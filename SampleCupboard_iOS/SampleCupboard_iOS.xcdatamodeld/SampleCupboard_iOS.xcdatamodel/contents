@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11E53" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Address" syncable="YES">
+        <attribute name="address_status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressline1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressline2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressline3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addresstype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facilityname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fax" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="license" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="partners" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="personid" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone_ext" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postalcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prov" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="suite" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Event" syncable="YES">
         <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
@@ -92,10 +120,11 @@
         <element name="Event" positionX="160" positionY="192" width="128" height="60"/>
         <element name="HealthCareProfessional" positionX="160" positionY="192" width="128" height="315"/>
         <element name="People" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Rep" positionX="160" positionY="192" width="128" height="375"/>
+        <element name="RepInventory" positionX="160" positionY="192" width="128" height="180"/>
+        <element name="Territory" positionX="160" positionY="192" width="128" height="150"/>
         <element name="TerritoryFSA" positionX="160" positionY="192" width="128" height="135"/>
         <element name="TerritoryRep" positionX="160" positionY="192" width="128" height="135"/>
-        <element name="Territory" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="RepInventory" positionX="160" positionY="192" width="128" height="180"/>
-        <element name="Rep" positionX="160" positionY="192" width="128" height="375"/>
+        <element name="Address" positionX="160" positionY="192" width="128" height="435"/>
     </elements>
 </model>
