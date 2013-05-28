@@ -1,18 +1,20 @@
 //
-//  FirstViewController.m
+//  HcpListViewController_iPad.m
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-05-17.
+//  Created by David Small on 13-05-18.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import "FirstViewController.h"
+#import "HcpListViewController_iPad.h"
 
-@interface FirstViewController ()
+@interface HcpListViewController_iPad ()
+
+@property (weak, nonatomic) IBOutlet UINavigationItem *healthcareProf;
 
 @end
 
-@implementation FirstViewController
+@implementation HcpListViewController_iPad
 
 - (void)viewDidLoad
 {

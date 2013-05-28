@@ -1,5 +1,5 @@
 //
-//  SecondViewController.h
+//  AppDelegate.h
 //  SampleCupboard_iOS
 //
 //  Created by David Small on 13-05-17.
@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
 
 @end
