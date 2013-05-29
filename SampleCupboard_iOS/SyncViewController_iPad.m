@@ -92,8 +92,8 @@
         
         
         UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"Announcement"
-                              message: @"Processing Complete!"
+                              initWithTitle: @"Load HCPs"
+                              message: @"HCPs loaded successfully."
                               delegate: nil
                               cancelButtonTitle:@"OK"
                               otherButtonTitles:nil];
@@ -113,9 +113,26 @@
 }
 
 - (IBAction)btnReloadDataClick:(id)sender {
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle: @"Synchronize"
+                          message: @"Record synchronized successfully"
+                          delegate: nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    [alert show];
 }
 
 - (IBAction)btnSyncClick:(id)sender {
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle: @"Synchronize"
+                          message: @"Record synchronized successfully"
+                          delegate: nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    [alert show];
     
 }
 

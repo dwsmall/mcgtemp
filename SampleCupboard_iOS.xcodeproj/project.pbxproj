@@ -80,6 +80,7 @@
 		5BEAD0E6174B379600FBF8B2 /* man.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E2174B379500FBF8B2 /* man.png */; };
 		5BEAD0E7174B379600FBF8B2 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E3174B379500FBF8B2 /* refresh.png */; };
 		5BEAD0E8174B379600FBF8B2 /* trend.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E4174B379600FBF8B2 /* trend.png */; };
+		5BFC9293175691B200C3AA12 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC9292175691B100C3AA12 /* ReportViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +201,8 @@
 		5BEAD0E2174B379500FBF8B2 /* man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = man.png; path = Images/man.png; sourceTree = "<group>"; };
 		5BEAD0E3174B379500FBF8B2 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = refresh.png; path = Images/refresh.png; sourceTree = "<group>"; };
 		5BEAD0E4174B379600FBF8B2 /* trend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trend.png; path = Images/trend.png; sourceTree = "<group>"; };
+		5BFC9291175691B100C3AA12 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
+		5BFC9292175691B100C3AA12 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,6 +334,8 @@
 				5BBBD89517550229002A3E11 /* ReportViewController_iPad.h */,
 				5BBBD89617550229002A3E11 /* ReportViewController_iPad.m */,
 				5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */,
+				5BFC9291175691B100C3AA12 /* ReportViewController.h */,
+				5BFC9292175691B100C3AA12 /* ReportViewController.m */,
 			);
 			path = SampleCupboard_iOS;
 			sourceTree = "<group>";
@@ -597,6 +602,7 @@
 				5BBBD89417550179002A3E11 /* ReportsDetailViewController_iPad.m in Sources */,
 				5BBBD89717550229002A3E11 /* ReportViewController_iPad.m in Sources */,
 				5BBBD89F17552E9E002A3E11 /* HomeViewController.m in Sources */,
+				5BFC9293175691B200C3AA12 /* ReportViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

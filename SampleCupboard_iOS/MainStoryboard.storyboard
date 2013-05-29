@@ -234,14 +234,14 @@
                                 <color key="backgroundColor" red="0.66764978247974449" green="0.85532336431337275" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="separatorColor" red="0.54222727479903698" green="0.78360839611198763" blue="0.96464416058394165" alpha="0.5" colorSpace="deviceRGB"/>
                                 <prototypes>
-                                    <tableViewCell opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="_topHeader" textLabel="iRZ-8i-vAP" detailTextLabel="fKP-p6-sZ7" style="IBUITableViewCellStyleValue1" id="jQP-53-7oj">
+                                    <tableViewCell opaque="NO" userInteractionEnabled="NO" tag="501" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="_topHeader" textLabel="iRZ-8i-vAP" detailTextLabel="fKP-p6-sZ7" style="IBUITableViewCellStyleValue1" id="jQP-53-7oj">
                                         <rect key="frame" x="0.0" y="54" width="768" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="1" width="678" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="Date: Aug 27, 2011" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iRZ-8i-vAP">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="600" contentMode="center" text="Date: Aug 27, 2011" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iRZ-8i-vAP">
                                                     <rect key="frame" x="10" y="10" width="154" height="23"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -250,7 +250,7 @@
                                                     <color key="shadowColor" red="0.82283616703247087" green="0.87906585260966963" blue="0.93185985331632648" alpha="1" colorSpace="calibratedRGB"/>
                                                     <size key="shadowOffset" width="2" height="2"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="To: Mr. John Smith" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fKP-p6-sZ7">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="601" contentMode="center" text="To: Mr. John Smith" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fKP-p6-sZ7">
                                                     <rect key="frame" x="512" y="10" width="156" height="23"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -264,21 +264,21 @@
                                         </view>
                                         <color key="backgroundColor" red="0.92999999999999994" green="0.96966666666666668" blue="1" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="5" indentationWidth="0.0" reuseIdentifier="_lineItem" rowHeight="25" id="Vnq-xO-KcJ">
+                                    <tableViewCell userInteractionEnabled="NO" alpha="0.5" tag="502" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="5" indentationWidth="0.0" reuseIdentifier="_lineItem" rowHeight="25" id="Vnq-xO-KcJ">
                                         <rect key="frame" x="0.0" y="99" width="768" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="678" height="24"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="Januvia 100mg (7 tablets)" lineBreakMode="tailTruncation" minimumFontSize="10" id="n7q-o8-9Md">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="602" contentMode="left" text="Januvia 100mg (7 tablets)" lineBreakMode="tailTruncation" minimumFontSize="10" id="n7q-o8-9Md">
                                                     <rect key="frame" x="26" y="0.0" width="244" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="right" text="5 Units" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="iaq-6A-EHt">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="603" contentMode="right" text="5 Units" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="iaq-6A-EHt">
                                                     <rect key="frame" x="536" y="0.0" width="122" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -290,21 +290,21 @@
                                         </view>
                                         <color key="backgroundColor" red="0.92999999999999994" green="0.96966666666666668" blue="1" alpha="0.90000000000000002" colorSpace="deviceRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="_summary" textLabel="flH-70-BlN" detailTextLabel="BCH-KX-zKj" style="IBUITableViewCellStyleValue1" id="fFi-ra-Vdg">
+                                    <tableViewCell tag="503" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="_summary" textLabel="flH-70-BlN" detailTextLabel="BCH-KX-zKj" style="IBUITableViewCellStyleValue1" id="fFi-ra-Vdg">
                                         <rect key="frame" x="0.0" y="124" width="768" height="45"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="658" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="In Progress" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="flH-70-BlN">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="604" contentMode="center" text="In Progress" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="flH-70-BlN">
                                                     <rect key="frame" x="10" y="10" width="105" height="23"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                                     <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" text="View Details" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BCH-KX-zKj">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="605" contentMode="center" text="View Details" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BCH-KX-zKj">
                                                     <rect key="frame" x="554" y="12" width="94" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -722,51 +722,12 @@
             </objects>
             <point key="canvasLocation" x="4793" y="1396"/>
         </scene>
-        <!--Report Detail View Controller i Pad-->
-        <scene sceneID="nFM-m8-x4C">
-            <objects>
-                <viewController storyboardIdentifier="ReportDefaultView" id="FcE-Pa-tW7" customClass="ReportDetailViewController_iPad" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hly-x4-B1S">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <navigationBar contentMode="scaleToFill" id="fFO-AQ-lEF">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.3675926679" green="0.59252089669999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <items>
-                                    <navigationItem id="j9E-2G-TJB"/>
-                                </items>
-                            </navigationBar>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Select a Report" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="zrV-BU-4yS">
-                                <rect key="frame" x="64" y="455" width="639" height="45"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Report Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rDJ-Hq-jKB">
-                                <rect key="frame" x="316" y="11" width="213" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="270-Xm-whJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2297" y="7114"/>
-        </scene>
-        <!--View Controller-->
+        <!--Reports Detail View Controller i Pad-->
         <scene sceneID="l9Q-aN-gwh">
             <objects>
-                <viewController id="CW8-9F-825" sceneMemberID="viewController">
+                <viewController id="CW8-9F-825" customClass="ReportsDetailViewController_iPad" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yYb-Bb-dCf">
-                        <rect key="frame" x="0.0" y="20" width="768" height="955"/>
+                        <rect key="frame" x="0.0" y="20" width="703" height="699"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="SELECT A REPORT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ieR-or-AfT">
@@ -777,7 +738,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <navigationBar contentMode="scaleToFill" barStyle="blackOpaque" id="qkX-Y5-8cd">
-                                <rect key="frame" x="-112" y="0.0" width="880" height="44"/>
+                                <rect key="frame" x="-112" y="0.0" width="815" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.3675926679" green="0.59252089669999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
@@ -785,13 +746,14 @@
                                 </items>
                             </navigationBar>
                             <searchBar contentMode="redraw" barStyle="blackOpaque" id="MP1-I1-h38">
-                                <rect key="frame" x="0.0" y="44" width="768" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="703" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.3675926679" green="0.59252089669999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
                 </viewController>
@@ -799,61 +761,42 @@
             </objects>
             <point key="canvasLocation" x="-693" y="3694"/>
         </scene>
-        <!--Table View Controller - Reports-->
+        <!--Report View Controller - Reports-->
         <scene sceneID="2du-9a-BTp">
             <objects>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="6jU-Gt-xGy" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hVf-37-mCI">
-                        <rect key="frame" x="0.0" y="64" width="320" height="739"/>
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="6jU-Gt-xGy" customClass="ReportViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="75" sectionHeaderHeight="10" sectionFooterHeight="10" id="hVf-37-mCI">
+                        <rect key="frame" x="0.0" y="64" width="320" height="655"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                        <color key="separatorColor" red="0.41817917689144801" green="0.83242107321267578" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="_reportItem" rowHeight="58" id="7eY-E1-fWD">
-                                <rect key="frame" x="0.0" y="22" width="320" height="58"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                            <tableViewCell opaque="NO" tag="1001" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="_reportItem" rowHeight="75" id="7eY-E1-fWD">
+                                <rect key="frame" x="0.0" y="34" width="320" height="77"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
+                                    <rect key="frame" x="10" y="1" width="300" height="74"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="19" id="tb1-9A-t5d">
-                                            <rect key="frame" x="79" y="9" width="84" height="24"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8001" contentMode="left" text="REPORT TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0OD-0F-dqd">
+                                            <rect key="frame" x="80" y="2" width="209" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="TopLeft" text="Label" lineBreakMode="wordWrap" minimumFontSize="16" id="jdm-IO-jlb">
-                                            <rect key="frame" x="87" y="31" width="76" height="24"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="8002" contentMode="left" text="Report Description" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="q4W-sL-Qhb">
+                                            <rect key="frame" x="80" y="17" width="200" height="57"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="my_usage.png" id="AUD-ck-oSO">
-                                            <rect key="frame" x="8" y="9" width="45" height="41"/>
+                                        <imageView userInteractionEnabled="NO" tag="8003" contentMode="scaleToFill" id="UDc-KH-AcO">
+                                            <rect key="frame" x="14" y="3" width="37" height="36"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <color key="backgroundColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="edd-yH-LVA">
-                                <rect key="frame" x="0.0" y="80" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="oqs-up-L6N">
-                                <rect key="frame" x="0.0" y="124" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -865,10 +808,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Reports" id="LKJ-29-xJP"/>
+                    <connections>
+                        <outlet property="tableView" destination="hVf-37-mCI" id="Bnb-qP-CtS"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3B9-jn-5rK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-157" y="2758"/>
+            <point key="canvasLocation" x="-197" y="2726"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rAt-uW-t6Z">
@@ -884,7 +830,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TcZ-xb-Utd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-693" y="2758"/>
+            <point key="canvasLocation" x="-701" y="2734"/>
         </scene>
         <!--Split View Controller - Reports-->
         <scene sceneID="Xbv-B0-wpX">
@@ -892,6 +838,7 @@
                 <splitViewController id="6lq-M8-P00" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Reports" image="trend.png" id="HsJ-2n-0eL"/>
                     <toolbarItems/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <segue destination="eWp-px-HCz" kind="relationship" relationship="masterViewController" id="LPq-4w-1bH"/>
                         <segue destination="CW8-9F-825" kind="relationship" relationship="detailViewController" id="Soq-jq-zqO"/>
@@ -899,67 +846,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IyH-gt-1TF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1673" y="3226"/>
-        </scene>
-        <!--Table View Controller - Reports-->
-        <scene sceneID="50D-te-oPo">
-            <objects>
-                <tableViewController storyboardIdentifier="DummyReportList" clearsSelectionOnViewWillAppear="NO" id="icE-Ka-0qX" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="EJu-EY-AwU">
-                        <rect key="frame" x="0.0" y="64" width="320" height="660"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="icE-Ka-0qX" id="0iW-jf-gLs"/>
-                            <outlet property="delegate" destination="icE-Ka-0qX" id="0dy-zc-oSH"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Reports" id="LwP-jR-XNy"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oQK-m1-YI7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3057" y="6018"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Lc8-5Q-ePT">
-            <objects>
-                <navigationController toolbarHidden="NO" id="4PP-VA-lSj" sceneMemberID="viewController">
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="uEH-lZ-RjI">
-                        <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="trt-gQ-RE8">
-                        <rect key="frame" x="0.0" y="724" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="icE-Ka-0qX" kind="relationship" relationship="rootViewController" id="6lL-4s-hKu"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bhC-Br-Hnn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2317" y="6018"/>
-        </scene>
-        <!--Report View Controller i Pad - Reports-->
-        <scene sceneID="x7O-Wv-HtZ">
-            <objects>
-                <splitViewController storyboardIdentifier="ReportView" id="aEl-6M-vFf" customClass="ReportViewController_iPad" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Reports" image="trend.png" id="89C-f6-VC8"/>
-                    <toolbarItems/>
-                    <connections>
-                        <segue destination="4PP-VA-lSj" kind="relationship" relationship="masterViewController" id="8gw-IG-QUD"/>
-                        <segue destination="FcE-Pa-tW7" kind="relationship" relationship="detailViewController" id="oAb-xh-MEf"/>
-                    </connections>
-                </splitViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ey4-6s-S8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="661" y="6647"/>
+            <point key="canvasLocation" x="-2033" y="3234"/>
         </scene>
         <!--Home View Controller - Home-->
         <scene sceneID="d6U-uk-VpR">
@@ -1147,12 +1034,11 @@
         <image name="green_btn_bg.png" width="638" height="37"/>
         <image name="home_background_portrait.png" width="768" height="1004"/>
         <image name="house.png" width="26" height="26"/>
-        <image name="iPad_Login_bouton_Background.png" width="450" height="268"/>
+        <image name="iPad_Login_bouton_Background.png" width="450" height="394"/>
         <image name="iPad_Login_bouton_button.png" width="338" height="63"/>
         <image name="iPad_Login_bouton_icon.png" width="121" height="217"/>
         <image name="iPad_MCG_background_portrait.png" width="768" height="1004"/>
         <image name="man.png" width="52" height="52"/>
-        <image name="my_usage.png" width="40" height="40"/>
         <image name="refresh.png" width="26" height="26"/>
         <image name="shoppingcart.png" width="26" height="26"/>
         <image name="trend.png" width="26" height="26"/>
@@ -1223,14 +1109,14 @@
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
-        <class className="ReportDetailViewController_iPad" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportDetailViewController_iPad.h"/>
+        <class className="ReportViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
             </relationships>
         </class>
-        <class className="ReportViewController_iPad" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportViewController_iPad.h"/>
+        <class className="ReportsDetailViewController_iPad" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportsDetailViewController_iPad.h"/>
         </class>
         <class className="SignatureControl" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SignatureControl.h"/>
@@ -1257,6 +1143,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="uHv-71-fOD"/>
+        <segue reference="9WN-vP-Qvx"/>
     </inferredMetricsTieBreakers>
 </document>

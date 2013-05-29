@@ -10,6 +10,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-@interface ReportViewController_iPad : UIViewController
+@interface ReportViewController_iPad : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
