@@ -1036,107 +1036,13 @@
         <image name="house.png" width="26" height="26"/>
         <image name="iPad_Login_bouton_Background.png" width="450" height="394"/>
         <image name="iPad_Login_bouton_button.png" width="338" height="63"/>
-        <image name="iPad_Login_bouton_icon.png" width="121" height="217"/>
+        <image name="iPad_Login_bouton_icon.png" width="97" height="136"/>
         <image name="iPad_MCG_background_portrait.png" width="768" height="1004"/>
         <image name="man.png" width="52" height="52"/>
         <image name="refresh.png" width="26" height="26"/>
         <image name="shoppingcart.png" width="26" height="26"/>
         <image name="trend.png" width="26" height="26"/>
     </resources>
-    <classes>
-        <class className="HcpListViewController_iPad" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HcpListViewController_iPad.h"/>
-            <relationships>
-                <relationship kind="outlet" name="healthcareProf" candidateClass="UINavigationItem"/>
-            </relationships>
-        </class>
-        <class className="HomeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="viewWeb" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="HyperlinkLabel" superclassName="UILabel">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HyperlinkLabel.h"/>
-        </class>
-        <class className="IndentTextField" superclassName="UITextField">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/IndentTextField.h"/>
-        </class>
-        <class className="LoginViewController_iPad" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController_iPad.h"/>
-            <relationships>
-                <relationship kind="action" name="signInClick:"/>
-                <relationship kind="outlet" name="BtnSignin" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="UserName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="busyIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="cbRememberMe" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="lblInvalidUserName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="loadingPanel" candidateClass="UIView"/>
-                <relationship kind="outlet" name="loginBackgroundImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="loginErrorPanel" candidateClass="UIView"/>
-                <relationship kind="outlet" name="loginIcon" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="loginView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="signInClick" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="txtPassword" candidateClass="IndentTextField"/>
-                <relationship kind="outlet" name="txtUserName" candidateClass="IndentTextField"/>
-            </relationships>
-        </class>
-        <class className="OrderDetailViewController_iPad" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OrderDetailViewController_iPad.h"/>
-            <relationships>
-                <relationship kind="action" name="CancelClicked:"/>
-                <relationship kind="action" name="CellEditorBegunEditing:"/>
-                <relationship kind="action" name="CellEditorEndedEdit:"/>
-                <relationship kind="action" name="DoneClicked:"/>
-                <relationship kind="action" name="NewProductClick:"/>
-                <relationship kind="action" name="tbActionsClick:"/>
-                <relationship kind="action" name="tbSaveDraftClick:"/>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
-                <relationship kind="outlet" name="tbActions" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tbSaveDraft" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="OrderViewController_iPad" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OrderViewController_iPad.h"/>
-            <relationships>
-                <relationship kind="action" name="OrderStatusFilterValueChanged:" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="lblTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="orderStatusFilter" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="orderStatusFilterValueChanged" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="ReportViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="ReportsDetailViewController_iPad" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportsDetailViewController_iPad.h"/>
-        </class>
-        <class className="SignatureControl" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignatureControl.h"/>
-        </class>
-        <class className="SyncViewController_iPad" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SyncViewController_iPad.h"/>
-            <relationships>
-                <relationship kind="action" name="btnLoadHCPsClick:"/>
-                <relationship kind="action" name="btnReloadDataClick:"/>
-                <relationship kind="action" name="btnSyncClick:"/>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="btnLoadHCPs" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="btnReloadData" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="btnSync" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="orderTableView" superclassName="UITableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/orderTableView.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
