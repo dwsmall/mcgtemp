@@ -66,7 +66,7 @@
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="displayname" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="displayname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="opt_allocationstrategy" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -140,10 +140,16 @@
         <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <entity name="HealthCareProfessional" syncable="YES">
+        <attribute name="address1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="department" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facility" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fax" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
@@ -152,8 +158,12 @@
         <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phlid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postal" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="preferredlanguage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rejected" optional="YES" attributeType="Integer 16" syncable="YES"/>
         <attribute name="specialty" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="specialty2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
@@ -316,23 +326,23 @@
     </entity>
     <elements>
         <element name="Address" positionX="160" positionY="192" width="128" height="435"/>
+        <element name="Allocation" positionX="160" positionY="192" width="128" height="345"/>
+        <element name="AllocationHeader" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="ClientInfo" positionX="160" positionY="192" width="128" height="360"/>
+        <element name="Disbursement" positionX="160" positionY="192" width="128" height="630"/>
+        <element name="DisbursementLineItem" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Event" positionX="160" positionY="192" width="128" height="60"/>
-        <element name="HealthCareProfessional" positionX="160" positionY="192" width="128" height="315"/>
+        <element name="HealthCareProfessional" positionX="160" positionY="192" width="128" height="465"/>
+        <element name="Order" positionX="160" positionY="192" width="128" height="720"/>
+        <element name="OrderLineItem" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="OrderTemplate" positionX="160" positionY="192" width="128" height="165"/>
+        <element name="OrderTemplateLine" positionX="160" positionY="192" width="128" height="105"/>
         <element name="People" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Product" positionX="160" positionY="192" width="128" height="285"/>
         <element name="Rep" positionX="160" positionY="192" width="128" height="375"/>
         <element name="RepInventory" positionX="160" positionY="192" width="128" height="180"/>
         <element name="Territory" positionX="160" positionY="192" width="128" height="150"/>
         <element name="TerritoryFSA" positionX="160" positionY="192" width="128" height="135"/>
         <element name="TerritoryRep" positionX="160" positionY="192" width="128" height="135"/>
-        <element name="Allocation" positionX="160" positionY="192" width="128" height="345"/>
-        <element name="AllocationHeader" positionX="160" positionY="192" width="128" height="195"/>
-        <element name="ClientInfo" positionX="160" positionY="192" width="128" height="360"/>
-        <element name="Disbursement" positionX="160" positionY="192" width="128" height="630"/>
-        <element name="Order" positionX="160" positionY="192" width="128" height="720"/>
-        <element name="DisbursementLineItem" positionX="160" positionY="192" width="128" height="165"/>
-        <element name="OrderLineItem" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="OrderTemplate" positionX="160" positionY="192" width="128" height="165"/>
-        <element name="OrderTemplateLine" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="Product" positionX="160" positionY="192" width="128" height="285"/>
     </elements>
 </model>

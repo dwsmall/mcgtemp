@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B4988C2175A27B0000AFD31 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */; };
 		5B5085E1174B20460068A71E /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5B5085E0174B20460068A71E /* en.lproj */; };
+		5B5C53E31757E44D004126D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C53E21757E44D004126D1 /* Reachability.m */; };
 		5B62125D1746D8C5007B5C7C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B62125C1746D8C5007B5C7C /* UIKit.framework */; };
 		5B62125F1746D8C5007B5C7C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B62125E1746D8C5007B5C7C /* Foundation.framework */; };
 		5B6212611746D8C5007B5C7C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6212601746D8C5007B5C7C /* CoreGraphics.framework */; };
@@ -94,7 +96,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5B5085E0174B20460068A71E /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
+		5B5C53E11757E44D004126D1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		5B5C53E21757E44D004126D1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		5B6212591746D8C5007B5C7C /* SampleCupboard_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleCupboard_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B62125C1746D8C5007B5C7C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5B62125E1746D8C5007B5C7C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -210,6 +215,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B4988C2175A27B0000AFD31 /* SystemConfiguration.framework in Frameworks */,
 				5BE39299174CBE6F005B40D2 /* CoreData.framework in Frameworks */,
 				5B62125D1746D8C5007B5C7C /* UIKit.framework in Frameworks */,
 				5B62125F1746D8C5007B5C7C /* Foundation.framework in Frameworks */,
@@ -230,9 +236,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B5C53E01757DB8A004126D1 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				5B5C53E11757E44D004126D1 /* Reachability.h */,
+				5B5C53E21757E44D004126D1 /* Reachability.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		5B6212501746D8C5007B5C7C = {
 			isa = PBXGroup;
 			children = (
+				5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */,
 				5B6212621746D8C5007B5C7C /* SampleCupboard_iOS */,
 				5B6212911746D8C6007B5C7C /* SampleCupboard_iOSTests */,
 				5B62125B1746D8C5007B5C7C /* Frameworks */,
@@ -264,6 +280,7 @@
 		5B6212621746D8C5007B5C7C /* SampleCupboard_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				5B5C53E01757DB8A004126D1 /* Classes */,
 				5B8C8A82174D39070088C4F0 /* JSONModel */,
 				5BEAD0DF174B36A200FBF8B2 /* shoppingcart.png */,
 				5BEAD0E1174B379500FBF8B2 /* house.png */,
@@ -287,8 +304,8 @@
 				5B6212B31746DA00007B5C7C /* iPad_MCG_background_portrait.png */,
 				5B6212B41746DA00007B5C7C /* iPad_MCG@2x.png */,
 				5B6212A21746D957007B5C7C /* SCB_Icon_iPad29x29.png */,
-				5B6212A31746D957007B5C7C /* SCB_Icon_iPad50x50.png */,
 				5B6212A41746D957007B5C7C /* SCB_Icon_iPhone4.png */,
+				5B6212A31746D957007B5C7C /* SCB_Icon_iPad50x50.png */,
 				5B6212A51746D957007B5C7C /* SCB_Icon_iTunes.png */,
 				5B62126B1746D8C5007B5C7C /* AppDelegate.h */,
 				5B62126C1746D8C5007B5C7C /* AppDelegate.m */,
@@ -603,6 +620,7 @@
 				5BBBD89717550229002A3E11 /* ReportViewController_iPad.m in Sources */,
 				5BBBD89F17552E9E002A3E11 /* HomeViewController.m in Sources */,
 				5BFC9293175691B200C3AA12 /* ReportViewController.m in Sources */,
+				5B5C53E31757E44D004126D1 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +713,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
