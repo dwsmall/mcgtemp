@@ -7,29 +7,81 @@
 //
 
 #import "ReportViewController.h"
-
-
-@interface ReportViewController ()
-
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-
-@end
-
-
-@implementation ReportViewController
-
+#import "ReportDetailContainer.h"
 
 NSArray *tableData;
 NSArray *tableDataX;
 NSArray *tableDataY;
 
 
+
+
+@interface ReportViewController () {
+     NSMutableArray *_objects;
+}
+
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@end
+
+
+@implementation ReportViewController
+
+
+- (void)awakeFromNib
+{
+    // self.clearsSelectionOnViewWillAppear = NO;
+    self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+    [super awakeFromNib];
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    tableData = [NSArray arrayWithObjects:@"My Usage", @"Territory Allocation", @"My Team", nil];
+    tableDataX = [NSArray arrayWithObjects:@"Show your total usage per product, by period (YTD, allocation period, current month)",
+                  @"Shows product allocations for your territory, quantity used (in units and %) and remaining MCG Inventory levels.",
+                  @"Lists all representatives in your territory(ies), group by territory name",
+                  nil];
+    tableDataY = [NSArray arrayWithObjects:@"my_allocations.png", @"my_allocations.png", @"my_allocations.png", nil];
+    
+        
+    [self.tableView reloadData];
+    
+	// Do any additional setup after loading the view, typically from a nib.
+    /*self.navigationItem.leftBarButtonItem = self.editButtonItem;
+     
+     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+     self.navigationItem.rightBarButtonItem = addButton;*/
+    
+    
+    self.reportDetailContainer = (ReportDetailContainer *)[[self.splitViewController.viewControllers lastObject] topViewController];
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+- (void)insertNewObject:(id)sender
+{
+    if (!_objects) {
+        _objects = [[NSMutableArray alloc] init];
+    }
+    [_objects insertObject:[NSDate date] atIndex:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // return [tableData count];
     return 3;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -55,34 +107,19 @@ NSArray *tableDataY;
     UILabel *PName = (UILabel *)[cell viewWithTag:8002];
     [PName setText:[tableDataX objectAtIndex:[indexPath row]]];
     
-   // cell.textLabel.text = [tableData objectAtIndex:indexPath.row];
+    // cell.textLabel.text = [tableData objectAtIndex:indexPath.row];
     
     // cell.detailTextLabel.text = [tableDataX objectAtIndex:indexPath.row];
     
     return cell;
-    
-    
-    // cell.textLabel.text = identifier;
-    
 }
 
 
-- (void)viewDidLoad
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    tableData = [NSArray arrayWithObjects:@"My Usage", @"Territory Allocation", @"My Team", nil];
-    tableDataX = [NSArray arrayWithObjects:@"Show your total usage per product, by period (YTD, allocation period, current month)",
-                  @"Shows product allocations for your territory, quantity used (in units and %) and remaining MCG Inventory levels.",
-                  @"Lists all representatives in your territory(ies), group by territory name",
-                  nil];
-    tableDataY = [NSArray arrayWithObjects:@"my_allocations.png", @"my_allocations.png", @"my_allocations.png", nil];
-    
-    
-    
-    [self.tableView reloadData];
+    if([indexPath row] < 3) {
+        [self.reportDetailContainer showViewWithId:[indexPath row]];
+    }
 }
-
-
 
 @end

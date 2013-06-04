@@ -654,4 +654,11 @@ Reachability *internetReachableFoo;
     
 }
 
+
+- (NSNumber*) isConnected
+{
+    BOOL isAppConnected = NO;
+    return [NSNumber numberWithBool:isAppConnected];
+}
+
 @end

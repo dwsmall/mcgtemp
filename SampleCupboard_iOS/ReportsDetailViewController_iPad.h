@@ -12,4 +12,6 @@
 
 @interface ReportsDetailViewController_iPad : UIViewController
 
+@property (strong, nonatomic) id detailItem;
+
 @end

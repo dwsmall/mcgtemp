@@ -40,7 +40,7 @@ NSArray *statusDataX;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // return [tableData count];
-    return 3;
+    return 6;
 }
 
 
@@ -48,7 +48,8 @@ NSArray *statusDataX;
 {
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
     
-    if(indexPath.row==0){
+    if(indexPath.section==0){
+        
         // Create first cell
         
         UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_topHeader"];
@@ -63,12 +64,14 @@ NSArray *statusDataX;
         UILabel *PName = (UILabel *)[cell viewWithTag:601];
         [PName setText:[tableDataX objectAtIndex:[indexPath row]]];
         
+        
+        
         return cell;
         
         
     }
     
-    if(indexPath.row==1){
+    if(indexPath.section==1){
         // Create second cell
         
         UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_lineItem"];
@@ -137,15 +140,15 @@ NSArray *statusDataX;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-     tableData = [NSArray arrayWithObjects:@"April 27, 2013", @"April 28, 2013", @"April 29, 2013", nil];
+     tableData = [NSArray arrayWithObjects:@"April 27, 2013", @"April 28, 2013", @"April 29, 2013",@"April 99, 2013", @"April 77, 2013", @"April 66, 2013", nil];
     
-    tableDataX = [NSArray arrayWithObjects:@"To:John Smith", @"To:Dale Smith", @"To:Doug Smith", nil];
+    tableDataX = [NSArray arrayWithObjects:@"To:John Smith", @"To:Dale Smith", @"To:Doug Smith",@"To:DD Smith", @"To:BB Smith", @"To:CC Smith", nil];
     
-    prodDataX = [NSArray arrayWithObjects:@"Januvia 100mg (7 tablets)", @"Janumet 50 mg (3 tablets)", @"Olmetec 40mg (3 tablets)", nil];
+    prodDataX = [NSArray arrayWithObjects:@"Januvia 100mg (7 tablets)", @"Janumet 50 mg (3 tablets)", @"Olmetec 40mg (3 tablets)",@"cc 100mg (7 tablets)", @"dd 50 mg (3 tablets)", @"ee 40mg (3 tablets)", nil];
     
-    unitDataX = [NSArray arrayWithObjects:@"5 Units", @"4 Units", @"7 Units", nil];
+    unitDataX = [NSArray arrayWithObjects:@"5 Units", @"4 Units", @"7 Units",@"99 Units", @"88 Units", @"77 Units", nil];
     
-    statusDataX = [NSArray arrayWithObjects:@"IN PROGRESS", @"IN PROGRESS", @"ON HOLD", nil];
+    statusDataX = [NSArray arrayWithObjects:@"IN PROGRESS", @"IN PROGRESS", @"ON HOLD",@"WAIT", @"WAIT", @"BACKORDER", nil];
     
     [self.tableView reloadData];
 }

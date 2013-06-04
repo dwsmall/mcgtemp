@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B4988C2175A27B0000AFD31 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */; };
+		5B4988C5175AAC25000AFD31 /* ReportDetailContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4988C4175AAC24000AFD31 /* ReportDetailContainer.m */; };
 		5B5085E1174B20460068A71E /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5B5085E0174B20460068A71E /* en.lproj */; };
 		5B5C53E31757E44D004126D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C53E21757E44D004126D1 /* Reachability.m */; };
 		5B62125D1746D8C5007B5C7C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B62125C1746D8C5007B5C7C /* UIKit.framework */; };
@@ -97,6 +98,8 @@
 
 /* Begin PBXFileReference section */
 		5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		5B4988C3175AAC24000AFD31 /* ReportDetailContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportDetailContainer.h; sourceTree = "<group>"; };
+		5B4988C4175AAC24000AFD31 /* ReportDetailContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportDetailContainer.m; sourceTree = "<group>"; };
 		5B5085E0174B20460068A71E /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		5B5C53E11757E44D004126D1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5B5C53E21757E44D004126D1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -326,8 +329,6 @@
 				5BCB1B861747A31000816AF7 /* HcpListViewController_iPad.m */,
 				5BCB1B881747A32E00816AF7 /* SyncViewController_iPad.h */,
 				5BCB1B891747A32E00816AF7 /* SyncViewController_iPad.m */,
-				5BCB1B8E1747A36700816AF7 /* ReportDetailViewController_iPad.h */,
-				5BCB1B8F1747A36700816AF7 /* ReportDetailViewController_iPad.m */,
 				5BE39221174BC9C7005B40D2 /* OrderDetailViewController_iPad.h */,
 				5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */,
 				5BE39224174BE9D0005B40D2 /* HyperlinkLabel.h */,
@@ -336,8 +337,6 @@
 				5BE39228174BEB83005B40D2 /* IndentTextField.m */,
 				5BE3922A174BEC9B005B40D2 /* OrderTableView.h */,
 				5BE3922B174BEC9B005B40D2 /* OrderTableView.m */,
-				5BE3922D174BED10005B40D2 /* ReportAllocationUsage.h */,
-				5BE3922E174BED11005B40D2 /* ReportAllocationUsage.m */,
 				5BE39230174BEDC6005B40D2 /* SearchbarWithOptions.h */,
 				5BE39231174BEDC7005B40D2 /* SearchbarWithOptions.m */,
 				5BE39236174BEE74005B40D2 /* SignatureControl.h */,
@@ -348,11 +347,16 @@
 				5BE3923D174BEF7A005B40D2 /* TextInputDialog_iPad.m */,
 				5BBBD89217550179002A3E11 /* ReportsDetailViewController_iPad.h */,
 				5BBBD89317550179002A3E11 /* ReportsDetailViewController_iPad.m */,
-				5BBBD89517550229002A3E11 /* ReportViewController_iPad.h */,
-				5BBBD89617550229002A3E11 /* ReportViewController_iPad.m */,
-				5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */,
+				5B4988C3175AAC24000AFD31 /* ReportDetailContainer.h */,
+				5B4988C4175AAC24000AFD31 /* ReportDetailContainer.m */,
 				5BFC9291175691B100C3AA12 /* ReportViewController.h */,
 				5BFC9292175691B100C3AA12 /* ReportViewController.m */,
+				5BBBD89517550229002A3E11 /* ReportViewController_iPad.h */,
+				5BBBD89617550229002A3E11 /* ReportViewController_iPad.m */,
+				5BCB1B8E1747A36700816AF7 /* ReportDetailViewController_iPad.h */,
+				5BCB1B8F1747A36700816AF7 /* ReportDetailViewController_iPad.m */,
+				5BB81560175DA81100DACE0B /* Reporting */,
+				5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */,
 			);
 			path = SampleCupboard_iOS;
 			sourceTree = "<group>";
@@ -448,6 +452,15 @@
 				5B8C8A9B174D39070088C4F0 /* JSONValueTransformer.m */,
 			);
 			path = JSONModelTransformations;
+			sourceTree = "<group>";
+		};
+		5BB81560175DA81100DACE0B /* Reporting */ = {
+			isa = PBXGroup;
+			children = (
+				5BE3922D174BED10005B40D2 /* ReportAllocationUsage.h */,
+				5BE3922E174BED11005B40D2 /* ReportAllocationUsage.m */,
+			);
+			name = Reporting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -621,6 +634,7 @@
 				5BBBD89F17552E9E002A3E11 /* HomeViewController.m in Sources */,
 				5BFC9293175691B200C3AA12 /* ReportViewController.m in Sources */,
 				5B5C53E31757E44D004126D1 /* Reachability.m in Sources */,
+				5B4988C5175AAC25000AFD31 /* ReportDetailContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

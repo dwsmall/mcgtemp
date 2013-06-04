@@ -12,7 +12,11 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreData/CoreData.h>
 
+@class ReportDetailContainer;
+
 @interface ReportViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property (strong, nonatomic) ReportDetailContainer *reportDetailContainer;
 
 @end
 
