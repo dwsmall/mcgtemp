@@ -83,13 +83,13 @@
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    // self.detailViewController.detailItem = object;
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    UIViewController *controller = segue.destinationViewController;
+    //controller.player = [self.players objectAtIndex: YOUR_SAVED_INDEX];
 }
-
-
 
 
 #pragma mark - Fetched results controller
@@ -142,6 +142,9 @@
 {
     [self.tableView beginUpdates];
 }
+
+
+
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
@@ -208,7 +211,7 @@
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     // cell.textLabel.text = [[object valueForKey:@"firstname"] description];
-    cell.textLabel.Text = [NSString stringWithFormat:@"%@, %@", [[object valueForKey:@"firstname"] description], [[object valueForKey:@"lastname"] description]];
+    cell.textLabel.Text = [[NSString stringWithFormat:@"%@, %@", [[object valueForKey:@"firstname"] description], [[object valueForKey:@"lastname"] description]] uppercaseString];
     
     cell.detailTextLabel.Text = [NSString stringWithFormat:@"%@ %@ %@",
                                  [[object valueForKey:@"city"] description],
@@ -217,5 +220,7 @@
     
     // cell.detailTextLabel.Text = [[object valueForKey:@"address1"] description];
 }
+
+
 
 @end

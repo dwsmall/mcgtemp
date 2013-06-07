@@ -44,18 +44,10 @@ NSArray *tableDataY;
                   @"Shows product allocations for your territory, quantity used (in units and %) and remaining MCG Inventory levels.",
                   @"Lists all representatives in your territory(ies), group by territory name",
                   nil];
-    tableDataY = [NSArray arrayWithObjects:@"my_allocations.png", @"my_allocations.png", @"my_allocations.png", nil];
+    tableDataY = [NSArray arrayWithObjects:@"Images/my_usage.png", @"Images/my_allocations.png", @"Images/my_team.png", nil];
     
         
     [self.tableView reloadData];
-    
-	// Do any additional setup after loading the view, typically from a nib.
-    /*self.navigationItem.leftBarButtonItem = self.editButtonItem;
-     
-     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-     self.navigationItem.rightBarButtonItem = addButton;*/
-    
-    
     self.reportDetailContainer = (ReportDetailContainer *)[[self.splitViewController.viewControllers lastObject] topViewController];
 }
 
@@ -88,28 +80,24 @@ NSArray *tableDataY;
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
     
     // Create first cell
-    // static NSString *CellIdentifier = @"Cell";
-    // UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
+   
     UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_reportItem"];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier];
     }
     
-    //UIImage *imageFile = [tableDataY objectAtIndex:indexPath.row];
-    //UIImageView *rImageView = (UIImageView *)[cell viewWithTag:8003];
-    //rImageView.image = [UIImage imageNamed:imageFile];
-    
+   
     UILabel *PDate = (UILabel *)[cell viewWithTag:8001];
     [PDate setText:[tableData objectAtIndex:[indexPath row]]];
     
     UILabel *PName = (UILabel *)[cell viewWithTag:8002];
     [PName setText:[tableDataX objectAtIndex:[indexPath row]]];
     
-    // cell.textLabel.text = [tableData objectAtIndex:indexPath.row];
     
-    // cell.detailTextLabel.text = [tableDataX objectAtIndex:indexPath.row];
+    UIImageView *PicView = (UIImageView *)[cell viewWithTag:8003];
+    UIImage *PicName = [UIImage imageNamed:[tableDataY objectAtIndex:[indexPath row]]];
+    [PicView setImage:PicName];
     
     return cell;
 }

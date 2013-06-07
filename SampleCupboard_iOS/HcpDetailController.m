@@ -1,25 +1,23 @@
 //
-//  ReportAllocationUsage.m
+//  HcpDetailController.m
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-05-21.
+//  Created by David Small on 13-06-06.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import "ReportAllocationUsage.h"
+#import "HcpDetailController.h"
 
-@interface ReportAllocationUsage ()
-
+@interface HcpDetailController ()
 @property (strong, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
 
 
 
-@implementation ReportAllocationUsage
+@implementation HcpDetailController
 
 
 - (void)viewDidLoad
@@ -37,20 +35,54 @@
 
 
 // [NSPredicate predicateWithFormat:SUBQUERY(Product,$product,$product.allocation.prodid == %@).@count != 0",id]
- 
+
 
 #pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    // return [[self.fetchedResultsController sections] count];
+    return 4;
 }
 
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     
-    return @"JC582901-Ottawa / Kingston";
+    NSString *HeaderTitle = @"Default";
+    
+    switch (section)
+    
+    {
+        case 0:
+            
+            HeaderTitle = @"Name";
+            break;
+            
+        case 1:
+            
+            HeaderTitle = @"Communication";
+            break;
+            
+        case 2:
+            
+            HeaderTitle = @"Address";
+            break;
+        
+        case 3:
+            
+            HeaderTitle = @"Last 5 Orders";
+            break;
+            
+        default:
+            
+            HeaderTitle = @"Info";
+            break;
+            
+    }
+            
+    return HeaderTitle;
+            
 }
 
 
@@ -58,38 +90,75 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    // return [sectionInfo numberOfObjects];    
-    return 2;
+    // return [sectionInfo numberOfObjects];
+    
+    int MRows = 0;
+    
+    switch (section)
+    
+    {
+        case 0:
+            
+            //Name Rows
+            MRows=5;  //5
+            break;
+            
+        case 1:
+            
+            //Communication
+            MRows=1;  
+            break;
+
+        case 2:
+            
+            //Address
+            MRows=7;  //7
+            break;
+            
+        case 3:
+            
+            //Last 5 Orders
+            MRows=1;
+            break;
+        
+        default:
+            
+            MRows=1;
+            break;
+            
+    }
+    
+    return MRows;
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        
-        UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_territoryheader"];
-        
-        UILabel *Product = (UILabel *)[cell viewWithTag:7601];
-        [Product setText:@"Product"];
-        
-        UILabel *Total = (UILabel *)[cell viewWithTag:7602];
-        [Total setText:@"Total"];
-        
-        UILabel *Used = (UILabel *)[cell viewWithTag:7603];
-        [Used setText:@"Used"];
-        
-        UILabel *Pct = (UILabel *)[cell viewWithTag:7604];
-        [Pct setText:@"%"];
-        
-        UILabel *STOCK = (UILabel *)[cell viewWithTag:7605];
-        [STOCK setText:@"Mcg Stock"];
-        
-        return cell;        
+    
+    
+    // UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_typeA"];
+    
+    // UILabel *Product = (UILabel *)[cell viewWithTag:8801];
+    // [Product setText:@"TestX"];
+    
+    // return cell;
+    
+    
+    NSString *MyFormType = @"_typeA";
+    
+    if ((indexPath.section == 0 && indexPath.row == 2) || indexPath.section == 1) {
+        MyFormType = @"_typeB";
     }
+
     
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyFormType forIndexPath:indexPath];
     
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"_territoryline1" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
+
+    
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"_typeB" forIndexPath:indexPath];
+    // [self configureCell:cell atIndexPath:indexPath];
+    
     return cell;
     
     
@@ -126,7 +195,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    // NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     // self.detailViewController.detailItem = object;
 }
 
@@ -247,26 +316,152 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     // cell.textLabel.text = [[object valueForKey:@"firstname"] description];
     
     
-    
-    UILabel *Product = (UILabel *)[cell viewWithTag:7801];
-    [Product setText:[[object valueForKey:@"code"] description]];
-    
-    UILabel *Total = (UILabel *)[cell viewWithTag:7802];
-    [Total setText:@"1500"];
-    
-    UILabel *Used = (UILabel *)[cell viewWithTag:7803];
-    [Used setText:@"734"];
-    
-    UILabel *Pct = (UILabel *)[cell viewWithTag:7804];
-    [Pct setText:@"49%"];
-    
-    UILabel *Stock = (UILabel *)[cell viewWithTag:7805];
-    [Stock setText:@"yes"];
+    // Set Vars
+    NSString *varLeftTitle = @"Title1";
+    NSString *varRightValue = @"Title2";
+    NSString *varTitle1 = @"Title1";
+    NSString *varText1 = @"Title2";
+    NSString *varTitle2 = @"Title1";
+    NSString *varText2 = @"Title2";
+    NSString *varTitle3 = @"Title1";
+    NSString *varText3 = @"Title2";
 
+    
+    
+    switch (indexPath.section)
+    
+    {
+        case 0:
+            //Name
+            if (indexPath.row == 0) {
+                varLeftTitle = @"First Name:";
+                varRightValue = @"David";
+            }
+            
+            if (indexPath.row == 1) {
+                varLeftTitle = @"Last Name:";
+                varRightValue = @"Small";
+            }
+            
+            if (indexPath.row == 2) {
+                varTitle1 = @"Title:";
+                varText1 = @"DR";
+                varTitle2 = @"Gender:";
+                varText2 = @"Male";
+                varTitle3 = @"Lang:";
+                varText3 = @"Francais";
+            }
+            break;
+            
+        case 1:
+            
+            //Communication
+            if (indexPath.row == 0) {
+                varTitle1 = @"Phone:";
+                varText1 = @"999.999.9999";
+                varTitle2 = @"Ext:";
+                varText2 = @"xt. 222";
+                varTitle3 = @"Fax:";
+                varText3 = @"999.999.9999";
+            }
+            break;
+            
+        case 2:
+            
+            //Address
+            if (indexPath.row == 0) {
+                varLeftTitle = @"Facility Name:";
+                varRightValue = @"MCG";
+            }
+            
+            if (indexPath.row == 1) {
+                varLeftTitle = @"AddressLine1:";
+                varRightValue = @"123123.1232";
+            }
+           
+            if (indexPath.row == 2) {
+                varLeftTitle = @"AddressLine2:";
+                varRightValue = @"123123.1232";
+            }
+            
+            
+            if (indexPath.row == 3) {
+                varLeftTitle = @"AddressLine3:";
+                varRightValue = @"123123.1232";
+            }
+            
+            if (indexPath.row == 4) {
+                varLeftTitle = @"Province:";
+                varRightValue = @"123123.1232";
+            }
+            
+            if (indexPath.row == 5) {
+                varLeftTitle = @"City:";
+                varRightValue = @"123123.1232";
+            }
+            
+            if (indexPath.row == 6) {
+                varLeftTitle = @"PostalCode:";
+                varRightValue = @"123123.1232";
+            }
+            
+            break;
+            
+        case 3:
+            
+            //Last 5 Orders
+            if (indexPath.row == 0) {
+                varLeftTitle = @"Load:";
+                varRightValue = @"";
+            }
+            break;
+            
+    }
+    
+    
+    
+    
+    
+    
+    if ((indexPath.section == 0 && indexPath.row == 2) || indexPath.section == 1) {
+        
+        //    [self configureCell:cell atIndexPath:indexPath];
+        
+        UILabel *Title1 = (UILabel *)[cell viewWithTag:8803];
+        [Title1 setText:varTitle1];
+        
+        UILabel *Text1 = (UILabel *)[cell viewWithTag:8804];
+        [Text1 setText:varText1];
+        
+        UILabel *Title2 = (UILabel *)[cell viewWithTag:8805];
+        [Title2 setText:varTitle2];
+        
+        UILabel *Text2 = (UILabel *)[cell viewWithTag:8806];
+        [Text2 setText:varText2];
+        
+        UILabel *Title3 = (UILabel *)[cell viewWithTag:8807];
+        [Title3 setText:varTitle3];
+        
+        UILabel *Text3 = (UILabel *)[cell viewWithTag:8808];
+        [Text3 setText:varText3];
+        
+        
+        
+    } else {
+    
+    
+    UILabel *LeftTitle = (UILabel *)[cell viewWithTag:8801];
+    [LeftTitle setText:varLeftTitle];
+    
+    UILabel *RightValue = (UILabel *)[cell viewWithTag:8802];
+    [RightValue setText:varRightValue];
+        
+    }
+    
 }
 
 @end

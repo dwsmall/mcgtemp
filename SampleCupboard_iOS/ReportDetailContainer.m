@@ -10,10 +10,18 @@
 
 @interface ReportDetailContainer ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+
+@property (weak, nonatomic) IBOutlet UINavigationItem *RptHeader;
+
 @end
 
 
 @implementation ReportDetailContainer
+
+
+// [UINavigationController.navigationItem setTintColor:[UIColor redColor]]; //Red as an example.
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,6 +37,8 @@
 {
     [super viewDidLoad];
 	self.detailViewController1 = [self.storyboard instantiateViewControllerWithIdentifier:@"viewController1"];
+    
+    
     self.detailViewController2 = [self.storyboard instantiateViewControllerWithIdentifier:@"viewController2"];
     self.detailViewController3 = [self.storyboard instantiateViewControllerWithIdentifier:@"viewController3"];
     [self addChildViewController:self.detailViewController1];
@@ -48,12 +58,15 @@
     switch (viewId) {
         case 0:
             viewController = self.detailViewController1;
+            self.navigationItem.title = @"My Usage";
             break;
         case 1:
             viewController = self.detailViewController2;
+            self.navigationItem.title = @"Territory Allocation";
             break;
         case 2:
             viewController = self.detailViewController3;
+            self.navigationItem.title = @"My Team";
             break;
     }
     [self showChildViewController:viewController];

@@ -1,14 +1,15 @@
 //
-//  ReportAllocationUsage.m
+//  ReportUsage.m
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-05-21.
+//  Created by David Small on 13-06-05.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import "ReportAllocationUsage.h"
+#import "ReportUsage.h"
 
-@interface ReportAllocationUsage ()
+
+@interface ReportUsage ()
 
 @property (strong, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -19,7 +20,7 @@
 
 
 
-@implementation ReportAllocationUsage
+@implementation ReportUsage
 
 
 - (void)viewDidLoad
@@ -37,9 +38,22 @@
 
 
 // [NSPredicate predicateWithFormat:SUBQUERY(Product,$product,$product.allocation.prodid == %@).@count != 0",id]
- 
+
 
 #pragma mark - Table View
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    
+    NSString *myheader = @"";
+    
+     if (section == 0) {
+        myheader = @"Onbrez Breezhaler 75mcg";
+     }
+    
+    return myheader;
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -47,54 +61,48 @@
 }
 
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    
-    return @"JC582901-Ottawa / Kingston";
-}
-
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    // return [sectionInfo numberOfObjects];    
-    return 2;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if (indexPath.row == 0) {
         
-        UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_territoryheader"];
+        UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_usageline1"];
         
-        UILabel *Product = (UILabel *)[cell viewWithTag:7601];
-        [Product setText:@"Product"];
+        UILabel *YTD = (UILabel *)[cell viewWithTag:2001];
+        [YTD setText:@"YTD"];
         
-        UILabel *Total = (UILabel *)[cell viewWithTag:7602];
-        [Total setText:@"Total"];
+        UILabel *Total1 = (UILabel *)[cell viewWithTag:2002];
+        [Total1 setText:@"500"];
         
-        UILabel *Used = (UILabel *)[cell viewWithTag:7603];
-        [Used setText:@"Used"];
-        
-        UILabel *Pct = (UILabel *)[cell viewWithTag:7604];
-        [Pct setText:@"%"];
-        
-        UILabel *STOCK = (UILabel *)[cell viewWithTag:7605];
-        [STOCK setText:@"Mcg Stock"];
-        
-        return cell;        
+        return cell;
     }
     
     
+    if (indexPath.row == 1) {
+       
+        UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_usageline2"];
+        
+        UILabel *Quartr = (UILabel *)[cell viewWithTag:2003];
+        [Quartr setText:@"Q2"];
+        
+        UILabel *Total = (UILabel *)[cell viewWithTag:2002];
+        [Total setText:@""];
+        
+        return cell;
+    }
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"_territoryline1" forIndexPath:indexPath];
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"_usageline3" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
-    
-    
 }
-
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -126,7 +134,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    // NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     // self.detailViewController.detailItem = object;
 }
 
@@ -148,14 +156,14 @@
     // NSManagedObjectContext *context = [self managedObjectContext];
     
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Product" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"AllocationHeader" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientid" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -247,26 +255,16 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    // cell.textLabel.text = [[object valueForKey:@"firstname"] description];
+    // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    UILabel *Mnnth = (UILabel *)[cell viewWithTag:2005];
+    [Mnnth setText:@"May,2013"];
+    
+    UILabel *Total2 = (UILabel *)[cell viewWithTag:2006];
+    [Total2 setText:@"300"];
     
     
-    
-    UILabel *Product = (UILabel *)[cell viewWithTag:7801];
-    [Product setText:[[object valueForKey:@"code"] description]];
-    
-    UILabel *Total = (UILabel *)[cell viewWithTag:7802];
-    [Total setText:@"1500"];
-    
-    UILabel *Used = (UILabel *)[cell viewWithTag:7803];
-    [Used setText:@"734"];
-    
-    UILabel *Pct = (UILabel *)[cell viewWithTag:7804];
-    [Pct setText:@"49%"];
-    
-    UILabel *Stock = (UILabel *)[cell viewWithTag:7805];
-    [Stock setText:@"yes"];
-
 }
 
 @end
+

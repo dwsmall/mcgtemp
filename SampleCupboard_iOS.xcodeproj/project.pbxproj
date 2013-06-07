@@ -58,6 +58,8 @@
 		5BBBD89417550179002A3E11 /* ReportsDetailViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBD89317550179002A3E11 /* ReportsDetailViewController_iPad.m */; };
 		5BBBD89717550229002A3E11 /* ReportViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBD89617550229002A3E11 /* ReportViewController_iPad.m */; };
 		5BBBD89F17552E9E002A3E11 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBD89E17552E9D002A3E11 /* HomeViewController.m */; };
+		5BBD28F9175FA44500AD9FF4 /* ReportUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBD28F8175FA44500AD9FF4 /* ReportUsage.m */; };
+		5BBD28FC175FA45C00AD9FF4 /* ReportTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBD28FB175FA45C00AD9FF4 /* ReportTeam.m */; };
 		5BCB1B7B1747A25800816AF7 /* OrderViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B7A1747A25800816AF7 /* OrderViewController_iPad.m */; };
 		5BCB1B7E1747A2BA00816AF7 /* MainWindowsController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B7D1747A2BA00816AF7 /* MainWindowsController_iPad.m */; };
 		5BCB1B811747A2DB00816AF7 /* LoginViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B801747A2DB00816AF7 /* LoginViewController_iPad.m */; };
@@ -83,6 +85,7 @@
 		5BEAD0E6174B379600FBF8B2 /* man.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E2174B379500FBF8B2 /* man.png */; };
 		5BEAD0E7174B379600FBF8B2 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E3174B379500FBF8B2 /* refresh.png */; };
 		5BEAD0E8174B379600FBF8B2 /* trend.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E4174B379600FBF8B2 /* trend.png */; };
+		5BF4CF831760D86700BB3DBC /* HcpDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF4CF821760D86700BB3DBC /* HcpDetailController.m */; };
 		5BFC9293175691B200C3AA12 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC9292175691B100C3AA12 /* ReportViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -169,6 +172,10 @@
 		5BBBD89617550229002A3E11 /* ReportViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController_iPad.m; sourceTree = "<group>"; };
 		5BBBD89D17552E9D002A3E11 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		5BBBD89E17552E9D002A3E11 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		5BBD28F7175FA44500AD9FF4 /* ReportUsage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportUsage.h; sourceTree = "<group>"; };
+		5BBD28F8175FA44500AD9FF4 /* ReportUsage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportUsage.m; sourceTree = "<group>"; };
+		5BBD28FA175FA45C00AD9FF4 /* ReportTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportTeam.h; sourceTree = "<group>"; };
+		5BBD28FB175FA45C00AD9FF4 /* ReportTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportTeam.m; sourceTree = "<group>"; };
 		5BCB1B791747A25800816AF7 /* OrderViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderViewController_iPad.h; sourceTree = "<group>"; };
 		5BCB1B7A1747A25800816AF7 /* OrderViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderViewController_iPad.m; sourceTree = "<group>"; };
 		5BCB1B7C1747A2B900816AF7 /* MainWindowsController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowsController_iPad.h; sourceTree = "<group>"; };
@@ -209,6 +216,8 @@
 		5BEAD0E2174B379500FBF8B2 /* man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = man.png; path = Images/man.png; sourceTree = "<group>"; };
 		5BEAD0E3174B379500FBF8B2 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = refresh.png; path = Images/refresh.png; sourceTree = "<group>"; };
 		5BEAD0E4174B379600FBF8B2 /* trend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trend.png; path = Images/trend.png; sourceTree = "<group>"; };
+		5BF4CF811760D86700BB3DBC /* HcpDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcpDetailController.h; sourceTree = "<group>"; };
+		5BF4CF821760D86700BB3DBC /* HcpDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcpDetailController.m; sourceTree = "<group>"; };
 		5BFC9291175691B100C3AA12 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
 		5BFC9292175691B100C3AA12 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -323,14 +332,16 @@
 				5BBBD89E17552E9D002A3E11 /* HomeViewController.m */,
 				5BCB1B791747A25800816AF7 /* OrderViewController_iPad.h */,
 				5BCB1B7A1747A25800816AF7 /* OrderViewController_iPad.m */,
+				5BE39221174BC9C7005B40D2 /* OrderDetailViewController_iPad.h */,
+				5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */,
 				5BCB1B7C1747A2B900816AF7 /* MainWindowsController_iPad.h */,
 				5BCB1B7D1747A2BA00816AF7 /* MainWindowsController_iPad.m */,
 				5BCB1B851747A31000816AF7 /* HcpListViewController_iPad.h */,
 				5BCB1B861747A31000816AF7 /* HcpListViewController_iPad.m */,
+				5BF4CF811760D86700BB3DBC /* HcpDetailController.h */,
+				5BF4CF821760D86700BB3DBC /* HcpDetailController.m */,
 				5BCB1B881747A32E00816AF7 /* SyncViewController_iPad.h */,
 				5BCB1B891747A32E00816AF7 /* SyncViewController_iPad.m */,
-				5BE39221174BC9C7005B40D2 /* OrderDetailViewController_iPad.h */,
-				5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */,
 				5BE39224174BE9D0005B40D2 /* HyperlinkLabel.h */,
 				5BE39225174BE9D0005B40D2 /* HyperlinkLabel.m */,
 				5BE39227174BEB83005B40D2 /* IndentTextField.h */,
@@ -459,6 +470,10 @@
 			children = (
 				5BE3922D174BED10005B40D2 /* ReportAllocationUsage.h */,
 				5BE3922E174BED11005B40D2 /* ReportAllocationUsage.m */,
+				5BBD28F7175FA44500AD9FF4 /* ReportUsage.h */,
+				5BBD28F8175FA44500AD9FF4 /* ReportUsage.m */,
+				5BBD28FA175FA45C00AD9FF4 /* ReportTeam.h */,
+				5BBD28FB175FA45C00AD9FF4 /* ReportTeam.m */,
 			);
 			name = Reporting;
 			sourceTree = "<group>";
@@ -635,6 +650,9 @@
 				5BFC9293175691B200C3AA12 /* ReportViewController.m in Sources */,
 				5B5C53E31757E44D004126D1 /* Reachability.m in Sources */,
 				5B4988C5175AAC25000AFD31 /* ReportDetailContainer.m in Sources */,
+				5BBD28F9175FA44500AD9FF4 /* ReportUsage.m in Sources */,
+				5BBD28FC175FA45C00AD9FF4 /* ReportTeam.m in Sources */,
+				5BF4CF831760D86700BB3DBC /* HcpDetailController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

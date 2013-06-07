@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "LoginViewController_iPad.h"
 
 @interface LoginViewController_iPad ()
@@ -37,6 +39,7 @@
 
 @property (weak, nonatomic) IBOutlet IndentTextField *txtUserName;
 
+@property (weak, nonatomic) IBOutlet UIButton *UserLoginBtn;
 
 @property (weak, nonatomic) IBOutlet IndentTextField *txtPassword;
 
@@ -56,8 +59,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    
+    // Set the button Text Color
+    [_UserLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _UserLoginBtn.layer.cornerRadius = 10; // this value vary as per your desire
+    _UserLoginBtn.clipsToBounds = YES;
 }
+
 
 - (void)didReceiveMemoryWarning
 {

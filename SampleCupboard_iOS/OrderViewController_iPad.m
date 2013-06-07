@@ -37,20 +37,28 @@ NSArray *prodDataX;
 NSArray *unitDataX;
 NSArray *statusDataX;
 
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+         return 6;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // return [tableData count];
-    return 6;
+    return 3;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
+    static NSString *simpleTableIdentifier2 = @"SimpleTableItem2";
     
-    if(indexPath.section==0){
+    
+        //rows += [tableView numberOfRowsInSection:i];
         
         // Create first cell
+    if (indexPath.row == 0) {
         
         UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_topHeader"];
         
@@ -64,55 +72,50 @@ NSArray *statusDataX;
         UILabel *PName = (UILabel *)[cell viewWithTag:601];
         [PName setText:[tableDataX objectAtIndex:[indexPath row]]];
         
-        
-        
         return cell;
-        
-        
-    }
     
-    if(indexPath.section==1){
-        // Create second cell
+    }
+   
+    
+    
+    
+    if (indexPath.row == 1) {
         
-        UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_lineItem"];
+        UITableViewCell *cellX = [tableView  dequeueReusableCellWithIdentifier:@"_lineItem"];
         
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier];
+        if (cellX == nil) {
+            cellX = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier2];
         }
         
-        // cell.textLabel.text = [tableData objectAtIndex:indexPath.row];
+        UILabel *PDate1 = (UILabel *)[cellX viewWithTag:602];
+        [PDate1 setText:[tableData objectAtIndex:[indexPath row]]];
         
+        UILabel *PName1 = (UILabel *)[cellX viewWithTag:603];
+        [PName1 setText:[tableDataX objectAtIndex:[indexPath row]]];
         
-        
-        UILabel *XName = (UILabel *)[cell viewWithTag:602	];
-        [XName setText:[prodDataX objectAtIndex:[indexPath row]]];
-        
-        
-        UILabel *YName = (UILabel *)[cell viewWithTag:603	];
-        [YName setText:[unitDataX objectAtIndex:[indexPath row]]];
-        
-        
-        return cell;
+        return cellX;
     }
     
-    else{
+    
+
         // Create all others
+    if (indexPath.row == 2) {
         
-        UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_summary"];
+        UITableViewCell *cellZ = [tableView  dequeueReusableCellWithIdentifier:@"_summary"];
         
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier];
+        if (cellZ == nil) {
+            cellZ = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier];
         }
         
         // cell.textLabel.text = [statusDataX objectAtIndex:indexPath.row];
         
-        UILabel *XName = (UILabel *)[cell viewWithTag:604];
-        [XName setText:[statusDataX objectAtIndex:[indexPath row]]];
+        UILabel *XNameX = (UILabel *)[cellZ viewWithTag:604];
+        [XNameX setText:[statusDataX objectAtIndex:[indexPath row]]];
         
-        return cell;
-        
-        
+        return cellZ;
+    
     }
+        
     
     // UPDATE TOP ROW
     

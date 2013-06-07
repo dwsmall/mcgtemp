@@ -143,10 +143,10 @@ Reachability *internetReachableFoo;
     // Remove Rep
     request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Rep" inManagedObjectContext:context]];
-    matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
+    NSArray *matchingDataX = [managedObjectContext executeFetchRequest:request error:&errorMSG];
     
-    if ([matchingData count]>0) {
-        for (NSManagedObject *obj in matchingData) {
+    if ([matchingDataX count]>0) {
+        for (NSManagedObject *obj in matchingDataX) {
             [managedObjectContext deleteObject:obj];
         }
         [managedObjectContext save:&errorMSG];
@@ -565,19 +565,6 @@ Reachability *internetReachableFoo;
     
 
 - (IBAction)btnSyncClick:(id)sender {
-    
-    // Update the UI on the main thread
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"Connection Established!");
-    });
-    
-    if (2 == 2)
-    {
-        // Update the UI on the main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Connection Established!");
-        });
-    }
     
     
     UIAlertView *alert = [[UIAlertView alloc]

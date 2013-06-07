@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <CoreData/CoreData.h>
 
-@interface OrderDetailViewController_iPad : UIViewController
+@interface OrderDetailViewController_iPad : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end
