@@ -7,6 +7,8 @@
 //
 
 
+#import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 #import "OrderDetailViewController_iPad.h"
 
 @interface OrderDetailViewController_iPad ()
@@ -43,21 +45,151 @@ NSArray *unitDataX;
 NSArray *statusDataX;
 
 
+@synthesize selectedButton, outputlabel;
+
+
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 6;
+    
+    int NSections = 2;
+    if (1 == 2) {
+        // Check If HCP Populated
+        NSections = 3;
+    }
+    
+    return NSections;
 }
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    
+    NSString *HeaderTitle = @"Default";
+    
+    switch (section)
+    
+    {
+        case 0:
+            
+            HeaderTitle = @"";
+            break;
+            
+        case 1:
+            
+            HeaderTitle = @"Requested Physician";
+            break;
+            
+        case 2:
+            
+            HeaderTitle = @"To be delivered to Physician";
+            break;
+            
+        case 3:
+            
+            HeaderTitle = @"Delivery Instructions";
+            break;
+            
+            
+        case 4:
+            
+            HeaderTitle = @"Shipping Carrier";
+            break;
+            
+            
+        case 5:
+            
+            HeaderTitle = @"Signature (required)";
+            break;
+            
+        default:
+            
+            HeaderTitle = @"";
+            break;
+            
+    }
+    
+    return HeaderTitle;
+    
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // return [tableData count];
-    return 3;
+    
+    int MRows = 0;
+    
+    switch (section)
+    
+    {
+        case 0:
+            
+            //Header
+            MRows=1;
+            break;
+            
+        case 1:
+            
+            //Requested Physician
+            MRows=2;
+            break;
+            
+        case 2:
+            
+            //To Be Delivered To Physician
+            MRows=2;  //7
+            break;
+            
+        case 3:
+            
+            //Delivery Instructions
+            MRows=1;
+            break;
+            
+        case 4:
+            
+            //Shipping Carrier
+            MRows=1;
+            break;
+        
+        case 5:
+            
+            //Signature
+            MRows=1;
+            break;
+            
+        default:
+            
+            MRows=1;
+            break;
+            
+    }
+    
+    return MRows;
+    
+    
 }
+
+
+
+
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [outputlabel setText:[NSString stringWithFormat:@"Your button was %d", selectedButton]];
+    
+    // DETERMINE STAGE OF APPLICATION
+    
+        //STAGE 1 - [SEGUE 1 AND NO HCP SELECTED] =  NEW ORDER
+        //STAGE 2 - [SEGUE 1 AND HCP SELECTED AND PRODUCT TOTAL = 0] = NEW ORDER AND HCP SELECTED
+        //STAGE 3 - [SEGUE 1 AND HCP SELECTED AND PRODUCT TOTAL <> 0] = NEW ORDER AND WITH PRODUCTS SELECTED
+        //STAGE 4 - [SEGUE 2] = SHOW ORDER DETAIL INFORMATION
+    
+    
+    
 	// Do any additional setup after loading the view, typically from a nib.
     tableData = [NSArray arrayWithObjects:@"April 27, 2013", @"April 28, 2013", @"April 29, 2013",@"April 99, 2013", @"April 77, 2013", @"April 66, 2013", nil];
     
@@ -80,75 +212,74 @@ NSArray *statusDataX;
     static NSString *simpleTableIdentifier2 = @"SimpleTableItem2";
     
     
-    //rows += [tableView numberOfRowsInSection:i];
+    NSString *MyFormType = @"_header";
     
-    // Create first cell
-    if (indexPath.row == 0) {
-        
-        UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_topHeader"];
-        
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier];
-        }
-        
-        UILabel *PDate = (UILabel *)[cell viewWithTag:600];
-        [PDate setText:[tableData objectAtIndex:[indexPath row]]];
-        
-        UILabel *PName = (UILabel *)[cell viewWithTag:601];
-        [PName setText:[tableDataX objectAtIndex:[indexPath row]]];
-        
-        return cell;
-        
+    switch (indexPath.section)
+    
+    {
+        case 0:
+            
+            //Header
+            MyFormType=@"_header";
+            break;
+            
+        case 1:
+            
+            //Requested Physician
+            if (indexPath.row == 0) {
+                MyFormType = @"_shipTo";
+            }
+            else {
+                MyFormType = @"_address";
+            }
+            
+            break;
+            
+        case 2:
+            
+            //To Be Delivered To Physician
+            if (indexPath.row == 0) {
+                MyFormType=@"_lineItem";
+            }
+            else {
+                MyFormType=@"_newLineItem";
+            }
+            
+            break;
+            
+        case 3:
+            
+            //Delivery Instructions
+            MyFormType=@"_instructions";
+            break;
+            
+        case 4:
+            
+            //Shipping Carrier
+            MyFormType=@"_carrier";
+            break;
+            
+        case 5:
+            
+            //Signature
+            MyFormType=@"_signature";
+            break;
+            
+        default:
+            
+            MyFormType=@"";
+            break;
+            
     }
     
     
     
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyFormType forIndexPath:indexPath];
     
-    if (indexPath.row == 1) {
-        
-        UITableViewCell *cellX = [tableView  dequeueReusableCellWithIdentifier:@"_lineItem"];
-        
-        if (cellX == nil) {
-            cellX = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier2];
-        }
-        
-        UILabel *PDate1 = (UILabel *)[cellX viewWithTag:602];
-        [PDate1 setText:[tableData objectAtIndex:[indexPath row]]];
-        
-        UILabel *PName1 = (UILabel *)[cellX viewWithTag:603];
-        [PName1 setText:[tableDataX objectAtIndex:[indexPath row]]];
-        
-        return cellX;
-    }
+    [self configureCell:cell atIndexPath:indexPath];
     
     
-    
-    // Create all others
-    if (indexPath.row == 2) {
-        
-        UITableViewCell *cellZ = [tableView  dequeueReusableCellWithIdentifier:@"_summary"];
-        
-        if (cellZ == nil) {
-            cellZ = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier];
-        }
-        
-        // cell.textLabel.text = [statusDataX objectAtIndex:indexPath.row];
-        
-        UILabel *XNameX = (UILabel *)[cellZ viewWithTag:604];
-        [XNameX setText:[statusDataX objectAtIndex:[indexPath row]]];
-        
-        return cellZ;
-        
-    }
-    
-    
-    // UPDATE TOP ROW
-    
-    
-    
-    // cell.textLabel.text = identifier;
-    
-    
+    return cell;
     
     
 }
@@ -184,6 +315,71 @@ NSArray *statusDataX;
 
 - (IBAction)CellEditorEndedEdit:(id)sender {
 }
+
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //return [indexPath row] * 20;
+    int Npole = 44;
+    
+    if (indexPath.section == 0) {
+        Npole = 100;
+    }
+    
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        Npole = 75;
+    }
+    
+    return Npole;
+    
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    
+    // HEADER
+    if (indexPath.section == 0) {
+        [(UILabel *)[cell viewWithTag:1] setText:@"MCG0000001"];
+    }
+    
+    // REQUESTED PHYSICIAN
+    if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+         [(UILabel *)[cell viewWithTag:1] setText:@"DOCTOR NAME"];
+         } else {
+         [(UILabel *)[cell viewWithTag:0] setText:@"ADDRESS LINE 1 \n ADDRESS LINE 2 \n ADDRESS LINE 3"];
+        }        
+    }
+    
+    // DELIVERED TO PHYSICIAN
+    if (indexPath.section == 2) {
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"TEST123";
+        }
+    }
+    
+    
+    // DELIVERY INSTRUCTIONS
+    if (indexPath.section == 3) {
+        [(UILabel *)[cell viewWithTag:1] setText:@"DOCTOR NAME"];
+    }
+    
+    // SHIPPING CARRIER
+    if (indexPath.section == 4) {
+        // [(UILabel *)[cell viewWithTag:1] setText:@"DOCTOR NAME"];
+    }
+    
+    // SIGNATURE
+    if (indexPath.section == 5) {
+        // [(UILabel *)[cell viewWithTag:1] setText:@"DOCTOR NAME"];
+    }
+    
+    
+   
+}
+
 
 @end
 

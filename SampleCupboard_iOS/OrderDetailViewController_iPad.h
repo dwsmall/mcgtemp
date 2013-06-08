@@ -12,5 +12,14 @@
 #import <CoreData/CoreData.h>
 
 @interface OrderDetailViewController_iPad : UIViewController <UITableViewDelegate, UITableViewDataSource>
+{
+    NSInteger selectedButton;
+    NSInteger appStage;
+}
+
+@property (nonatomic) NSInteger selectedButton;
+@property (nonatomic) NSInteger appStage;
+
+@property (nonatomic, weak) IBOutlet UILabel *outputlabel;
 
 @end

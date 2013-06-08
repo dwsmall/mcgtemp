@@ -7,6 +7,9 @@
 //
 
 #import "OrderViewController_iPad.h"
+#import "OrderDetailViewController_iPad.h"
+
+
 
 @interface OrderViewController_iPad ()
 
@@ -165,4 +168,29 @@ NSArray *statusDataX;
 
 - (IBAction)OrderStatusFilterValueChanged:(UISegmentedControl *)sender {
 }
+
+
+// This will get called too before the view appears
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"_viewordersegue"]) {
+        
+        // Get destination view
+        OrderDetailViewController_iPad *vc = [segue destinationViewController];
+        
+        // Get button tag number (or do whatever you need to do here, based on your object
+        //NSInteger tagIndex = [(UIButton *)sender tag];
+        NSInteger tagIndex = 1;
+        
+        // Pass the information to your destination view
+        //[vc setSelectedButton:tagIndex];
+        [vc setSelectedButton:2];
+        
+        // [segue.destinationViewController setSelectedButton:0];
+        
+        
+    }
+}
+
+
 @end
