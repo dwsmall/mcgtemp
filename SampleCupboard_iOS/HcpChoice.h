@@ -1,8 +1,8 @@
 //
-//  OrderViewController_iPad.h
+//  HcpChoice.h
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-05-18.
+//  Created by David Small on 13-06-11.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreData/CoreData.h>
 
-@interface OrderViewController_iPad : UIViewController <NSFetchedResultsControllerDelegate>
+@interface HcpChoice : UIViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

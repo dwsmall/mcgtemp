@@ -34,6 +34,11 @@
 
 - (IBAction)CellEditorEndedEdit:(id)sender;
 
+
+- (IBAction)CancelOrderDetail:(UIBarButtonItem *)sender;
+
+
+
 @end
 
 @implementation OrderDetailViewController_iPad
@@ -53,11 +58,19 @@ NSArray *statusDataX;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     int NSections = 2;
-    if (1 == 2) {
-        // Check If HCP Populated
-        NSections = 3;
-    }
     
+    if (selectedButton == 0)
+    {
+        // NEW RECORD
+        NSections = 2;
+    }
+
+    if (selectedButton == 2)
+    {
+        // SHOW DETAILED RECORDS
+        NSections = 6;
+    }
+
     return NSections;
 }
 
@@ -276,8 +289,7 @@ NSArray *statusDataX;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyFormType forIndexPath:indexPath];
     
-    [self configureCell:cell atIndexPath:indexPath];
-    
+    [self configureCell:cell atIndexPath:indexPath];    
     
     return cell;
     
@@ -316,6 +328,33 @@ NSArray *statusDataX;
 - (IBAction)CellEditorEndedEdit:(id)sender {
 }
 
+- (IBAction)CancelOrderDetail:(UIBarButtonItem *)sender {
+
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle: @"Cancel Request" message: @"Warning! All Entered Data Will Be Lost" delegate: self
+                               cancelButtonTitle: @"cancel" otherButtonTitles: @"OK", nil];
+    
+    [alertView show];
+    
+    NSLog(@"process Name 222222 BIG");
+
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if([title isEqualToString:@"OK"])
+    {
+        NSLog(@"Manual Segue Required");
+        [self performSegueWithIdentifier:@"_returntoorderlist" sender:self];
+    }
+    else if([title isEqualToString:@"cancel"])
+    {
+        // NSLog(@"User Selected Cancel");
+    }
+ 
+}
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -341,15 +380,56 @@ NSArray *statusDataX;
     
     // HEADER
     if (indexPath.section == 0) {
-        [(UILabel *)[cell viewWithTag:1] setText:@"MCG0000001"];
+        
+        // Initialize Values
+        
+        [(UILabel *)[cell viewWithTag:1] setText:@""];  //reference
+        [(UILabel *)[cell viewWithTag:5] setText:@"NEW"]; //status
+        
+        NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+        [DateFormatter setDateFormat:@"dd-MM-yyyy"];
+        [(UILabel *)[cell viewWithTag:2] setText:[DateFormatter stringFromDate:[NSDate date]]]; //Date Created
+        
+        [(UILabel *)[cell viewWithTag:3] setText:@""]; //date released
+        [(UILabel *)[cell viewWithTag:4] setText:@""]; //date shipped
+        
+        [(UILabel *)[cell viewWithTag:6] setText:@""]; //reason label
+        [(UILabel *)[cell viewWithTag:7] setText:@""]; //reason value
+        
+        [(UILabel *)[cell viewWithTag:8] setText:@""]; //tracking label
+        [(UILabel *)[cell viewWithTag:9] setText:@""]; //tracking value
+        
+        
+        if (selectedButton == 2)
+        {
+            [(UILabel *)[cell viewWithTag:1] setText:@"MCG0000001"];
+            [(UILabel *)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"btn %d", selectedButton]];
+        }
+        
     }
     
     // REQUESTED PHYSICIAN
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-         [(UILabel *)[cell viewWithTag:1] setText:@"DOCTOR NAME"];
+            
+            if (selectedButton == 2)
+            {
+                [(UILabel *)[cell viewWithTag:1] setText:@"Doctors Name"];
+            } else {
+                [(UILabel *)[cell viewWithTag:1] setText:@"SELECT PHYSICIAN"];
+            }
+            
+            
          } else {
-         [(UILabel *)[cell viewWithTag:0] setText:@"ADDRESS LINE 1 \n ADDRESS LINE 2 \n ADDRESS LINE 3"];
+         
+             
+             if (selectedButton == 2)
+             {
+                 [(UILabel *)[cell viewWithTag:0] setText:@"Address Line"];
+             } else {
+                 [(UILabel *)[cell viewWithTag:0] setText:@""];
+             }
+             
         }        
     }
     
@@ -379,7 +459,6 @@ NSArray *statusDataX;
     
    
 }
-
 
 @end
 

@@ -325,24 +325,24 @@
         <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Address" positionX="160" positionY="192" width="128" height="435"/>
-        <element name="Allocation" positionX="160" positionY="192" width="128" height="345"/>
-        <element name="AllocationHeader" positionX="160" positionY="192" width="128" height="195"/>
-        <element name="ClientInfo" positionX="160" positionY="192" width="128" height="360"/>
-        <element name="Disbursement" positionX="160" positionY="192" width="128" height="630"/>
-        <element name="DisbursementLineItem" positionX="160" positionY="192" width="128" height="165"/>
-        <element name="Event" positionX="160" positionY="192" width="128" height="60"/>
-        <element name="HealthCareProfessional" positionX="160" positionY="192" width="128" height="465"/>
-        <element name="Order" positionX="160" positionY="192" width="128" height="720"/>
-        <element name="OrderLineItem" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="OrderTemplate" positionX="160" positionY="192" width="128" height="165"/>
-        <element name="OrderTemplateLine" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="People" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="Product" positionX="160" positionY="192" width="128" height="285"/>
-        <element name="Rep" positionX="160" positionY="192" width="128" height="375"/>
-        <element name="RepInventory" positionX="160" positionY="192" width="128" height="180"/>
-        <element name="Territory" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="TerritoryFSA" positionX="160" positionY="192" width="128" height="135"/>
-        <element name="TerritoryRep" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="Address" positionX="124" positionY="249" width="128" height="435"/>
+        <element name="Allocation" positionX="-794" positionY="249" width="128" height="345"/>
+        <element name="AllocationHeader" positionX="160" positionY="-24" width="128" height="195"/>
+        <element name="ClientInfo" positionX="-396" positionY="-315" width="128" height="360"/>
+        <element name="Disbursement" positionX="448" positionY="396" width="128" height="630"/>
+        <element name="DisbursementLineItem" positionX="-135" positionY="-111" width="128" height="165"/>
+        <element name="Event" positionX="153" positionY="-159" width="128" height="60"/>
+        <element name="HealthCareProfessional" positionX="-2" positionY="291" width="128" height="465"/>
+        <element name="Order" positionX="297" positionY="126" width="128" height="720"/>
+        <element name="OrderLineItem" positionX="-576" positionY="99" width="128" height="150"/>
+        <element name="OrderTemplate" positionX="450" positionY="222" width="128" height="165"/>
+        <element name="OrderTemplateLine" positionX="-9" positionY="135" width="128" height="105"/>
+        <element name="People" positionX="-396" positionY="225" width="128" height="90"/>
+        <element name="Product" positionX="-146" positionY="594" width="128" height="285"/>
+        <element name="Rep" positionX="-576" positionY="549" width="128" height="375"/>
+        <element name="RepInventory" positionX="-317" positionY="450" width="128" height="180"/>
+        <element name="Territory" positionX="-522" positionY="309" width="128" height="150"/>
+        <element name="TerritoryFSA" positionX="-135" positionY="333" width="128" height="135"/>
+        <element name="TerritoryRep" positionX="-191" positionY="180" width="128" height="135"/>
     </elements>
 </model>

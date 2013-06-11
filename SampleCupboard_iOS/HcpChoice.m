@@ -1,51 +1,30 @@
 //
-//  OrderViewController_iPad.m
+//  HcpChoice.m
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-05-18.
+//  Created by David Small on 13-06-11.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import "OrderViewController_iPad.h"
-#import "OrderDetailViewController_iPad.h"
+#import "HcpChoice.h"
 
-
-
-@interface OrderViewController_iPad ()
-
-
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UILabel *lblTitle;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *orderStatusFilter;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *orderStatusFilterValueChanged;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@interface HcpChoice ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-
-- (IBAction)OrderStatusFilterValueChanged:(UISegmentedControl *)sender;
-
+@property (weak, nonatomic) IBOutlet UINavigationItem *healthcareProf;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-
 @end
 
-
-
-
-
-
-@implementation OrderViewController_iPad
-
-
-
-#pragma mark - View Functions
+@implementation HcpChoice
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    [self.tableView reloadData];
+    
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -54,80 +33,63 @@
 }
 
 
-// This will get called too before the view appears
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"_viewordersegue"]) {
-        
-        // Get destination view
-        OrderDetailViewController_iPad *vc = [segue destinationViewController];
-        
-        // Get button tag number (or do whatever you need to do here, based on your object
-        //NSInteger tagIndex = [(UIButton *)sender tag];
-        NSInteger tagIndex = 1;
-        
-        // Pass the information to your destination view
-        //[vc setSelectedButton:tagIndex];
-        [vc setSelectedButton:2];
-        
-        // [segue.destinationViewController setSelectedButton:0];
-        
-        
-    }
-}
-
-
-
 
 
 #pragma mark - Table View
 
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // return [[self.fetchedResultsController sections] count];  // returns 1 result
-    return [self.fetchedResultsController.fetchedObjects count];
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [[self.fetchedResultsController sections] count];
 }
-
-
-
-
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-     return 3;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
 }
-
-
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
-    NSString *varCellType = @"";
-    
-    switch (indexPath.row) {
-        case 0:
-            varCellType = @"_topHeader";
-            break;
-        case 1:
-            varCellType = @"_lineItem";
-            break;
-        case 2:
-            varCellType = @"_summary";
-            break;
-        }
-        
-    UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:varCellType forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"_hcplist" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
-   
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        NSError *error = nil;
+        if (![context save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // The table view should not be re-orderable.
+    return NO;
 }
 
 
 
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    // UIViewController *controller = segue.destinationViewController;
+    //controller.player = [self.players objectAtIndex: YOUR_SAVED_INDEX];
+}
 
 
 #pragma mark - Fetched results controller
@@ -145,21 +107,21 @@
     // NSManagedObjectContext *context = [self managedObjectContext];
     
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Order" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"HealthCareProfessional" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientid" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstname" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"MasterOrder"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -176,11 +138,13 @@
 
 
 
-
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView beginUpdates];
 }
+
+
+
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
@@ -243,75 +207,20 @@
 
 
 
-
-
-
-
-#pragma mark - Custom Functions
-
-- (IBAction)OrderStatusFilterValueChanged:(UISegmentedControl *)sender {
-}
-
-
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    // NSManagedObject *object = [_fetchedResultsController objectAtIndexPath:indexPath];
-
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    // cell.textLabel.text = [[object valueForKey:@"firstname"] description];
+    cell.textLabel.Text = [[NSString stringWithFormat:@"%@, %@", [[object valueForKey:@"firstname"] description], [[object valueForKey:@"lastname"] description]] uppercaseString];
     
-        
-    if (indexPath.row == 0) {
-        
-        
-        UILabel *PDate = (UILabel *)[cell viewWithTag:600];
-        [PDate setText:@"TestDD"];
-        
-        // [PDate setText:[[object valueForKey:@"datecreated"] description]];
-        NSMutableString *myWord = [[NSMutableString alloc] init];
-        [myWord appendString:[NSString stringWithFormat:@"%d", indexPath.section]];
-        
-        UILabel *PName = (UILabel *)[cell viewWithTag:601];
-        [PName setText:@"test1"];
-        
-        // [PName setText: [NSString stringWithFormat:@"%@, %@",
-        // [[object valueForKey:@"shipping_firstname"] description],
-        // [[object valueForKey:@"shipping_lastname"] description]]];
-    }
+    cell.detailTextLabel.Text = [NSString stringWithFormat:@"%@ %@ %@",
+                                 [[object valueForKey:@"city"] description],
+                                 [[object valueForKey:@"province"] description],
+                                 [[object valueForKey:@"postal"] description]];
     
-    
-    if (indexPath.row == 1) {
-        
-        UILabel *PDate1 = (UILabel *)[cell viewWithTag:602];
-        [PDate1 setText:@"21"];
-        
-        // [PDate1 setText: [NSString stringWithFormat:@"%@, %@",
-           //               [[object valueForKey:@"shipping_firstname"] description],
-              //           [[object valueForKey:@"shipping_lastname"] description]]];
-        
-        
-        // [PDate1 setText:@"Ezetrol 10mg"];
-        
-        UILabel *PName1 = (UILabel *)[cell viewWithTag:603];
-        [PName1 setText:@"21"];
-        
-    }
-    
-    
-    if (indexPath.row == 2) {
-        
-        UILabel *XNameX = (UILabel *)[cell viewWithTag:604];
-        [XNameX setText:@"TestA"];
-        
-        // [XNameX setText: [NSString stringWithFormat:@"%@, %@",
-           //                [[object valueForKey:@"shipping_firstname"] description],
-              //             [[object valueForKey:@"shipping_lastname"] description]]];
-        
-        // [XNameX setText:[[object valueForKey:@"status"] description]];
-        
-    }
-    
-    
+    // cell.detailTextLabel.Text = [[object valueForKey:@"address1"] description];
 }
+
 
 
 @end

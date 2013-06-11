@@ -45,6 +45,10 @@
 		5B6212BE1746DA00007B5C7C /* iPad_MCG_background_portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212B31746DA00007B5C7C /* iPad_MCG_background_portrait.png */; };
 		5B6212BF1746DA00007B5C7C /* iPad_MCG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212B41746DA00007B5C7C /* iPad_MCG@2x.png */; };
 		5B6212C11746DA61007B5C7C /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212C01746DA61007B5C7C /* MainStoryboard.storyboard */; };
+		5B7E6DBA17670DF3008286D4 /* ReportDataFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E6DB917670DF3008286D4 /* ReportDataFeed.m */; };
+		5B7E6DBD17670F2E008286D4 /* LoanModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E6DBC17670F2D008286D4 /* LoanModel.m */; };
+		5B7E6DC017670F71008286D4 /* LocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E6DBF17670F71008286D4 /* LocationModel.m */; };
+		5B7E6DEC1767334B008286D4 /* HcpChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E6DEB17673343008286D4 /* HcpChoice.m */; };
 		5B8C8A9C174D39070088C4F0 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C8A85174D39070088C4F0 /* JSONModel.m */; };
 		5B8C8A9D174D39070088C4F0 /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C8A87174D39070088C4F0 /* JSONModelArray.m */; };
 		5B8C8A9E174D39070088C4F0 /* JSONModelClassProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C8A89174D39070088C4F0 /* JSONModelClassProperty.m */; };
@@ -145,6 +149,14 @@
 		5B6212B31746DA00007B5C7C /* iPad_MCG_background_portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPad_MCG_background_portrait.png; sourceTree = "<group>"; };
 		5B6212B41746DA00007B5C7C /* iPad_MCG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPad_MCG@2x.png"; sourceTree = "<group>"; };
 		5B6212C01746DA61007B5C7C /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		5B7E6DB817670DF2008286D4 /* ReportDataFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportDataFeed.h; sourceTree = "<group>"; };
+		5B7E6DB917670DF3008286D4 /* ReportDataFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportDataFeed.m; sourceTree = "<group>"; };
+		5B7E6DBB17670F2D008286D4 /* LoanModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoanModel.h; sourceTree = "<group>"; };
+		5B7E6DBC17670F2D008286D4 /* LoanModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoanModel.m; sourceTree = "<group>"; };
+		5B7E6DBE17670F71008286D4 /* LocationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationModel.h; sourceTree = "<group>"; };
+		5B7E6DBF17670F71008286D4 /* LocationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationModel.m; sourceTree = "<group>"; };
+		5B7E6DEA1767333F008286D4 /* HcpChoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcpChoice.h; sourceTree = "<group>"; };
+		5B7E6DEB17673343008286D4 /* HcpChoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcpChoice.m; sourceTree = "<group>"; };
 		5B8C8A84174D39070088C4F0 /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
 		5B8C8A85174D39070088C4F0 /* JSONModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONModel.m; sourceTree = "<group>"; };
 		5B8C8A86174D39070088C4F0 /* JSONModelArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModelArray.h; sourceTree = "<group>"; };
@@ -292,8 +304,8 @@
 		5B6212621746D8C5007B5C7C /* SampleCupboard_iOS */ = {
 			isa = PBXGroup;
 			children = (
-				5B5C53E01757DB8A004126D1 /* Classes */,
 				5B8C8A82174D39070088C4F0 /* JSONModel */,
+				5B5C53E01757DB8A004126D1 /* Classes */,
 				5BEAD0DF174B36A200FBF8B2 /* shoppingcart.png */,
 				5BEAD0E1174B379500FBF8B2 /* house.png */,
 				5BEAD0E2174B379500FBF8B2 /* man.png */,
@@ -366,6 +378,8 @@
 				5BBBD89617550229002A3E11 /* ReportViewController_iPad.m */,
 				5BCB1B8E1747A36700816AF7 /* ReportDetailViewController_iPad.h */,
 				5BCB1B8F1747A36700816AF7 /* ReportDetailViewController_iPad.m */,
+				5B7E6DEA1767333F008286D4 /* HcpChoice.h */,
+				5B7E6DEB17673343008286D4 /* HcpChoice.m */,
 				5BB81560175DA81100DACE0B /* Reporting */,
 				5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */,
 			);
@@ -403,6 +417,15 @@
 				5B6212941746D8C6007B5C7C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5B7E6DE917672AE6008286D4 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				5B7E6DBB17670F2D008286D4 /* LoanModel.h */,
+				5B7E6DBC17670F2D008286D4 /* LoanModel.m */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 		5B8C8A82174D39070088C4F0 /* JSONModel */ = {
@@ -468,6 +491,11 @@
 		5BB81560175DA81100DACE0B /* Reporting */ = {
 			isa = PBXGroup;
 			children = (
+				5B7E6DE917672AE6008286D4 /* model */,
+				5B7E6DBE17670F71008286D4 /* LocationModel.h */,
+				5B7E6DBF17670F71008286D4 /* LocationModel.m */,
+				5B7E6DB817670DF2008286D4 /* ReportDataFeed.h */,
+				5B7E6DB917670DF3008286D4 /* ReportDataFeed.m */,
 				5BE3922D174BED10005B40D2 /* ReportAllocationUsage.h */,
 				5BE3922E174BED11005B40D2 /* ReportAllocationUsage.m */,
 				5BBD28F7175FA44500AD9FF4 /* ReportUsage.h */,
@@ -653,6 +681,10 @@
 				5BBD28F9175FA44500AD9FF4 /* ReportUsage.m in Sources */,
 				5BBD28FC175FA45C00AD9FF4 /* ReportTeam.m in Sources */,
 				5BF4CF831760D86700BB3DBC /* HcpDetailController.m in Sources */,
+				5B7E6DBA17670DF3008286D4 /* ReportDataFeed.m in Sources */,
+				5B7E6DBD17670F2E008286D4 /* LoanModel.m in Sources */,
+				5B7E6DC017670F71008286D4 /* LocationModel.m in Sources */,
+				5B7E6DEC1767334B008286D4 /* HcpChoice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

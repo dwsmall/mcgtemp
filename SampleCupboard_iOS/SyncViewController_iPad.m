@@ -443,6 +443,54 @@ Reachability *internetReachableFoo;
             NSLog(@"%@", dictContainer);
     }
     
+    // ORDER INFO
+    
+    url = [NSURL URLWithString:@"http://project.dwsmall.com/order"];
+    jsonData = [NSData dataWithContentsOfURL:url];
+    
+    if(jsonData != nil)
+    {
+        NSError *error = nil;
+        NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+        NSArray* arrayContainer = [dictContainer objectForKey:@"order"];
+        
+        // NSLog(@"rep: %@", arrayContainer);
+        
+        //Iterate JSON Objects
+        for(int i=0;i<[arrayContainer count];i++)
+        {
+            NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
+            
+            NSManagedObject *model = [NSEntityDescription
+                                      insertNewObjectForEntityForName:@"Order"
+                                      inManagedObjectContext:context];
+            [model setValue:[dicItems objectForKey:@"clientid"] forKey:@"clientid"];
+            [model setValue:[dicItems objectForKey:@"reference"] forKey:@"reference"];
+            [model setValue:[dicItems objectForKey:@"shipping_firstname"] forKey:@"shipping_firstname"];
+            [model setValue:[dicItems objectForKey:@"shipping_lastname"] forKey:@"shipping_lastname"];
+            [model setValue:[dicItems objectForKey:@"status"] forKey:@"status"];
+            
+            
+            // Date Conversion Routine
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"EEE, d MMM yyyy HH:mm:ss zzz"];
+            NSString *dateStringA = [dicItems objectForKey:@"datecreated"];
+            NSDate *dateA = [dateFormatter dateFromString:dateStringA];
+            [model setValue:dateA forKey:@"datecreated"];
+            
+            // [model setValue:[dicItems objectForKey:@"datecreated"] forKey:@"datecreated"];
+        }
+        
+        if (![context save:&error]) {
+            NSLog(@"Couldn't save: %@", [error localizedDescription]);
+        }
+        
+        if (error == nil)
+            NSLog(@"%@", dictContainer);
+    }
+    
+    
+    
 
     
     

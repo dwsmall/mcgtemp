@@ -4,6 +4,9 @@
 // Created by Matej Bukovinski on 2.4.09.
 //
 
+#import "QuartzCore/QuartzCore.h"
+#import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 #import "MBProgressHUD.h"
 
 @interface MBProgressHUD ()
