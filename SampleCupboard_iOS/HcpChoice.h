@@ -11,7 +11,10 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreData/CoreData.h>
 
-@interface HcpChoice : UIViewController <NSFetchedResultsControllerDelegate>
+@interface HcpChoice : UIViewController <NSFetchedResultsControllerDelegate> {
+
+NSIndexPath *checkedCell;
+}
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

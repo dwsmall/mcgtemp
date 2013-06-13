@@ -1,8 +1,8 @@
 //
-//  HcpListViewController_iPad.h
+//  HcpAdditionalDetails.h
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-05-18.
+//  Created by David Small on 13-06-12.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
@@ -11,17 +11,15 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreData/CoreData.h>
 
-@class HcpListViewController_iPad;
+@class HcpAdditionalDetails;
 
-@interface HcpListViewController_iPad : UIViewController <NSFetchedResultsControllerDelegate> {
-    
-    NSInteger ChosenRowNumber;
-    
-}
 
-@property (nonatomic) NSInteger ChosenRowNumber;
+@interface HcpAdditionalDetails : UIViewController <NSFetchedResultsControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UITableView *tableViewX;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 
 @end

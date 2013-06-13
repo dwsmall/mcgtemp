@@ -13,7 +13,6 @@
 
 @interface OrderViewController_iPad ()
 
-
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *orderStatusFilter;
@@ -21,20 +20,21 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-
 - (IBAction)OrderStatusFilterValueChanged:(UISegmentedControl *)sender;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
+-(IBAction)return:(UIStoryboardSegue *)segue;
+
 @end
-
-
-
-
 
 
 @implementation OrderViewController_iPad
 
+
+-(IBAction)return:(UIStoryboardSegue *)segue{
+    
+}
 
 
 #pragma mark - View Functions
@@ -64,11 +64,13 @@
         
         // Get button tag number (or do whatever you need to do here, based on your object
         //NSInteger tagIndex = [(UIButton *)sender tag];
-        NSInteger tagIndex = 1;
+        //  NSInteger tagIndex = 1;
         
         // Pass the information to your destination view
         //[vc setSelectedButton:tagIndex];
         [vc setSelectedButton:2];
+        [vc setSelectedHCPNUMBER:2];
+        [vc setSelectedPRODUCTNUMBER:0];
         
         // [segue.destinationViewController setSelectedButton:0];
         
@@ -85,7 +87,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // return [[self.fetchedResultsController sections] count];  // returns 1 result
-    return [self.fetchedResultsController.fetchedObjects count];
+    
+    // working model
+    //return [self.fetchedResultsController.fetchedObjects count];
+    
+    // hcp example
+    return [[self.fetchedResultsController sections] count];
+    //return 5;
 }
 
 
@@ -95,7 +103,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-     return 3;
+    // working model
+    // return 3;
+    
+    // id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    //return [sectionInfo numberOfObjects];
+    
+    return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
+
+    
+    // return 3;
 }
 
 
@@ -103,25 +120,37 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+        // NSManagedObject *object = [_fetchedResultsController objectAtIndexPath:indexPath];
+        NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+        NSLog(@"Row: %d",indexPath.row);
+        NSLog(@"Section: %d",indexPath.section);
     
-    NSString *varCellType = @"";
-    
-    switch (indexPath.row) {
-        case 0:
-            varCellType = @"_topHeader";
-            break;
-        case 1:
-            varCellType = @"_lineItem";
-            break;
-        case 2:
-            varCellType = @"_summary";
-            break;
+        // NSLog(@"Section: %d",indexPath.section);
+
+        NSLog(@"Hit Me... ");
+        
+        NSString *varCellType = @"_topHeader";
+        
+        switch (indexPath.row) {
+            case 0:
+                varCellType = @"_topHeader";
+                break;
+            case 1:
+                varCellType = @"_lineItem";
+                break;
+            case 2:
+                varCellType = @"_summary";
+                break;
         }
         
-    UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:varCellType forIndexPath:indexPath];
-    [self configureCell:cell atIndexPath:indexPath];
-    return cell;
+        
+        UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:varCellType forIndexPath:indexPath];
+        
+        [self configureCell:cell atIndexPath:indexPath];
+        return cell;
+   
    
 }
 
@@ -152,14 +181,15 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientid" ascending:NO];
-    NSArray *sortDescriptors = @[sortDescriptor];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"reference" ascending:NO];
+    // NSArray *sortDescriptors = @[sortDescriptor];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"MasterOrder"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"reference" cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -257,16 +287,14 @@
 {
     // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     // NSManagedObject *object = [_fetchedResultsController objectAtIndexPath:indexPath];
-
     
-        
     if (indexPath.row == 0) {
         
         
         UILabel *PDate = (UILabel *)[cell viewWithTag:600];
-        [PDate setText:@"TestDD"];
+        [PDate setText:@"TestDD"];        
+        //[PDate setText:[[object valueForKey:@"datecreated"] description]];
         
-        // [PDate setText:[[object valueForKey:@"datecreated"] description]];
         NSMutableString *myWord = [[NSMutableString alloc] init];
         [myWord appendString:[NSString stringWithFormat:@"%d", indexPath.section]];
         
@@ -277,6 +305,8 @@
         // [[object valueForKey:@"shipping_firstname"] description],
         // [[object valueForKey:@"shipping_lastname"] description]]];
     }
+    
+    
     
     
     if (indexPath.row == 1) {

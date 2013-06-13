@@ -37,9 +37,8 @@
 
 - (IBAction)CancelOrderDetail:(UIBarButtonItem *)sender;
 
-
-
 @end
+
 
 @implementation OrderDetailViewController_iPad
 
@@ -51,7 +50,9 @@ NSArray *statusDataX;
 
 
 @synthesize selectedButton, outputlabel;
-
+@synthesize selectedHCP, outputlabel1;
+@synthesize selectedHCPNUMBER, outputlabel2;
+@synthesize selectedPRODUCTNUMBER, outputlabel3;
 
 
 
@@ -59,15 +60,25 @@ NSArray *statusDataX;
     
     int NSections = 2;
     
+    // NEW RECORD
     if (selectedButton == 0)
     {
-        // NEW RECORD
-        NSections = 2;
+        if (selectedHCPNUMBER == 1001) {
+            NSections = 3;  // Stage 2 - SHOW HCP INFO...            
+        } else {
+            NSections = 2;  // Stage 1
+        }
+        
+        if (selectedPRODUCTNUMBER == 1001) {
+            NSections = 6;  // Stage 3 - SHOW ALL INFO...
+        }
     }
+    
 
+    
+    // SHOW EXISTING ORDER
     if (selectedButton == 2)
     {
-        // SHOW DETAILED RECORDS
         NSections = 6;
     }
 
@@ -192,7 +203,7 @@ NSArray *statusDataX;
 {
     [super viewDidLoad];
     
-    [outputlabel setText:[NSString stringWithFormat:@"Your button was %d", selectedButton]];
+    // [outputlabel setText:[NSString stringWithFormat:@"Your button was %d", selectedButton]];
     
     // DETERMINE STAGE OF APPLICATION
     
@@ -221,8 +232,8 @@ NSArray *statusDataX;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *simpleTableIdentifier = @"SimpleTableItem";
-    static NSString *simpleTableIdentifier2 = @"SimpleTableItem2";
+    // static NSString *simpleTableIdentifier = @"SimpleTableItem";
+    // static NSString *simpleTableIdentifier2 = @"SimpleTableItem2";
     
     
     NSString *MyFormType = @"_header";
@@ -412,22 +423,38 @@ NSArray *statusDataX;
     if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             
-            if (selectedButton == 2)
+            if (selectedButton == 0) // NEW ORDER
+            {
+                if (selectedHCPNUMBER == 1001) {
+                    [(UILabel *)[cell viewWithTag:1] setText:@"hcp name"]; // load hcp Name
+                } else {
+                    [(UILabel *)[cell viewWithTag:1] setText:@"SELECT PHYSICIAN"];
+                }
+            }
+            
+            
+            if (selectedButton == 2)  // SHOW DETAILS
             {
                 [(UILabel *)[cell viewWithTag:1] setText:@"Doctors Name"];
-            } else {
-                [(UILabel *)[cell viewWithTag:1] setText:@"SELECT PHYSICIAN"];
             }
             
             
          } else {
-         
              
-             if (selectedButton == 2)
+         
+             if (selectedButton == 0) // NEW ORDER
              {
-                 [(UILabel *)[cell viewWithTag:0] setText:@"Address Line"];
-             } else {
-                 [(UILabel *)[cell viewWithTag:0] setText:@""];
+                 if (selectedHCPNUMBER == 1001) {
+                     [(UILabel *)[cell viewWithTag:0] setText:@"Address line1 \n Address line2 \n"]; // load Address
+                 } else {
+                     [(UILabel *)[cell viewWithTag:0] setText:@""];
+                 }
+             }
+             
+             
+             if (selectedButton == 2)  // SHOW DETAILS
+             {
+                 [(UILabel *)[cell viewWithTag:0] setText:@"Get Address \n"];
              }
              
         }        
@@ -443,7 +470,7 @@ NSArray *statusDataX;
     
     // DELIVERY INSTRUCTIONS
     if (indexPath.section == 3) {
-        [(UILabel *)[cell viewWithTag:1] setText:@"DOCTOR NAME"];
+        [(UILabel *)[cell viewWithTag:1] setText:@"SHIPPING INSTRUCTIONS"];
     }
     
     // SHIPPING CARRIER

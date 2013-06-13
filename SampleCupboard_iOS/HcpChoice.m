@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+#import "OrderDetailViewController_iPad.h"
 #import "HcpChoice.h"
 
 @interface HcpChoice ()
@@ -50,8 +51,24 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"_hcplist" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
+    
+    // Set CheckMark on Row
+    if ([checkedCell isEqual:indexPath])
+        
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        
+    } else
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    
     return cell;
 }
 
@@ -87,8 +104,25 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    // UIViewController *controller = segue.destinationViewController;
-    //controller.player = [self.players objectAtIndex: YOUR_SAVED_INDEX];
+    
+    // Return HCP SELECTION
+    if ([[segue identifier] isEqualToString:@"_chosehcp_done"]) {
+        
+        // Get destination view
+        OrderDetailViewController_iPad *vc = [segue destinationViewController];
+        
+        // NSIndexPath *selectedIndexPathX = [self.tableView indexPathForCell:sender];
+        [vc setSelectedHCPNUMBER:1001];
+        
+        
+    }
+    
+    
+    // User Cancelled Selection
+    if ([[segue identifier] isEqualToString:@"_chosehcp_cancel"]) {
+        
+        
+    }
 }
 
 
@@ -205,6 +239,15 @@
  }
  */
 
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    checkedCell = indexPath;
+    [tableView reloadData];
+    
+}
 
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath

@@ -52,9 +52,6 @@ Reachability *internetReachableFoo;
 
 
 
-
-
-
     
 - (IBAction)btnReloadDataClick:(id)sender {
 
@@ -549,7 +546,7 @@ Reachability *internetReachableFoo;
         
         // HCP
         
-        NSURL *url = [NSURL URLWithString:@"http://project.dwsmall.com/hcp"];
+        NSURL *url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/GetActiveHcpsInARepsReach/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590"];
         NSData *jsonData = [NSData dataWithContentsOfURL:url];
         
         
@@ -557,7 +554,7 @@ Reachability *internetReachableFoo;
         {
             NSError *error = nil;
             NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-            NSArray* arrayContainer = [dictContainer objectForKey:@"hcp"];
+            NSArray* arrayContainer = [dictContainer objectForKey:@"GetActiveHcpsInARepsReachResult"];
             
             // NSLog(@"hcp: %@", arrayContainer);
             
@@ -569,24 +566,55 @@ Reachability *internetReachableFoo;
                 NSManagedObject *model = [NSEntityDescription
                                           insertNewObjectForEntityForName:@"HealthCareProfessional"
                                           inManagedObjectContext:context];
-                [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
+                [model setValue:@"TEST123" forKey:@"clientid"];
                 [model setValue:[dicItems objectForKey:@"FirstName"] forKey:@"firstname"];
                 [model setValue:[dicItems objectForKey:@"LastName"] forKey:@"lastname"];
-                [model setValue:[dicItems objectForKey:@"Phone"] forKey:@"phone"];
-                [model setValue:[dicItems objectForKey:@"Fax"] forKey:@"fax"];
-                [model setValue:[dicItems objectForKey:@"Facility"] forKey:@"facility"];
+                
+                
+                if ([[dicItems objectForKey:@"Phone"] isKindOfClass:[NSNull class]]) {
+                    [model setValue:@" " forKey:@"phone"];
+                } else {
+                    [model setValue:[dicItems objectForKey:@"Phone"] forKey:@"phone"];
+                }
+                                
+                if ([[dicItems objectForKey:@"Fax"] isKindOfClass:[NSNull class]]) {
+                    [model setValue:@" " forKey:@"fax"];
+                } else {
+                    [model setValue:[dicItems objectForKey:@"Fax"] forKey:@"fax"];
+                }
+                
+                
+                if ([[dicItems objectForKey:@"FacilityName"] isKindOfClass:[NSNull class]]) {
+                    [model setValue:@" " forKey:@"facility"];
+                } else {
+                    [model setValue:[dicItems objectForKey:@"FacilityName"] forKey:@"facility"];
+                }
+
                 [model setValue:[dicItems objectForKey:@"Deparment"] forKey:@"department"];
-                [model setValue:[dicItems objectForKey:@"Address1"] forKey:@"address1"];
-                [model setValue:[dicItems objectForKey:@"Address2"] forKey:@"address2"];
-                [model setValue:[dicItems objectForKey:@"Address3"] forKey:@"address3"];
+                [model setValue:[dicItems objectForKey:@"AddressLine1"] forKey:@"address1"];
+                
+                if ([[dicItems objectForKey:@"AddressLine2"] isKindOfClass:[NSNull class]]) {
+                    [model setValue:@" " forKey:@"address2"];
+                } else {
+                    [model setValue:[dicItems objectForKey:@"AddressLine2"] forKey:@"address2"];
+                }
+                
+                if ([[dicItems objectForKey:@"AddressLine3"] isKindOfClass:[NSNull class]]) {
+                    [model setValue:@" " forKey:@"address3"];
+                } else {
+                    [model setValue:[dicItems objectForKey:@"AddressLine3"] forKey:@"address3"];
+                }
+                
+                
+                
+                // [model setValue:[dicItems objectForKey:@"AddressLine2"] forKey:@"address2"];
+                // [model setValue:[dicItems objectForKey:@"AddressLine3"] forKey:@"address3"];
                 [model setValue:[dicItems objectForKey:@"Email"] forKey:@"email"];
                 [model setValue:[dicItems objectForKey:@"City"] forKey:@"city"];
                 [model setValue:[dicItems objectForKey:@"Province"] forKey:@"province"];
-                [model setValue:[dicItems objectForKey:@"Postal"] forKey:@"postal"];
+                [model setValue:[dicItems objectForKey:@"PostalCode"] forKey:@"postal"];
                 // [model setValue:[dicItems objectForKey:@"SignDate"] forKey:@"signdate"];
-                [model setValue:[dicItems objectForKey:@"PHLID"] forKey:@"phlid"];
-                [model setValue:[dicItems objectForKey:@"Rejected"] forKey:@"rejected"];
-                
+                [model setValue:[dicItems objectForKey:@"PHLID"] forKey:@"id"];                
             }
             
             if (![context save:&error]) {
@@ -594,7 +622,7 @@ Reachability *internetReachableFoo;
             }
             
             // if (error == nil)
-                // NSLog(@"%@", dictContainer);
+                // NSLog(@"%@", dictContainer);addre
         }
         
         

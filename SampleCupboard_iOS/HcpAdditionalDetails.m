@@ -1,40 +1,29 @@
 //
-//  HcpListViewController_iPad.m
+//  HcpAdditionalDetails.m
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-05-18.
+//  Created by David Small on 13-06-12.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+#import "HcpAdditionalDetails.h"
 
-#import "HcpDetailController.h"
-
-#import "HcpListViewController_iPad.h"
-
-@interface HcpListViewController_iPad ()
+@interface HcpAdditionalDetails ()
+@property (strong, nonatomic) IBOutlet UINavigationBar *navBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UINavigationItem *healthcareProf;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-
--(IBAction)return:(UIStoryboardSegue *)segue;
-
 @end
 
-@implementation HcpListViewController_iPad
 
 
--(IBAction)return:(UIStoryboardSegue *)segue{
-    
-}
 
-
+@implementation HcpAdditionalDetails
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
 }
 
 
@@ -44,41 +33,83 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSLog(@"Did Select Row %ld", (long)indexPath.row);
-    
-    // UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    // NSString *cellText = cell.textLabel.text;
-    
-    ChosenRowNumber = indexPath.row;
-    
-}
-
-
-
 
 
 
 #pragma mark - Table View
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    return 3;
 }
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    
+    NSString *HeaderTitle = @"";
+    
+    switch (section)
+    
+    {
+        case 0:
+            HeaderTitle = @"";  //Address Type
+            break;
+            
+        case 1:            
+            HeaderTitle = @"Details";
+            break;
+            
+        case 2:            
+            HeaderTitle = @"Communication";
+            break;            
+    }
+    
+    return HeaderTitle;
+    
+}
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+    // id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    // return [sectionInfo numberOfObjects];
+    
+    int MRows = 0;
+    
+    switch (section)
+    
+    {
+        case 0:
+            MRows=1;    //Address Type
+            break;
+            
+        case 1:
+            MRows=7;    //Details
+            break;
+            
+        case 2:
+            MRows=3;    //Communication
+            break;
+            
+    }
+    
+    return MRows;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"_hcplist" forIndexPath:indexPath];
+    
+    NSString *MyFormType = @"_typeA";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyFormType forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
+    
+    
 }
+
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -108,32 +139,13 @@
     return NO;
 }
 
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([segue.identifier isEqualToString:@"_push_to_hcpdetails"]) {
-       
-        
-            // Step 1 - Declare VC Controller
-            HcpDetailController *detailVC = (HcpDetailController *)[segue destinationViewController];
-        
-            // Method #1 - Get Index Path of Selected Row, Use As Index Path of fetch To Retrieve Values
-            // DOES NOT WORK NSIndexPath *indexPathX = [self.tableView indexPathForSelectedRow];
-
-            HcpListViewController_iPad *ourfetchClass = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:ChosenRowNumber inSection:0]];
-        
-            NSLog(@"The First Name From FetchResults %@",[[ourfetchClass valueForKey:@"firstname"]description]);
-            detailVC.selectedHCPMSG = [[ourfetchClass valueForKey:@"firstname"] description];
-        
-            detailVC.currentHCPINFO = @[[[ourfetchClass valueForKey:@"firstname"] description], [[ourfetchClass valueForKey:@"lastname"] description], [[ourfetchClass valueForKey:@"facility"] description]];
-        
-        
-        // NSArray *fetchedObjects = [self.managedObjectContext
-                    //                executeFetchRequest:fetchRequest error:&error];
-    }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    // self.detailViewController.detailItem = object;
 }
+
+
 
 
 #pragma mark - Fetched results controller
@@ -146,19 +158,19 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
-        id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-        self.managedObjectContext = [appDelegate managedObjectContext];
-        // NSManagedObjectContext *context = [self managedObjectContext];
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    // NSManagedObjectContext *context = [self managedObjectContext];
     
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"HealthCareProfessional" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Product" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstname" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -186,9 +198,6 @@
 {
     [self.tableView beginUpdates];
 }
-
-
-
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
@@ -253,18 +262,36 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     // cell.textLabel.text = [[object valueForKey:@"firstname"] description];
-    cell.textLabel.Text = [[NSString stringWithFormat:@"%@, %@", [[object valueForKey:@"firstname"] description], [[object valueForKey:@"lastname"] description]] uppercaseString];
     
-    cell.detailTextLabel.Text = [NSString stringWithFormat:@"%@ %@ %@",
-                                 [[object valueForKey:@"city"] description],
-                                 [[object valueForKey:@"province"] description],
-    [[object valueForKey:@"postal"] description]];
     
-    // cell.detailTextLabel.Text = [[object valueForKey:@"address1"] description];
+    switch (indexPath.section)
+    
+    {
+        case 0: //Address Type
+            if (indexPath.row == 0) {
+                cell.textLabel.text = @"Address Type:";
+                cell.detailTextLabel.text = @"Primary";
+            }
+            break;
+            
+        case 1: //Details
+            if (indexPath.row == 0) {
+                cell.textLabel.text = @"Name:";
+                cell.detailTextLabel.text = @"Primary";
+            }
+            cell.textLabel.text = @"Telephone:";
+            cell.detailTextLabel.text = @"9999999999";
+            break;
+            
+        case 2:  //Communication
+            cell.textLabel.text = @"Telephone:";
+            cell.detailTextLabel.text = @"9999999999";
+            break;
+    }
+    
+    
 }
-
-
 
 @end

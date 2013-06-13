@@ -1,33 +1,23 @@
 //
-//  HcpListViewController_iPad.m
+//  HcpChoice.m
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-05-18.
+//  Created by David Small on 13-06-11.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+#import "OrderDetailViewController_iPad.h"
+#import "ProductChoice.h"
 
-#import "HcpDetailController.h"
-
-#import "HcpListViewController_iPad.h"
-
-@interface HcpListViewController_iPad ()
+@interface ProductChoice ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *healthcareProf;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-
--(IBAction)return:(UIStoryboardSegue *)segue;
-
 @end
 
-@implementation HcpListViewController_iPad
 
 
--(IBAction)return:(UIStoryboardSegue *)segue{
-    
-}
-
-
+@implementation ProductChoice
 
 
 - (void)viewDidLoad
@@ -38,24 +28,12 @@
 }
 
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSLog(@"Did Select Row %ld", (long)indexPath.row);
-    
-    // UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    // NSString *cellText = cell.textLabel.text;
-    
-    ChosenRowNumber = indexPath.row;
-    
-}
-
-
 
 
 
@@ -75,8 +53,24 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"_hcplist" forIndexPath:indexPath];
+    
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"_productlist" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
+    
+    // Set CheckMark on Row
+    if ([checkedCell isEqual:indexPath])
+        
+    {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        
+    } else
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    
     return cell;
 }
 
@@ -112,27 +106,26 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([segue.identifier isEqualToString:@"_push_to_hcpdetails"]) {
-       
+    
+    // Return HCP SELECTION
+    if ([[segue identifier] isEqualToString:@"_choseproduct_done"]) {
         
-            // Step 1 - Declare VC Controller
-            HcpDetailController *detailVC = (HcpDetailController *)[segue destinationViewController];
+        // Get destination view
+        OrderDetailViewController_iPad *vc = [segue destinationViewController];
         
-            // Method #1 - Get Index Path of Selected Row, Use As Index Path of fetch To Retrieve Values
-            // DOES NOT WORK NSIndexPath *indexPathX = [self.tableView indexPathForSelectedRow];
-
-            HcpListViewController_iPad *ourfetchClass = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:ChosenRowNumber inSection:0]];
-        
-            NSLog(@"The First Name From FetchResults %@",[[ourfetchClass valueForKey:@"firstname"]description]);
-            detailVC.selectedHCPMSG = [[ourfetchClass valueForKey:@"firstname"] description];
-        
-            detailVC.currentHCPINFO = @[[[ourfetchClass valueForKey:@"firstname"] description], [[ourfetchClass valueForKey:@"lastname"] description], [[ourfetchClass valueForKey:@"facility"] description]];
+        // NSIndexPath *selectedIndexPathX = [self.tableView indexPathForCell:sender];
+        [vc setSelectedHCPNUMBER:1001];
+        [vc setSelectedPRODUCTNUMBER:1001];
         
         
-        // NSArray *fetchedObjects = [self.managedObjectContext
-                    //                executeFetchRequest:fetchRequest error:&error];
     }
-
+    
+    
+    // User Cancelled Selection
+    if ([[segue identifier] isEqualToString:@"_choseproduct_cancel"]) {
+        
+        
+    }
 }
 
 
@@ -146,26 +139,26 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
-        id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-        self.managedObjectContext = [appDelegate managedObjectContext];
-        // NSManagedObjectContext *context = [self managedObjectContext];
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    // NSManagedObjectContext *context = [self managedObjectContext];
     
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"HealthCareProfessional" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Product" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstname" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"code" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"MasterProduct"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -251,18 +244,23 @@
 
 
 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    checkedCell = indexPath;
+    [tableView reloadData];
+    
+}
+
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    // cell.textLabel.text = [[object valueForKey:@"firstname"] description];
-    cell.textLabel.Text = [[NSString stringWithFormat:@"%@, %@", [[object valueForKey:@"firstname"] description], [[object valueForKey:@"lastname"] description]] uppercaseString];
     
-    cell.detailTextLabel.Text = [NSString stringWithFormat:@"%@ %@ %@",
-                                 [[object valueForKey:@"city"] description],
-                                 [[object valueForKey:@"province"] description],
-    [[object valueForKey:@"postal"] description]];
+    cell.textLabel.text = [[object valueForKey:@"code"] description];
+    cell.detailTextLabel.text = [[object valueForKey:@"lowlevelquantity"] description];
     
-    // cell.detailTextLabel.Text = [[object valueForKey:@"address1"] description];
+    
 }
 
 
