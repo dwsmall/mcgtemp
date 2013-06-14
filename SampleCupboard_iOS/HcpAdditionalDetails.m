@@ -20,6 +20,8 @@
 @implementation HcpAdditionalDetails
 
 
+@synthesize currentHCPINFOEXT;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -272,23 +274,55 @@
         case 0: //Address Type
             if (indexPath.row == 0) {
                 cell.textLabel.text = @"Address Type:";
-                cell.detailTextLabel.text = @"Primary";
+                cell.detailTextLabel.text = currentHCPINFOEXT[8];
             }
             break;
-            
+            			
         case 1: //Details
             if (indexPath.row == 0) {
-                cell.textLabel.text = @"Name:";
-                cell.detailTextLabel.text = @"Primary";
+                cell.textLabel.text = @"Facility:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[9];
             }
-            cell.textLabel.text = @"Telephone:";
-            cell.detailTextLabel.text = @"9999999999";
-            break;
+            if (indexPath.row == 1) {
+                cell.textLabel.text = @"Address 1:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[10];
+            }
+            if (indexPath.row == 2) {
+                cell.textLabel.text = @"Address 2:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[11];
+            }
+            if (indexPath.row == 3) {
+                cell.textLabel.text = @"Address 3:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[12];
+            }
+            if (indexPath.row == 4) {
+                cell.textLabel.text = @"Province:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[13];
+            }
+            if (indexPath.row == 5) {
+                cell.textLabel.text = @"City:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[14];
+            }
+            if (indexPath.row == 6) {
+                cell.textLabel.text = @"Postal:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[15];
+            }
+            
             
         case 2:  //Communication
-            cell.textLabel.text = @"Telephone:";
-            cell.detailTextLabel.text = @"9999999999";
-            break;
+            if (indexPath.row == 0) {
+                cell.textLabel.text = @"Telephone:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[5];
+            }
+            if (indexPath.row == 1) {
+                cell.textLabel.text = @"Extension:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[16];
+            }
+            if (indexPath.row == 2) {
+                cell.textLabel.text = @"Fax:";
+                cell.detailTextLabel.text = currentHCPINFOEXT[6];
+            }
+            
     }
     
     

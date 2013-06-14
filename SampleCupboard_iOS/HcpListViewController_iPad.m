@@ -120,17 +120,63 @@
         
             // Method #1 - Get Index Path of Selected Row, Use As Index Path of fetch To Retrieve Values
             // DOES NOT WORK NSIndexPath *indexPathX = [self.tableView indexPathForSelectedRow];
+            // NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 
             HcpListViewController_iPad *ourfetchClass = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:ChosenRowNumber inSection:0]];
         
-            NSLog(@"The First Name From FetchResults %@",[[ourfetchClass valueForKey:@"firstname"]description]);
-            detailVC.selectedHCPMSG = [[ourfetchClass valueForKey:@"firstname"] description];
         
-            detailVC.currentHCPINFO = @[[[ourfetchClass valueForKey:@"firstname"] description], [[ourfetchClass valueForKey:@"lastname"] description], [[ourfetchClass valueForKey:@"facility"] description]];
+            // Handling of Null Fields (Server Side or Replace With NSAssert)
+            NSString *varfirst = [[ourfetchClass valueForKey:@"firstname"] description];
+            NSString *varlast = [[ourfetchClass valueForKey:@"lastname"] description];
+            NSString *vargender = [[ourfetchClass valueForKey:@"gender"] description];
+            NSString *varphone = [[ourfetchClass valueForKey:@"phone"] description];
+            NSString *varfax = [[ourfetchClass valueForKey:@"fax"] description];
+            NSString *varaddress1 = [[ourfetchClass valueForKey:@"address1"] description];
+            NSString *varaddress2 = [[ourfetchClass valueForKey:@"address2"] description];
+            NSString *varaddress3 = [[ourfetchClass valueForKey:@"address3"] description];
+            NSString *vardeparment = [[ourfetchClass valueForKey:@"department"] description];
+            NSString *varfacility = [[ourfetchClass valueForKey:@"facility"] description];
+            NSString *varlang = [[ourfetchClass valueForKey:@"language"] description];
+        
+            if (varfirst == NULL) { varfirst = @".";}
+            if (varlast == NULL) {varlast = @".";}
+            if (vargender == NULL) {vargender = @"MALE";}
+            if (varphone == NULL) {varphone = @" ";}
+            if (varfacility == NULL) {varfacility = @" ";}
+            if (varaddress1 == NULL) {varaddress1 = @" ";}
+            if (varaddress2 == NULL) {varaddress2 = @" ";}
+            if (varaddress3 == NULL) {varaddress3 = @" ";}
+            if (vardeparment == NULL) {vardeparment = @" ";}
+            if (varlang == NULL) {varlang = @"English";}
+            
         
         
-        // NSArray *fetchedObjects = [self.managedObjectContext
-                    //                executeFetchRequest:fetchRequest error:&error];
+            NSString *longaddress_name = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",
+                                     [[ourfetchClass valueForKey:@"facility"] description],
+                                     [[ourfetchClass valueForKey:@"address1"] description],
+                                     [[ourfetchClass valueForKey:@"city"] description],
+                                     [[ourfetchClass valueForKey:@"province"] description],
+                                     [[ourfetchClass valueForKey:@"postal"] description]];
+        
+            detailVC.currentHCPINFO = @[varfirst,
+                              varlast,
+                              @"DR",
+                              vargender,
+                              varlang,
+                              varphone,
+                              varfax,
+                              longaddress_name,
+                              @"Primary",
+                              varfacility,
+                              varaddress1,
+                              varaddress2,
+                              varaddress3,
+                              [[ourfetchClass valueForKey:@"province"] description],
+                              [[ourfetchClass valueForKey:@"city"] description],
+                              [[ourfetchClass valueForKey:@"postal"] description],
+                              vardeparment];
+
+        
     }
 
 }

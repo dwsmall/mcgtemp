@@ -6,6 +6,10 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+
+
+#import "HcpAdditionalDetails.h"
+
 #import "HcpDetailController.h"
 
 @interface HcpDetailController ()
@@ -294,12 +298,26 @@
 
 
 
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"_additionalhcp"]) {
+        
+        HcpAdditionalDetails *extVC = (HcpAdditionalDetails *)[segue destinationViewController];
+        extVC.currentHCPINFOEXT = currentHCPINFO;
+        
+    }
+    
+}
+
+
+
+
+
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    // cell.textLabel.text = [[object valueForKey:@"firstname"] description];
-    // NSIndexPath *indexPathX = [NSIndexPath indexPathForItem:<#(NSInteger)#> inSection:<#(NSInteger)#>:1];
-    // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:0];
         
     
     switch (indexPath.section)
@@ -325,12 +343,12 @@
             
             if (indexPath.row == 3) {
                 cell.textLabel.text = @"Gender:";
-                cell.detailTextLabel.text = @"Male";
+                cell.detailTextLabel.text = currentHCPINFO[3];
             }
             
             if (indexPath.row == 4) {
                 cell.textLabel.text = @"Language:";
-                cell.detailTextLabel.text = @"English";
+                cell.detailTextLabel.text = currentHCPINFO[4];
             }
             break;
             
@@ -339,7 +357,12 @@
             //Communication
             if (indexPath.row == 0) {
                 cell.textLabel.text = @"Telephone:";
-                cell.detailTextLabel.text = @"9999999999";
+                cell.detailTextLabel.text = currentHCPINFO[5];
+            }
+            
+            if (indexPath.row == 1) {
+                cell.textLabel.text = @"Fax:";
+                cell.detailTextLabel.text = currentHCPINFO[6];
             }
             break;
             
@@ -347,7 +370,7 @@
             
             //Address
             if (indexPath.row == 0) {
-                cell.textLabel.text = @"Long Address Line...";
+                cell.textLabel.text = currentHCPINFO[7];
             }
             
             break;

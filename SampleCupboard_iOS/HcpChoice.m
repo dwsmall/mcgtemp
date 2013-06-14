@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+
+#import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
 #import "OrderDetailViewController_iPad.h"
 #import "HcpChoice.h"
 
@@ -18,11 +21,12 @@
 @implementation HcpChoice
 
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
 }
 
 
@@ -42,6 +46,7 @@
 {
     return [[self.fetchedResultsController sections] count];
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -68,15 +73,9 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return NO;
-}
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -94,36 +93,26 @@
     }
 }
 
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // The table view should not be re-orderable.
-    return NO;
+    int adjHeight = 80;
+    return adjHeight;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    path = indexPath;
+    NSLog(@"index path for hcp_selection DIDSELECT %i", path.row);
+    
+    checkedCell = indexPath;
+    [tableView reloadData];
 }
 
 
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    
-    // Return HCP SELECTION
-    if ([[segue identifier] isEqualToString:@"_chosehcp_done"]) {
-        
-        // Get destination view
-        OrderDetailViewController_iPad *vc = [segue destinationViewController];
-        
-        // NSIndexPath *selectedIndexPathX = [self.tableView indexPathForCell:sender];
-        [vc setSelectedHCPNUMBER:1001];
-        
-        
-    }
-    
-    
-    // User Cancelled Selection
-    if ([[segue identifier] isEqualToString:@"_chosehcp_cancel"]) {
-        
-        
-    }
-}
+
 
 
 #pragma mark - Fetched results controller
@@ -172,12 +161,11 @@
 
 
 
+
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView beginUpdates];
 }
-
-
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
@@ -193,7 +181,6 @@
             break;
     }
 }
-
 
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
@@ -229,41 +216,96 @@
     [self.tableView endUpdates];
 }
 
-/*
- // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
- {
- // In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
- }
- */
 
 
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    checkedCell = indexPath;
-    [tableView reloadData];
-    
-}
 
+
+
+
+#pragma mark - Cell
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    // cell.textLabel.text = [[object valueForKey:@"firstname"] description];
     cell.textLabel.Text = [[NSString stringWithFormat:@"%@, %@", [[object valueForKey:@"firstname"] description], [[object valueForKey:@"lastname"] description]] uppercaseString];
     
-    cell.detailTextLabel.Text = [NSString stringWithFormat:@"%@ %@ %@",
+    cell.detailTextLabel.Text = [NSString stringWithFormat:@"%@ \n %@ %@ %@ \n %@ %@ %@",
+                                 [[object valueForKey:@"facility"] description],
+                                 [[object valueForKey:@"address1"] description],
+                                 [[object valueForKey:@"address2"] description],
+                                 [[object valueForKey:@"address3"] description],
                                  [[object valueForKey:@"city"] description],
                                  [[object valueForKey:@"province"] description],
                                  [[object valueForKey:@"postal"] description]];
-    
-    // cell.detailTextLabel.Text = [[object valueForKey:@"address1"] description];
 }
 
 
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    
+    // Return HCP SELECTION
+    if ([[segue identifier] isEqualToString:@"_chosehcp_done"]) {
+        
+        // SHOULD USE - NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        
+        // Get destination view
+        OrderDetailViewController_iPad *vc = [segue destinationViewController];
+        [vc setSelectedHCPNUMBER:1001];
+               
+        OrderDetailViewController_iPad *ourfetchClass = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:checkedCell.row inSection:0]];
+ 
+        // Handling of Null Fields (Server Side or Replace With NSAssert)
+        NSString *varphlid = [[ourfetchClass valueForKey:@"phlid"] description];
+        NSString *varfirst = [[ourfetchClass valueForKey:@"firstname"] description];
+        NSString *varlast = [[ourfetchClass valueForKey:@"lastname"] description];
+        NSString *varfacility = [[ourfetchClass valueForKey:@"facility"] description];
+        NSString *varaddress1 = [[ourfetchClass valueForKey:@"address1"] description];
+        NSString *varaddress2 = [[ourfetchClass valueForKey:@"address2"] description];
+        NSString *varaddress3 = [[ourfetchClass valueForKey:@"address3"] description];
+        
+        if (varphlid == NULL) {varphlid = @"111";}
+        if (varfirst == NULL) { varfirst = @".";}
+        if (varlast == NULL) {varlast = @".";}
+        if (varfacility == NULL) {varfacility = @" ";}
+        if (varaddress1 == NULL) {varaddress1 = @" ";}
+        if (varaddress2 == NULL) {varaddress2 = @" ";}
+        if (varaddress3 == NULL) {varaddress3 = @" ";}
+        
+        
+        NSString *shorthcp_name = [NSString stringWithFormat:@"%@,%@",
+                                      [[ourfetchClass valueForKey:@"lastname"] description],
+                                      [[ourfetchClass valueForKey:@"firstname"] description]];
+        
+        NSString *longaddress_name = [NSString stringWithFormat:@"%@ \n %@ %@ %@ %@",
+                                      [[ourfetchClass valueForKey:@"facility"] description],
+                                      [[ourfetchClass valueForKey:@"address1"] description],
+                                      [[ourfetchClass valueForKey:@"city"] description],
+                                      [[ourfetchClass valueForKey:@"province"] description],
+                                      [[ourfetchClass valueForKey:@"postal"] description]];
+        
+        vc.selectedHCPINFO = @[shorthcp_name,
+                               longaddress_name,
+                                    varfacility,
+                                    varaddress1,
+                                    varaddress2,
+                                    varaddress3,
+                                    [[ourfetchClass valueForKey:@"province"] description],
+                                    [[ourfetchClass valueForKey:@"city"] description],
+                                    [[ourfetchClass valueForKey:@"postal"] description]];
+        
+    }
+    
+    
+    // User Cancelled Selection
+    if ([[segue identifier] isEqualToString:@"_chosehcp_cancel"]) {
+        
+        
+    }
+}
 
 @end

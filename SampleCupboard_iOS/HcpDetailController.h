@@ -31,6 +31,7 @@
 @property (nonatomic) NSString *selectedHCPMSG;
 @property (nonatomic) NSInteger *selectedHCPNUMBER;
 @property (nonatomic) NSIndexPath *selectedHCPINDEX;
+
 @property (nonatomic) NSArray *currentHCPINFO;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

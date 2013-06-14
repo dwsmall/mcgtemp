@@ -14,12 +14,16 @@
 @class HcpAdditionalDetails;
 
 
-@interface HcpAdditionalDetails : UIViewController <NSFetchedResultsControllerDelegate>
+@interface HcpAdditionalDetails : UIViewController <NSFetchedResultsControllerDelegate> {
+
+    NSArray *currentHCPINFOEXT;
+}
 
 @property (weak, nonatomic) IBOutlet UITableView *tableViewX;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+@property (nonatomic) NSArray *currentHCPINFOEXT;
 
 @end

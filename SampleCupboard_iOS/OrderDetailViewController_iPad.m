@@ -37,6 +37,7 @@
 
 - (IBAction)CancelOrderDetail:(UIBarButtonItem *)sender;
 
+
 @end
 
 
@@ -52,6 +53,7 @@ NSArray *statusDataX;
 @synthesize selectedButton, outputlabel;
 @synthesize selectedHCP, outputlabel1;
 @synthesize selectedHCPNUMBER, outputlabel2;
+@synthesize selectedHCPINFO, outputlabel4;
 @synthesize selectedPRODUCTNUMBER, outputlabel3;
 
 
@@ -64,7 +66,7 @@ NSArray *statusDataX;
     if (selectedButton == 0)
     {
         if (selectedHCPNUMBER == 1001) {
-            NSections = 3;  // Stage 2 - SHOW HCP INFO...            
+            NSections = 6;  // Stage 2 - SHOW HCP INFO...
         } else {
             NSections = 2;  // Stage 1
         }
@@ -161,7 +163,8 @@ NSArray *statusDataX;
         case 2:
             
             //To Be Delivered To Physician
-            MRows=2;  //7
+            MRows = [[[self fetchedResultsController] fetchedObjects] count];
+            MRows = MRows + 1;
             break;
             
         case 3:
@@ -262,13 +265,12 @@ NSArray *statusDataX;
         case 2:
             
             //To Be Delivered To Physician
-            if (indexPath.row == 0) {
-                MyFormType=@"_lineItem";
-            }
-            else {
+            // Iterate based on fetched products from table
+            if (indexPath.row == [[[self fetchedResultsController] fetchedObjects] count]) {
                 MyFormType=@"_newLineItem";
-            }
-            
+            } else {
+                MyFormType=@"_lineItem";
+            }			            
             break;
             
         case 3:
@@ -339,6 +341,8 @@ NSArray *statusDataX;
 - (IBAction)CellEditorEndedEdit:(id)sender {
 }
 
+
+
 - (IBAction)CancelOrderDetail:(UIBarButtonItem *)sender {
 
     UIAlertView *alertView = [[UIAlertView alloc]
@@ -346,9 +350,6 @@ NSArray *statusDataX;
                                cancelButtonTitle: @"cancel" otherButtonTitles: @"OK", nil];
     
     [alertView show];
-    
-    NSLog(@"process Name 222222 BIG");
-
 }
 
 
@@ -385,6 +386,61 @@ NSArray *statusDataX;
     return Npole;
     
 }
+
+
+
+
+
+#pragma mark - Fetched results controller
+
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    // NSManagedObjectContext *context = [self managedObjectContext];
+    
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Product" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"code" ascending:NO];
+    NSArray *sortDescriptors = @[sortDescriptor];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *pFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"MasterProductList"];
+    // pFetchedResultsController.delegate = self;
+    self.fetchedResultsController = pFetchedResultsController;
+    
+	NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}
+    
+    return _fetchedResultsController;
+}
+
+
+
+
+
+
+
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
@@ -426,9 +482,14 @@ NSArray *statusDataX;
             if (selectedButton == 0) // NEW ORDER
             {
                 if (selectedHCPNUMBER == 1001) {
-                    [(UILabel *)[cell viewWithTag:1] setText:@"hcp name"]; // load hcp Name
+                     NSLog(@"Value For [TOPROW] selectedHCPNUMBER %d", selectedHCPNUMBER);
+                    
+                    [(UILabel *)[cell viewWithTag:1] setText:selectedHCPINFO[0]]; // load hcp Name
+                    
+                     NSLog(@"SHOULD NOT WRITE BLANK %@", selectedHCPINFO[0]);
                 } else {
-                    [(UILabel *)[cell viewWithTag:1] setText:@"SELECT PHYSICIAN"];
+                    NSLog(@"Value For [BOTTOMROW] selectedHCPNUMBER %d", selectedHCPNUMBER);
+                    [(UILabel *)[cell viewWithTag:1] setText:selectedHCPINFO[0]];
                 }
             }
             
@@ -445,7 +506,7 @@ NSArray *statusDataX;
              if (selectedButton == 0) // NEW ORDER
              {
                  if (selectedHCPNUMBER == 1001) {
-                     [(UILabel *)[cell viewWithTag:0] setText:@"Address line1 \n Address line2 \n"]; // load Address
+                     [(UILabel *)[cell viewWithTag:0] setText:selectedHCPINFO[1]]; // load Address
                  } else {
                      [(UILabel *)[cell viewWithTag:0] setText:@""];
                  }
@@ -462,9 +523,19 @@ NSArray *statusDataX;
     
     // DELIVERED TO PHYSICIAN
     if (indexPath.section == 2) {
-        if (indexPath.row == 0) {
-            cell.textLabel.text = @"TEST123";
+        
+        // Iterate based on fetched products from table
+        if (indexPath.row == [[[self fetchedResultsController] fetchedObjects] count]) {
+            
+            cell.textLabel.text = @"";
+            
+        } else {
+            
+            NSManagedObject *object = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+            cell.textLabel.text = [[object valueForKey:@"code"] description];
+            cell.detailTextLabel.text = @"0";
         }
+    
     }
     
     
@@ -475,17 +546,18 @@ NSArray *statusDataX;
     
     // SHIPPING CARRIER
     if (indexPath.section == 4) {
-        // [(UILabel *)[cell viewWithTag:1] setText:@"DOCTOR NAME"];
+        
     }
     
     // SIGNATURE
     if (indexPath.section == 5) {
-        // [(UILabel *)[cell viewWithTag:1] setText:@"DOCTOR NAME"];
     }
     
     
    
 }
+
+
 
 @end
 
