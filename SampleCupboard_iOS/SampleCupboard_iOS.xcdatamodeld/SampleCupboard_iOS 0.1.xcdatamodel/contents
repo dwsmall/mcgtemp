@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11E53" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Address" syncable="YES">
+        <attribute name="address_status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressline1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressline2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressline3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addresstype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facilityname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fax" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="license" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="partners" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="personid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone_ext" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postalcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prov" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="suite" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Allocation" syncable="YES">
+        <attribute name="allocationheaderid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="defaultordermax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="hcptargetlistid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="inventory" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ishcp" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ishcptargetlist" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isrep" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isterritory" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ordermax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="originalordermax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="originaltotalmax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="parentid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="personalid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalmax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="AllocationHeader" syncable="YES">
+        <attribute name="allocdescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateend" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datestart" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="inactive" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ClientInfo" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="displayname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_allocationstrategy" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_canaudit" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_candodisbursement" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptobatch" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptoconsumer" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptohcp" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptopharmacy" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptorep" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptothirdparty" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptowholesaler" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_ordertype_allowsbackorder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_ordertype_allowsemergencyorders" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_ordertype_allowsmanagerapproval" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_ordertype_allowspartialshipment" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="ordersreferencecounterid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Disbursement" syncable="YES">
+        <attribute name="applicationsource" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creatorid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateentered" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="daterecieved" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datereleased" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datesigned" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="options_isfinalized" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="ordercontenttype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ownerid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="shipping_addressline1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressline2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressline3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_facilityname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_fax" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_firstname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_instructions" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_lastname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_licence" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_partner" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_phoneextension" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_postalcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_suite" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_territory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shiptoid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="signature" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DisbursementLineItem" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="disbursementid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lotcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantitydisbursed" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Event" syncable="YES">
+        <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <entity name="HealthCareProfessional" syncable="YES">
+        <attribute name="address1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="address3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="department" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="facility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fax" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identitymanagerid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phlid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preferredlanguage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rejected" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="specialty" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialty2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Order" syncable="YES">
+        <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="applicationsource" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creatorid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datereleased" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateshipped" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datesigned" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="options_isfinalized" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="ordercontenttype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ownerid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reference" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="refprefix" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressline1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressline2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressline3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_facilityname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_fax" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_firstname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_instructions" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_lastname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_licence" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_partner" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_phoneextension" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_postalcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_suite" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_territory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shiptoid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="signature" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="statusreason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="trackingnumbers" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="OrderLineItem" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantityordered" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="OrderTemplate" syncable="YES">
+        <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ownerid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_instructions" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shiptoid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="templatename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="OrderTemplateLine" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ordertemplateid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantityordered" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="People" syncable="YES">
+        <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="people_id" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Product" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageurl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lowlevelquantity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="options_option2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="options_ordertypeeligibility" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="packagesize" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="product_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unitmultiplier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <entity name="Rep" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fax" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hcpstatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identitymanagerid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preferredlanguage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialty" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="specialty2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="RepInventory" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="expirydate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="lotcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="qtyavailable" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="repid" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <entity name="Territory" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territorynumber" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TerritoryFSA" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="fsa" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="TerritoryRep" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="repid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Address" positionX="124" positionY="249" width="128" height="435"/>
+        <element name="Allocation" positionX="-794" positionY="249" width="128" height="345"/>
+        <element name="AllocationHeader" positionX="160" positionY="-24" width="128" height="195"/>
+        <element name="ClientInfo" positionX="-396" positionY="-315" width="128" height="360"/>
+        <element name="Disbursement" positionX="448" positionY="396" width="128" height="630"/>
+        <element name="DisbursementLineItem" positionX="-135" positionY="-111" width="128" height="165"/>
+        <element name="Event" positionX="153" positionY="-159" width="128" height="60"/>
+        <element name="HealthCareProfessional" positionX="-2" positionY="291" width="128" height="465"/>
+        <element name="Order" positionX="-585" positionY="-534" width="128" height="735"/>
+        <element name="OrderLineItem" positionX="-776" positionY="0" width="128" height="150"/>
+        <element name="OrderTemplate" positionX="450" positionY="222" width="128" height="165"/>
+        <element name="OrderTemplateLine" positionX="-9" positionY="135" width="128" height="105"/>
+        <element name="People" positionX="-396" positionY="225" width="128" height="90"/>
+        <element name="Product" positionX="-146" positionY="594" width="128" height="285"/>
+        <element name="Rep" positionX="-576" positionY="549" width="128" height="375"/>
+        <element name="RepInventory" positionX="-317" positionY="450" width="128" height="180"/>
+        <element name="Territory" positionX="-522" positionY="309" width="128" height="150"/>
+        <element name="TerritoryFSA" positionX="-135" positionY="333" width="128" height="135"/>
+        <element name="TerritoryRep" positionX="-191" positionY="180" width="128" height="135"/>
+    </elements>
+</model>
