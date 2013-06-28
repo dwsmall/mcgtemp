@@ -6,14 +6,9 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
-#import <CoreData/CoreData.h>
+@class HcpListViewController;
 
-@class HcpListViewController_iPad;
-
-@interface HcpListViewController_iPad : UIViewController <NSFetchedResultsControllerDelegate> {
+@interface HcpListViewController : UIViewController <NSFetchedResultsControllerDelegate> {
     
     NSInteger ChosenRowNumber;
     

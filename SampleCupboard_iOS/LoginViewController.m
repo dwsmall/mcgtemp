@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import <QuartzCore/QuartzCore.h>
 
-#import "LoginViewController_iPad.h"
 
-@interface LoginViewController_iPad ()
+#import "LoginViewController.h"
+
+@interface LoginViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 
@@ -50,7 +50,7 @@
 
 
 
-@implementation LoginViewController_iPad
+@implementation LoginViewController
 
 
 

@@ -14,34 +14,45 @@ Reachability *internetReachableFoo;
 @interface SyncViewController_iPad ()
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnLoadHCPs;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnReloadData;
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnSync;
 
 - (IBAction)btnLoadHCPsClick:(id)sender;
-
 - (IBAction)btnReloadDataClick:(id)sender;
-
 - (IBAction)btnSyncClick:(id)sender;
-
 
 @end
 
 
+
 @implementation SyncViewController_iPad
-
-
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    // Show No Network Message If Internet is Not Connected...
+    Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
+    NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
+     if (internetStatus == NotReachable){
+     
+         NSLog(@"There's no connection");
+         
+         UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                        initWithTitle:@"No internet connection"
+                                        message:@"Internet connection is required to use this app"
+                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+         
+         [errorAlertView show];
+         
+     
+     } else {
+         NSLog(@"Internet connection is OK");
+     }
+    
 }
-
-
 
 
 - (void)didReceiveMemoryWarning
@@ -51,108 +62,313 @@ Reachability *internetReachableFoo;
 }
 
 
-
+- (IBAction)btnSyncClick:(id)sender {
     
-- (IBAction)btnReloadDataClick:(id)sender {
-
+    // TEST INSERTION METHOD USING MANUAL INSERT
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
     NSManagedObjectContext *context = [self managedObjectContext];
     
-    // Remove Client Info
-    NSError *errorMSG = nil;
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
-    [request setEntity:[NSEntityDescription entityForName:@"ClientInfo" inManagedObjectContext:context]];
+    // PART 1. INSERT ORDER
+    // NSManagedObjectContext *context = [self managedObjectContext];
+    NSManagedObject *OrderHDR = [NSEntityDescription
+                                 insertNewObjectForEntityForName:@"Order"
+                                 inManagedObjectContext:context];
+    [OrderHDR setValue:@"123456" forKey:@"clientid"];
+    [OrderHDR setValue:@"2e9847f5-c72b-4118-bb99-349377e18758" forKey:@"orderid"];
+    [OrderHDR setValue:@"1234567" forKey:@"reference"];
+    [OrderHDR setValue:@"Brick" forKey:@"shipping_firstname"];
+    [OrderHDR setValue:@"Mortar" forKey:@"shipping_lastname"];
+    [OrderHDR setValue:@"Active" forKey:@"status"];
     
-    NSArray *matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"EEE, d MMM yyyy HH:mm:ss zzz"];
+        NSString *dateStringA = @"Tue, 18 Oct 2011 15:54:43 +0900";
+        NSDate *dateA = [dateFormatter dateFromString:dateStringA];
+    [OrderHDR setValue:dateA forKey:@"datecreated"];
     
-    if ([matchingData count]>0) {
-        for (NSManagedObject *obj in matchingData) {
-            [managedObjectContext deleteObject:obj];
-        }
-        [managedObjectContext save:&errorMSG];
+    
+    
+    // could also use [OrderHDR setValue:[NSDate date] forKey:@"datecreated"];
+    
+    
+    // PART 2. INSERT ORDER DETAILS IMMEDIATELY AFTER
+    NSManagedObject *OrderDTL = [NSEntityDescription
+                                          insertNewObjectForEntityForName:@"OrderLineItem"
+                                          inManagedObjectContext:context];
+    [OrderDTL setValue:@"2e9847f5-c72b-4118-bb99-349377e18758" forKey:@"orderid"];
+    [OrderDTL setValue:@"123456" forKey:@"clientid"];
+    [OrderDTL setValue:@"EMG 2300" forKey:@"productid"];
+    [OrderDTL setValue:[NSNumber numberWithInt:55] forKey:@"quantityordered"];
+    [OrderDTL setValue:[NSDate date] forKey:@"datecreated"];
+    
+    //PART 3. INSERT VALUE FOR RELATIONSHIP    
+    [OrderDTL setValue:OrderHDR forKey:@"toOrderHeader"];
+    // [OrderHDR setValue:OrderDTL forKey:@"toOrderDetails"];
+    
+    NSError *error;
+    if (![context save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle: @"Synchronize"
+                          message: @"Record synchronized successfully"
+                          delegate: nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    [alert show];
+    
+}
 
 
-    // Remove Product Info
-    request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"Product" inManagedObjectContext:context]];
-    matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
+- (IBAction)btnReloadDataClick:(id)sender {
     
-    if ([matchingData count]>0) {
-        for (NSManagedObject *obj in matchingData) {
-            [managedObjectContext deleteObject:obj];
-        }
-        [managedObjectContext save:&errorMSG];
+    // Check Internet
+    Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
+    NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
+    if (internetStatus == NotReachable){
+        
+        NSLog(@"There's no connection");
+        
+        UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                       initWithTitle:NSLocalizedString(@"Connection Required",@"titleKey")
+                                       message:NSLocalizedString(@"Internet connection is required to use this app!",@"messageKey")                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [errorAlertView show];
+        
+    } else {
+        
+        // NSLog(NSLocalizedString(@"Connection OK",@"fakeKey"));
+        
+        // Delete Data For "others"
+        [self performSelectorOnMainThread:@selector(RemoveEntities:) withObject:@"others" waitUntilDone:YES];
+        
+        // Populate Data For "others"
+        [self performSelectorOnMainThread:@selector(PopulateEntities:) withObject:@"others" waitUntilDone:YES];
+        
+        // Process Complete
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"Complete",@"titleKey")
+                              message:NSLocalizedString(@"Reload Complete",@"messageKey")
+                              delegate:self
+                              cancelButtonTitle:NSLocalizedString(@"OK",@"cancelKey")
+                              otherButtonTitles:nil];
+        [alert show];
     }
     
-    // Remove Allocation
-    request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"Allocation" inManagedObjectContext:context]];
-    matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
+}
+
+
+
+- (IBAction)btnLoadHCPsClick:(id)sender {
     
-    if ([matchingData count]>0) {
-        for (NSManagedObject *obj in matchingData) {
-            [managedObjectContext deleteObject:obj];
-        }
-        [managedObjectContext save:&errorMSG];
+    
+    // Check Internet
+    Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
+    NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
+    if (internetStatus == NotReachable){
+        
+        NSLog(@"There's no connection");
+        
+        UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                       initWithTitle:NSLocalizedString(@"Connection Required",@"titleKey")
+                                       message:NSLocalizedString(@"Internet connection is required to use this app!",@"messageKey")                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [errorAlertView show];
+        
+    } else {
+        
+        // Delete Data HCP
+        [self performSelectorOnMainThread:@selector(RemoveEntities:) withObject:@"hcp" waitUntilDone:YES];
+        
+        // Populate Data For "others"
+        [self performSelectorOnMainThread:@selector(PopulateEntities:) withObject:@"hcp" waitUntilDone:YES];
+        
+        // Process All Records
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"HCP Update Complete"
+                              message: @"All Hcp Records Have Been Updated."
+                              delegate: nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }
     
-    // Remove AllocationHeader
-    request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"AllocationHeader" inManagedObjectContext:context]];
-    matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
+}
     
-    if ([matchingData count]>0) {
-        for (NSManagedObject *obj in matchingData) {
-            [managedObjectContext deleteObject:obj];
-        }
-        [managedObjectContext save:&errorMSG];
+    
+
+
+
+
+
+
+
+
+
+- (void) RemoveEntities:(NSString *) removalType {
+
+    
+    NSLog(@"Entity Removal Called %@", removalType);
+    
+    NSArray *deletionEntity;
+    
+    NSString *delete_hcp = @"hcp";
+    NSString *delete_others = @"others";
+    
+    
+    if ([removalType isEqual: delete_hcp])  {
+        deletionEntity = @[@"HealCareProfessional"];
     }
     
-    
-    // Remove TerritoryFSA
-    request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"TerritoryFSA" inManagedObjectContext:context]];
-    matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
-    
-    if ([matchingData count]>0) {
-        for (NSManagedObject *obj in matchingData) {
-            [managedObjectContext deleteObject:obj];
-        }
-        [managedObjectContext save:&errorMSG];
+    if ([removalType isEqual: delete_others]) {
+        deletionEntity = @[@"ClientInfo",@"Product",@"Allocation",@"AllocationHeader",@"TerritoryFSA",@"Territory",@"Rep", @"Order", @"OrderLineItem"];
     }
     
-    // Remove Territory
-    request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"Territory" inManagedObjectContext:context]];
-    matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
+    // Define Delegate Context
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
     
-    if ([matchingData count]>0) {
-        for (NSManagedObject *obj in matchingData) {
-            [managedObjectContext deleteObject:obj];
+    
+    NSLog(@"Total Entries %i", [deletionEntity count]);
+    
+    
+
+    for(int i=0;i<[deletionEntity count];i++)
+    {
+        
+        // Error Msg Handling - Process Acts Transactional [Critical]
+        NSError *errorMSG = nil;
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+
+        request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:[deletionEntity objectAtIndex:i] inManagedObjectContext:context]];
+    
+        NSArray *matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
+    
+        if ([matchingData count]>0) {
+            for (NSManagedObject *obj in matchingData) {
+                [managedObjectContext deleteObject:obj];
+            }
+            [managedObjectContext save:&errorMSG];
         }
-        [managedObjectContext save:&errorMSG];
+        
+        NSLog(@"Actual Entry %@", [deletionEntity objectAtIndex:i] );
+        // NSLog(@"This Entity Has Been Removed %@", deletionEntity);
+        
+    }// End Each
+
+}
+
+
+
+- (void) PopulateEntities:(NSString *) populationType {
+    
+
+    //Entities Should Be Defined By Stuff Being Sent (May Need To Exclude Certain Objects)
+    
+    
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    
+    NSString *populate_hcp = @"hcp";
+    NSString *populate_others = @"others";
+    
+    if ([populationType isEqual: populate_hcp])  {
+        
+    // HCP
+    NSURL *url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/GetActiveHcpsInARepsReach/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590"];
+    NSData *jsonData = [NSData dataWithContentsOfURL:url];
+    
+    
+    if(jsonData != nil)
+    {
+        NSError *error = nil;
+        NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+        NSArray* arrayContainer = [dictContainer objectForKey:@"GetActiveHcpsInARepsReachResult"];
+        
+        // NSLog(@"hcp: %@", arrayContainer);
+        
+        //Iterate JSON Objects
+        for(int i=0;i<[arrayContainer count];i++)
+        {
+            NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
+            
+            NSManagedObject *model = [NSEntityDescription
+                                      insertNewObjectForEntityForName:@"HealthCareProfessional"
+                                      inManagedObjectContext:context];
+            [model setValue:@"TEST123" forKey:@"clientid"];
+            [model setValue:[dicItems objectForKey:@"FirstName"] forKey:@"firstname"];
+            [model setValue:[dicItems objectForKey:@"LastName"] forKey:@"lastname"];
+            
+            
+            if ([[dicItems objectForKey:@"Phone"] isKindOfClass:[NSNull class]]) {
+                [model setValue:@" " forKey:@"phone"];
+            } else {
+                [model setValue:[dicItems objectForKey:@"Phone"] forKey:@"phone"];
+            }
+            
+            if ([[dicItems objectForKey:@"Fax"] isKindOfClass:[NSNull class]]) {
+                [model setValue:@" " forKey:@"fax"];
+            } else {
+                [model setValue:[dicItems objectForKey:@"Fax"] forKey:@"fax"];
+            }
+            
+            
+            if ([[dicItems objectForKey:@"FacilityName"] isKindOfClass:[NSNull class]]) {
+                [model setValue:@" " forKey:@"facility"];
+            } else {
+                [model setValue:[dicItems objectForKey:@"FacilityName"] forKey:@"facility"];
+            }
+            
+            [model setValue:[dicItems objectForKey:@"Deparment"] forKey:@"department"];
+            [model setValue:[dicItems objectForKey:@"AddressLine1"] forKey:@"address1"];
+            
+            if ([[dicItems objectForKey:@"AddressLine2"] isKindOfClass:[NSNull class]]) {
+                [model setValue:@" " forKey:@"address2"];
+            } else {
+                [model setValue:[dicItems objectForKey:@"AddressLine2"] forKey:@"address2"];
+            }
+            
+            if ([[dicItems objectForKey:@"AddressLine3"] isKindOfClass:[NSNull class]]) {
+                [model setValue:@" " forKey:@"address3"];
+            } else {
+                [model setValue:[dicItems objectForKey:@"AddressLine3"] forKey:@"address3"];
+            }
+            
+            
+            
+            // [model setValue:[dicItems objectForKey:@"AddressLine2"] forKey:@"address2"];
+            // [model setValue:[dicItems objectForKey:@"AddressLine3"] forKey:@"address3"];
+            [model setValue:[dicItems objectForKey:@"Email"] forKey:@"email"];
+            [model setValue:[dicItems objectForKey:@"City"] forKey:@"city"];
+            [model setValue:[dicItems objectForKey:@"Province"] forKey:@"province"];
+            [model setValue:[dicItems objectForKey:@"PostalCode"] forKey:@"postal"];
+            // [model setValue:[dicItems objectForKey:@"SignDate"] forKey:@"signdate"];
+            [model setValue:[dicItems objectForKey:@"PHLID"] forKey:@"id"];
+        }
+        
+        if (![context save:&error]) {
+            NSLog(@"Couldn't save: %@", [error localizedDescription]);
+        }
+        
+        // if (error == nil)
+        // NSLog(@"%@", dictContainer);addre
     }
 
     
-    // Remove Rep
-    request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"Rep" inManagedObjectContext:context]];
-    NSArray *matchingDataX = [managedObjectContext executeFetchRequest:request error:&errorMSG];
-    
-    if ([matchingDataX count]>0) {
-        for (NSManagedObject *obj in matchingDataX) {
-            [managedObjectContext deleteObject:obj];
-        }
-        [managedObjectContext save:&errorMSG];
-    }
+        
+        
+    }  // END HCP SECTION
     
     
     
     
-    
+    if ([populationType isEqual: populate_others])  {
     
     // Client Info -  Single Record
     NSURL *url = [NSURL URLWithString:@"http://project.dwsmall.com/clientinfo"];
@@ -174,7 +390,7 @@ Reachability *internetReachableFoo;
         [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
         [model setValue:[dicItems objectForKey:@"DisplayName"]  forKey:@"displayname"];
         
-
+        
         if (![context save:&error]) {
             NSLog(@"Couldn't save: %@", [error localizedDescription]);
         }
@@ -212,7 +428,7 @@ Reachability *internetReachableFoo;
             [model setValue:[dicItems objectForKey:@"options_OrderTypeEligibility"]  forKey:@"options_ordertypeeligibility"];
             [model setValue:[dicItems objectForKey:@"status"]  forKey:@"status"];
         }
-                       
+        
         if (![context save:&error]) {
             NSLog(@"Couldn't save: %@", [error localizedDescription]);
         }
@@ -444,28 +660,41 @@ Reachability *internetReachableFoo;
     
     url = [NSURL URLWithString:@"http://project.dwsmall.com/order"];
     jsonData = [NSData dataWithContentsOfURL:url];
+        
+        // Grab Detailed Data
+        NSURL *url2 = [NSURL URLWithString:@"http://project.dwsmall.com/orderdetails"];
+        NSData *jsonData2 = [NSData dataWithContentsOfURL:url2];
     
+        
     if(jsonData != nil)
     {
         NSError *error = nil;
         NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+        
+            // Dictionary of Detailed Items
+            NSDictionary* dictContainer2 = [NSJSONSerialization JSONObjectWithData:jsonData2 options:kNilOptions error:&error];
+        
         NSArray* arrayContainer = [dictContainer objectForKey:@"order"];
         
-        // NSLog(@"rep: %@", arrayContainer);
+            // Container of Detailed Items
+            NSArray* arrayContainer2 = [dictContainer2 objectForKey:@"orderdetails"];
+        
+        
         
         //Iterate JSON Objects
         for(int i=0;i<[arrayContainer count];i++)
         {
             NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
             
-            NSManagedObject *model = [NSEntityDescription
+            NSManagedObject *OrderHDR = [NSEntityDescription
                                       insertNewObjectForEntityForName:@"Order"
                                       inManagedObjectContext:context];
-            [model setValue:[dicItems objectForKey:@"clientid"] forKey:@"clientid"];
-            [model setValue:[dicItems objectForKey:@"reference"] forKey:@"reference"];
-            [model setValue:[dicItems objectForKey:@"shipping_firstname"] forKey:@"shipping_firstname"];
-            [model setValue:[dicItems objectForKey:@"shipping_lastname"] forKey:@"shipping_lastname"];
-            [model setValue:[dicItems objectForKey:@"status"] forKey:@"status"];
+            [OrderHDR setValue:[dicItems objectForKey:@"clientid"] forKey:@"clientid"];
+            [OrderHDR setValue:[dicItems objectForKey:@"order_id"] forKey:@"orderid"];
+            [OrderHDR setValue:[dicItems objectForKey:@"reference"] forKey:@"reference"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_firstname"] forKey:@"shipping_firstname"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_lastname"] forKey:@"shipping_lastname"];
+            [OrderHDR setValue:[dicItems objectForKey:@"status"] forKey:@"status"];
             
             
             // Date Conversion Routine
@@ -473,7 +702,54 @@ Reachability *internetReachableFoo;
             [dateFormatter setDateFormat:@"EEE, d MMM yyyy HH:mm:ss zzz"];
             NSString *dateStringA = [dicItems objectForKey:@"datecreated"];
             NSDate *dateA = [dateFormatter dateFromString:dateStringA];
-            [model setValue:dateA forKey:@"datecreated"];
+            [OrderHDR setValue:dateA forKey:@"datecreated"];
+            
+            
+                // Get Matching Detailed Items And Insert
+                for(int x=0;x<[arrayContainer2 count];x++)
+                {
+                    NSDictionary* dicItems2 = [arrayContainer2 objectAtIndex:x];
+                    
+                    // WRITE OUT COMPARATIVE VALUES...
+                    NSLog(@"RAW HDR dicItems - : %@", [dicItems objectForKey:@"order_id"]);
+                    NSLog(@"RAW DETAILS dicItems2 - : %@", [dicItems2 objectForKey:@"order_id"] );
+                    
+                    NSString *testx1 = [[dicItems objectForKey:@"order_id"] stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                    NSLog(@"STRIPPED VALUE - : %@", testx1);
+                    
+                    
+                    NSString *TESTA1 = [dicItems objectForKey:@"order_id"];
+                    NSString *TESTA2 = [dicItems2 objectForKey:@"order_id"];
+                    
+                    NSLog(@"SMOOTH STRING HDR dicItems - : %@", TESTA1);
+                    NSLog(@"SMOOTH STRING DETAILS dicItems2 - : %@", TESTA2);
+                    
+
+                    
+                    NSString *TESTdw1 = [[dicItems objectForKey:@"order_id"] stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                    NSString *TESTdw2 = [[dicItems2 objectForKey:@"order_id"] stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                    
+                    
+                    if ([TESTdw1 isEqualToString: TESTdw2]) {
+                    // PART 2. INSERT ORDER DETAILS IMMEDIATELY AFTER
+                    NSManagedObject *OrderDTL = [NSEntityDescription
+                                         insertNewObjectForEntityForName:@"OrderLineItem"
+                                         inManagedObjectContext:context];
+                        
+                        [OrderDTL setValue:[dicItems2 objectForKey:@"clientid"] forKey:@"clientid"];
+                        [OrderDTL setValue:[dicItems2 objectForKey:@"order_id"] forKey:@"orderid"];
+                        [OrderDTL setValue:[dicItems2 objectForKey:@"productid"] forKey:@"productid"];
+                        [OrderDTL setValue:[dicItems2 objectForKey:@"quantityordered"] forKey:@"quantityordered"];
+                        [OrderDTL setValue:[NSDate date] forKey:@"datecreated"];
+            
+                        //PART 3. INSERT VALUE FOR RELATIONSHIP
+                        [OrderDTL setValue:OrderHDR forKey:@"toOrderHeader"];
+                        
+                        NSLog(@"WORKING MAN - :");
+                    }
+                }
+            
+            
             
             // [model setValue:[dicItems objectForKey:@"datecreated"] forKey:@"datecreated"];
         }
@@ -484,216 +760,54 @@ Reachability *internetReachableFoo;
         
         if (error == nil)
             NSLog(@"%@", dictContainer);
+            NSLog(@"%@", dictContainer2);
     }
-    
-    
-    
-
-    
-    
-    // Process Complete
-    UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:NSLocalizedString(@"Complete",@"titleKey")
-                              message:NSLocalizedString(@"Reload Complete",@"messageKey")
-                              delegate:self
-                              cancelButtonTitle:NSLocalizedString(@"OK",@"cancelKey")
-                              otherButtonTitles:nil];
-    [alert show];
-    
-    
-    
-    
-}
-
-- (IBAction)btnLoadHCPsClick:(id)sender {
-    
-    
-    if (2 == 1) {
-        
-        // No Internet Connection
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:NSLocalizedString(@"Connection Required",@"titleKey")
-                                  message:NSLocalizedString(@"Device Could Not Connect To Internet!",@"messageKey")
-                                  delegate:self
-                                  cancelButtonTitle:NSLocalizedString(@"ok",@"cancelKey")
-                                  otherButtonTitles:nil];
-        [alertView show];
-        
-    
-    } else {
-        
-        id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-        self.managedObjectContext = [appDelegate managedObjectContext];
-        NSManagedObjectContext *context = [self managedObjectContext];
-        
-    
-        // Remove Client Info
-        NSError *errorMSG = nil;
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        
-        [request setEntity:[NSEntityDescription entityForName:@"HealthCareProfessional" inManagedObjectContext:context]];
-        
-        NSArray *matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
-        
-        if ([matchingData count]>0) {
-            for (NSManagedObject *obj in matchingData) {
-                [managedObjectContext deleteObject:obj];
-            }
-            [managedObjectContext save:&errorMSG];
-        }
-
         
         
-        // HCP
+        // ORDER DETAILS
         
-        NSURL *url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/GetActiveHcpsInARepsReach/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590"];
-        NSData *jsonData = [NSData dataWithContentsOfURL:url];
+        // url = [NSURL URLWithString:@"http://project.dwsmall.com/orderdetails"];
+        // jsonData = [NSData dataWithContentsOfURL:url];
         
-        
-        if(jsonData != nil)
-        {
-            NSError *error = nil;
-            NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-            NSArray* arrayContainer = [dictContainer objectForKey:@"GetActiveHcpsInARepsReachResult"];
-            
-            // NSLog(@"hcp: %@", arrayContainer);
+        // if(jsonData != nil)
+        // {
+        //     NSError *error = nil;
+        //     NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+        //     NSArray* arrayContainer = [dictContainer objectForKey:@"orderdetails"];
             
             //Iterate JSON Objects
-            for(int i=0;i<[arrayContainer count];i++)
-            {
-                NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
+        
+        //    for(int i=0;i<[arrayContainer count];i++)
+        //    {
+        //        NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
                 
-                NSManagedObject *model = [NSEntityDescription
-                                          insertNewObjectForEntityForName:@"HealthCareProfessional"
-                                          inManagedObjectContext:context];
-                [model setValue:@"TEST123" forKey:@"clientid"];
-                [model setValue:[dicItems objectForKey:@"FirstName"] forKey:@"firstname"];
-                [model setValue:[dicItems objectForKey:@"LastName"] forKey:@"lastname"];
-                
-                
-                if ([[dicItems objectForKey:@"Phone"] isKindOfClass:[NSNull class]]) {
-                    [model setValue:@" " forKey:@"phone"];
-                } else {
-                    [model setValue:[dicItems objectForKey:@"Phone"] forKey:@"phone"];
-                }
-                                
-                if ([[dicItems objectForKey:@"Fax"] isKindOfClass:[NSNull class]]) {
-                    [model setValue:@" " forKey:@"fax"];
-                } else {
-                    [model setValue:[dicItems objectForKey:@"Fax"] forKey:@"fax"];
-                }
-                
-                
-                if ([[dicItems objectForKey:@"FacilityName"] isKindOfClass:[NSNull class]]) {
-                    [model setValue:@" " forKey:@"facility"];
-                } else {
-                    [model setValue:[dicItems objectForKey:@"FacilityName"] forKey:@"facility"];
-                }
-
-                [model setValue:[dicItems objectForKey:@"Deparment"] forKey:@"department"];
-                [model setValue:[dicItems objectForKey:@"AddressLine1"] forKey:@"address1"];
-                
-                if ([[dicItems objectForKey:@"AddressLine2"] isKindOfClass:[NSNull class]]) {
-                    [model setValue:@" " forKey:@"address2"];
-                } else {
-                    [model setValue:[dicItems objectForKey:@"AddressLine2"] forKey:@"address2"];
-                }
-                
-                if ([[dicItems objectForKey:@"AddressLine3"] isKindOfClass:[NSNull class]]) {
-                    [model setValue:@" " forKey:@"address3"];
-                } else {
-                    [model setValue:[dicItems objectForKey:@"AddressLine3"] forKey:@"address3"];
-                }
-                
-                
-                
-                // [model setValue:[dicItems objectForKey:@"AddressLine2"] forKey:@"address2"];
-                // [model setValue:[dicItems objectForKey:@"AddressLine3"] forKey:@"address3"];
-                [model setValue:[dicItems objectForKey:@"Email"] forKey:@"email"];
-                [model setValue:[dicItems objectForKey:@"City"] forKey:@"city"];
-                [model setValue:[dicItems objectForKey:@"Province"] forKey:@"province"];
-                [model setValue:[dicItems objectForKey:@"PostalCode"] forKey:@"postal"];
-                // [model setValue:[dicItems objectForKey:@"SignDate"] forKey:@"signdate"];
-                [model setValue:[dicItems objectForKey:@"PHLID"] forKey:@"id"];                
-            }
+        //        NSManagedObject *model = [NSEntityDescription
+        //                                  insertNewObjectForEntityForName:@"OrderLineItem"
+        //                                  inManagedObjectContext:context];
+        //        [model setValue:[dicItems objectForKey:@"clientid"] forKey:@"clientid"];
+        //        [model setValue:[dicItems objectForKey:@"order_id"] forKey:@"orderid"];
+        //        [model setValue:[dicItems objectForKey:@"productid"] forKey:@"productid"];
+        //        [model setValue:[dicItems objectForKey:@"quantityordered"] forKey:@"quantityordered"];
+        //    }
             
-            if (![context save:&error]) {
-                NSLog(@"Couldn't save: %@", [error localizedDescription]);
-            }
+        //    if (![context save:&error]) {
+        //        NSLog(@"Couldn't save: %@", [error localizedDescription]);
+        //    }
             
-            // if (error == nil)
-                // NSLog(@"%@", dictContainer);addre
-        }
+        //    if (error == nil)
+        //         NSLog(@"%@", dictContainer);
+        // }
         
         
-        // Process All Records
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"HCP Update Complete"
-                              message: @"All Hcp Records Have Been Updated."
-                              delegate: nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
-}
-    
-    
+        }  // end populate of others 
 
-- (IBAction)btnSyncClick:(id)sender {
-    
-    
-    UIAlertView *alert = [[UIAlertView alloc]
-                         initWithTitle: @"Synchronize"
-                         message: @"Record synchronized successfully"
-                         delegate: nil
-                         cancelButtonTitle:@"OK"
-                         otherButtonTitles:nil];
-    [alert show];
-    
 }
 
 
-// Checks if we have an internet connection or not
-- (void) testInternetConnection
-{
-
-    internetReachableFoo = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
-    
-    // Internet is reachable
-    internetReachableFoo.reachableBlock = ^(Reachability*reach)
-    {
-        
-        // Update the UI on the main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Connection Established!");
-        });
-        
-    };
-    
-    // Internet is not reachable
-    internetReachableFoo.unreachableBlock = ^(Reachability*reach)
-    {
-        // Update the UI on the main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Connection Could Not Be Made to Internet");
-        });
-        
-    };
-    
-    [internetReachableFoo startNotifier];
-    
-    
-}
 
 
--(bool) mainx
-{
-    char* name;
-    name = malloc (sizeof(char) * 6);
-    name = "david";
-    return TRUE;
-}
+
+
 
 
 
@@ -706,7 +820,6 @@ Reachability *internetReachableFoo;
     NSError *error;
     NSArray *items = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
     
-    
     for (NSManagedObject *managedObject in items) {
     	[_managedObjectContext deleteObject:managedObject];
     	NSLog(@"%@ object deleted",entityDescription);
@@ -717,11 +830,5 @@ Reachability *internetReachableFoo;
     
 }
 
-
-- (NSNumber*) isConnected
-{
-    BOOL isAppConnected = NO;
-    return [NSNumber numberWithBool:isAppConnected];
-}
 
 @end

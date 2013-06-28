@@ -126,7 +126,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    // NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     // self.detailViewController.detailItem = object;
 }
 

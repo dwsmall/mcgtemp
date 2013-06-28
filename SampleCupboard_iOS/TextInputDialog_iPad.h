@@ -6,10 +6,6 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
-
 @interface TextInputDialog_iPad : UIViewController {
     UILabel *_lblCaption;
 	UITextField *_editText;

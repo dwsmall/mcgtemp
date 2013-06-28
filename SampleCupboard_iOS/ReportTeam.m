@@ -82,9 +82,9 @@
     
     LoanModel* loan = _feed.loans[indexPath.row];
     
-    NSString* message = [NSString stringWithFormat:@"%@ from %@ needs a loan %@",
-                         loan.name, loan.location.country, loan.use
-                         ];
+    //  NSString* message = [NSString stringWithFormat:@"%@ from %@ needs a loan %@",
+        //                  loan.name, loan.location.country, loan.use
+           //              ];
     
     
     // [HUD showAlertWithTitle:@"Loan details" text:message];

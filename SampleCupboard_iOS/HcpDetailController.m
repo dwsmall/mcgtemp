@@ -42,11 +42,6 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    NSLog(@"show test msg words: %@",selectedHCPMSG);
-    NSLog(@"show test msg index: %@",selectedHCPINDEX);
-    
-    // FETCH SINGLE RESULTS INTO AN ARRAY...
-
 }
 
 
@@ -177,11 +172,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    // self.detailViewController.detailItem = object;
-    NSLog(@"ROW: %d",indexPath.row);
-    // [self performSegueWithIdentifier:@"_additionalhcp" sender:self];
-    // NSLog(@"ROW2: %d",indexPath.row);
+
 }
 
 
@@ -285,17 +276,6 @@
 {
     [self.tableView endUpdates];
 }
-
-/*
- // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
- {
- // In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
- }
- */
-
 
 
 

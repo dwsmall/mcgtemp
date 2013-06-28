@@ -169,7 +169,7 @@
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Order" syncable="YES">
+    <entity name="Order" representedClassName="Order" syncable="YES">
         <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="applicationsource" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
@@ -216,8 +216,9 @@
         <attribute name="statusreason" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trackingnumbers" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toOrderDetails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OrderLineItem" inverseName="toOrderHeader" inverseEntity="OrderLineItem" syncable="YES"/>
     </entity>
-    <entity name="OrderLineItem" syncable="YES">
+    <entity name="OrderLineItem" representedClassName="OrderLineItem" syncable="YES">
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
@@ -225,6 +226,7 @@
         <attribute name="orderid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="quantityordered" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="toOrderHeader" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Order" inverseName="toOrderDetails" inverseEntity="Order" syncable="YES"/>
     </entity>
     <entity name="OrderTemplate" syncable="YES">
         <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
@@ -326,7 +328,7 @@
         <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Address" positionX="124" positionY="249" width="128" height="435"/>
+        <element name="Address" positionX="171" positionY="258" width="128" height="435"/>
         <element name="Allocation" positionX="-794" positionY="249" width="128" height="345"/>
         <element name="AllocationHeader" positionX="160" positionY="-24" width="128" height="195"/>
         <element name="ClientInfo" positionX="-396" positionY="-315" width="128" height="360"/>
@@ -334,8 +336,8 @@
         <element name="DisbursementLineItem" positionX="-135" positionY="-111" width="128" height="165"/>
         <element name="Event" positionX="153" positionY="-159" width="128" height="60"/>
         <element name="HealthCareProfessional" positionX="-2" positionY="291" width="128" height="465"/>
-        <element name="Order" positionX="-585" positionY="-534" width="128" height="735"/>
-        <element name="OrderLineItem" positionX="-776" positionY="0" width="128" height="150"/>
+        <element name="Order" positionX="-585" positionY="-534" width="128" height="750"/>
+        <element name="OrderLineItem" positionX="-756" positionY="-87" width="128" height="165"/>
         <element name="OrderTemplate" positionX="450" positionY="222" width="128" height="165"/>
         <element name="OrderTemplateLine" positionX="-9" positionY="135" width="128" height="105"/>
         <element name="People" positionX="-396" positionY="225" width="128" height="90"/>

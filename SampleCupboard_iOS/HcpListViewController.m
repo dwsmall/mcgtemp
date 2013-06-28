@@ -9,9 +9,9 @@
 
 #import "HcpDetailController.h"
 
-#import "HcpListViewController_iPad.h"
+#import "HcpListViewController.h"
 
-@interface HcpListViewController_iPad ()
+@interface HcpListViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *healthcareProf;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation HcpListViewController_iPad
+@implementation HcpListViewController
 
 
 -(IBAction)return:(UIStoryboardSegue *)segue{
@@ -47,10 +47,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSLog(@"Did Select Row %ld", (long)indexPath.row);
-    
-    // UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    // NSString *cellText = cell.textLabel.text;
-    
     ChosenRowNumber = indexPath.row;
     
 }
@@ -122,7 +118,7 @@
             // DOES NOT WORK NSIndexPath *indexPathX = [self.tableView indexPathForSelectedRow];
             // NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 
-            HcpListViewController_iPad *ourfetchClass = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:ChosenRowNumber inSection:0]];
+            HcpListViewController *ourfetchClass = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:ChosenRowNumber inSection:0]];
         
         
             // Handling of Null Fields (Server Side or Replace With NSAssert)
@@ -285,22 +281,12 @@
     [self.tableView endUpdates];
 }
 
-/*
- // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
- {
- // In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
- }
- */
-
 
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    // cell.textLabel.text = [[object valueForKey:@"firstname"] description];
+
     cell.textLabel.Text = [[NSString stringWithFormat:@"%@, %@", [[object valueForKey:@"firstname"] description], [[object valueForKey:@"lastname"] description]] uppercaseString];
     
     cell.detailTextLabel.Text = [NSString stringWithFormat:@"%@ %@ %@",
@@ -308,7 +294,6 @@
                                  [[object valueForKey:@"province"] description],
     [[object valueForKey:@"postal"] description]];
     
-    // cell.detailTextLabel.Text = [[object valueForKey:@"address1"] description];
 }
 
 

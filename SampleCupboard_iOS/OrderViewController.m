@@ -6,12 +6,14 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import "OrderViewController_iPad.h"
+
+#import "Order.h"
+#import "OrderLineItem.h"
+
+#import "OrderViewController.h"
 #import "OrderDetailViewController_iPad.h"
 
-
-
-@interface OrderViewController_iPad ()
+@interface OrderViewController ()
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
@@ -29,7 +31,7 @@
 @end
 
 
-@implementation OrderViewController_iPad
+@implementation OrderViewController
 
 
 -(IBAction)return:(UIStoryboardSegue *)segue{
@@ -62,22 +64,12 @@
         // Get destination view
         OrderDetailViewController_iPad *vc = [segue destinationViewController];
         
-        // Get button tag number (or do whatever you need to do here, based on your object
-        //NSInteger tagIndex = [(UIButton *)sender tag];
-        //  NSInteger tagIndex = 1;
-        
         // Pass the information to your destination view
-        //[vc setSelectedButton:tagIndex];
         [vc setSelectedButton:2];
         [vc setSelectedHCPNUMBER:2];
         [vc setSelectedPRODUCTNUMBER:0];
-        
-        // [segue.destinationViewController setSelectedButton:0];
-        
-        
     }
 }
-
 
 
 
@@ -86,14 +78,11 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // return [[self.fetchedResultsController sections] count];  // returns 1 result
     
-    // working model
-    //return [self.fetchedResultsController.fetchedObjects count];
-    
-    // hcp example
-    return [[self.fetchedResultsController sections] count];
-    //return 5;
+    // Fetch Each Object As Section (Should Show Total Orders as Results - XX)
+    // NSLog(@"NUMBER OF SECTIONS: %d", [[[self.fetchedResultsController sections] objectAtIndex:0] numberOfObjects]);
+    return [[[self.fetchedResultsController sections] objectAtIndex:0] numberOfObjects];
+         
 }
 
 
@@ -103,16 +92,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // working model
-    // return 3;
     
-    // id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    //return [sectionInfo numberOfObjects];
+    // Determine Number of Rows Based on NSSet Count For Details
     
-    return [[[self.fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
-
+    // Order *order =[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:section inSection:0]];
     
-    // return 3;
+    Order *ord = [[self.fetchedResultsController fetchedObjects] objectAtIndex:section];
+    
+    int TOTROWS;
+    TOTROWS = (2 + [ord.toOrderDetails.allObjects count]);
+    
+    return TOTROWS;
+    
 }
 
 
@@ -121,36 +112,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-        // NSManagedObject *object = [_fetchedResultsController objectAtIndexPath:indexPath];
-        NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-        NSLog(@"Row: %d",indexPath.row);
-        NSLog(@"Section: %d",indexPath.section);
-    
-        // NSLog(@"Section: %d",indexPath.section);
+        Order *ord = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.section];
 
-        NSLog(@"Hit Me... ");
-        
-        NSString *varCellType = @"_topHeader";
-        
-        switch (indexPath.row) {
-            case 0:
-                varCellType = @"_topHeader";
-                break;
-            case 1:
-                varCellType = @"_lineItem";
-                break;
-            case 2:
-                varCellType = @"_summary";
-                break;
+    
+        NSString *varCellType = @"_lineItem";
+    
+        if (indexPath.row == 0) {
+            varCellType = @"_topHeader";
         }
-        
+    
+        // Summary Should Be Equivalent of Total Row Count
+        if (indexPath.row == ([ord.toOrderDetails.allObjects count] + 1)) {
+            varCellType = @"_summary";
+        }
+
         
         UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:varCellType forIndexPath:indexPath];
         
         [self configureCell:cell atIndexPath:indexPath];
-        return cell;
-   
+        return cell;   
    
 }
 
@@ -189,7 +169,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"reference" cacheName:nil];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -285,59 +265,85 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    // NSManagedObject *object = [_fetchedResultsController objectAtIndexPath:indexPath];
+    
+    
+    // REPLACE INDEX PATH FOR ROW ON FETCH CALL
+    NSManagedObject *object = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
     
     if (indexPath.row == 0) {
         
-        
         UILabel *PDate = (UILabel *)[cell viewWithTag:600];
-        [PDate setText:@"TestDD"];        
-        //[PDate setText:[[object valueForKey:@"datecreated"] description]];
-        
-        NSMutableString *myWord = [[NSMutableString alloc] init];
-        [myWord appendString:[NSString stringWithFormat:@"%d", indexPath.section]];
+        [PDate setText:[[object valueForKey:@"datecreated"] description]];
         
         UILabel *PName = (UILabel *)[cell viewWithTag:601];
-        [PName setText:@"test1"];
-        
-        // [PName setText: [NSString stringWithFormat:@"%@, %@",
-        // [[object valueForKey:@"shipping_firstname"] description],
-        // [[object valueForKey:@"shipping_lastname"] description]]];
+        [PName setText: [NSString stringWithFormat:@"%@, %@",
+        [[object valueForKey:@"shipping_firstname"] description],
+        [[object valueForKey:@"shipping_lastname"] description]]];
     }
     
     
     
     
-    if (indexPath.row == 1) {
+    // if (indexPath.row == 1) {
+        
+     
+        Order *order =[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
+        
+        
+        // TEST1
+        NSSet *books = order.toOrderDetails;
+        NSArray *booksList = books;
+        // NSLog(@"Name TEST1: %@", booksList[0]);
+    
+        // TEST2
+        NSSet *orderDetails = [order.toOrderDetails valueForKeyPath:@"productid"];
+        NSArray *orderDetailsItem = [orderDetails allObjects];
+        
+        // TEST3
+        NSSet *booksByAuthor = [object valueForKey:@"toOrderDetails"];
+        NSArray *booksArray = [booksByAuthor allObjects];
+        
+        for (books in booksList) {
+            NSLog(@"Name: %@", booksList.description);
+            // NSLog(@"Zip: %@", details.zip);
+        }
+       
+        
         
         UILabel *PDate1 = (UILabel *)[cell viewWithTag:602];
-        [PDate1 setText:@"21"];
+        // [PDate1 setText:[[object valueForKey:@"shipping_firstname"] description]];
+        // [PDate1 setText:[order.reference description]];
         
-        // [PDate1 setText: [NSString stringWithFormat:@"%@, %@",
-           //               [[object valueForKey:@"shipping_firstname"] description],
-              //           [[object valueForKey:@"shipping_lastname"] description]]];
         
+    
+        NSLog(@"Name MSG1 : %@", order.toOrderDetails.description);
+    
+        // MSG2 SHOWS ALL VALUES toOrderDetails is null
+        // NSLog(@"Name MSG2 : %@", [order.toOrderDetails valueForKeyPath:@"productid"]);
+    
+        [PDate1 setText:[orderDetails.description description]];
+        
+        // [PDate1 setText:[order.shipping_firstname description]];
+        
+        // [PDate1 setText:[[order valueForKey:@"shipping_firstname"] description]];
         
         // [PDate1 setText:@"Ezetrol 10mg"];
+        // [PDate1 setText:[[object valueForKeyPath:@"shipping_firstname"] description]];
+        // UILabel PDate1 = role.shipping_lastname;
+        // cell.textLabel.text = order.shipping_firstname;
+        
+        // [PDate1 setText:[[object valueForKey:@"datecreated.order"] description]];
         
         UILabel *PName1 = (UILabel *)[cell viewWithTag:603];
+        // [PName1 setText:[[object valueForKeyPath:order.shipping_addressline1] description]];
+        // [PDate1 setText:[order.shipping_addressline1 description]];
         [PName1 setText:@"21"];
-        
-    }
+   // }
     
     
     if (indexPath.row == 2) {
-        
         UILabel *XNameX = (UILabel *)[cell viewWithTag:604];
-        [XNameX setText:@"TestA"];
-        
-        // [XNameX setText: [NSString stringWithFormat:@"%@, %@",
-           //                [[object valueForKey:@"shipping_firstname"] description],
-              //             [[object valueForKey:@"shipping_lastname"] description]]];
-        
-        // [XNameX setText:[[object valueForKey:@"status"] description]];
-        
+        [XNameX setText:[[object valueForKey:@"status"] description]];
     }
     
     

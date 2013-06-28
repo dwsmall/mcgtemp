@@ -6,13 +6,6 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
-#import <CoreData/CoreData.h>
-
-
-
 NSFetchedResultsController *fetchedResultsController;
 NSManagedObjectContext *managedObjectContext;
 

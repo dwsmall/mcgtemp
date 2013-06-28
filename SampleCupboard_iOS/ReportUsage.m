@@ -37,7 +37,6 @@
 }
 
 
-// [NSPredicate predicateWithFormat:SUBQUERY(Product,$product,$product.allocation.prodid == %@).@count != 0",id]
 
 
 #pragma mark - Table View

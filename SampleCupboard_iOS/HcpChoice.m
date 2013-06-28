@@ -6,9 +6,6 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-
-#import <UIKit/UIKit.h>
-#import <CoreGraphics/CoreGraphics.h>
 #import "OrderDetailViewController_iPad.h"
 #import "HcpChoice.h"
 

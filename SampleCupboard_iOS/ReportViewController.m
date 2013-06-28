@@ -44,7 +44,7 @@ NSArray *tableDataY;
                   @"Shows product allocations for your territory, quantity used (in units and %) and remaining MCG Inventory levels.",
                   @"Lists all representatives in your territory(ies), group by territory name",
                   nil];
-    tableDataY = [NSArray arrayWithObjects:@"Images/my_usage.png", @"Images/my_allocations.png", @"Images/my_team.png", nil];
+    tableDataY = [NSArray arrayWithObjects:@"my_usage.png", @"my_allocations.png", @"my_team.png", nil];
     
         
     [self.tableView reloadData];

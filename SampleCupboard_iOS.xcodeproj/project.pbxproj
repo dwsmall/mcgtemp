@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0C7895176D4C6500770EDF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B6212601746D8C5007B5C7C /* CoreGraphics.framework */; };
+		5B105791176F42F80048513E /* OrderLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B105790176F42F80048513E /* OrderLineItem.m */; };
+		5B105794176F42F90048513E /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B105793176F42F90048513E /* Order.m */; };
 		5B4988C2175A27B0000AFD31 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */; };
 		5B4988C5175AAC25000AFD31 /* ReportDetailContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4988C4175AAC24000AFD31 /* ReportDetailContainer.m */; };
+		5B4DDBD1176E97850015A496 /* my_allocations.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4DDBCE176E97850015A496 /* my_allocations.png */; };
+		5B4DDBD2176E97850015A496 /* my_team.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4DDBCF176E97850015A496 /* my_team.png */; };
+		5B4DDBD3176E97850015A496 /* my_usage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4DDBD0176E97850015A496 /* my_usage.png */; };
 		5B5085E1174B20460068A71E /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5B5085E0174B20460068A71E /* en.lproj */; };
 		5B5C53E31757E44D004126D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C53E21757E44D004126D1 /* Reachability.m */; };
 		5B62125D1746D8C5007B5C7C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B62125C1746D8C5007B5C7C /* UIKit.framework */; };
@@ -61,24 +67,18 @@
 		5B8C8AA5174D39070088C4F0 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C8A9B174D39070088C4F0 /* JSONValueTransformer.m */; };
 		5B96673417678A2E0017F0E4 /* ProductChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B96673317678A2E0017F0E4 /* ProductChoice.m */; };
 		5B9667371768C41C0017F0E4 /* HcpAdditionalDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9667361768C41C0017F0E4 /* HcpAdditionalDetails.m */; };
-		5BBBD89417550179002A3E11 /* ReportsDetailViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBD89317550179002A3E11 /* ReportsDetailViewController_iPad.m */; };
-		5BBBD89717550229002A3E11 /* ReportViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBD89617550229002A3E11 /* ReportViewController_iPad.m */; };
 		5BBBD89F17552E9E002A3E11 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBD89E17552E9D002A3E11 /* HomeViewController.m */; };
 		5BBD28F9175FA44500AD9FF4 /* ReportUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBD28F8175FA44500AD9FF4 /* ReportUsage.m */; };
 		5BBD28FC175FA45C00AD9FF4 /* ReportTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBD28FB175FA45C00AD9FF4 /* ReportTeam.m */; };
-		5BCB1B7B1747A25800816AF7 /* OrderViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B7A1747A25800816AF7 /* OrderViewController_iPad.m */; };
-		5BCB1B7E1747A2BA00816AF7 /* MainWindowsController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B7D1747A2BA00816AF7 /* MainWindowsController_iPad.m */; };
-		5BCB1B811747A2DB00816AF7 /* LoginViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B801747A2DB00816AF7 /* LoginViewController_iPad.m */; };
-		5BCB1B871747A31100816AF7 /* HcpListViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B861747A31000816AF7 /* HcpListViewController_iPad.m */; };
+		5BCB1B7B1747A25800816AF7 /* OrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B7A1747A25800816AF7 /* OrderViewController.m */; };
+		5BCB1B811747A2DB00816AF7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B801747A2DB00816AF7 /* LoginViewController.m */; };
+		5BCB1B871747A31100816AF7 /* HcpListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B861747A31000816AF7 /* HcpListViewController.m */; };
 		5BCB1B8A1747A32E00816AF7 /* SyncViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B891747A32E00816AF7 /* SyncViewController_iPad.m */; };
-		5BCB1B901747A36700816AF7 /* ReportDetailViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B8F1747A36700816AF7 /* ReportDetailViewController_iPad.m */; };
 		5BD83539174AE96E00DA8B5A /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5BD83538174AE96D00DA8B5A /* fr.lproj */; };
 		5BD8353B174AE98400DA8B5A /* Icons in Resources */ = {isa = PBXBuildFile; fileRef = 5BD8353A174AE98300DA8B5A /* Icons */; };
-		5BD8353D174AE98F00DA8B5A /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 5BD8353C174AE98E00DA8B5A /* Images */; };
 		5BE39223174BC9CA005B40D2 /* OrderDetailViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */; };
 		5BE39226174BE9D1005B40D2 /* HyperlinkLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39225174BE9D0005B40D2 /* HyperlinkLabel.m */; };
 		5BE39229174BEB83005B40D2 /* IndentTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39228174BEB83005B40D2 /* IndentTextField.m */; };
-		5BE3922C174BEC9C005B40D2 /* OrderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3922B174BEC9B005B40D2 /* OrderTableView.m */; };
 		5BE3922F174BED12005B40D2 /* ReportAllocationUsage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3922E174BED11005B40D2 /* ReportAllocationUsage.m */; };
 		5BE39232174BEDC8005B40D2 /* SearchbarWithOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39231174BEDC7005B40D2 /* SearchbarWithOptions.m */; };
 		5BE39238174BEE76005B40D2 /* SignatureControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39237174BEE75005B40D2 /* SignatureControl.m */; };
@@ -106,9 +106,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B0C7898176D4ED100770EDF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		5B0C7899176D4ED100770EDF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		5B10578D176F3C360048513E /*  */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodeld; name = ""; sourceTree = "<group>"; };
+		5B10578E176F3E540048513E /* SampleCupboard_iOS 1.001.xcdatamodel */ = {isa = PBXFileReference; explicitFileType = wrapper.xcdatamodel; path = "SampleCupboard_iOS 1.001.xcdatamodel"; sourceTree = "<group>"; };
+		5B10578F176F42F80048513E /* OrderLineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderLineItem.h; sourceTree = "<group>"; };
+		5B105790176F42F80048513E /* OrderLineItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderLineItem.m; sourceTree = "<group>"; };
+		5B105792176F42F90048513E /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
+		5B105793176F42F90048513E /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5B4988C3175AAC24000AFD31 /* ReportDetailContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportDetailContainer.h; sourceTree = "<group>"; };
 		5B4988C4175AAC24000AFD31 /* ReportDetailContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportDetailContainer.m; sourceTree = "<group>"; };
+		5B4DDBCE176E97850015A496 /* my_allocations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_allocations.png; sourceTree = "<group>"; };
+		5B4DDBCF176E97850015A496 /* my_team.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_team.png; sourceTree = "<group>"; };
+		5B4DDBD0176E97850015A496 /* my_usage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_usage.png; sourceTree = "<group>"; };
 		5B5085E0174B20460068A71E /* en.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = en.lproj; sourceTree = "<group>"; };
 		5B5C53E11757E44D004126D1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5B5C53E21757E44D004126D1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -184,39 +195,28 @@
 		5B96673317678A2E0017F0E4 /* ProductChoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductChoice.m; sourceTree = "<group>"; };
 		5B9667351768C41C0017F0E4 /* HcpAdditionalDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcpAdditionalDetails.h; sourceTree = "<group>"; };
 		5B9667361768C41C0017F0E4 /* HcpAdditionalDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcpAdditionalDetails.m; sourceTree = "<group>"; };
-		5BBBD89217550179002A3E11 /* ReportsDetailViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportsDetailViewController_iPad.h; sourceTree = "<group>"; };
-		5BBBD89317550179002A3E11 /* ReportsDetailViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportsDetailViewController_iPad.m; sourceTree = "<group>"; };
-		5BBBD89517550229002A3E11 /* ReportViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController_iPad.h; sourceTree = "<group>"; };
-		5BBBD89617550229002A3E11 /* ReportViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController_iPad.m; sourceTree = "<group>"; };
 		5BBBD89D17552E9D002A3E11 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		5BBBD89E17552E9D002A3E11 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		5BBD28F7175FA44500AD9FF4 /* ReportUsage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportUsage.h; sourceTree = "<group>"; };
 		5BBD28F8175FA44500AD9FF4 /* ReportUsage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportUsage.m; sourceTree = "<group>"; };
 		5BBD28FA175FA45C00AD9FF4 /* ReportTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportTeam.h; sourceTree = "<group>"; };
 		5BBD28FB175FA45C00AD9FF4 /* ReportTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportTeam.m; sourceTree = "<group>"; };
-		5BCB1B791747A25800816AF7 /* OrderViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderViewController_iPad.h; sourceTree = "<group>"; };
-		5BCB1B7A1747A25800816AF7 /* OrderViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderViewController_iPad.m; sourceTree = "<group>"; };
-		5BCB1B7C1747A2B900816AF7 /* MainWindowsController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainWindowsController_iPad.h; sourceTree = "<group>"; };
-		5BCB1B7D1747A2BA00816AF7 /* MainWindowsController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainWindowsController_iPad.m; sourceTree = "<group>"; };
-		5BCB1B7F1747A2DB00816AF7 /* LoginViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController_iPad.h; sourceTree = "<group>"; };
-		5BCB1B801747A2DB00816AF7 /* LoginViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController_iPad.m; sourceTree = "<group>"; };
-		5BCB1B851747A31000816AF7 /* HcpListViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcpListViewController_iPad.h; sourceTree = "<group>"; };
-		5BCB1B861747A31000816AF7 /* HcpListViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcpListViewController_iPad.m; sourceTree = "<group>"; };
+		5BCB1B791747A25800816AF7 /* OrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderViewController.h; sourceTree = "<group>"; };
+		5BCB1B7A1747A25800816AF7 /* OrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderViewController.m; sourceTree = "<group>"; };
+		5BCB1B7F1747A2DB00816AF7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		5BCB1B801747A2DB00816AF7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		5BCB1B851747A31000816AF7 /* HcpListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcpListViewController.h; sourceTree = "<group>"; };
+		5BCB1B861747A31000816AF7 /* HcpListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcpListViewController.m; sourceTree = "<group>"; };
 		5BCB1B881747A32E00816AF7 /* SyncViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncViewController_iPad.h; sourceTree = "<group>"; };
 		5BCB1B891747A32E00816AF7 /* SyncViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncViewController_iPad.m; sourceTree = "<group>"; };
-		5BCB1B8E1747A36700816AF7 /* ReportDetailViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportDetailViewController_iPad.h; sourceTree = "<group>"; };
-		5BCB1B8F1747A36700816AF7 /* ReportDetailViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportDetailViewController_iPad.m; sourceTree = "<group>"; };
 		5BD83538174AE96D00DA8B5A /* fr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fr.lproj; sourceTree = "<group>"; };
 		5BD8353A174AE98300DA8B5A /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
-		5BD8353C174AE98E00DA8B5A /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		5BE39221174BC9C7005B40D2 /* OrderDetailViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController_iPad.h; sourceTree = "<group>"; };
 		5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController_iPad.m; sourceTree = "<group>"; };
 		5BE39224174BE9D0005B40D2 /* HyperlinkLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyperlinkLabel.h; sourceTree = "<group>"; };
 		5BE39225174BE9D0005B40D2 /* HyperlinkLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyperlinkLabel.m; sourceTree = "<group>"; };
 		5BE39227174BEB83005B40D2 /* IndentTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndentTextField.h; sourceTree = "<group>"; };
 		5BE39228174BEB83005B40D2 /* IndentTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndentTextField.m; sourceTree = "<group>"; };
-		5BE3922A174BEC9B005B40D2 /* OrderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTableView.h; sourceTree = "<group>"; };
-		5BE3922B174BEC9B005B40D2 /* OrderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTableView.m; sourceTree = "<group>"; };
 		5BE3922D174BED10005B40D2 /* ReportAllocationUsage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportAllocationUsage.h; sourceTree = "<group>"; };
 		5BE3922E174BED11005B40D2 /* ReportAllocationUsage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportAllocationUsage.m; sourceTree = "<group>"; };
 		5BE39230174BEDC6005B40D2 /* SearchbarWithOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchbarWithOptions.h; sourceTree = "<group>"; };
@@ -245,11 +245,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B6212611746D8C5007B5C7C /* CoreGraphics.framework in Frameworks */,
 				5B4988C2175A27B0000AFD31 /* SystemConfiguration.framework in Frameworks */,
 				5BE39299174CBE6F005B40D2 /* CoreData.framework in Frameworks */,
 				5B62125D1746D8C5007B5C7C /* UIKit.framework in Frameworks */,
 				5B62125F1746D8C5007B5C7C /* Foundation.framework in Frameworks */,
-				5B6212611746D8C5007B5C7C /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +257,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B0C7895176D4C6500770EDF /* CoreGraphics.framework in Frameworks */,
 				5B62128C1746D8C6007B5C7C /* SenTestingKit.framework in Frameworks */,
 				5B62128D1746D8C6007B5C7C /* UIKit.framework in Frameworks */,
 				5B62128E1746D8C6007B5C7C /* Foundation.framework in Frameworks */,
@@ -266,13 +267,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5B5C53E01757DB8A004126D1 /* Classes */ = {
+		5B5C53E01757DB8A004126D1 /* Utility Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5BE39230174BEDC6005B40D2 /* SearchbarWithOptions.h */,
+				5BE39231174BEDC7005B40D2 /* SearchbarWithOptions.m */,
+				5BE39236174BEE74005B40D2 /* SignatureControl.h */,
+				5BE39237174BEE75005B40D2 /* SignatureControl.m */,
+				5BE39239174BEEF3005B40D2 /* TextField.h */,
+				5BE3923A174BEEF5005B40D2 /* TextField.m */,
+				5BE3923C174BEF79005B40D2 /* TextInputDialog_iPad.h */,
+				5BE3923D174BEF7A005B40D2 /* TextInputDialog_iPad.m */,
 				5B5C53E11757E44D004126D1 /* Reachability.h */,
 				5B5C53E21757E44D004126D1 /* Reachability.m */,
+				5B0C7898176D4ED100770EDF /* MBProgressHUD.h */,
+				5B0C7899176D4ED100770EDF /* MBProgressHUD.m */,
 			);
-			name = Classes;
+			name = "Utility Classes";
 			sourceTree = "<group>";
 		};
 		5B6212501746D8C5007B5C7C = {
@@ -310,88 +321,24 @@
 		5B6212621746D8C5007B5C7C /* SampleCupboard_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				5BAA91AA176C1BAB00969C20 /* Images */,
 				5B8C8A82174D39070088C4F0 /* JSONModel */,
-				5B5C53E01757DB8A004126D1 /* Classes */,
-				5BEAD0DF174B36A200FBF8B2 /* shoppingcart.png */,
-				5BEAD0E1174B379500FBF8B2 /* house.png */,
-				5BEAD0E2174B379500FBF8B2 /* man.png */,
-				5BEAD0E3174B379500FBF8B2 /* refresh.png */,
-				5BEAD0E4174B379600FBF8B2 /* trend.png */,
+				5B5C53E01757DB8A004126D1 /* Utility Classes */,
 				5B5085E0174B20460068A71E /* en.lproj */,
-				5BD8353C174AE98E00DA8B5A /* Images */,
 				5BD8353A174AE98300DA8B5A /* Icons */,
 				5BD83538174AE96D00DA8B5A /* fr.lproj */,
 				5B6212C01746DA61007B5C7C /* MainStoryboard.storyboard */,
-				5B6212AA1746DA00007B5C7C /* home_background_landscape.png */,
-				5B6212AB1746DA00007B5C7C /* home_background_portrait.png */,
-				5B6212AC1746DA00007B5C7C /* Icon-72.png */,
-				5B6212AD1746DA00007B5C7C /* Icon-72@2x.png */,
-				5B6212AE1746DA00007B5C7C /* iPad_Login_bouton_Background.png */,
-				5B6212AF1746DA00007B5C7C /* iPad_Login_bouton_button.png */,
-				5B6212B01746DA00007B5C7C /* iPad_Login_bouton_icon.png */,
-				5B6212B11746DA00007B5C7C /* iPad_Login_bouton_SignIn.png */,
-				5B6212B21746DA00007B5C7C /* iPad_MCG_background_landscape.png */,
-				5B6212B31746DA00007B5C7C /* iPad_MCG_background_portrait.png */,
-				5B6212B41746DA00007B5C7C /* iPad_MCG@2x.png */,
-				5B6212A21746D957007B5C7C /* SCB_Icon_iPad29x29.png */,
-				5B6212A41746D957007B5C7C /* SCB_Icon_iPhone4.png */,
-				5B6212A31746D957007B5C7C /* SCB_Icon_iPad50x50.png */,
-				5B6212A51746D957007B5C7C /* SCB_Icon_iTunes.png */,
-				5B62126B1746D8C5007B5C7C /* AppDelegate.h */,
 				5B62126C1746D8C5007B5C7C /* AppDelegate.m */,
-				5B62127A1746D8C5007B5C7C /* first.png */,
-				5B62127C1746D8C5007B5C7C /* first@2x.png */,
-				5B6212811746D8C5007B5C7C /* second.png */,
-				5B6212831746D8C5007B5C7C /* second@2x.png */,
+				5B62126B1746D8C5007B5C7C /* AppDelegate.h */,
+				5BAA91AB176C2FD900969C20 /* Login_Controller */,
+				5BAA91AD176C305300969C20 /* Home_Controller */,
+				5BAA91AE176C30BF00969C20 /* Order_Controller */,
+				5BAA91AF176C310B00969C20 /* Hcp_Controller */,
+				5BAA91B0176C31A100969C20 /* Sync_Controller */,
+				5BAA91B1176C320600969C20 /* Report_Controller */,
 				5B6212631746D8C5007B5C7C /* Supporting Files */,
-				5BCB1B7F1747A2DB00816AF7 /* LoginViewController_iPad.h */,
-				5BCB1B801747A2DB00816AF7 /* LoginViewController_iPad.m */,
-				5BBBD89D17552E9D002A3E11 /* HomeViewController.h */,
-				5BBBD89E17552E9D002A3E11 /* HomeViewController.m */,
-				5BCB1B791747A25800816AF7 /* OrderViewController_iPad.h */,
-				5BCB1B7A1747A25800816AF7 /* OrderViewController_iPad.m */,
-				5BE39221174BC9C7005B40D2 /* OrderDetailViewController_iPad.h */,
-				5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */,
-				5BCB1B7C1747A2B900816AF7 /* MainWindowsController_iPad.h */,
-				5BCB1B7D1747A2BA00816AF7 /* MainWindowsController_iPad.m */,
-				5BCB1B851747A31000816AF7 /* HcpListViewController_iPad.h */,
-				5BCB1B861747A31000816AF7 /* HcpListViewController_iPad.m */,
-				5BF4CF811760D86700BB3DBC /* HcpDetailController.h */,
-				5BF4CF821760D86700BB3DBC /* HcpDetailController.m */,
-				5B9667351768C41C0017F0E4 /* HcpAdditionalDetails.h */,
-				5B9667361768C41C0017F0E4 /* HcpAdditionalDetails.m */,
-				5BCB1B881747A32E00816AF7 /* SyncViewController_iPad.h */,
-				5BCB1B891747A32E00816AF7 /* SyncViewController_iPad.m */,
-				5BE39224174BE9D0005B40D2 /* HyperlinkLabel.h */,
-				5BE39225174BE9D0005B40D2 /* HyperlinkLabel.m */,
-				5BE39227174BEB83005B40D2 /* IndentTextField.h */,
-				5BE39228174BEB83005B40D2 /* IndentTextField.m */,
-				5BE3922A174BEC9B005B40D2 /* OrderTableView.h */,
-				5BE3922B174BEC9B005B40D2 /* OrderTableView.m */,
-				5BE39230174BEDC6005B40D2 /* SearchbarWithOptions.h */,
-				5BE39231174BEDC7005B40D2 /* SearchbarWithOptions.m */,
-				5BE39236174BEE74005B40D2 /* SignatureControl.h */,
-				5BE39237174BEE75005B40D2 /* SignatureControl.m */,
-				5BE39239174BEEF3005B40D2 /* TextField.h */,
-				5BE3923A174BEEF5005B40D2 /* TextField.m */,
-				5BE3923C174BEF79005B40D2 /* TextInputDialog_iPad.h */,
-				5BE3923D174BEF7A005B40D2 /* TextInputDialog_iPad.m */,
-				5BBBD89217550179002A3E11 /* ReportsDetailViewController_iPad.h */,
-				5BBBD89317550179002A3E11 /* ReportsDetailViewController_iPad.m */,
-				5B4988C3175AAC24000AFD31 /* ReportDetailContainer.h */,
-				5B4988C4175AAC24000AFD31 /* ReportDetailContainer.m */,
-				5BFC9291175691B100C3AA12 /* ReportViewController.h */,
-				5BFC9292175691B100C3AA12 /* ReportViewController.m */,
-				5BBBD89517550229002A3E11 /* ReportViewController_iPad.h */,
-				5BBBD89617550229002A3E11 /* ReportViewController_iPad.m */,
-				5BCB1B8E1747A36700816AF7 /* ReportDetailViewController_iPad.h */,
-				5BCB1B8F1747A36700816AF7 /* ReportDetailViewController_iPad.m */,
-				5B7E6DEA1767333F008286D4 /* HcpChoice.h */,
-				5B7E6DEB17673343008286D4 /* HcpChoice.m */,
-				5B96673217678A2E0017F0E4 /* ProductChoice.h */,
-				5B96673317678A2E0017F0E4 /* ProductChoice.m */,
+				5BAA91A9176C15C900969C20 /* Model */,
 				5BB81560175DA81100DACE0B /* Reporting */,
-				5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */,
 			);
 			path = SampleCupboard_iOS;
 			sourceTree = "<group>";
@@ -432,6 +379,8 @@
 		5B7E6DE917672AE6008286D4 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				5B7E6DBF17670F71008286D4 /* LocationModel.m */,
+				5B7E6DBE17670F71008286D4 /* LocationModel.h */,
 				5B7E6DBB17670F2D008286D4 /* LoanModel.h */,
 				5B7E6DBC17670F2D008286D4 /* LoanModel.m */,
 			);
@@ -498,12 +447,126 @@
 			path = JSONModelTransformations;
 			sourceTree = "<group>";
 		};
+		5BAA91A9176C15C900969C20 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */,
+				5B105792176F42F90048513E /* Order.h */,
+				5B105793176F42F90048513E /* Order.m */,
+				5B10578F176F42F80048513E /* OrderLineItem.h */,
+				5B105790176F42F80048513E /* OrderLineItem.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		5BAA91AA176C1BAB00969C20 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				5B4DDBCE176E97850015A496 /* my_allocations.png */,
+				5B4DDBCF176E97850015A496 /* my_team.png */,
+				5B4DDBD0176E97850015A496 /* my_usage.png */,
+				5B62127A1746D8C5007B5C7C /* first.png */,
+				5B62127C1746D8C5007B5C7C /* first@2x.png */,
+				5B6212811746D8C5007B5C7C /* second.png */,
+				5B6212831746D8C5007B5C7C /* second@2x.png */,
+				5B6212AA1746DA00007B5C7C /* home_background_landscape.png */,
+				5B6212AB1746DA00007B5C7C /* home_background_portrait.png */,
+				5B6212AC1746DA00007B5C7C /* Icon-72.png */,
+				5B6212AD1746DA00007B5C7C /* Icon-72@2x.png */,
+				5B6212AE1746DA00007B5C7C /* iPad_Login_bouton_Background.png */,
+				5B6212AF1746DA00007B5C7C /* iPad_Login_bouton_button.png */,
+				5B6212B01746DA00007B5C7C /* iPad_Login_bouton_icon.png */,
+				5B6212B11746DA00007B5C7C /* iPad_Login_bouton_SignIn.png */,
+				5B6212B21746DA00007B5C7C /* iPad_MCG_background_landscape.png */,
+				5B6212B31746DA00007B5C7C /* iPad_MCG_background_portrait.png */,
+				5B6212B41746DA00007B5C7C /* iPad_MCG@2x.png */,
+				5B6212A21746D957007B5C7C /* SCB_Icon_iPad29x29.png */,
+				5B6212A41746D957007B5C7C /* SCB_Icon_iPhone4.png */,
+				5B6212A31746D957007B5C7C /* SCB_Icon_iPad50x50.png */,
+				5B6212A51746D957007B5C7C /* SCB_Icon_iTunes.png */,
+				5BEAD0E2174B379500FBF8B2 /* man.png */,
+				5BEAD0E3174B379500FBF8B2 /* refresh.png */,
+				5BEAD0E4174B379600FBF8B2 /* trend.png */,
+				5BEAD0E1174B379500FBF8B2 /* house.png */,
+				5BEAD0DF174B36A200FBF8B2 /* shoppingcart.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		5BAA91AB176C2FD900969C20 /* Login_Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5BCB1B7F1747A2DB00816AF7 /* LoginViewController.h */,
+				5BCB1B801747A2DB00816AF7 /* LoginViewController.m */,
+				5BE39227174BEB83005B40D2 /* IndentTextField.h */,
+				5BE39228174BEB83005B40D2 /* IndentTextField.m */,
+			);
+			name = Login_Controller;
+			sourceTree = "<group>";
+		};
+		5BAA91AD176C305300969C20 /* Home_Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5BBBD89D17552E9D002A3E11 /* HomeViewController.h */,
+				5BBBD89E17552E9D002A3E11 /* HomeViewController.m */,
+				5BE39224174BE9D0005B40D2 /* HyperlinkLabel.h */,
+				5BE39225174BE9D0005B40D2 /* HyperlinkLabel.m */,
+			);
+			name = Home_Controller;
+			sourceTree = "<group>";
+		};
+		5BAA91AE176C30BF00969C20 /* Order_Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5BCB1B791747A25800816AF7 /* OrderViewController.h */,
+				5BCB1B7A1747A25800816AF7 /* OrderViewController.m */,
+				5BE39221174BC9C7005B40D2 /* OrderDetailViewController_iPad.h */,
+				5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */,
+				5B7E6DEA1767333F008286D4 /* HcpChoice.h */,
+				5B7E6DEB17673343008286D4 /* HcpChoice.m */,
+				5B96673217678A2E0017F0E4 /* ProductChoice.h */,
+				5B96673317678A2E0017F0E4 /* ProductChoice.m */,
+			);
+			name = Order_Controller;
+			sourceTree = "<group>";
+		};
+		5BAA91AF176C310B00969C20 /* Hcp_Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5BCB1B851747A31000816AF7 /* HcpListViewController.h */,
+				5BCB1B861747A31000816AF7 /* HcpListViewController.m */,
+				5BF4CF811760D86700BB3DBC /* HcpDetailController.h */,
+				5BF4CF821760D86700BB3DBC /* HcpDetailController.m */,
+				5B9667351768C41C0017F0E4 /* HcpAdditionalDetails.h */,
+				5B9667361768C41C0017F0E4 /* HcpAdditionalDetails.m */,
+			);
+			name = Hcp_Controller;
+			sourceTree = "<group>";
+		};
+		5BAA91B0176C31A100969C20 /* Sync_Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5BCB1B881747A32E00816AF7 /* SyncViewController_iPad.h */,
+				5BCB1B891747A32E00816AF7 /* SyncViewController_iPad.m */,
+			);
+			name = Sync_Controller;
+			sourceTree = "<group>";
+		};
+		5BAA91B1176C320600969C20 /* Report_Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5BFC9291175691B100C3AA12 /* ReportViewController.h */,
+				5BFC9292175691B100C3AA12 /* ReportViewController.m */,
+				5B4988C3175AAC24000AFD31 /* ReportDetailContainer.h */,
+				5B4988C4175AAC24000AFD31 /* ReportDetailContainer.m */,
+			);
+			name = Report_Controller;
+			sourceTree = "<group>";
+		};
 		5BB81560175DA81100DACE0B /* Reporting */ = {
 			isa = PBXGroup;
 			children = (
 				5B7E6DE917672AE6008286D4 /* model */,
-				5B7E6DBE17670F71008286D4 /* LocationModel.h */,
-				5B7E6DBF17670F71008286D4 /* LocationModel.m */,
 				5B7E6DB817670DF2008286D4 /* ReportDataFeed.h */,
 				5B7E6DB917670DF3008286D4 /* ReportDataFeed.m */,
 				5BE3922D174BED10005B40D2 /* ReportAllocationUsage.h */,
@@ -613,13 +676,15 @@
 				5B6212C11746DA61007B5C7C /* MainStoryboard.storyboard in Resources */,
 				5BD83539174AE96E00DA8B5A /* fr.lproj in Resources */,
 				5BD8353B174AE98400DA8B5A /* Icons in Resources */,
-				5BD8353D174AE98F00DA8B5A /* Images in Resources */,
 				5B5085E1174B20460068A71E /* en.lproj in Resources */,
 				5BEAD0E0174B36A200FBF8B2 /* shoppingcart.png in Resources */,
 				5BEAD0E5174B379600FBF8B2 /* house.png in Resources */,
 				5BEAD0E6174B379600FBF8B2 /* man.png in Resources */,
 				5BEAD0E7174B379600FBF8B2 /* refresh.png in Resources */,
 				5BEAD0E8174B379600FBF8B2 /* trend.png in Resources */,
+				5B4DDBD1176E97850015A496 /* my_allocations.png in Resources */,
+				5B4DDBD2176E97850015A496 /* my_team.png in Resources */,
+				5B4DDBD3176E97850015A496 /* my_usage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,16 +721,13 @@
 			files = (
 				5B6212691746D8C5007B5C7C /* main.m in Sources */,
 				5B62126D1746D8C5007B5C7C /* AppDelegate.m in Sources */,
-				5BCB1B7B1747A25800816AF7 /* OrderViewController_iPad.m in Sources */,
-				5BCB1B7E1747A2BA00816AF7 /* MainWindowsController_iPad.m in Sources */,
-				5BCB1B811747A2DB00816AF7 /* LoginViewController_iPad.m in Sources */,
-				5BCB1B871747A31100816AF7 /* HcpListViewController_iPad.m in Sources */,
+				5BCB1B7B1747A25800816AF7 /* OrderViewController.m in Sources */,
+				5BCB1B811747A2DB00816AF7 /* LoginViewController.m in Sources */,
+				5BCB1B871747A31100816AF7 /* HcpListViewController.m in Sources */,
 				5BCB1B8A1747A32E00816AF7 /* SyncViewController_iPad.m in Sources */,
-				5BCB1B901747A36700816AF7 /* ReportDetailViewController_iPad.m in Sources */,
 				5BE39223174BC9CA005B40D2 /* OrderDetailViewController_iPad.m in Sources */,
 				5BE39226174BE9D1005B40D2 /* HyperlinkLabel.m in Sources */,
 				5BE39229174BEB83005B40D2 /* IndentTextField.m in Sources */,
-				5BE3922C174BEC9C005B40D2 /* OrderTableView.m in Sources */,
 				5BE3922F174BED12005B40D2 /* ReportAllocationUsage.m in Sources */,
 				5BE39232174BEDC8005B40D2 /* SearchbarWithOptions.m in Sources */,
 				5BE39238174BEE76005B40D2 /* SignatureControl.m in Sources */,
@@ -682,8 +744,6 @@
 				5B8C8AA3174D39070088C4F0 /* JSONModel+networking.m in Sources */,
 				5B8C8AA4174D39070088C4F0 /* JSONKeyMapper.m in Sources */,
 				5B8C8AA5174D39070088C4F0 /* JSONValueTransformer.m in Sources */,
-				5BBBD89417550179002A3E11 /* ReportsDetailViewController_iPad.m in Sources */,
-				5BBBD89717550229002A3E11 /* ReportViewController_iPad.m in Sources */,
 				5BBBD89F17552E9E002A3E11 /* HomeViewController.m in Sources */,
 				5BFC9293175691B200C3AA12 /* ReportViewController.m in Sources */,
 				5B5C53E31757E44D004126D1 /* Reachability.m in Sources */,
@@ -697,6 +757,8 @@
 				5B7E6DEC1767334B008286D4 /* HcpChoice.m in Sources */,
 				5B96673417678A2E0017F0E4 /* ProductChoice.m in Sources */,
 				5B9667371768C41C0017F0E4 /* HcpAdditionalDetails.m in Sources */,
+				5B105791176F42F80048513E /* OrderLineItem.m in Sources */,
+				5B105794176F42F90048513E /* Order.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -899,9 +961,11 @@
 		5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				5B10578D176F3C360048513E /*  */,
 				5BE39246174C3177005B40D2 /* SampleCupboard_iOS.xcdatamodel */,
+				5B10578E176F3E540048513E /* SampleCupboard_iOS 1.001.xcdatamodel */,
 			);
-			currentVersion = 5BE39246174C3177005B40D2 /* SampleCupboard_iOS.xcdatamodel */;
+			currentVersion = 5B10578E176F3E540048513E /* SampleCupboard_iOS 1.001.xcdatamodel */;
 			path = SampleCupboard_iOS.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -6,12 +6,7 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import <CoreGraphics/CoreGraphics.h>
-#import <CoreData/CoreData.h>
-
-@interface OrderViewController_iPad : UIViewController <NSFetchedResultsControllerDelegate>
+@interface OrderViewController : UIViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
