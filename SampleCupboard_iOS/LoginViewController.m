@@ -34,17 +34,13 @@
 
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 
-
-@property (weak, nonatomic) IBOutlet UIButton *signInClick;
-
 @property (weak, nonatomic) IBOutlet IndentTextField *txtUserName;
 
 @property (weak, nonatomic) IBOutlet UIButton *UserLoginBtn;
 
 @property (weak, nonatomic) IBOutlet IndentTextField *txtPassword;
 
-
-- (IBAction)signInClick:(id)sender;
+- (IBAction)LoginButton:(UIButton *)sender;
 
 @end
 
@@ -63,6 +59,18 @@
     [_UserLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _UserLoginBtn.layer.cornerRadius = 10; // this value vary as per your desire
     _UserLoginBtn.clipsToBounds = YES;
+    
+
+    // Set All TabBar Badges Upon Load
+    for (UIViewController *viewController in self.tabBarController.viewControllers) {
+
+        if (viewController.tabBarItem.tag == 4) {
+            //Check UnSent Orders in Temp
+            viewController.tabBarItem.badgeValue = @"1";
+        }
+    }
+    
+    
 }
 
 
@@ -72,6 +80,73 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)signInClick:(id)sender {
+- (IBAction)LoginButton:(UIButton *)sender {
+    
+    
+    
+    NSURL *url=[NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/Login"];
+    NSString *nameX = @"testx";
+    NSString *languageX = @"French";
+    
+    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:nameX, @"name", languageX, @"language", nil];
+    
+    NSError *errorMSG = nil;
+    
+    //convert object to data
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:newDatasetInfo options:kNilOptions error:&errorMSG];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody:jsonData];
+    
+    // print json:
+    NSLog(@"JSON summary: %@", [[NSString alloc] initWithData:jsonData
+                                                     encoding:NSUTF8StringEncoding]);
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+    
+    
+    
+        
+    
+    UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                   initWithTitle:@"TEST555"
+                                   message:@"Internet connection is TEST777"
+                                   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [errorAlertView show];
+    
 }
+
+
+
+
+
+
+-   (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)theData{
+    NSLog(@"String sent from server %@",[[NSString alloc] initWithData:theData encoding:NSUTF8StringEncoding]);
+    
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    
+    UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                   initWithTitle:@"CONNECTION DONE LOADING"
+                                   message:@"Internet connection is DONE"
+                                   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [errorAlertView show];
+    
+}
+
+- (NSString *)urlEncodeValue:(NSString *)str
+{
+NSString *result = (NSString *) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)str, NULL, CFSTR("?=&+"), kCFStringEncodingUTF8));
+return result;
+}
+
 @end
+

@@ -76,34 +76,6 @@
     return cell;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return NO;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        NSError *error = nil;
-        if (![context save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // The table view should not be re-orderable.
-    return NO;
-}
-
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -114,11 +86,27 @@
             // Step 1 - Declare VC Controller
             HcpDetailController *detailVC = (HcpDetailController *)[segue destinationViewController];
         
+            NSIndexPath *ip = [self.tableView indexPathForSelectedRow];
+        
+            [detailVC setMoDATA:[[self.fetchedResultsController fetchedObjects] objectAtIndex:ChosenRowNumber]];
+            // [detailVC setMoDATA:[[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:ChosenRowNumber inSection:0]]];
+        
+        
+            NSLog(@"indexPathForSelectedRow %@", ip);
+            // NSLog(@"indexPathForSelectedRow Based on Sender %@", [sender indexPathForSelectedRow]);
+            NSLog(@"indexPathForSelectedItems Based on Sender %@", [sender indexPathsForSelectedItems]);
+            // NSLog(@"indexPathForSelectedRow Based on Sender %@", [sender indexPathForCell:<#(UITableViewCell *)#>]);
+            NSLog(@"Choosen Row NUMBER %d", ChosenRowNumber);
+        
+            NSLog(@"Make Sure Populated DOCTOR Before Sending %@", [[self.fetchedResultsController fetchedObjects] objectAtIndex:ChosenRowNumber]);
+        
+        
             // Method #1 - Get Index Path of Selected Row, Use As Index Path of fetch To Retrieve Values
             // DOES NOT WORK NSIndexPath *indexPathX = [self.tableView indexPathForSelectedRow];
             // NSArray *fetchedObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 
             HcpListViewController *ourfetchClass = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:ChosenRowNumber inSection:0]];
+        
         
         
             // Handling of Null Fields (Server Side or Replace With NSAssert)
@@ -207,7 +195,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"MasterHCP"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     

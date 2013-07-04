@@ -6,7 +6,15 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+#import "Order.h"
+#import "OrderLineItem.h"
+#import "TextInputDialog_iPad.h"
 #import "OrderDetailViewController_iPad.h"
+
+#import "Reachability.h"
+
+Reachability *internetReachableFoo;
+
 
 @interface OrderDetailViewController_iPad ()
 
@@ -16,10 +24,12 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *tbSaveDraft;
 
+@property (weak, nonatomic) IBOutlet UITableView *myTableView;
+
+@property (weak, nonatomic) IBOutlet UILabel *carrier_display_label;
 
 - (IBAction)CancelClicked:(id)sender;
 
-- (IBAction)DoneClicked:(id)sender;
 
 - (IBAction)NewProductClick:(id)sender;
 
@@ -34,6 +44,13 @@
 
 - (IBAction)CancelOrderDetail:(UIBarButtonItem *)sender;
 
+
+- (IBAction)Carrier_Ground:(UIButton *)sender;
+
+- (IBAction)Carrier_Air:(UIButton *)sender;
+
+
+- (IBAction)Done_Clicked:(UIBarButtonItem *)sender;
 
 @end
 
@@ -52,8 +69,15 @@ NSArray *statusDataX;
 @synthesize selectedHCPNUMBER, outputlabel2;
 @synthesize selectedHCPINFO, outputlabel4;
 @synthesize selectedPRODUCTNUMBER, outputlabel3;
+@synthesize myresults, outputlabel5;
 
+@synthesize fetchedResultsController2, outputlabelA;
+@synthesize managedObjectContext2, outputlabelB;
 
+@synthesize fetchRequest2, outputlabelC;
+@synthesize fetchOBJ2, outputlabelD;
+
+@synthesize moDATA, outputlabelE;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -103,7 +127,6 @@ NSArray *statusDataX;
             break;
             
         case 2:
-            
             HeaderTitle = @"To be delivered to Physician";
             break;
             
@@ -138,7 +161,10 @@ NSArray *statusDataX;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // return [tableData count];
+    
+    
+    NSManagedObject *object = moDATA;
+    
     
     int MRows = 0;
     
@@ -158,20 +184,26 @@ NSArray *statusDataX;
             break;
             
         case 2:
-            
-            //To Be Delivered To Physician
-            MRows = [[[self fetchedResultsController] fetchedObjects] count];
-            MRows = MRows + 1;
+            // Products - To Be Delivered To Physician
+                // View Detail ?
+            if (selectedButton == 0) // NEW ORDER
+            {
+                MRows = [[[self fetchedResultsController] fetchedObjects] count];   //Total Products
+                break;
+            }
+           
+            if (selectedButton == 2) // SHOW DETAILS
+            {            
+            MRows = [[object valueForKey:@"toOrderDetails"] count];
             break;
+            }
             
         case 3:
-            
             //Delivery Instructions
             MRows=1;
             break;
             
         case 4:
-            
             //Shipping Carrier
             MRows=1;
             break;
@@ -203,7 +235,7 @@ NSArray *statusDataX;
 {
     [super viewDidLoad];
     
-    // [outputlabel setText:[NSString stringWithFormat:@"Your button was %d", selectedButton]];
+  
     
     // DETERMINE STAGE OF APPLICATION
     
@@ -211,30 +243,13 @@ NSArray *statusDataX;
         //STAGE 2 - [SEGUE 1 AND HCP SELECTED AND PRODUCT TOTAL = 0] = NEW ORDER AND HCP SELECTED
         //STAGE 3 - [SEGUE 1 AND HCP SELECTED AND PRODUCT TOTAL <> 0] = NEW ORDER AND WITH PRODUCTS SELECTED
         //STAGE 4 - [SEGUE 2] = SHOW ORDER DETAIL INFORMATION
-    
-    
-    
-	// Do any additional setup after loading the view, typically from a nib.
-    tableData = [NSArray arrayWithObjects:@"April 27, 2013", @"April 28, 2013", @"April 29, 2013",@"April 99, 2013", @"April 77, 2013", @"April 66, 2013", nil];
-    
-    tableDataX = [NSArray arrayWithObjects:@"To:John Smith", @"To:Dale Smith", @"To:Doug Smith",@"To:DD Smith", @"To:BB Smith", @"To:CC Smith", nil];
-    
-    prodDataX = [NSArray arrayWithObjects:@"Januvia 100mg (7 tablets)", @"Janumet 50 mg (3 tablets)", @"Olmetec 40mg (3 tablets)",@"cc 100mg (7 tablets)", @"dd 50 mg (3 tablets)", @"ee 40mg (3 tablets)", nil];
-    
-    unitDataX = [NSArray arrayWithObjects:@"5 Units", @"4 Units", @"7 Units",@"99 Units", @"88 Units", @"77 Units", nil];
-    
-    statusDataX = [NSArray arrayWithObjects:@"IN PROGRESS", @"IN PROGRESS", @"ON HOLD",@"WAIT", @"WAIT", @"BACKORDER", nil];
-    
-    // [self.tableView reloadData];
+   
 }
 
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // static NSString *simpleTableIdentifier = @"SimpleTableItem";
-    // static NSString *simpleTableIdentifier2 = @"SimpleTableItem2";
-    
     
     NSString *MyFormType = @"_header";
     
@@ -308,6 +323,47 @@ NSArray *statusDataX;
 
 
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+
+    if (indexPath.section == 2)
+    {
+        
+        /* Custom Keyboard to Prevent Negatives.
+          User entering signed values using Alpha,etc... 
+        */
+        
+        _hiddenTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+        
+        _hiddenTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        
+        _hiddenTextField.becomeFirstResponder;
+        
+    }
+
+}
+
+
+#pragma mark - UIKeyInput Protocol Methods
+
+- (BOOL)hasText
+{
+    return YES;
+}
+
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    NSIndexPath *ip = [self.myTableView indexPathForSelectedRow];
+    
+    UITableViewCell *cell = [self.myTableView cellForRowAtIndexPath:ip];
+    
+    cell.detailTextLabel.text = string;
+    
+    return YES;
+}
 
 
 
@@ -320,8 +376,7 @@ NSArray *statusDataX;
 - (IBAction)CancelClicked:(id)sender {
 }
 
-- (IBAction)DoneClicked:(id)sender {
-}
+
 
 - (IBAction)NewProductClick:(id)sender {
 }
@@ -340,6 +395,7 @@ NSArray *statusDataX;
 
 
 
+
 - (IBAction)CancelOrderDetail:(UIBarButtonItem *)sender {
 
     UIAlertView *alertView = [[UIAlertView alloc]
@@ -348,6 +404,193 @@ NSArray *statusDataX;
     
     [alertView show];
 }
+
+- (IBAction)Carrier_Ground:(UIButton *)sender {
+    
+    // change label
+    	
+
+}
+
+- (IBAction)Carrier_Air:(UIButton *)sender {
+    
+    
+    
+    //UIAlertView *alertView = [[UIAlertView alloc]
+      //                        initWithTitle: @"Warning" message: @"This shipment will be sent by ATS Air" delegate: self
+        //                      cancelButtonTitle: @"OK" otherButtonTitles:nil];
+    
+    // [alertView show];
+}
+
+
+
+
+- (IBAction)Done_Clicked:(UIBarButtonItem *)sender {
+    
+    NSLog(@"Create Entry in Order Temp");
+    
+    // TEST INSERTION METHOD USING MANUAL INSERT
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    NSManagedObjectContext *contextINSERT = [self managedObjectContext];
+    
+    
+    // PART 1. INSERT ORDER
+    // NSManagedObjectContext *context = [self managedObjectContext];
+    NSManagedObject *OrderHDR = [NSEntityDescription
+                                 insertNewObjectForEntityForName:@"Order"
+                                 inManagedObjectContext:contextINSERT];
+    [OrderHDR setValue:@"D646E129-1F38-4F83-94D7-82BF57DD4F24" forKey:@"clientid"];
+    [OrderHDR setValue:@"2e9847f5-c72b-4118-bb99-349377e17777" forKey:@"orderid"];
+    [OrderHDR setValue:@"1234567" forKey:@"reference"];
+    [OrderHDR setValue:@"TESTXML" forKey:@"shipping_firstname"];
+    [OrderHDR setValue:@"TESTXMLSEND" forKey:@"shipping_lastname"];
+    [OrderHDR setValue:@"NEW" forKey:@"status"];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEE, d MMM yyyy HH:mm:ss zzz"];
+    NSString *dateStringA = @"Tue, 18 Oct 2011 15:54:43 +0900";
+    NSDate *dateA = [dateFormatter dateFromString:dateStringA];
+    [OrderHDR setValue:dateA forKey:@"datecreated"];
+    
+    // could also use [OrderHDR setValue:[NSDate date] forKey:@"datecreated"];
+    
+    
+    // PART 2. INSERT ORDER DETAILS IMMEDIATELY AFTER
+    NSManagedObject *OrderDTL = [NSEntityDescription
+                                 insertNewObjectForEntityForName:@"OrderLineItem"
+                                 inManagedObjectContext:contextINSERT];
+    [OrderDTL setValue:@"2e9847f5-c72b-4118-bb99-349377e17777" forKey:@"orderid"];
+    [OrderDTL setValue:@"D646E129-1F38-4F83-94D7-82BF57DD4F24" forKey:@"clientid"];
+    [OrderDTL setValue:@"D646E129-1F38-4F83-94D7-82BF57DD4F24" forKey:@"productid"];
+    
+    [OrderDTL setValue:@"Jaunumet 88" forKey:@"stored_product_name"];
+    [OrderDTL setValue:@"4 units" forKey:@"stored_product_description"];
+    [OrderDTL setValue:@"12352" forKey:@"stored_product_code"];
+    
+    [OrderDTL setValue:[NSNumber numberWithInt:55] forKey:@"quantityordered"];
+    [OrderDTL setValue:[NSDate date] forKey:@"datecreated"];
+    
+    //PART 3. INSERT VALUE FOR RELATIONSHIP
+    [OrderDTL setValue:OrderHDR forKey:@"toOrderHeader"];
+    // [OrderHDR setValue:OrderDTL forKey:@"toOrderDetails"];
+    
+    NSError *error;
+    if (![contextINSERT save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    
+    
+    // Check if Online Status is Good
+    // Show No Network Message If Internet is Not Connected...
+    Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
+    NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
+    if (internetStatus == NotReachable){
+        
+        
+        // Update badge number
+        // Set All TabBar Badges Upon Load
+        for (UIViewController *viewController in self.tabBarController.viewControllers) {
+            
+            if (viewController.tabBarItem.tag == 4) {
+                //Get TabBarItem and Increment By 1
+                viewController.tabBarItem.badgeValue = @"2";
+            }
+        }
+        
+        NSLog(@"There's no connection");
+        
+        
+    } else {
+        NSLog(@"Internet connection is OK");
+        
+        
+        //Create XML File For Submission
+        
+        
+        //Send To MCG...
+        
+        
+        
+    
+    }
+    
+    
+       
+    
+}
+
+
+
+
+/*
+ Assume self has a property 'tableView' -- as is the case for an instance of a UITableViewController
+ subclass -- and a method configureCell:atIndexPath: which updates the contents of a given cell
+ with information from a managed object at the given index path in the fetched results controller.
+ */
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.myTableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.myTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.myTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.myTableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath]
+                    atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.myTableView endUpdates];
+}
+
+
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -396,11 +639,11 @@ NSArray *statusDataX;
         return _fetchedResultsController;
     }
     
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
-    // NSManagedObjectContext *context = [self managedObjectContext];
     
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Product" inManagedObjectContext:self.managedObjectContext];
@@ -410,14 +653,14 @@ NSArray *statusDataX;
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"code" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *pFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"MasterProductList"];
+    NSFetchedResultsController *pFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"ProductList"];
     // pFetchedResultsController.delegate = self;
     self.fetchedResultsController = pFetchedResultsController;
     
@@ -427,7 +670,7 @@ NSArray *statusDataX;
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
-	}
+	}   
     
     return _fetchedResultsController;
 }
@@ -441,6 +684,8 @@ NSArray *statusDataX;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    
+    NSManagedObject *object = moDATA;
     
     // HEADER
     if (indexPath.section == 0) {
@@ -466,8 +711,21 @@ NSArray *statusDataX;
         
         if (selectedButton == 2)
         {
-            [(UILabel *)[cell viewWithTag:1] setText:@"MCG0000001"];
-            [(UILabel *)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"btn %d", selectedButton]];
+            [(UILabel *)[cell viewWithTag:1] setText:[[object valueForKey:@"reference"] description]];
+            [(UILabel *)[cell viewWithTag:5] setText:[[object valueForKey:@"status"] description]]; //status
+            
+            NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+            [DateFormatter setDateFormat:@"dd-MM-yyyy"];
+            [(UILabel *)[cell viewWithTag:2] setText:[DateFormatter stringFromDate:[object valueForKey:@"datecreated"] ]]; //Date Created
+            
+            [(UILabel *)[cell viewWithTag:3] setText:[object valueForKey:@"datereleased"]]; //date released
+            [(UILabel *)[cell viewWithTag:4] setText:[object valueForKey:@"dateshipped"]]; //date shipped
+            
+            // [(UILabel *)[cell viewWithTag:6] setText:@""]; //reason label
+            // [(UILabel *)[cell viewWithTag:7] setText:@""]; //reason value
+            
+            // [(UILabel *)[cell viewWithTag:8] setText:@""]; //tracking label
+            // [(UILabel *)[cell viewWithTag:9] setText:@""]; //tracking value
         }
         
     }
@@ -493,7 +751,9 @@ NSArray *statusDataX;
             
             if (selectedButton == 2)  // SHOW DETAILS
             {
-                [(UILabel *)[cell viewWithTag:1] setText:@"Doctors Name"];
+                [(UILabel *)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@, %@",
+                                                          [[object valueForKey:@"shipping_lastname"] description],
+                                                          [[object valueForKey:@"shipping_firstname"] description]]];
             }
             
             
@@ -512,7 +772,16 @@ NSArray *statusDataX;
              
              if (selectedButton == 2)  // SHOW DETAILS
              {
-                 [(UILabel *)[cell viewWithTag:0] setText:@"Get Address \n"];
+                 
+                 NSString *AddressBuilder = [NSString stringWithFormat:@"%@ \n %@ \n %@ \n %@,%@,%@",
+                                             [[object valueForKey:@"shipping_addressline1"] description],
+                                             [[object valueForKey:@"shipping_addressline2"] description],
+                                             [[object valueForKey:@"shipping_addressline3"] description],
+                                             [[object valueForKey:@"shipping_city"] description],
+                                             [[object valueForKey:@"shipping_province"] description],
+                                             [[object valueForKey:@"shipping_postalcode"] description]];
+                 
+                 [(UILabel *)[cell viewWithTag:0] setText:AddressBuilder];
              }
              
         }        
@@ -521,24 +790,39 @@ NSArray *statusDataX;
     // DELIVERED TO PHYSICIAN
     if (indexPath.section == 2) {
         
-        // Iterate based on fetched products from table
-        if (indexPath.row == [[[self fetchedResultsController] fetchedObjects] count]) {
+        if (selectedButton == 0) // NEW ORDER
+        {
+            NSManagedObject *ProductObject = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
             
-            cell.textLabel.text = @"";
+            cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",
+                                   [[ProductObject valueForKey:@"name"] description],
+                                   [[ProductObject valueForKey:@"product_description"] description]];
             
-        } else {
-            
-            NSManagedObject *object = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
-            cell.textLabel.text = [[object valueForKey:@"code"] description];
             cell.detailTextLabel.text = @"0";
         }
-    
+        
+        if (selectedButton == 2) // EXISTING ORDER
+        {
+            // Iterate based on fetched products from table
+            if (indexPath.row == [[[self fetchedResultsController] fetchedObjects] count])
+            {
+                cell.textLabel.text = @"";
+            
+            } else {                
+                NSSet *orderDetails = [[object valueForKey:@"toOrderDetails"] valueForKeyPath:@"productid"];
+                NSArray *orderDetailsItem = [orderDetails allObjects];
+                NSSet *orderDetails2 = [[object valueForKey:@"toOrderDetails"] valueForKeyPath:@"quantityordered"];
+                NSArray *orderDetailsItem2 = [orderDetails2 allObjects];
+                cell.textLabel.text = [orderDetailsItem objectAtIndex:(indexPath.row)];
+                cell.detailTextLabel.text = [[orderDetailsItem2 objectAtIndex:(indexPath.row)] stringValue];
+            }
+        }
     }
     
     
     // DELIVERY INSTRUCTIONS
     if (indexPath.section == 3) {
-        [(UILabel *)[cell viewWithTag:1] setText:@"SHIPPING INSTRUCTIONS"];
+        [(UILabel *)[cell viewWithTag:1] setText:[[object valueForKey:@"shipping_instructions"] description]];
     }
     
     // SHIPPING CARRIER
@@ -553,7 +837,6 @@ NSArray *statusDataX;
     
    
 }
-
 
 
 @end

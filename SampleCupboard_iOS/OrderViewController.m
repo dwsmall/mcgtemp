@@ -39,6 +39,10 @@
 }
 
 
+
+
+
+
 #pragma mark - View Functions
 
 
@@ -47,6 +51,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self.tableView reloadData];
+    
+    // Check OutStanding Orders And Display
+    // [self.tabBarItem setBadgeValue:@"3"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,10 +71,41 @@
         // Get destination view
         OrderDetailViewController_iPad *vc = [segue destinationViewController];
         
+        
+        NSIndexPath *ip = [self.tableView indexPathForSelectedRow];
+       // vc.fetchedResultsController2 = [[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.row];
+        
+        
         // Pass the information to your destination view
         [vc setSelectedButton:2];
         [vc setSelectedHCPNUMBER:2];
         [vc setSelectedPRODUCTNUMBER:0];
+        [vc setFetchedResultsController2:[[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.section]];
+        [vc setManagedObjectContext2: [[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.section]];
+        
+        [vc setMyresults:[[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.section]];
+        
+        [vc setMoDATA:[[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.section]];
+        
+        
+        
+        
+        //[vc setFetchedResultsController2:(NSFetchedResultsController)]
+        
+        // NSLog(@"Make Sure Populated Before Sending %@", [[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.row]);
+        
+        // NSLog(@"THIS ROW HAS BEEN SELECTED %d",ip.row);
+        // NSLog(@"THIS SECTION SECTION HAS BEEN SELECTED %d",ip.section);
+
+        
+        // NSLog(@"THIS SENDER ROW HAS BEEN SELECTED %@",[sender indexPathForSelectedRow]);
+
+        
+        
+        
+        
+        // option 1 [prepare values]
+        
     }
 }
 
@@ -80,7 +118,8 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     // Fetch Each Object As Section (Should Show Total Orders as Results - XX)
-    // NSLog(@"NUMBER OF SECTIONS: %d", [[[self.fetchedResultsController sections] objectAtIndex:0] numberOfObjects]);
+    
+    NSLog(@"NUMBER OF SECTIONS: %d", [[[self.fetchedResultsController sections] objectAtIndex:0] numberOfObjects]);
     return [[[self.fetchedResultsController sections] objectAtIndex:0] numberOfObjects];
          
 }
@@ -212,7 +251,7 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    UITableView *tableView = self.tableView;
+    UITableView *tableView = self.tableView;		
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
@@ -266,88 +305,66 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     
-    
     // REPLACE INDEX PATH FOR ROW ON FETCH CALL
-    NSManagedObject *object = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
+    //NSManagedObject *object = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
     
+    Order *order =[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
+    
+    // HEADER CELL
     if (indexPath.row == 0) {
         
         UILabel *PDate = (UILabel *)[cell viewWithTag:600];
-        [PDate setText:[[object valueForKey:@"datecreated"] description]];
         
+        // Date [Reference] Formating...
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"dd/MM/yyyy"];
+        [PDate setText: [NSString stringWithFormat:@"%@ [MERC%@]",
+                         [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:[order valueForKey:@"datecreated"]]],
+                         [[order valueForKey:@"reference"] description]]];
+        
+        
+        // Name Formating
         UILabel *PName = (UILabel *)[cell viewWithTag:601];
         [PName setText: [NSString stringWithFormat:@"%@, %@",
-        [[object valueForKey:@"shipping_firstname"] description],
-        [[object valueForKey:@"shipping_lastname"] description]]];
+        [[order valueForKey:@"shipping_firstname"] description],
+        [[order valueForKey:@"shipping_lastname"] description]]];
     }
     
     
+    // DETAIL ITEM CELL    
+    if (indexPath.row != 0 && indexPath.row != ([order.toOrderDetails.allObjects count] + 1) ) {
     
-    
-    // if (indexPath.row == 1) {
-        
-     
-        Order *order =[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
-        
-        
-        // TEST1
-        NSSet *books = order.toOrderDetails;
-        NSArray *booksList = books;
-        // NSLog(@"Name TEST1: %@", booksList[0]);
-    
-        // TEST2
         NSSet *orderDetails = [order.toOrderDetails valueForKeyPath:@"productid"];
         NSArray *orderDetailsItem = [orderDetails allObjects];
+
+        NSSet *orderDetails2 = [order.toOrderDetails valueForKeyPath:@"quantityordered"];
+        NSArray *orderDetailsItem2 = [orderDetails2 allObjects];
+
         
-        // TEST3
-        NSSet *booksByAuthor = [object valueForKey:@"toOrderDetails"];
-        NSArray *booksArray = [booksByAuthor allObjects];
-        
-        for (books in booksList) {
-            NSLog(@"Name: %@", booksList.description);
-            // NSLog(@"Zip: %@", details.zip);
-        }
-       
-        
-        
-        UILabel *PDate1 = (UILabel *)[cell viewWithTag:602];
-        // [PDate1 setText:[[object valueForKey:@"shipping_firstname"] description]];
-        // [PDate1 setText:[order.reference description]];
-        
-        
+        UILabel *PItem = (UILabel *)[cell viewWithTag:602];
+        [PItem setText:[orderDetailsItem objectAtIndex:(indexPath.row - 1)]];
     
-        NSLog(@"Name MSG1 : %@", order.toOrderDetails.description);
-    
-        // MSG2 SHOWS ALL VALUES toOrderDetails is null
-        // NSLog(@"Name MSG2 : %@", [order.toOrderDetails valueForKeyPath:@"productid"]);
-    
-        [PDate1 setText:[orderDetails.description description]];
+        UILabel *PQty = (UILabel *)[cell viewWithTag:603];
+        [PQty setText:[[orderDetailsItem2 objectAtIndex:(indexPath.row - 1)] stringValue]];
         
-        // [PDate1 setText:[order.shipping_firstname description]];
-        
-        // [PDate1 setText:[[order valueForKey:@"shipping_firstname"] description]];
-        
-        // [PDate1 setText:@"Ezetrol 10mg"];
-        // [PDate1 setText:[[object valueForKeyPath:@"shipping_firstname"] description]];
-        // UILabel PDate1 = role.shipping_lastname;
-        // cell.textLabel.text = order.shipping_firstname;
-        
-        // [PDate1 setText:[[object valueForKey:@"datecreated.order"] description]];
-        
-        UILabel *PName1 = (UILabel *)[cell viewWithTag:603];
-        // [PName1 setText:[[object valueForKeyPath:order.shipping_addressline1] description]];
-        // [PDate1 setText:[order.shipping_addressline1 description]];
-        [PName1 setText:@"21"];
-   // }
+    }
     
     
-    if (indexPath.row == 2) {
+    // SUMMARY CELL
+    if (indexPath.row == ([order.toOrderDetails.allObjects count] + 1)) {
         UILabel *XNameX = (UILabel *)[cell viewWithTag:604];
-        [XNameX setText:[[object valueForKey:@"status"] description]];
+        [XNameX setText:[[order valueForKey:@"status"] description]];
     }
     
     
 }
 
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    // DO NOT USE THIS MESSAGE (WILL CAUSE CRASH)
+    // self.fetchedResultsController = nil;
+    // self.context = nil;
+}
 
 @end

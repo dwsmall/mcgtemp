@@ -64,6 +64,11 @@ Reachability *internetReachableFoo;
 
 - (IBAction)btnSyncClick:(id)sender {
     
+    
+   
+    
+    
+    
     // TEST INSERTION METHOD USING MANUAL INSERT
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
@@ -401,16 +406,15 @@ Reachability *internetReachableFoo;
     
     
     // Products - Multiple
-    url = [NSURL URLWithString:@"http://project.dwsmall.com/product"];
+    url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/GetProductByUserId/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590"];
+        
     jsonData = [NSData dataWithContentsOfURL:url];
     
     if(jsonData != nil)
     {
         NSError *error = nil;
         NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-        NSArray* arrayContainer = [dictContainer objectForKey:@"product"];
-        
-        // NSLog(@"product: %@", arrayContainer);
+        NSArray* arrayContainer = [dictContainer objectForKey:@"GetProductByUserIdResult"];
         
         //Iterate JSON Objects
         for(int i=0;i<[arrayContainer count];i++)
@@ -420,13 +424,17 @@ Reachability *internetReachableFoo;
             NSManagedObject *model = [NSEntityDescription
                                       insertNewObjectForEntityForName:@"Product"
                                       inManagedObjectContext:context];
-            [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
-            [model setValue:[dicItems objectForKey:@"Type"]  forKey:@"type"];
             [model setValue:[dicItems objectForKey:@"Code"]  forKey:@"code"];
-            [model setValue:[dicItems objectForKey:@"lowlevelquantity"]  forKey:@"lowlevelquantity"];
-            [model setValue:[dicItems objectForKey:@"unitmultiplier"]  forKey:@"unitmultiplier"];
-            [model setValue:[dicItems objectForKey:@"options_OrderTypeEligibility"]  forKey:@"options_ordertypeeligibility"];
-            [model setValue:[dicItems objectForKey:@"status"]  forKey:@"status"];
+            [model setValue:[dicItems objectForKey:@"Name"]  forKey:@"name"];
+            [model setValue:[dicItems objectForKey:@"Description"]  forKey:@"product_description"];
+            [model setValue:[dicItems objectForKey:@"LowLevelQuantity"]  forKey:@"lowlevelquantity"];
+            [model setValue:[dicItems objectForKey:@"Type"]  forKey:@"type"];
+            [model setValue:[dicItems objectForKey:@"Status"]  forKey:@"status"];
+            [model setValue:[dicItems objectForKey:@"UnitMultiplier"]  forKey:@"unitmultiplier"];
+            
+            // [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
+            // [model setValue:[dicItems objectForKey:@"options_OrderTypeEligibility"]  forKey:@"options_ordertypeeligibility"];
+            
         }
         
         if (![context save:&error]) {
@@ -538,79 +546,7 @@ Reachability *internetReachableFoo;
     }
     
     
-    
-    // Territory
-    
-    url = [NSURL URLWithString:@"http://project.dwsmall.com/territory"];
-    jsonData = [NSData dataWithContentsOfURL:url];
-    
-    if(jsonData != nil)
-    {
-        NSError *error = nil;
-        NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-        NSArray* arrayContainer = [dictContainer objectForKey:@"territory"];
         
-        // NSLog(@"territory: %@", arrayContainer);
-        
-        //Iterate JSON Objects
-        for(int i=0;i<[arrayContainer count];i++)
-        {
-            NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
-            
-            NSManagedObject *model = [NSEntityDescription
-                                      insertNewObjectForEntityForName:@"Territory"
-                                      inManagedObjectContext:context];
-            [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
-            [model setValue:[dicItems objectForKey:@"Province"] forKey:@"province"];
-            [model setValue:[dicItems objectForKey:@"Name"] forKey:@"name"];
-            [model setValue:[dicItems objectForKey:@"TerritoryNumber"] forKey:@"territorynumber"];
-            
-        }
-        
-        if (![context save:&error]) {
-            NSLog(@"Couldn't save: %@", [error localizedDescription]);
-        }
-        
-        if (error == nil)
-            NSLog(@"%@", dictContainer);
-    }
-    
-    
-    // TerritoryFSA
-    
-    url = [NSURL URLWithString:@"http://project.dwsmall.com/territoryfsa"];
-    jsonData = [NSData dataWithContentsOfURL:url];
-    
-    if(jsonData != nil)
-    {
-        NSError *error = nil;
-        NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-        NSArray* arrayContainer = [dictContainer objectForKey:@"territoryfsa"];
-        
-        // NSLog(@"territoryfsa: %@", arrayContainer);
-        
-        //Iterate JSON Objects
-        for(int i=0;i<[arrayContainer count];i++)
-        {
-            NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
-            
-            NSManagedObject *model = [NSEntityDescription
-                                      insertNewObjectForEntityForName:@"TerritoryFSA"
-                                      inManagedObjectContext:context];
-            [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
-            [model setValue:[dicItems objectForKey:@"Fsa"] forKey:@"fsa"];
-            [model setValue:[dicItems objectForKey:@"Territoryid"] forKey:@"territoryid"];
-            
-        }
-        
-        if (![context save:&error]) {
-            NSLog(@"Couldn't save: %@", [error localizedDescription]);
-        }
-        
-        if (error == nil)
-            NSLog(@"%@", dictContainer);
-    }
-    
     
     // REP
     
@@ -656,8 +592,8 @@ Reachability *internetReachableFoo;
             NSLog(@"%@", dictContainer);
     }
     
-    // ORDER INFO
     
+    // ORDER INFO
     url = [NSURL URLWithString:@"http://project.dwsmall.com/order"];
     jsonData = [NSData dataWithContentsOfURL:url];
         
@@ -739,6 +675,11 @@ Reachability *internetReachableFoo;
                         [OrderDTL setValue:[dicItems2 objectForKey:@"clientid"] forKey:@"clientid"];
                         [OrderDTL setValue:[dicItems2 objectForKey:@"order_id"] forKey:@"orderid"];
                         [OrderDTL setValue:[dicItems2 objectForKey:@"productid"] forKey:@"productid"];
+                        
+                        [OrderDTL setValue:@"Jaunumet 77" forKey:@"stored_product_name"];
+                        [OrderDTL setValue:@"4 units" forKey:@"stored_product_description"];
+                        [OrderDTL setValue:@"12352" forKey:@"stored_product_code"];
+
                         [OrderDTL setValue:[dicItems2 objectForKey:@"quantityordered"] forKey:@"quantityordered"];
                         [OrderDTL setValue:[NSDate date] forKey:@"datecreated"];
             
@@ -762,44 +703,91 @@ Reachability *internetReachableFoo;
             NSLog(@"%@", dictContainer);
             NSLog(@"%@", dictContainer2);
     }
+    
         
         
-        // ORDER DETAILS
         
-        // url = [NSURL URLWithString:@"http://project.dwsmall.com/orderdetails"];
-        // jsonData = [NSData dataWithContentsOfURL:url];
         
-        // if(jsonData != nil)
-        // {
-        //     NSError *error = nil;
-        //     NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-        //     NSArray* arrayContainer = [dictContainer objectForKey:@"orderdetails"];
+        // TERRITORY POPULATION
+        
+        url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/GetTerritoriesByUserId/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590"];
+        
+        jsonData = [NSData dataWithContentsOfURL:url];
+        
+        if(jsonData != nil)	
+        {
+            NSError *error = nil;
             
-            //Iterate JSON Objects
-        
-        //    for(int i=0;i<[arrayContainer count];i++)
-        //    {
-        //        NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
+            NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+            
+            NSArray* arrayContainer = [dictContainer objectForKey:@"GetTerritoriesByUserIdResult"];
+            
+            
+            //Iterate TERRITORY
+            for(int i=0;i<[arrayContainer count];i++)
+            {
+                NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
                 
-        //        NSManagedObject *model = [NSEntityDescription
-        //                                  insertNewObjectForEntityForName:@"OrderLineItem"
-        //                                  inManagedObjectContext:context];
-        //        [model setValue:[dicItems objectForKey:@"clientid"] forKey:@"clientid"];
-        //        [model setValue:[dicItems objectForKey:@"order_id"] forKey:@"orderid"];
-        //        [model setValue:[dicItems objectForKey:@"productid"] forKey:@"productid"];
-        //        [model setValue:[dicItems objectForKey:@"quantityordered"] forKey:@"quantityordered"];
-        //    }
+                // Create TERRITORY
+                NSManagedObject *model = [NSEntityDescription
+                                          insertNewObjectForEntityForName:@"Territory"
+                                          inManagedObjectContext:context];
+                // [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
+                [model setValue:[dicItems objectForKey:@"Name"] forKey:@"name"];
+                [model setValue:[dicItems objectForKey:@"Id"] forKey:@"territory_id"];
+                
+                
+                    // Get Detailed Items [FSA]
+                
+                NSString *baseurl = @"http://dev.samplecupboard.com/Data/MobileServices.svc/GetFSAByTerritoryId/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/";
+                
+                NSURL *urlFSA = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
+                                                      baseurl,
+                                                      [dicItems objectForKey:@"Id"]]];
+	
+                    NSData *jsonDataFSA = [NSData dataWithContentsOfURL:urlFSA];
+                
+                    // Dictionary of Detailed Items
+                    NSDictionary* dictContainerFSA = [NSJSONSerialization JSONObjectWithData:jsonDataFSA options:kNilOptions error:&error];
+                
+                    // Container of Detailed Items
+                    NSArray* arrayContainerFSA = [dictContainerFSA objectForKey:@"GetFSAByTerritoryIdResult"];
+                
+                    //Iterate FSA
+                    for(int x=0;x<[arrayContainerFSA count];x++)
+                    {
+                        NSDictionary* dicItemsFSA = [arrayContainerFSA objectAtIndex:x];
+                        	
+                                NSManagedObject *modelfsa = [NSEntityDescription
+                                                  insertNewObjectForEntityForName:@"TerritoryFSA"
+                                                  inManagedObjectContext:context];
+                                [modelfsa setValue:[dicItemsFSA objectForKey:@"Fsa"] forKey:@"fsa"];
+                                [modelfsa setValue:[dicItemsFSA objectForKey:@"Territoryid"] forKey:@"territory_id"];
+                        
+                            //PART 3. INSERT VALUE FOR RELATIONSHIP
+                            // [OrderDTL setValue:OrderHDR forKey:@"toOrderHeader"];
+                    }
+                
+                
+            }  //End of dictContainer For
             
-        //    if (![context save:&error]) {
-        //        NSLog(@"Couldn't save: %@", [error localizedDescription]);
-        //    }
             
-        //    if (error == nil)
-        //         NSLog(@"%@", dictContainer);
-        // }
+            if (![context save:&error]) {
+                    NSLog(@"Couldn't save: %@", [error localizedDescription]);
+            }
+            
+            if (error == nil) {
+                    NSLog(@"%@", dictContainer);
+            }
+    }
         
         
-        }  // end populate of others 
+        
+        
+    
+        
+        
+    }  // end populate of others
 
 }
 

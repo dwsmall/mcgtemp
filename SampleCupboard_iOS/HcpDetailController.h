@@ -15,6 +15,8 @@
     NSInteger *selectedHCPNUMBER;
     NSIndexPath *selectedHCPINDEX;
     NSArray *currentHCPINFO;
+    
+    NSManagedObject *moDATA;
         
 }
 
@@ -32,5 +34,7 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+@property (nonatomic, weak) IBOutlet UILabel *outputlabelA;
+@property (strong, nonatomic) NSManagedObject *moDATA;
 
 @end

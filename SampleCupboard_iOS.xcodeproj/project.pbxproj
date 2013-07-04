@@ -76,6 +76,7 @@
 		5BCB1B8A1747A32E00816AF7 /* SyncViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B891747A32E00816AF7 /* SyncViewController_iPad.m */; };
 		5BD83539174AE96E00DA8B5A /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5BD83538174AE96D00DA8B5A /* fr.lproj */; };
 		5BD8353B174AE98400DA8B5A /* Icons in Resources */ = {isa = PBXBuildFile; fileRef = 5BD8353A174AE98300DA8B5A /* Icons */; };
+		5BE091E81784851C0035F51B /* ConvertRequestToOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091E71784851C0035F51B /* ConvertRequestToOrder.m */; };
 		5BE39223174BC9CA005B40D2 /* OrderDetailViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */; };
 		5BE39226174BE9D1005B40D2 /* HyperlinkLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39225174BE9D0005B40D2 /* HyperlinkLabel.m */; };
 		5BE39229174BEB83005B40D2 /* IndentTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39228174BEB83005B40D2 /* IndentTextField.m */; };
@@ -108,7 +109,7 @@
 /* Begin PBXFileReference section */
 		5B0C7898176D4ED100770EDF /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		5B0C7899176D4ED100770EDF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		5B10578D176F3C360048513E /*  */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodeld; name = ""; sourceTree = "<group>"; };
+		5B10578D176F3C360048513E = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodeld; sourceTree = "<group>"; };
 		5B10578E176F3E540048513E /* SampleCupboard_iOS 1.001.xcdatamodel */ = {isa = PBXFileReference; explicitFileType = wrapper.xcdatamodel; path = "SampleCupboard_iOS 1.001.xcdatamodel"; sourceTree = "<group>"; };
 		5B10578F176F42F80048513E /* OrderLineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderLineItem.h; sourceTree = "<group>"; };
 		5B105790176F42F80048513E /* OrderLineItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderLineItem.m; sourceTree = "<group>"; };
@@ -211,6 +212,8 @@
 		5BCB1B891747A32E00816AF7 /* SyncViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncViewController_iPad.m; sourceTree = "<group>"; };
 		5BD83538174AE96D00DA8B5A /* fr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fr.lproj; sourceTree = "<group>"; };
 		5BD8353A174AE98300DA8B5A /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
+		5BE091E61784851C0035F51B /* ConvertRequestToOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertRequestToOrder.h; sourceTree = "<group>"; };
+		5BE091E71784851C0035F51B /* ConvertRequestToOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertRequestToOrder.m; sourceTree = "<group>"; };
 		5BE39221174BC9C7005B40D2 /* OrderDetailViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController_iPad.h; sourceTree = "<group>"; };
 		5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController_iPad.m; sourceTree = "<group>"; };
 		5BE39224174BE9D0005B40D2 /* HyperlinkLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyperlinkLabel.h; sourceTree = "<group>"; };
@@ -282,6 +285,8 @@
 				5B5C53E21757E44D004126D1 /* Reachability.m */,
 				5B0C7898176D4ED100770EDF /* MBProgressHUD.h */,
 				5B0C7899176D4ED100770EDF /* MBProgressHUD.m */,
+				5BE091E61784851C0035F51B /* ConvertRequestToOrder.h */,
+				5BE091E71784851C0035F51B /* ConvertRequestToOrder.m */,
 			);
 			name = "Utility Classes";
 			sourceTree = "<group>";
@@ -759,6 +764,7 @@
 				5B9667371768C41C0017F0E4 /* HcpAdditionalDetails.m in Sources */,
 				5B105791176F42F80048513E /* OrderLineItem.m in Sources */,
 				5B105794176F42F90048513E /* Order.m in Sources */,
+				5BE091E81784851C0035F51B /* ConvertRequestToOrder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -961,7 +967,7 @@
 		5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				5B10578D176F3C360048513E /*  */,
+				5B10578D176F3C360048513E,
 				5BE39246174C3177005B40D2 /* SampleCupboard_iOS.xcdatamodel */,
 				5B10578E176F3E540048513E /* SampleCupboard_iOS 1.001.xcdatamodel */,
 			);

@@ -30,6 +30,7 @@
 @synthesize selectedHCPNUMBER;
 @synthesize selectedHCPMSG;
 @synthesize currentHCPINFO;
+@synthesize moDATA, outputlabelA;
 // @synthesize currentHCPARRAY;
 
 
@@ -298,7 +299,11 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        
+    
+    NSManagedObject *object = moDATA;
+    
+    // [(UILabel *)[cell viewWithTag:1] setText:[[object valueForKey:@"reference"] description]];
+
     
     switch (indexPath.section)
     
@@ -308,27 +313,33 @@
             if (indexPath.row == 0) {
                 // cell.textLabel.text = @"First Name:";
                 cell.textLabel.text = @"First Name:";
-                cell.detailTextLabel.text = currentHCPINFO[0];
+                cell.detailTextLabel.text = [[object valueForKey:@"firstname"] description];
+                //cell.detailTextLabel.text = currentHCPINFO[0];
             }
             
             if (indexPath.row == 1) {
                 cell.textLabel.text = @"Last Name:";
-                cell.detailTextLabel.text = currentHCPINFO[1];
+                cell.detailTextLabel.text = [[object valueForKey:@"lastname"] description];
+                // cell.detailTextLabel.text = currentHCPINFO[1];
             }
             
             if (indexPath.row == 2) {
                 cell.textLabel.text = @"Title:";
-                cell.detailTextLabel.text = currentHCPINFO[2];
+                cell.detailTextLabel.text = [[object valueForKey:@"title"] description];
+                // cell.detailTextLabel.text = @"ADD TITLE";
+                // cell.detailTextLabel.text = currentHCPINFO[2];
             }
             
             if (indexPath.row == 3) {
                 cell.textLabel.text = @"Gender:";
-                cell.detailTextLabel.text = currentHCPINFO[3];
+                cell.detailTextLabel.text = [[object valueForKey:@"gender"] description];
+                // cell.detailTextLabel.text = currentHCPINFO[3];
             }
             
             if (indexPath.row == 4) {
                 cell.textLabel.text = @"Language:";
-                cell.detailTextLabel.text = currentHCPINFO[4];
+                cell.detailTextLabel.text = [[object valueForKey:@"language"] description];
+                // cell.detailTextLabel.text = currentHCPINFO[4];
             }
             break;
             
@@ -337,12 +348,14 @@
             //Communication
             if (indexPath.row == 0) {
                 cell.textLabel.text = @"Telephone:";
-                cell.detailTextLabel.text = currentHCPINFO[5];
+                cell.detailTextLabel.text = [[object valueForKey:@"phone"] description];
+                // cell.detailTextLabel.text = currentHCPINFO[5];
             }
             
             if (indexPath.row == 1) {
                 cell.textLabel.text = @"Fax:";
-                cell.detailTextLabel.text = currentHCPINFO[6];
+                cell.detailTextLabel.text = [[object valueForKey:@"fax"] description];
+                // cell.detailTextLabel.text = currentHCPINFO[6];
             }
             break;
             
@@ -350,7 +363,13 @@
             
             //Address
             if (indexPath.row == 0) {
-                cell.textLabel.text = currentHCPINFO[7];
+                NSString *longaddress_name = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",
+                                              [[object valueForKey:@"facility"] description],
+                                              [[object valueForKey:@"address1"] description],
+                                              [[object valueForKey:@"city"] description],
+                                              [[object valueForKey:@"province"] description],
+                                              [[object valueForKey:@"postal"] description]];
+                cell.textLabel.text = longaddress_name;
             }
             
             break;

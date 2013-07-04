@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-@interface TextInputDialog_iPad : UIViewController {
-    UILabel *_lblCaption;
-	UITextField *_editText;
-	UIButton *_btnOk;
+#import <UIKit/UIKit.h>
 
+@interface TextInputDialog_iPad : UIView <UIKeyInput>
+{
+    NSMutableString *textToDisplay;
 }
 
-
+@property (nonatomic, retain) NSMutableString *textToDisplay;
 @end
