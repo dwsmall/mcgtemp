@@ -28,7 +28,7 @@
         <attribute name="territory" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Allocation" syncable="YES">
+    <entity name="Allocation" representedClassName="Allocation" syncable="YES">
         <attribute name="allocationheaderid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
@@ -49,8 +49,9 @@
         <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalmax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="toAllocHdr" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AllocationHeader" inverseName="toAllocDetails" inverseEntity="AllocationHeader" syncable="YES"/>
     </entity>
-    <entity name="AllocationHeader" syncable="YES">
+    <entity name="AllocationHeader" representedClassName="AllocationHeader" syncable="YES">
         <attribute name="allocdescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
@@ -61,6 +62,7 @@
         <attribute name="inactive" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toAllocDetails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Allocation" inverseName="toAllocHdr" inverseEntity="Allocation" syncable="YES"/>
     </entity>
     <entity name="ClientInfo" syncable="YES">
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
@@ -228,7 +230,7 @@
         <attribute name="stored_product_name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="toOrderHeader" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Order" inverseName="toOrderDetails" inverseEntity="Order" syncable="YES"/>
     </entity>
-    <entity name="OrderTemplate" syncable="YES">
+    <entity name="OrderTemplate" representedClassName="OrderTemplate" syncable="YES">
         <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ownerid" optional="YES" attributeType="String" syncable="YES"/>
@@ -237,12 +239,14 @@
         <attribute name="shiptoid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="templatename" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toOrdTempDetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="OrderTemplateLine" inverseName="toOrdTempHdr" inverseEntity="OrderTemplateLine" syncable="YES"/>
     </entity>
-    <entity name="OrderTemplateLine" syncable="YES">
+    <entity name="OrderTemplateLine" representedClassName="OrderTemplateLine" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ordertemplateid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="quantityordered" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="toOrdTempHdr" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OrderTemplate" inverseName="toOrdTempDetails" inverseEntity="OrderTemplate" syncable="YES"/>
     </entity>
     <entity name="People" syncable="YES">
         <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
@@ -302,7 +306,7 @@
         <attribute name="qtyavailable" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="repid" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
-    <entity name="Territory" syncable="YES">
+    <entity name="Territory" representedClassName="Territory" syncable="YES">
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
@@ -311,14 +315,16 @@
         <attribute name="province" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territory_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territorynumber" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toFSA" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TerritoryFSA" inverseName="toTerritory" inverseEntity="TerritoryFSA" syncable="YES"/>
     </entity>
-    <entity name="TerritoryFSA" syncable="YES">
+    <entity name="TerritoryFSA" representedClassName="TerritoryFSA" syncable="YES">
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="fsa" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territory_id" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toTerritory" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Territory" inverseName="toFSA" inverseEntity="Territory" syncable="YES"/>
     </entity>
     <entity name="TerritoryRep" syncable="YES">
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
@@ -330,22 +336,22 @@
     </entity>
     <elements>
         <element name="Address" positionX="324" positionY="-246" width="128" height="435"/>
-        <element name="Allocation" positionX="-243" positionY="-318" width="128" height="345"/>
-        <element name="AllocationHeader" positionX="-405" positionY="-168" width="128" height="195"/>
+        <element name="Allocation" positionX="-407" positionY="-324" width="128" height="360"/>
+        <element name="AllocationHeader" positionX="-236" positionY="-210" width="128" height="210"/>
         <element name="ClientInfo" positionX="97" positionY="-531" width="128" height="360"/>
         <element name="Disbursement" positionX="628" positionY="-531" width="128" height="630"/>
         <element name="DisbursementLineItem" positionX="475" positionY="-318" width="128" height="165"/>
         <element name="HealthCareProfessional" positionX="-72" positionY="-528" width="128" height="465"/>
         <element name="Order" positionX="-585" positionY="-534" width="128" height="750"/>
         <element name="OrderLineItem" positionX="-756" positionY="-87" width="128" height="210"/>
-        <element name="OrderTemplate" positionX="-245" positionY="54" width="128" height="165"/>
-        <element name="OrderTemplateLine" positionX="-398" positionY="111" width="128" height="105"/>
+        <element name="OrderTemplate" positionX="-245" positionY="54" width="128" height="180"/>
+        <element name="OrderTemplateLine" positionX="-398" positionY="111" width="128" height="120"/>
         <element name="People" positionX="324" positionY="-369" width="128" height="90"/>
         <element name="Product" positionX="-74" positionY="-36" width="128" height="285"/>
         <element name="Rep" positionX="99" positionY="-123" width="128" height="375"/>
         <element name="RepInventory" positionX="475" positionY="-531" width="128" height="180"/>
-        <element name="Territory" positionX="-245" positionY="-525" width="128" height="165"/>
-        <element name="TerritoryFSA" positionX="-407" positionY="-495" width="128" height="135"/>
+        <element name="Territory" positionX="-245" positionY="-525" width="128" height="180"/>
+        <element name="TerritoryFSA" positionX="-407" positionY="-495" width="128" height="150"/>
         <element name="TerritoryRep" positionX="322" positionY="-531" width="128" height="135"/>
     </elements>
 </model>

@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+
+
 #import "SyncViewController_iPad.h"
 #import "Reachability.h"
 
@@ -125,6 +127,16 @@ Reachability *internetReachableFoo;
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil];
     [alert show];
+
+    
+    // [self performSelectorOnMainThread:@selector(RemoveEntities:) withObject:@"others" waitUntilDone:YES];
+    
+    // Delete Data For "others"
+    // [self performSelectorOnMainThread:@selector(RemoveEntities:) withObject:@"others" waitUntilDone:YES];
+    
+    // Example #1 - NO Work
+    // [self performSelectorOnMainThread:@selector(deleteAllManagedObjectsInModel:) withObject:@"others" waitUntilDone:YES];
+    
     
 }
 
@@ -211,8 +223,8 @@ Reachability *internetReachableFoo;
 
 
 
-
-- (void) RemoveEntities:(NSString *) removalType {
+//STUDY AND REMOVE
+- (void) RemoveEntitiesNOTUSED:(NSString *) removalType {
 
     
     NSLog(@"Entity Removal Called %@", removalType);
@@ -269,24 +281,143 @@ Reachability *internetReachableFoo;
 
 
 
+
+// EXAMPLE #2
+- (void) RemoveEntities:(NSString *) removalType {
+    
+    
+    NSLog(@"Entity A Removal Called %@", removalType);
+    
+    NSArray *deletionEntity;
+    
+    NSString *delete_hcp = @"hcp";
+    NSString *delete_others = @"others";
+    
+    
+    if ([removalType isEqual: delete_hcp])  {
+        deletionEntity = @[@"HealCareProfessional"];
+    }
+    
+    if ([removalType isEqual: delete_others]) {
+        deletionEntity = @[@"ClientInfo",@"Product",@"Allocation",@"AllocationHeader",@"TerritoryFSA",@"Territory",@"Rep", @"Order", @"OrderLineItem"];
+    }
+    
+    // Define Delegate Context
+    // id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    // self.managedObjectContext = [appDelegate managedObjectContext];
+    // NSManagedObjectContext *context = [self managedObjectContext];
+    
+    
+    NSLog(@"Total Entries %i", [deletionEntity count]);
+    
+    
+    
+    for(int i=0;i<[deletionEntity count];i++)
+    {
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:[deletionEntity objectAtIndex:i] inManagedObjectContext:_managedObjectContext];
+        [fetchRequest setEntity:entity];
+        
+        NSError *error;
+        NSArray *items = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        
+        for (NSManagedObject *managedObject in items) {
+            [_managedObjectContext deleteObject:managedObject];
+            NSLog(@"%@ object deleted",[deletionEntity objectAtIndex:i]);
+        }
+        if (![_managedObjectContext save:&error]) {
+            NSLog(@"Error deleting %@ - error:%@",[deletionEntity objectAtIndex:i],error);
+        }
+        
+        NSLog(@"Actual Entry %@", [deletionEntity objectAtIndex:i] );
+        // NSLog(@"This Entity Has Been Removed %@", deletionEntity);
+        
+    }// End Each
+    
+}
+
+
+
+
+
+// EXAMPLE #1 - Remove All Objects IF NEW REP
+- (void)deleteAllManagedObjectsInModel:(NSString *) removalType
+{
+
+    //managedObjectModel
+    NSManagedObjectModel *managedObjectModel;
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"SampleCupboard_iOS" withExtension:@"momd"];
+    managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    
+    //managedObjectContext
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+
+    
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+        [managedObjectContext performBlockAndWait:^{
+            for (NSEntityDescription *entity in managedObjectModel) {
+                NSFetchRequest *fetchRequest = [NSFetchRequest new];
+                [fetchRequest setEntity:entity];
+                [fetchRequest setIncludesSubentities:NO];
+                NSArray *objects = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
+                for (NSManagedObject *managedObject in objects) {
+                    [managedObjectContext deleteObject:managedObjectContext];
+                }
+            }
+            
+            [managedObjectContext save:nil];
+        }];
+    }];
+    [operation setCompletionBlock:^{
+        // Do stuff once the truncation is complete
+    }];
+    [operation start];
+}
+
+
+
+
+
+
 - (void) PopulateEntities:(NSString *) populationType {
     
 
     //Entities Should Be Defined By Stuff Being Sent (May Need To Exclude Certain Objects)
-    
-    
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
     NSManagedObjectContext *context = [self managedObjectContext];
     
+    //Prep Values
+    NSString *baseurl = @"http://dev.samplecupboard.com/Data/MobileServices.svc";
+    NSString *urluserid = @"0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590";
+    NSString *urltoken = @"kmtriddWYscp8w1nwgnfkA==";
+    NSURL *url = [NSURL URLWithString:@""];
     
+    NSString *urlsvc = @"TBD";
+    
+    
+    //Population Options
     NSString *populate_hcp = @"hcp";
     NSString *populate_others = @"others";
+    
+    
+    
     
     if ([populationType isEqual: populate_hcp])  {
         
     // HCP
-    NSURL *url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/GetActiveHcpsInARepsReach/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590"];
+    urlsvc = @"GetActiveHcpsInARepsReach";
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
+                                    baseurl,
+                                    urlsvc,
+                                    urluserid,
+                                    urltoken,
+                                    urluserid]];
+        
+        
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
     
@@ -377,6 +508,7 @@ Reachability *internetReachableFoo;
     
     // Client Info -  Single Record
     NSURL *url = [NSURL URLWithString:@"http://project.dwsmall.com/clientinfo"];
+    
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
     if(jsonData != nil)
@@ -406,7 +538,14 @@ Reachability *internetReachableFoo;
     
     
     // Products - Multiple
-    url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/GetProductByUserId/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590"];
+        
+    urlsvc = @"GetProductByUserId";
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
+                                    baseurl,
+                                    urlsvc,
+                                    urluserid,
+                                    urltoken,
+                                    urluserid]];
         
     jsonData = [NSData dataWithContentsOfURL:url];
     
@@ -550,37 +689,56 @@ Reachability *internetReachableFoo;
     
     // REP
     
-    url = [NSURL URLWithString:@"http://project.dwsmall.com/rep"];
-    jsonData = [NSData dataWithContentsOfURL:url];
+        NSString *urlsvc = @"GetUserById";        
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
+                                                baseurl,
+                                                urlsvc,
+                                                urluserid,
+                                                urltoken,
+                                                urluserid]];
+        
+        NSLog(@"url: %@", url);
+        
+        jsonData = [NSData dataWithContentsOfURL:url];
     
     if(jsonData != nil)
     {
         NSError *error = nil;
         NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-        NSArray* arrayContainer = [dictContainer objectForKey:@"rep"];
+        NSArray* arrayContainer = [dictContainer objectForKey:@"GetUserByIdResult"];
         
-        // NSLog(@"rep: %@", arrayContainer);
+        
+        NSLog(@"array count %d",[arrayContainer count]);
+        
+
         
         //Iterate JSON Objects
         for(int i=0;i<[arrayContainer count];i++)
         {
-            NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
             
-            NSManagedObject *model = [NSEntityDescription
+            // should only be 1 item
+            if (i == 5)
+            {
+                NSLog(@"current index %d",i);
+                NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
+            
+                NSManagedObject *model = [NSEntityDescription
                                       insertNewObjectForEntityForName:@"Rep"
                                       inManagedObjectContext:context];
-            [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
-            [model setValue:[dicItems objectForKey:@"FirstName"] forKey:@"firstname"];
-            [model setValue:[dicItems objectForKey:@"LastName"] forKey:@"lastname"];
-            [model setValue:[dicItems objectForKey:@"Title"] forKey:@"title"];
-            [model setValue:[dicItems objectForKey:@"Role"] forKey:@"role"];
-            [model setValue:[dicItems objectForKey:@"Username"] forKey:@"username"];
-            [model setValue:[dicItems objectForKey:@"Password"] forKey:@"password"];
-            [model setValue:[dicItems objectForKey:@"Status"] forKey:@"status"];
-            [model setValue:[dicItems objectForKey:@"Language"] forKey:@"language"];
-            [model setValue:[dicItems objectForKey:@"PreferredLanguage"] forKey:@"preferredlanguage"];
-            [model setValue:[dicItems objectForKey:@"IdentityManagerId"] forKey:@"identitymanagerid"];
-            [model setValue:[dicItems objectForKey:@"Email"] forKey:@"email"];
+                // [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
+                [model setValue:[dicItems objectForKey:@"Name"] forKey:@"firstname"];
+                [model setValue:[dicItems objectForKey:@"Password"] forKey:@"password"];
+            
+                // [model setValue:[dicItems objectForKey:@"LastName"] forKey:@"lastname"];
+                // [model setValue:[dicItems objectForKey:@"Title"] forKey:@"title"];
+                // [model setValue:[dicItems objectForKey:@"Role"] forKey:@"role"];
+                // [model setValue:[dicItems objectForKey:@"Username"] forKey:@"username"];
+                // [model setValue:[dicItems objectForKey:@"Status"] forKey:@"status"];
+                // [model setValue:[dicItems objectForKey:@"Language"] forKey:@"language"];
+                // [model setValue:[dicItems objectForKey:@"PreferredLanguage"] forKey:@"preferredlanguage"];
+                // [model setValue:[dicItems objectForKey:@"IdentityManagerId"] forKey:@"identitymanagerid"];
+                // [model setValue:[dicItems objectForKey:@"Email"] forKey:@"email"];
+            }
             
         }
         
@@ -593,14 +751,35 @@ Reachability *internetReachableFoo;
     }
     
     
+        
+        
     // ORDER INFO
-    url = [NSURL URLWithString:@"http://project.dwsmall.com/order"];
+    
+    // HCP
+    urlsvc = @"GetOrdersByRepId";
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
+                                    baseurl,
+                                    urlsvc,
+                                    urluserid,
+                                    urltoken,
+                                    urluserid]];
+        
     jsonData = [NSData dataWithContentsOfURL:url];
         
-        // Grab Detailed Data
-        NSURL *url2 = [NSURL URLWithString:@"http://project.dwsmall.com/orderdetails"];
-        NSData *jsonData2 = [NSData dataWithContentsOfURL:url2];
     
+        // Grab Detailed Data
+        urlsvc = @"GetOrdersItemByRepId";
+        NSURL *url2 = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
+                                    baseurl,
+                                    urlsvc,
+                                    urluserid,
+                                    urltoken,
+                                    urluserid]];
+        NSData *jsonData2 = [NSData dataWithContentsOfURL:url2];
+        
+        
+        NSLog(@"Url for ORDER DETAIL: %@", url2);
+        
         
     if(jsonData != nil)
     {
@@ -610,10 +789,10 @@ Reachability *internetReachableFoo;
             // Dictionary of Detailed Items
             NSDictionary* dictContainer2 = [NSJSONSerialization JSONObjectWithData:jsonData2 options:kNilOptions error:&error];
         
-        NSArray* arrayContainer = [dictContainer objectForKey:@"order"];
+        NSArray* arrayContainer = [dictContainer objectForKey:@"GetOrdersByRepIdResult"];
         
             // Container of Detailed Items
-            NSArray* arrayContainer2 = [dictContainer2 objectForKey:@"orderdetails"];
+            NSArray* arrayContainer2 = [dictContainer2 objectForKey:@"GetOrdersItemByRepIdResult"];
         
         
         
@@ -625,12 +804,35 @@ Reachability *internetReachableFoo;
             NSManagedObject *OrderHDR = [NSEntityDescription
                                       insertNewObjectForEntityForName:@"Order"
                                       inManagedObjectContext:context];
-            [OrderHDR setValue:[dicItems objectForKey:@"clientid"] forKey:@"clientid"];
-            [OrderHDR setValue:[dicItems objectForKey:@"order_id"] forKey:@"orderid"];
-            [OrderHDR setValue:[dicItems objectForKey:@"reference"] forKey:@"reference"];
+            // [OrderHDR setValue:[dicItems objectForKey:@"clientid"] forKey:@"clientid"];
+            [OrderHDR setValue:[dicItems objectForKey:@"orderId"] forKey:@"orderid"];
+            
+            
+            [OrderHDR setValue:[NSString stringWithFormat:@"%@",[dicItems objectForKey:@"reference"]] forKey:@"reference"];
+            
+            [OrderHDR setValue:[dicItems objectForKey:@"refprefix"] forKey:@"refprefix"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_facilityname"] forKey:@"shipping_facilityname"];
             [OrderHDR setValue:[dicItems objectForKey:@"shipping_firstname"] forKey:@"shipping_firstname"];
             [OrderHDR setValue:[dicItems objectForKey:@"shipping_lastname"] forKey:@"shipping_lastname"];
-            [OrderHDR setValue:[dicItems objectForKey:@"status"] forKey:@"status"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_line1"] forKey:@"shipping_addressline1"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_line2"] forKey:@"shipping_addressline2"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_line3"] forKey:@"shipping_addressline3"];
+            
+            // [OrderHDR setValue:[dicItems objectForKey:@"shipping_suite"] forKey:@"shipping_suite"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_postalcode"] forKey:@"shipping_postalcode"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_city"] forKey:@"shipping_city"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_provinces"] forKey:@"shipping_province"];
+            // [OrderHDR setValue:[dicItems objectForKey:@"shipping_notes"] forKey:@"shipping_notes"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_phone"] forKey:@"shipping_phone"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_phoneextension"] forKey:@"shipping_phoneextension"];
+            
+            // [OrderHDR setValue:[dicItems objectForKey:@"shipping_trackingnumber"] forKey:@"trackingnumbers"];
+            
+            // [OrderHDR setValue:[dicItems objectForKey:@"shipping_fax"] forKey:@"shipping_fax"];
+            // [OrderHDR setValue:[dicItems objectForKey:@"shipping_instructions"] forKey:@"shipping_instructions"];
+            // [OrderHDR setValue:[dicItems objectForKey:@"shipping_licence"] forKey:@"shipping_licence"];
+            
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_status"] forKey:@"status"];
             
             
             // Date Conversion Routine
@@ -647,46 +849,33 @@ Reachability *internetReachableFoo;
                     NSDictionary* dicItems2 = [arrayContainer2 objectAtIndex:x];
                     
                     // WRITE OUT COMPARATIVE VALUES...
-                    NSLog(@"RAW HDR dicItems - : %@", [dicItems objectForKey:@"order_id"]);
-                    NSLog(@"RAW DETAILS dicItems2 - : %@", [dicItems2 objectForKey:@"order_id"] );
+                    NSString *TESTdw1 = [[dicItems objectForKey:@"orderId"] stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                    NSString *TESTdw2 = [[dicItems2 objectForKey:@"Orderid"] stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
                     
-                    NSString *testx1 = [[dicItems objectForKey:@"order_id"] stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-                    NSLog(@"STRIPPED VALUE - : %@", testx1);
-                    
-                    
-                    NSString *TESTA1 = [dicItems objectForKey:@"order_id"];
-                    NSString *TESTA2 = [dicItems2 objectForKey:@"order_id"];
-                    
-                    NSLog(@"SMOOTH STRING HDR dicItems - : %@", TESTA1);
-                    NSLog(@"SMOOTH STRING DETAILS dicItems2 - : %@", TESTA2);
-                    
-
-                    
-                    NSString *TESTdw1 = [[dicItems objectForKey:@"order_id"] stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
-                    NSString *TESTdw2 = [[dicItems2 objectForKey:@"order_id"] stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                    // NSLog(@"Comparison %@, %@", TESTdw1, TESTdw2);
                     
                     
                     if ([TESTdw1 isEqualToString: TESTdw2]) {
                     // PART 2. INSERT ORDER DETAILS IMMEDIATELY AFTER
+                        NSLog(@"MATCH WAS FOUND");
+                        
                     NSManagedObject *OrderDTL = [NSEntityDescription
                                          insertNewObjectForEntityForName:@"OrderLineItem"
                                          inManagedObjectContext:context];
                         
-                        [OrderDTL setValue:[dicItems2 objectForKey:@"clientid"] forKey:@"clientid"];
-                        [OrderDTL setValue:[dicItems2 objectForKey:@"order_id"] forKey:@"orderid"];
-                        [OrderDTL setValue:[dicItems2 objectForKey:@"productid"] forKey:@"productid"];
+                        // [OrderDTL setValue:[dicItems2 objectForKey:@"clientid"] forKey:@"clientid"];
+                        [OrderDTL setValue:[dicItems2 objectForKey:@"Orderid"] forKey:@"orderid"];
+                        [OrderDTL setValue:[dicItems2 objectForKey:@"ProductId"] forKey:@"productid"];
                         
-                        [OrderDTL setValue:@"Jaunumet 77" forKey:@"stored_product_name"];
-                        [OrderDTL setValue:@"4 units" forKey:@"stored_product_description"];
-                        [OrderDTL setValue:@"12352" forKey:@"stored_product_code"];
+                        [OrderDTL setValue:[dicItems2 objectForKey:@"Stored_Product_Name"] forKey:@"stored_product_name"];
+                        [OrderDTL setValue:[dicItems2 objectForKey:@"Stored_Product_Description"] forKey:@"stored_product_description"];
+                        [OrderDTL setValue:[dicItems2 objectForKey:@"Stored_Product_Code"]  forKey:@"stored_product_code"];
 
                         [OrderDTL setValue:[dicItems2 objectForKey:@"quantityordered"] forKey:@"quantityordered"];
                         [OrderDTL setValue:[NSDate date] forKey:@"datecreated"];
             
                         //PART 3. INSERT VALUE FOR RELATIONSHIP
                         [OrderDTL setValue:OrderHDR forKey:@"toOrderHeader"];
-                        
-                        NSLog(@"WORKING MAN - :");
                     }
                 }
             
@@ -710,7 +899,13 @@ Reachability *internetReachableFoo;
         
         // TERRITORY POPULATION
         
-        url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/GetTerritoriesByUserId/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590"];
+        urlsvc = @"GetTerritoriesByUserId";
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
+                                    baseurl,
+                                    urlsvc,
+                                    urluserid,
+                                    urltoken,
+                                    urluserid]];
         
         jsonData = [NSData dataWithContentsOfURL:url];
         
@@ -739,11 +934,13 @@ Reachability *internetReachableFoo;
                 
                     // Get Detailed Items [FSA]
                 
-                NSString *baseurl = @"http://dev.samplecupboard.com/Data/MobileServices.svc/GetFSAByTerritoryId/0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590/kmtriddWYscp8w1nwgnfkA==/";
-                
-                NSURL *urlFSA = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",
-                                                      baseurl,
-                                                      [dicItems objectForKey:@"Id"]]];
+                    urlsvc = @"GetFSAByTerritoryId";
+                    NSURL *urlFSA = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
+                                            baseurl,
+                                            urlsvc,
+                                            urluserid,
+                                            urltoken,
+                                            [dicItems objectForKey:@"Id"]]];
 	
                     NSData *jsonDataFSA = [NSData dataWithContentsOfURL:urlFSA];
                 

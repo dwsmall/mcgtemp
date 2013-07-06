@@ -77,6 +77,12 @@
 		5BD83539174AE96E00DA8B5A /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5BD83538174AE96D00DA8B5A /* fr.lproj */; };
 		5BD8353B174AE98400DA8B5A /* Icons in Resources */ = {isa = PBXBuildFile; fileRef = 5BD8353A174AE98300DA8B5A /* Icons */; };
 		5BE091E81784851C0035F51B /* ConvertRequestToOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091E71784851C0035F51B /* ConvertRequestToOrder.m */; };
+		5BE091EB1785F52A0035F51B /* Territory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091EA1785F52A0035F51B /* Territory.m */; };
+		5BE091EE1785F52A0035F51B /* TerritoryFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091ED1785F52A0035F51B /* TerritoryFSA.m */; };
+		5BE091F11785F63B0035F51B /* AllocationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091F01785F63B0035F51B /* AllocationHeader.m */; };
+		5BE091F41785F63B0035F51B /* Allocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091F31785F63B0035F51B /* Allocation.m */; };
+		5BE091F71785F7000035F51B /* OrderTemplateLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091F61785F7000035F51B /* OrderTemplateLine.m */; };
+		5BE091FA1785F7000035F51B /* OrderTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091F91785F7000035F51B /* OrderTemplate.m */; };
 		5BE39223174BC9CA005B40D2 /* OrderDetailViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */; };
 		5BE39226174BE9D1005B40D2 /* HyperlinkLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39225174BE9D0005B40D2 /* HyperlinkLabel.m */; };
 		5BE39229174BEB83005B40D2 /* IndentTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39228174BEB83005B40D2 /* IndentTextField.m */; };
@@ -214,6 +220,18 @@
 		5BD8353A174AE98300DA8B5A /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
 		5BE091E61784851C0035F51B /* ConvertRequestToOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvertRequestToOrder.h; sourceTree = "<group>"; };
 		5BE091E71784851C0035F51B /* ConvertRequestToOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvertRequestToOrder.m; sourceTree = "<group>"; };
+		5BE091E91785F52A0035F51B /* Territory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Territory.h; sourceTree = "<group>"; };
+		5BE091EA1785F52A0035F51B /* Territory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Territory.m; sourceTree = "<group>"; };
+		5BE091EC1785F52A0035F51B /* TerritoryFSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TerritoryFSA.h; sourceTree = "<group>"; };
+		5BE091ED1785F52A0035F51B /* TerritoryFSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TerritoryFSA.m; sourceTree = "<group>"; };
+		5BE091EF1785F63A0035F51B /* AllocationHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllocationHeader.h; sourceTree = "<group>"; };
+		5BE091F01785F63B0035F51B /* AllocationHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllocationHeader.m; sourceTree = "<group>"; };
+		5BE091F21785F63B0035F51B /* Allocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Allocation.h; sourceTree = "<group>"; };
+		5BE091F31785F63B0035F51B /* Allocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Allocation.m; sourceTree = "<group>"; };
+		5BE091F51785F7000035F51B /* OrderTemplateLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTemplateLine.h; sourceTree = "<group>"; };
+		5BE091F61785F7000035F51B /* OrderTemplateLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTemplateLine.m; sourceTree = "<group>"; };
+		5BE091F81785F7000035F51B /* OrderTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTemplate.h; sourceTree = "<group>"; };
+		5BE091F91785F7000035F51B /* OrderTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTemplate.m; sourceTree = "<group>"; };
 		5BE39221174BC9C7005B40D2 /* OrderDetailViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController_iPad.h; sourceTree = "<group>"; };
 		5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController_iPad.m; sourceTree = "<group>"; };
 		5BE39224174BE9D0005B40D2 /* HyperlinkLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HyperlinkLabel.h; sourceTree = "<group>"; };
@@ -456,6 +474,18 @@
 			isa = PBXGroup;
 			children = (
 				5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */,
+				5BE091F81785F7000035F51B /* OrderTemplate.h */,
+				5BE091F91785F7000035F51B /* OrderTemplate.m */,
+				5BE091F51785F7000035F51B /* OrderTemplateLine.h */,
+				5BE091F61785F7000035F51B /* OrderTemplateLine.m */,
+				5BE091F21785F63B0035F51B /* Allocation.h */,
+				5BE091F31785F63B0035F51B /* Allocation.m */,
+				5BE091EF1785F63A0035F51B /* AllocationHeader.h */,
+				5BE091F01785F63B0035F51B /* AllocationHeader.m */,
+				5BE091EC1785F52A0035F51B /* TerritoryFSA.h */,
+				5BE091ED1785F52A0035F51B /* TerritoryFSA.m */,
+				5BE091E91785F52A0035F51B /* Territory.h */,
+				5BE091EA1785F52A0035F51B /* Territory.m */,
 				5B105792176F42F90048513E /* Order.h */,
 				5B105793176F42F90048513E /* Order.m */,
 				5B10578F176F42F80048513E /* OrderLineItem.h */,
@@ -765,6 +795,12 @@
 				5B105791176F42F80048513E /* OrderLineItem.m in Sources */,
 				5B105794176F42F90048513E /* Order.m in Sources */,
 				5BE091E81784851C0035F51B /* ConvertRequestToOrder.m in Sources */,
+				5BE091EB1785F52A0035F51B /* Territory.m in Sources */,
+				5BE091EE1785F52A0035F51B /* TerritoryFSA.m in Sources */,
+				5BE091F11785F63B0035F51B /* AllocationHeader.m in Sources */,
+				5BE091F41785F63B0035F51B /* Allocation.m in Sources */,
+				5BE091F71785F7000035F51B /* OrderTemplateLine.m in Sources */,
+				5BE091FA1785F7000035F51B /* OrderTemplate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
