@@ -66,6 +66,8 @@ Reachability *internetReachableFoo;
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+
+    
     // Set the button Text Color
     [_UserLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _UserLoginBtn.layer.cornerRadius = 10; // this value vary as per your desire
@@ -74,10 +76,15 @@ Reachability *internetReachableFoo;
 
     // Set All TabBar Badges Upon Load
     for (UIViewController *viewController in self.tabBarController.viewControllers) {
-
+        
+        if (viewController.tabBarItem.tag != 0) {
+            [viewController.tabBarItem setEnabled:NO];
+        }
+        
         if (viewController.tabBarItem.tag == 4) {
             //Check UnSent Orders in Temp
             viewController.tabBarItem.badgeValue = @"1";
+            [viewController.tabBarItem setEnabled:NO];
         }
     }
     
@@ -123,23 +130,24 @@ Reachability *internetReachableFoo;
         NSString *passwordX = _password.text;
         
         
-        //Store Password As Hashed (if successful)
-        // NSString *doogood = [self sha1:passwordX];
+        NSDictionary *infoDB = [NSDictionary dictionaryWithObjectsAndKeys:
+                              nameX,
+                              @"userName",
+                              passwordX,
+                              @"password",
+                              @"IPadApp",
+                              @"sourceApp",
+                              nil];
+
         
+        NSLog(@"first show %@", infoDB);
         
-        // NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:nameX, @"userName", passwordX, @"password", @"IPadApp", @"sourceApp", nil];
-        
-        NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:nameX,@"userName",passwordX,@"password", nil];
-        
-        
-        NSDictionary *newDatasetInfoX = [NSDictionary dictionaryWithObjectsAndKeys:nameX,@"userName",passwordX,@"password", nil];
-        
-        NSLog(@"testx %@", newDatasetInfoX);
         
         NSError *errorMSG = nil;
         
         //convert object to data
-        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:newDatasetInfo options:kNilOptions error:&errorMSG];
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:infoDB options:kNilOptions error:&errorMSG];
+        
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:url];
@@ -191,6 +199,7 @@ Reachability *internetReachableFoo;
         
         [errorAlertView show];
         
+        
     } else if ([LoginResultContainer length] > 0)
     {
         
@@ -217,6 +226,7 @@ Reachability *internetReachableFoo;
                 NSManagedObject *TCred = [NSEntityDescription
                                              insertNewObjectForEntityForName:@"Tokenized_Credentials"
                                              inManagedObjectContext:context];
+                [TCred setValue:@"current_rep" forKey:@"id"];
                 [TCred setValue:_userName.text forKey:@"username"];
                 [TCred setValue:_password.text forKey:@"password"];
                 [TCred setValue:[self sha1:_password.text] forKey:@"password_hash"];
@@ -235,6 +245,65 @@ Reachability *internetReachableFoo;
         
             // YES - UPDATE RECORD
             if ([items count] == 1) {
+                
+                NSError *error = nil;
+                
+                
+                // Delete All Date If Rep Name Not Equal...
+                
+
+                
+                //Set up to get the thing you want to update
+                NSFetchRequest * request = [[NSFetchRequest alloc] init];
+                [request setEntity:[NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context]];
+                [request setPredicate:[NSPredicate predicateWithFormat:@"id=%@",@"current_rep"]];
+                
+                //Ask for it
+                NSArray *savechange = [[context executeFetchRequest:request error:&error] lastObject];
+                
+                if (error) {
+                    //Handle any errors
+                }	
+                
+                if (!savechange) {
+                    //Nothing there to update
+                }
+                
+                //Update the object
+                [savechange setValue:LoginResultContainer forKey:@"token"];
+                [savechange setValue:_password.text forKey:@"password"];
+                [savechange setValue:[self sha1:_password.text] forKey:@"password_hash"];
+                [savechange setValue:[NSDate date] forKey:@"date_validated"];
+                
+                //Save it
+                error = nil;
+                if (![context save:&error]) {
+                    //Handle any error with the saving of the context
+                }
+                
+                
+                // - success ROUTINE = -- open menu items  / segue to home screen
+                // Set All TabBar Badges Upon Load
+                for (UIViewController *viewController in self.tabBarController.viewControllers) {
+                    
+                    
+                    if (viewController.tabBarItem.tag == 0)
+                    {
+                        [viewController.tabBarItem setEnabled:NO];
+                    }
+                    else
+                    {
+                        [viewController.tabBarItem setEnabled:YES];
+                    }
+                    
+                
+                }
+                    [self.tabBarController setSelectedIndex:1];        
+        
+                // Manual Segue to Home Screen
+        
+                // [self performSegueWithIdentifier:@"_loginvalidated" sender:self];
+                // [self performSegueWithIdentifier:@"_logintotab" sender:self];
             
             }
         
