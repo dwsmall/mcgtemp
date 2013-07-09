@@ -57,18 +57,26 @@
                                         <rect key="frame" x="0.0" y="0.0" width="450" height="394"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" background="iPad_Login_bouton_button.png" clearButtonMode="whileEditing" id="Uqm-WP-e8I" customClass="IndentTextField">
-                                        <rect key="frame" x="171" y="179" width="249" height="34"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="iPad_Login_bouton_button.png" id="VoY-Mk-qH9">
+                                        <rect key="frame" x="171" y="175" width="249" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="iPad_Login_bouton_button.png" id="htE-Jl-fZE">
+                                        <rect key="frame" x="171" y="228" width="246" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username" minimumFontSize="17" clearButtonMode="whileEditing" id="Uqm-WP-e8I" userLabel="userName" customClass="IndentTextField">
+                                        <rect key="frame" x="189" y="179" width="218" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <rect key="contentStretch" x="0.34999999999999998" y="0.29999999999999999" width="0.64999999999999969" height="0.69999999999999973"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" background="iPad_Login_bouton_button.png" clearButtonMode="whileEditing" id="Gly-8H-I6M" customClass="IndentTextField">
-                                        <rect key="frame" x="171" y="228" width="249" height="34"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" clearButtonMode="whileEditing" id="Gly-8H-I6M" userLabel="password" customClass="IndentTextField">
+                                        <rect key="frame" x="189" y="228" width="218" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                     </textField>
                                     <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="ERU-aA-b0D">
                                         <rect key="frame" x="171" y="278" width="79" height="27"/>
@@ -134,8 +142,10 @@
                         <outlet property="loginErrorPanel" destination="io9-dY-SgW" id="OZR-Gm-MAR"/>
                         <outlet property="loginIcon" destination="BnR-uT-aQI" id="wCf-7B-RXz"/>
                         <outlet property="loginView" destination="cEI-uv-vnB" id="bQ0-4k-wf2"/>
+                        <outlet property="password" destination="Gly-8H-I6M" id="5Ed-HS-hx3"/>
                         <outlet property="txtPassword" destination="Gly-8H-I6M" id="pek-dB-9ZX"/>
                         <outlet property="txtUserName" destination="Uqm-WP-e8I" id="a5b-ke-0Bk"/>
+                        <outlet property="userName" destination="Uqm-WP-e8I" id="Vli-ke-fC7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
@@ -1901,6 +1911,181 @@
         <image name="shoppingcart.png" width="26" height="26"/>
         <image name="trend.png" width="26" height="26"/>
     </resources>
+    <classes>
+        <class className="HcpAdditionalDetails" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HcpAdditionalDetails.h"/>
+            <relationships>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="tableViewX" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="HcpChoice" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HcpChoice.h"/>
+            <relationships>
+                <relationship kind="outlet" name="healthcareProf" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="HcpDetailController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HcpDetailController.h"/>
+            <relationships>
+                <relationship kind="action" name="return:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="outputlabelA" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="tableViewX" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="HcpListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HcpListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="return:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="healthcareProf" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="viewWeb" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="HyperlinkLabel" superclassName="UILabel">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HyperlinkLabel.h"/>
+        </class>
+        <class className="IndentTextField" superclassName="UITextField">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IndentTextField.h"/>
+        </class>
+        <class className="LoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="LoginButton:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="BtnSignin" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="UserLoginBtn" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="UserName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="busyIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="cbRememberMe" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="lblInvalidUserName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loadingPanel" candidateClass="UIView"/>
+                <relationship kind="outlet" name="loginBackgroundImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginErrorPanel" candidateClass="UIView"/>
+                <relationship kind="outlet" name="loginIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="password" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="txtPassword" candidateClass="IndentTextField"/>
+                <relationship kind="outlet" name="txtUserName" candidateClass="IndentTextField"/>
+                <relationship kind="outlet" name="userName" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="OrderDetailViewController_iPad" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OrderDetailViewController_iPad.h"/>
+            <relationships>
+                <relationship kind="action" name="CancelClicked:"/>
+                <relationship kind="action" name="CancelOrderDetail:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="Carrier_Air:" candidateClass="UIButton"/>
+                <relationship kind="action" name="Carrier_Ground:" candidateClass="UIButton"/>
+                <relationship kind="action" name="CellEditorBegunEditing:"/>
+                <relationship kind="action" name="CellEditorEndedEdit:"/>
+                <relationship kind="action" name="Done_Clicked:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="NewProductClick:"/>
+                <relationship kind="action" name="tbActionsClick:"/>
+                <relationship kind="action" name="tbSaveDraftClick:"/>
+                <relationship kind="outlet" name="carrier_display_label" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="hiddenTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="myTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="outputlabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel1" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel2" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel3" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel4" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel5" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelA" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelB" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelC" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelD" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelE" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tbActions" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="tbSaveDraft" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="OrderViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OrderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="OrderStatusFilterValueChanged:" candidateClass="UISegmentedControl"/>
+                <relationship kind="action" name="return:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="lblTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="orderStatusFilter" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="orderStatusFilterValueChanged" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ProductChoice" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProductChoice.h"/>
+            <relationships>
+                <relationship kind="outlet" name="healthcareProf" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ReportAllocationUsage" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportAllocationUsage.h"/>
+            <relationships>
+                <relationship kind="outlet" name="detailDescriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ReportDetailContainer" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportDetailContainer.h"/>
+            <relationships>
+                <relationship kind="outlet" name="RptHeader" candidateClass="UINavigationItem"/>
+            </relationships>
+        </class>
+        <class className="ReportTeam" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportTeam.h"/>
+            <relationships>
+                <relationship kind="outlet" name="detailDescriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ReportUsage" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportUsage.h"/>
+            <relationships>
+                <relationship kind="outlet" name="detailDescriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ReportViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="SignatureControl" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignatureControl.h"/>
+        </class>
+        <class className="SyncViewController_iPad" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SyncViewController_iPad.h"/>
+            <relationships>
+                <relationship kind="action" name="btnLoadHCPsClick:"/>
+                <relationship kind="action" name="btnReloadDataClick:"/>
+                <relationship kind="action" name="btnSyncClick:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="btnLoadHCPs" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="btnReloadData" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="btnSync" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

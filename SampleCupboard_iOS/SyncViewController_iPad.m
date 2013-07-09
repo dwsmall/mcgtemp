@@ -216,73 +216,6 @@ Reachability *internetReachableFoo;
     
     
 
-
-
-
-
-
-
-
-//STUDY AND REMOVE
-- (void) RemoveEntitiesNOTUSED:(NSString *) removalType {
-
-    
-    NSLog(@"Entity Removal Called %@", removalType);
-    
-    NSArray *deletionEntity;
-    
-    NSString *delete_hcp = @"hcp";
-    NSString *delete_others = @"others";
-    
-    
-    if ([removalType isEqual: delete_hcp])  {
-        deletionEntity = @[@"HealCareProfessional"];
-    }
-    
-    if ([removalType isEqual: delete_others]) {
-        deletionEntity = @[@"ClientInfo",@"Product",@"Allocation",@"AllocationHeader",@"TerritoryFSA",@"Territory",@"Rep", @"Order", @"OrderLineItem"];
-    }
-    
-    // Define Delegate Context
-    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-    self.managedObjectContext = [appDelegate managedObjectContext];
-    NSManagedObjectContext *context = [self managedObjectContext];
-    
-    
-    NSLog(@"Total Entries %i", [deletionEntity count]);
-    
-    
-
-    for(int i=0;i<[deletionEntity count];i++)
-    {
-        
-        // Error Msg Handling - Process Acts Transactional [Critical]
-        NSError *errorMSG = nil;
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-
-        request = [[NSFetchRequest alloc] init];
-        [request setEntity:[NSEntityDescription entityForName:[deletionEntity objectAtIndex:i] inManagedObjectContext:context]];
-    
-        NSArray *matchingData = [managedObjectContext executeFetchRequest:request error:&errorMSG];
-    
-        if ([matchingData count]>0) {
-            for (NSManagedObject *obj in matchingData) {
-                [managedObjectContext deleteObject:obj];
-            }
-            [managedObjectContext save:&errorMSG];
-        }
-        
-        NSLog(@"Actual Entry %@", [deletionEntity objectAtIndex:i] );
-        // NSLog(@"This Entity Has Been Removed %@", deletionEntity);
-        
-    }// End Each
-
-}
-
-
-
-
-// EXAMPLE #2
 - (void) RemoveEntities:(NSString *) removalType {
     
     
@@ -302,25 +235,25 @@ Reachability *internetReachableFoo;
         deletionEntity = @[@"ClientInfo",@"Product",@"Allocation",@"AllocationHeader",@"TerritoryFSA",@"Territory",@"Rep", @"Order", @"OrderLineItem"];
     }
     
+    
     // Define Delegate Context
-    // id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-    // self.managedObjectContext = [appDelegate managedObjectContext];
-    // NSManagedObjectContext *context = [self managedObjectContext];
-    
-    
-    NSLog(@"Total Entries %i", [deletionEntity count]);
-    
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
     
     
     for(int i=0;i<[deletionEntity count];i++)
     {
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:[deletionEntity objectAtIndex:i] inManagedObjectContext:_managedObjectContext];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:[deletionEntity objectAtIndex:i] inManagedObjectContext:context];
+  
         [fetchRequest setEntity:entity];
         
         NSError *error;
-        NSArray *items = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
+        
         
         for (NSManagedObject *managedObject in items) {
             [_managedObjectContext deleteObject:managedObject];
@@ -331,7 +264,7 @@ Reachability *internetReachableFoo;
         }
         
         NSLog(@"Actual Entry %@", [deletionEntity objectAtIndex:i] );
-        // NSLog(@"This Entity Has Been Removed %@", deletionEntity);
+        
         
     }// End Each
     

@@ -8,8 +8,12 @@
 
 #import "IndentTextField.h"
 
+NSFetchedResultsController *fetchedResultsController;
+NSManagedObjectContext *managedObjectContext;
+
 @interface LoginViewController : UIViewController
 
-
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
