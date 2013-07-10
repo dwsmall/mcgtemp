@@ -46,9 +46,9 @@ Reachability *internetReachableFoo;
 @property (weak, nonatomic) IBOutlet IndentTextField *txtPassword;
 
 
-@property (strong, nonatomic) IBOutlet UITextField *userName;
+@property (strong, atomic) IBOutlet UITextField *userName;
 
-@property (strong, nonatomic) IBOutlet UITextField *password;
+@property (strong, atomic) IBOutlet UITextField *password;
 
 
 - (IBAction)LoginButton:(UIButton *)sender;
@@ -66,28 +66,35 @@ Reachability *internetReachableFoo;
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-
     
-    // Set the button Text Color
-    [_UserLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _UserLoginBtn.layer.cornerRadius = 10; // this value vary as per your desire
-    _UserLoginBtn.clipsToBounds = YES;
+    // FAKE CODE FOR DEV PURPOSES
+    if (1 == 2) {
+    
+        [self.tabBarController setSelectedIndex:1];
+    
+    } else {
+    
+        // Set the button Text Color
+        [_UserLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _UserLoginBtn.layer.cornerRadius = 10; // this value vary as per your desire
+        _UserLoginBtn.clipsToBounds = YES;
     
 
-    // Set All TabBar Badges Upon Load
-    for (UIViewController *viewController in self.tabBarController.viewControllers) {
+        // Set All TabBar Badges Upon Load
+        for (UIViewController *viewController in self.tabBarController.viewControllers) {
         
-        if (viewController.tabBarItem.tag != 0) {
-            [viewController.tabBarItem setEnabled:NO];
+            if (viewController.tabBarItem.tag != 0) {
+                [viewController.tabBarItem setEnabled:NO];
+            }
+        
+            if (viewController.tabBarItem.tag == 4) {
+                //Check UnSent Orders in Temp
+                viewController.tabBarItem.badgeValue = @"1";
+                [viewController.tabBarItem setEnabled:NO];
+            }
         }
         
-        if (viewController.tabBarItem.tag == 4) {
-            //Check UnSent Orders in Temp
-            viewController.tabBarItem.badgeValue = @"1";
-            [viewController.tabBarItem setEnabled:NO];
-        }
-    }
-    
+    } //END OF FOR
     
 }
 
@@ -108,14 +115,102 @@ Reachability *internetReachableFoo;
     if (internetStatus == NotReachable){
         
         // NO INTERNET ?
-        NSLog(@"There's no connection");
         
-        UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                       initWithTitle:@"No internet connection"
-                                       message:@"Internet connection is required to use this app"
-                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        // Check For Offline Login Credentials
+        id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+        self.managedObjectContext = [appDelegate managedObjectContext];
+        NSManagedObjectContext *context = [self managedObjectContext];
         
-        [errorAlertView show];
+        NSError *error;
+        
+        NSFetchRequest * request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"id=%@",@"current_rep"]];
+        NSArray *currentitems = [[context executeFetchRequest:request error:&error] lastObject];
+        
+        
+        NSString *comp_username = [[[currentitems valueForKey:@"username"] description] lowercaseString];
+        NSString *comp_password = [[[currentitems valueForKey:@"password"] description] lowercaseString];
+
+        NSLog(@"These Are The Values %@, %@", _userName.text, [_userName.text copy]);
+        
+        if ( [[_userName.text lowercaseString] isEqualToString:comp_username] )
+        {
+            NSLog(@"Offline Login Confirmed");
+            
+            if ( [[_password.text lowercaseString] isEqualToString:comp_password] ) {
+                
+                // SUCCESS ROUTINE
+                for (UIViewController *viewController in self.tabBarController.viewControllers) {
+                    
+                    
+                    if (viewController.tabBarItem.tag == 0)
+                    {
+                        [viewController.tabBarItem setEnabled:NO];
+                    }
+                    else
+                    {
+                        [viewController.tabBarItem setEnabled:YES];
+                    }
+                    
+                    
+                }
+                [self.tabBarController setSelectedIndex:1];
+                
+                
+                
+            } else {
+                
+                UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                               initWithTitle:@"INVALID LOGIN"
+                                               message:@"Please Check Your UserName and Password"
+                                               delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                
+                [errorAlertView show];
+                
+            }
+            
+            
+            
+        } else {
+        
+            UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                           initWithTitle:@"INVALID LOGIN"
+                                           message:@"Offline Login Requires Previous User Credentials"
+                                           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [errorAlertView show];
+            
+            
+            // SUCCESS ROUTINE - TEMP CODE
+            for (UIViewController *viewController in self.tabBarController.viewControllers) {
+                
+                
+                if (viewController.tabBarItem.tag == 0)
+                {
+                    [viewController.tabBarItem setEnabled:NO];
+                }
+                else
+                {
+                    [viewController.tabBarItem setEnabled:YES];
+                }
+                
+                
+            }
+            [self.tabBarController setSelectedIndex:1];
+            
+        }
+        
+        
+        //NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        //NSEntityDescription *entity = [NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context];
+        // [fetchRequest setEntity:entity];
+        
+        // NSError *error;
+        // NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
+        
+        
+       
         
         
     } else {
@@ -129,8 +224,33 @@ Reachability *internetReachableFoo;
         NSString *nameX = _userName.text;
         NSString *passwordX = _password.text;
         
+     
+        NSDictionary* infoTEST = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 @"greg.lee@merck.com",
+                                 @"userName",
+                                 @"qa",
+                                 @"password",
+                                 @"IPadApp",
+                                 @"sourceApp",
+                                 nil];
         
-        NSDictionary *infoDB = [NSDictionary dictionaryWithObjectsAndKeys:
+        NSLog(@"first show TEST %@", infoTEST);
+        
+        
+        
+        NSDictionary* infoRAW = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [_userName.text copy],
+                                @"userName",
+                                [_password.text copy],
+                                @"password",
+                                @"IPadApp",
+                                @"sourceApp",
+                                nil];
+        
+        NSLog(@"first show %@", infoRAW);
+        CFShow(CFBridgingRetain(infoRAW));
+        
+        NSDictionary* infoDB = [NSDictionary dictionaryWithObjectsAndKeys:
                               nameX,
                               @"userName",
                               passwordX,
@@ -146,7 +266,7 @@ Reachability *internetReachableFoo;
         NSError *errorMSG = nil;
         
         //convert object to data
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:infoDB options:kNilOptions error:&errorMSG];
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:infoTEST options:kNilOptions error:&errorMSG];
         
         
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -222,11 +342,17 @@ Reachability *internetReachableFoo;
             if ([items count] == 0) {
                 
                 
+                // GET USER INFORMATION
+                NSString *user_id = @"0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590";
+                
+                
+                
                 // Insert New Record
                 NSManagedObject *TCred = [NSEntityDescription
                                              insertNewObjectForEntityForName:@"Tokenized_Credentials"
                                              inManagedObjectContext:context];
                 [TCred setValue:@"current_rep" forKey:@"id"];
+                [TCred setValue:user_id forKey:@"user_id"];
                 [TCred setValue:_userName.text forKey:@"username"];
                 [TCred setValue:_password.text forKey:@"password"];
                 [TCred setValue:[self sha1:_password.text] forKey:@"password_hash"];
@@ -240,6 +366,23 @@ Reachability *internetReachableFoo;
                
                 
                 // Mark Initial Database Message
+                // Set All TabBar Badges Upon Load
+                for (UIViewController *viewController in self.tabBarController.viewControllers) {
+                    
+                    
+                    if (viewController.tabBarItem.tag == 0)
+                    {
+                        [viewController.tabBarItem setEnabled:NO];
+                    }
+                    else
+                    {
+                        [viewController.tabBarItem setEnabled:YES];
+                    }
+                    
+                    
+                }
+                [self.tabBarController setSelectedIndex:1];
+                
             }
         
         
@@ -252,6 +395,9 @@ Reachability *internetReachableFoo;
                 // Delete All Date If Rep Name Not Equal...
                 
 
+                // RETRIEVE USER ID
+                // GET USER INFORMATION
+                NSString *user_id = @"0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590";
                 
                 //Set up to get the thing you want to update
                 NSFetchRequest * request = [[NSFetchRequest alloc] init];
@@ -270,6 +416,7 @@ Reachability *internetReachableFoo;
                 }
                 
                 //Update the object
+                [savechange setValue:user_id forKey:@"user_id"];
                 [savechange setValue:LoginResultContainer forKey:@"token"];
                 [savechange setValue:_password.text forKey:@"password"];
                 [savechange setValue:[self sha1:_password.text] forKey:@"password_hash"];
@@ -298,12 +445,7 @@ Reachability *internetReachableFoo;
                     
                 
                 }
-                    [self.tabBarController setSelectedIndex:1];        
-        
-                // Manual Segue to Home Screen
-        
-                // [self performSegueWithIdentifier:@"_loginvalidated" sender:self];
-                // [self performSegueWithIdentifier:@"_logintotab" sender:self];
+                    [self.tabBarController setSelectedIndex:1];
             
             }
         

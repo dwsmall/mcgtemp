@@ -26,6 +26,7 @@
     
     NSManagedObject *moDATA;
     
+    NSManagedObject *moHCPDATA;
     
 }
 @property (weak, nonatomic) IBOutlet UITextField *hiddenTextField;
@@ -52,6 +53,8 @@
 
 @property (nonatomic, weak) IBOutlet UILabel *outputlabelE;
 
+@property (nonatomic, weak) IBOutlet UILabel *outputlabelF;
+
 @property (nonatomic, weak) IBOutlet UILabel *outputlabel5;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -66,5 +69,8 @@
 
 
 @property (strong, nonatomic) NSManagedObject *moDATA;
+
+@property (strong, nonatomic) NSManagedObject *moHCPDATA;
+
 
 @end

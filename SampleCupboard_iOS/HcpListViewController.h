@@ -8,14 +8,8 @@
 
 @class HcpListViewController;
 
-@interface HcpListViewController : UIViewController <NSFetchedResultsControllerDelegate> {
+@interface HcpListViewController : UIViewController <NSFetchedResultsControllerDelegate>
     
-    NSInteger ChosenRowNumber;
-    
-}
-
-@property (nonatomic) NSInteger ChosenRowNumber;
-
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

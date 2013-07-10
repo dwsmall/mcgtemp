@@ -78,6 +78,7 @@ NSArray *statusDataX;
 @synthesize fetchOBJ2, outputlabelD;
 
 @synthesize moDATA, outputlabelE;
+@synthesize moHCPDATA, outputlabelF;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -509,10 +510,123 @@ NSArray *statusDataX;
         
         //Create XML File For Submission
         
+        NSDictionary *ordhdr_dict = @{   @"UserId" : @"0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590",
+                                    @"Token" : @"kR1zzKeIrOSZrMKq9C7YYA==",
+                                    @"OwnerId" : @"0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590",
+                                    @"ShipToId" : @"795632d4-1e96-4a69-a1af-1e579527bdff",
+                                    @"TerritoryId" : @"9c0df8e7-e88a-4f92-8a0d-0cb902ea3f7e",
+                                    @"AllocationId" : @"a0e4dc78-07c1-414c-be8e-ed6732902729",
+                                    @"CreatorId" : @"0bb9fdad-ddd9-4cea-861b-073bb6d1a590",
+                                    @"ClientId" : @"d646e129-1f38-4f83-94d7-82bf57dd4f24",
+                                    @"ShippingAddressId" : @"47ae66f2-4646-403f-a4a6-42faf3b36539",
+                                    @"ApplicationSource" : @"MobileSampleCupboard",
+                                    @"DateEntered" : @"2013-07-10T00:00:00",
+                                    @"DateCreated" : @"2013-07-10T00:00:00",
+                                    @"DateModified" : @"2013-07-10T00:00:00",
+                                    @"Shipping_FacilityName" : @"Dougs Health Care",
+                                    @"ShippingFirstName" : @"Carl",
+                                    @"ShippingLastName" : @"Lewis",
+                                    @"Shipping_AddressLine1" : @"77 Redwillow Rd",
+                                    @"Shipping_AddressLine2" : @"Apartment 5",
+                                    @"Shipping_AddressLine3" : @"PO 521",
+                                    @"Shipping_City" : @"Brampton",
+                                    @"Shipping_PostalCode" : @"L6P2B2",
+                                    @"Shipping_Province" : @"ON",
+                                    @"Shipping_Status" : @"Active",
+                                    @"Shipping_Phone" : @"234343434",
+                                    @"Shipping_PhoneExtension" : @"xt.234",
+                                    @"Shipping_Fax" : @"234234",
+                                    @"Shipping_Partner" : @"ATS",
+                                    @"Shipping_Type" : @"GROUND",
+                                    @"Shipping_Email" : @"me@myemail.com",
+                                    @"Signature" : @"W3siaXNTdGFydCI6IHRydWUsICJ4IjogMTg1LCAieSI6IDg0fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogMTg3LCAieSI6IDgyfSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogMTk3LCAieSI6IDgyfSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogMjE2LCAieSI6IDc5fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogMjQzLCAieSI6IDc3fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogMjcxLCAieSI6IDc0fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogMzAyLCAieSI6IDcxfSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogMzMxLCAieSI6IDY5fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogMzYxLCAieSI6IDY2fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogMzkwLCAieSI6IDY2fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNDE4LCAieSI6IDY2fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNDM5LCAieSI6IDY2fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNDYwLCAieSI6IDY3fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNDc0LCAieSI6IDY5fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNDg3LCAieSI6IDcxfSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNDk1LCAieSI6IDczfSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNDk4LCAieSI6IDc0fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNTAxLCAieSI6IDc1fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNTAxLCAieSI6IDc2fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNTAxLCAieSI6IDc4fSwgeyJpc1N0YXJ0IjogZmFsc2UsICJ4IjogNDk4LCAieSI6IDgzfV0="
+                                    };
         
-        //Send To MCG...
+        // Build xml
+        NSMutableString *order_xml = [[NSMutableString alloc] initWithString:@""];
+        [order_xml appendString:@"<?xml version=\"1.0\"?>\n<NewMobileOrderModel xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n"];
+        
+            // Convert Dictionary Values
+            NSArray *arr = [ordhdr_dict allKeys];
+        
+            // Conversion Routine
+            for(int i=0;i<[arr count];i++)
+            {
+                id nodeValue = [ordhdr_dict objectForKey:[arr objectAtIndex:i]];
+                
+                if([nodeValue isKindOfClass:[NSArray class]] )
+                {
+                    if([nodeValue count]>0){
+                        for(int j=0;j<[nodeValue count];j++)
+                        {
+                            id value = [nodeValue objectAtIndex:j];
+                            if([ value isKindOfClass:[NSDictionary class]])
+                            {
+                                [order_xml appendString:[NSString stringWithFormat:@"<%@>",[arr objectAtIndex:i]]];
+                                [order_xml appendString:[NSString stringWithFormat:@"%@",[value objectForKey:@"text"]]];
+                                [order_xml appendString:[NSString stringWithFormat:@"</%@>\n",[arr objectAtIndex:i]]];
+                            }
+                        }
+                    }
+                }
+                else if([nodeValue isKindOfClass:[NSDictionary class]])
+                {
+                    [order_xml appendString:[NSString stringWithFormat:@"<%@>",[arr objectAtIndex:i]]];
+                    if([[nodeValue objectForKey:@"Id"] isKindOfClass:[NSString class]])
+                        [order_xml appendString:[NSString stringWithFormat:@"%@",[nodeValue objectForKey:@"Id"]]];
+                    else
+                        [order_xml appendString:[NSString stringWithFormat:@"%@",[[nodeValue objectForKey:@"Id"] objectForKey:@"text"]]];
+                    [order_xml appendString:[NSString stringWithFormat:@"</%@>\n",[arr objectAtIndex:i]]];
+                }
+            
+                else
+                {
+                    if([nodeValue length]>0){
+                        [order_xml appendString:[NSString stringWithFormat:@"<%@>",[arr objectAtIndex:i]]];
+                        [order_xml appendString:[NSString stringWithFormat:@"%@",[ordhdr_dict objectForKey:[arr objectAtIndex:i]]]];
+                        [order_xml appendString:[NSString stringWithFormat:@"</%@>\n",[arr objectAtIndex:i]]];
+                    }
+                }
+            }
+        
+        NSString *ordhdr_xml=[order_xml stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+        
+        // OrderLine Details
+            [order_xml appendString:[NSString stringWithFormat:@"<IsDraft xsi:nil=\"%@\" />\n", @"true"]];
+            [order_xml appendString:[NSString stringWithFormat:@"<DateSigned xsi:nil=\"%@\" />\n", @"true"]];
+        
+            [order_xml appendString:[NSString stringWithFormat:@"<OrderLineItems>\n"]];
+        
+            [order_xml appendString:[NSString stringWithFormat:@"<NewMobileOrderLineItem>\n<ProductId>%@</ProductId>\n<QuantityOrdered>%@</QuantityOrdered>\n</NewMobileOrderLineItem>\n", @"4fe0bf38-9382-4710-877d-9fcd513effa2", @"1"]];
+        
+            // [order_xml appendString:[NSString stringWithFormat:@"<NewMobileOrderLineItem><ProductId>%@</ProductId><QuantityOrdered>%@</QuantityOrdered></NewMobileOrderLineItem>", @"4fe0bf38-9382-4710-877d-9fcd513effa2", @"1"]];
+        
+            [order_xml appendString:[NSString stringWithFormat:@"</OrderLineItems>\n"]];
+        
+        // Header End
+        [order_xml appendString:[NSString stringWithFormat:@"</NewMobileOrderModel>\n"]];
+        
+        NSLog(@"xmlData: %@", order_xml);
         
         
+        //Send Response To SC
+        NSData *data = [order_xml dataUsingEncoding:NSUTF8StringEncoding];
+        // NSData *jsonData = [NSJSONSerialization dataWithJSONObject:infoTEST options:kNilOptions error:&errorMSG];
+        
+        NSURL *url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/CreateOrder"];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        
+        [request setHTTPMethod:@"POST"];
+        [request setValue:@"text/html; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+        [request setValue:@"text/html; charset=utf-8" forHTTPHeaderField:@"Accept"];
+        [request setHTTPBody:data];
+        
+        NSURLResponse *response;
+        NSError *err;
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
+        NSString* newStr = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+        
+        NSLog(@"responseData: %@", newStr);
         
     
     }
@@ -837,6 +951,11 @@ NSArray *statusDataX;
     
    
 }
+
+
+
+
+
 
 
 @end

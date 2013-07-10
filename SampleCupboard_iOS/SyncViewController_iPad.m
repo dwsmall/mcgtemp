@@ -67,9 +67,6 @@ Reachability *internetReachableFoo;
 - (IBAction)btnSyncClick:(id)sender {
     
     
-   
-    
-    
     
     // TEST INSERTION METHOD USING MANUAL INSERT
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
@@ -228,7 +225,7 @@ Reachability *internetReachableFoo;
     
     
     if ([removalType isEqual: delete_hcp])  {
-        deletionEntity = @[@"HealCareProfessional"];
+        deletionEntity = @[@"HealthCareProfessional"];
     }
     
     if ([removalType isEqual: delete_others]) {
@@ -241,9 +238,12 @@ Reachability *internetReachableFoo;
     self.managedObjectContext = [appDelegate managedObjectContext];
     NSManagedObjectContext *context = [self managedObjectContext];
     
+
     
     for(int i=0;i<[deletionEntity count];i++)
     {
+        
+        NSLog(@"Entity in Question %@", [deletionEntity objectAtIndex:i]);
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         
@@ -323,10 +323,22 @@ Reachability *internetReachableFoo;
     self.managedObjectContext = [appDelegate managedObjectContext];
     NSManagedObjectContext *context = [self managedObjectContext];
     
+    NSError *error;
+    
+    //Get User ID AND Token
+    NSFetchRequest * request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"id=%@",@"current_rep"]];
+    NSArray *currentitems = [[context executeFetchRequest:request error:&error] lastObject];
+    
+    NSString *comp_userid = [[[currentitems valueForKey:@"user_id"] description] lowercaseString];
+    NSString *comp_token = [[[currentitems valueForKey:@"token"] description] lowercaseString];
+    
+    
     //Prep Values
     NSString *baseurl = @"http://dev.samplecupboard.com/Data/MobileServices.svc";
-    NSString *urluserid = @"0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590";
-    NSString *urltoken = @"kmtriddWYscp8w1nwgnfkA==";
+    NSString *urluserid = comp_userid;
+    NSString *urltoken = comp_token;
     NSURL *url = [NSURL URLWithString:@""];
     
     NSString *urlsvc = @"TBD";
@@ -350,6 +362,7 @@ Reachability *internetReachableFoo;
                                     urltoken,
                                     urluserid]];
         
+    NSLog(@"Show HCP SVC %@", url);
         
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     

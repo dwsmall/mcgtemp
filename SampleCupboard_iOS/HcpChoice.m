@@ -12,8 +12,11 @@
 @interface HcpChoice ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *healthcareProf;
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
 @end
+
 
 @implementation HcpChoice
 
@@ -101,7 +104,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     path = indexPath;
-    NSLog(@"index path for hcp_selection DIDSELECT %i", path.row);
+    NSLog(@"index path for hcp_selection DID SELECT %i", path.row);
     
     checkedCell = indexPath;
     [tableView reloadData];
@@ -141,7 +144,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"HCPChoice"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -253,8 +256,17 @@
         // Get destination view
         OrderDetailViewController_iPad *vc = [segue destinationViewController];
         [vc setSelectedHCPNUMBER:1001];
-               
+        
+        
+        
+        NSIndexPath *ip = [self.tableView indexPathForSelectedRow];
+        [vc setMoHCPDATA:[[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.section]];
+        
+        
         OrderDetailViewController_iPad *ourfetchClass = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:checkedCell.row inSection:0]];
+        
+        
+        
  
         // Handling of Null Fields (Server Side or Replace With NSAssert)
         NSString *varphlid = [[ourfetchClass valueForKey:@"phlid"] description];
