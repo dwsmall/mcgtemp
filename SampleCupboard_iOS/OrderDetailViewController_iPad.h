@@ -8,6 +8,14 @@
 
 @interface OrderDetailViewController_iPad : UIViewController <UITableViewDelegate, UITableViewDataSource>
 {
+    
+
+    NSMutableDictionary *orderValue_Dict;
+    NSMutableDictionary *orderValueExt_Dict;
+    NSMutableArray *orderValueDetails_Arr;
+    
+    NSInteger keyboardObservable;
+    
     NSInteger selectedButton;
     NSInteger selectedHCP;
     
@@ -28,7 +36,23 @@
     
     NSManagedObject *moHCPDATA;
     
+    
+    
+    
 }
+
+// Capture Order Values For xml Conversion
+@property (strong, nonatomic) NSDictionary *orderValue_Dict;
+@property (strong, nonatomic) NSDictionary *orderValueExt_Dict;
+@property (strong, nonatomic) NSArray *orderValueDetails_Arr;
+
+// Keyboard Observable
+@property (nonatomic) NSInteger keyboardObservable;
+
+
+@property (strong, nonatomic) IBOutlet UIButton *ok_btn;
+
+
 @property (weak, nonatomic) IBOutlet UITextField *hiddenTextField;
 
 @property (nonatomic) NSInteger selectedButton;
@@ -59,6 +83,7 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContextToken;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController2;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext2;

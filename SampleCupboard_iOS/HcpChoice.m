@@ -252,20 +252,16 @@
     if ([[segue identifier] isEqualToString:@"_chosehcp_done"]) {
         
         // SHOULD USE - NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+        // Can Use Checked Cell Because 2 step with Done Clause
         
         // Get destination view
         OrderDetailViewController_iPad *vc = [segue destinationViewController];
         [vc setSelectedHCPNUMBER:1001];
         
         
-        
-        NSIndexPath *ip = [self.tableView indexPathForSelectedRow];
-        [vc setMoHCPDATA:[[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.section]];
-        
-        
+        [vc setMoHCPDATA:[[self.fetchedResultsController fetchedObjects] objectAtIndex:checkedCell.row]];
+                
         OrderDetailViewController_iPad *ourfetchClass = [[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:checkedCell.row inSection:0]];
-        
-        
         
  
         // Handling of Null Fields (Server Side or Replace With NSAssert)
@@ -305,8 +301,7 @@
                                     varaddress3,
                                     [[ourfetchClass valueForKey:@"province"] description],
                                     [[ourfetchClass valueForKey:@"city"] description],
-                                    [[ourfetchClass valueForKey:@"postal"] description]];
-        
+                                    [[ourfetchClass valueForKey:@"postal"] description]];        
     }
     
     

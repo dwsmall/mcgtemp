@@ -67,6 +67,32 @@ Reachability *internetReachableFoo;
 	// Do any additional setup after loading the view, typically from a nib.
     
     
+    // Get OutStanding Badges on Login
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    // NSError *error;
+    
+    NSFetchRequest * request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Orders" inManagedObjectContext:context]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"projectcode=%@",@"unsent"]];
+    
+    // PX2 Handle 0 returned items
+    // NSArray *currentitems = [[context executeFetchRequest:request error:&error] lastObject];
+    
+    
+    // Prepare to Update Badge Number
+    for (UIViewController *viewController in self.tabBarController.viewControllers) {
+        
+        if (viewController.tabBarItem.tag == 4) {
+            // PX2 viewController.tabBarItem.badgeValue = [currentitems count];
+        }
+    }
+    
+    
+    
+    
     // FAKE CODE FOR DEV PURPOSES
     if (1 == 2) {
     
@@ -296,7 +322,7 @@ Reachability *internetReachableFoo;
 -   (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)theData{
     
     
-    // Determine Server Response
+    
     
     
     NSLog(@"String sent from server %@",[[NSString alloc] initWithData:theData encoding:NSUTF8StringEncoding]);

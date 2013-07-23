@@ -362,6 +362,6 @@
         <element name="Territory" positionX="-245" positionY="-525" width="128" height="180"/>
         <element name="TerritoryFSA" positionX="-407" positionY="-495" width="128" height="150"/>
         <element name="TerritoryRep" positionX="322" positionY="-531" width="128" height="135"/>
-        <element name="Tokenized_Credentials" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Tokenized_Credentials" positionX="-749" positionY="-531" width="128" height="150"/>
     </elements>
 </model>
