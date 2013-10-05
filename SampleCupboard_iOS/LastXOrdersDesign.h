@@ -1,0 +1,13 @@
+//
+//  LastXOrdersDesign.h
+//  SampleCupboard_iOS
+//
+//  Created by David Small on 9/6/13.
+//  Copyright (c) 2013 MCG. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface LastXOrdersDesign : UITableViewCell
+
+@end

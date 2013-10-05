@@ -2,7 +2,7 @@
 //  Order.h
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-06-17.
+//  Created by David Small on 9/19/13.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
@@ -54,11 +54,12 @@
 @property (nonatomic, retain) NSString * shipping_territory;
 @property (nonatomic, retain) NSString * shipping_type;
 @property (nonatomic, retain) NSString * shiptoid;
-@property (nonatomic, retain) NSData * signature;
+@property (nonatomic, retain) NSString * signature;
 @property (nonatomic, retain) NSString * status;
 @property (nonatomic, retain) NSString * statusreason;
 @property (nonatomic, retain) NSString * territoryid;
 @property (nonatomic, retain) NSString * trackingnumbers;
+@property (nonatomic, retain) NSString * formnumber;
 @property (nonatomic, retain) NSSet *toOrderDetails;
 @end
 

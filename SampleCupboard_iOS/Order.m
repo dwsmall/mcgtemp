@@ -2,7 +2,7 @@
 //  Order.m
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 13-06-17.
+//  Created by David Small on 9/19/13.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
@@ -58,6 +58,7 @@
 @dynamic statusreason;
 @dynamic territoryid;
 @dynamic trackingnumbers;
+@dynamic formnumber;
 @dynamic toOrderDetails;
 
 @end
