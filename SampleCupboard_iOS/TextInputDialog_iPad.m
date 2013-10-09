@@ -76,21 +76,9 @@
     
     for (UITableView *someObject in [self.superview subviews]) {
         NSLog(@"show all objects - 1 %@",someObject.subviews);
-        
-        // NSLog(@"show all objects - 2 %@",someObject.nextResponder);
-        // no work - NSLog(@"show all objects - 3 %@",someObject.delegate);
-        //  NSLog(@"show all objects - 4 %@",someObject.description);
-        // NSLog(@"show all objects - 5 %@",someObject.indexPathForSelectedRow);
-         // NSLog(@"show all objects - 6 %@",someObject.indexPathsForVisibleRows);
-       // NSLog(@"show all objects - 7  %@",someObject.visibleCells);
-        
        
     }
-    
-    // NSIndexPath *selectedIndexPath = [(UITableView *)OrderDetailViewController_iPad indexPathForSelectedRow];
-    
-    //NSIndexPath *indexPath = [(UITableView *)self.superview indexPathForCell: self];
-    
+   
     
     
 }

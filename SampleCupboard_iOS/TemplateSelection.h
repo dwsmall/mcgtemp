@@ -6,8 +6,13 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 
-@interface TemplateSelection : NSObject
+@interface TemplateSelection : UIViewController <NSFetchedResultsControllerDelegate> {
+    
+    NSIndexPath *checkedCell;
+}
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

@@ -6,8 +6,13 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@interface SetupConfig : NSObject {
+    NSString *_myString;
+}
 
-@interface SetupConfig : NSObject
+@property (retain) NSString *myString;
+@property (retain) NSString *currentHCP;
+
+- (void)sharedSetupConfig;
 
 @end
