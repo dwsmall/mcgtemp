@@ -6,8 +6,12 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "Order.h"
 
-@interface Order_Extensions : NSObject
+@interface Order (Extensions)
+
++ (void)importDataToMoc:(NSManagedObjectContext *)moc;
+- (NSString *)sectionTitle;
 
 @end
+

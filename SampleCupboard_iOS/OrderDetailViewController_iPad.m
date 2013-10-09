@@ -248,6 +248,16 @@ NSArray *statusDataX;
     
         _odNavBar.tintColor = [UIColor blueColor];
         _odNavBarTitle.title = @"View Order Details";
+        
+        _SaveDraftButton.enabled = FALSE;
+        TemplateMenuButton.enabled = FALSE;
+        
+        _SaveDraftButton.image = nil;
+        TemplateMenuButton.image = nil;
+        
+        _SaveDraftButton.width = 0.0f;
+        TemplateMenuButton.width = 0.0f;
+        
     }
     
     
@@ -393,8 +403,8 @@ NSArray *statusDataX;
                     
                     // no sig. entered
                     UIAlertView *alertView = [[UIAlertView alloc]
-                                              initWithTitle: @"No Signature Entered"
-                                              message: @"Signature Data Not Entered on Device" delegate: nil
+                                              initWithTitle: @"Signature Required"
+                                              message: @"Signature Not Entered on Device" delegate: nil
                                               cancelButtonTitle: @"OK" otherButtonTitles: nil];
                     
                     [alertView show];
@@ -463,24 +473,10 @@ NSArray *statusDataX;
                             
                             // disable hcp button
                             if (x == 0 && i == 1) {
-                                UITextField *testx = (UITextField*)[cell viewWithTag:1];
-                                testx.enabled = NO;
-                                testx.hidden = YES;
                                 
                                 UIButton  *btnhcp = (UIButton*)[cell viewWithTag:22];
-                                // btnhcp.enabled = NO;
-                                // btnhcp.hidden = YES;
-                                
-                                [btnhcp setEnabled:FALSE];
-                                [btnhcp setHidden:TRUE];
-                                [btnhcp setBackgroundColor:[UIColor clearColor]];
-                                
-                                cell.userInteractionEnabled = NO;
-                                btnhcp.userInteractionEnabled = NO;
-                                
-                                cell.backgroundColor = [UIColor orangeColor];
-                                
-                                // NSLog(@"dw1 - show value: %@")
+                                btnhcp.enabled = NO;
+                                btnhcp.hidden = YES;
                             }
                             
                             // disable prod selection
@@ -505,16 +501,6 @@ NSArray *statusDataX;
                                 btnCarrierB.enabled = NO;
                             }
                             
-                            
-                            
-                            if (i==2) {
-                                NSLog(@"@dw1 - show cell text: %@", cell.textLabel.text);
-                                NSLog(@"@dw1 - show cell count: %d", x);
-                                NSLog(@"@dw1 - show total count: %d", CellCount);
-                            }
-                            
-
-                            NSLog(@"dw1 - show noentry Row:%d and Section:%d", x, i);
                         
                         }
                 }
@@ -617,7 +603,16 @@ NSArray *statusDataX;
 
 - (IBAction)TemplateMenu_Clicked:(UIBarButtonItem *)sender {
     
-    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle: @"Order"
+    
+    if (actionSheet_) {
+        [actionSheet_ dismissWithClickedButtonIndex:-1 animated:YES];
+        actionSheet_ = nil;
+        return;
+    }
+    
+
+    
+    actionSheet_ = [[UIActionSheet alloc] initWithTitle: @"Order"
                                                               delegate: self
                                                      cancelButtonTitle: nil
                                                 destructiveButtonTitle: nil
@@ -625,9 +620,7 @@ NSArray *statusDataX;
                                    @"Load Template", nil];
     
     
-    
-    // change co-ordinates for landscape
-    [actionSheet showFromRect:CGRectMake(240, self.view.frame.size.height - 60, 200, 200) inView:odMainView animated:YES];
+    [actionSheet_ showFromBarButtonItem:sender animated:YES];
     
 }
 
@@ -676,7 +669,13 @@ NSArray *statusDataX;
 
 
 
-
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    // just set to nil
+    actionSheet_ = nil;
+    
+    NSLog(@"ActionSheet Dismissed");
+    
+}
 
 
 
@@ -1845,6 +1844,10 @@ NSArray *statusDataX;
             }
             
             
+            NSLog(@"dw1 - BBC - show added products on screen");
+            
+            
+            
             
             // add product based on initial load
             
@@ -1999,14 +2002,37 @@ NSArray *statusDataX;
                 
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",prodqty];
                 
+                NSLog(@"dw1 - BBC2 - show added products on screen");
                 
-                // add product array entries
-                arrTempProducts = [NSMutableArray array];
-                [arrTempProducts addObject:[[ProductObject valueForKey:@"productid"] description]];
-                [arrTempProducts addObject:[[ProductObject valueForKey:@"productname"] description]];
-                [arrTempProducts addObject:[[ProductObject valueForKey:@"productdescription"] description]];
-                [arrTempProducts addObject:[NSString stringWithFormat:@"%d",prodqty]];
-                [app.globalProductsScrn addObject:arrTempProducts]; /* first row is added */
+                
+                // Prevent Addition of Existing Projects
+                
+                NSString *add_productid = @"YES";
+                
+                
+                for (int p = 0; p < [app.globalProductsScrn count]; p++)
+                {
+                    NSString *myproductfoundid = [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:0];
+                    
+                    if ([myproductfoundid isEqualToString:[[ProductObject valueForKey:@"productid"] description] ]) {
+                        
+                        add_productid = @"NO";
+                        
+                    }
+                }
+                
+                
+                if ([add_productid isEqualToString:@"YES"]) {
+                    
+                    // add product array entries
+                    arrTempProducts = [NSMutableArray array];
+                    [arrTempProducts addObject:[[ProductObject valueForKey:@"productid"] description]];
+                    [arrTempProducts addObject:[[ProductObject valueForKey:@"productname"] description]];
+                    [arrTempProducts addObject:[[ProductObject valueForKey:@"productdescription"] description]];
+                    [arrTempProducts addObject:[NSString stringWithFormat:@"%d",prodqty]];
+                    [app.globalProductsScrn addObject:arrTempProducts]; /* first row is added */
+                
+                }
                 
                 
                 
@@ -2708,6 +2734,9 @@ float a;
             // use screen prod after initial load
             predicate = [NSPredicate predicateWithFormat:@"territoryid = %@ AND (productid IN %@)", territoryid, productsdisplay];
             [fetchRequest setPredicate:predicate];
+            
+            
+            
         }
         
         // clear initial load ???
@@ -3236,6 +3265,11 @@ float a;
     
     [OrderHDR setValue:projectcode_var forKey:@"projectcode"];
     [OrderHDR setValue:[NSDate date] forKey:@"datecreated"];
+    
+    
+    // show me how many products
+    NSLog(@"dw1 - how many products:: %lu", (unsigned long)[app.globalProductsScrn count]);
+    
     
     
     // Get Details From Dictionary

@@ -7,10 +7,15 @@
 //
 
 
+#import "AppDelegate.h"
+
 
 #import "LoginViewController.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "Reachability.h"
+
+#import "MBProgressHUD.h"
+
 
 Reachability *internetReachableFoo;
 
@@ -21,7 +26,7 @@ Reachability *internetReachableFoo;
 
 @property (weak, nonatomic) IBOutlet UIButton *BtnSignin;
 
-@property (weak, nonatomic) IBOutlet UILabel *UserName;
+// @property (weak, nonatomic) IBOutlet UILabel *UserName;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *busyIndicator;
 
@@ -39,16 +44,31 @@ Reachability *internetReachableFoo;
 
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 
-@property (weak, nonatomic) IBOutlet IndentTextField *txtUserName;
-
 @property (weak, nonatomic) IBOutlet UIButton *UserLoginBtn;
-
-@property (weak, nonatomic) IBOutlet IndentTextField *txtPassword;
 
 
 @property (strong, atomic) IBOutlet UITextField *userName;
 
 @property (strong, atomic) IBOutlet UITextField *password;
+
+
+@property (strong, nonatomic) IBOutlet UISwitch *Remember_Button;
+
+
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *myActIndicator;
+
+
+
+
+@property (strong, nonatomic) IBOutlet UILabel *lblUsername;
+
+@property (strong, nonatomic) IBOutlet UILabel *lblPassword;
+
+
+@property (strong, nonatomic) IBOutlet UILabel *lblRememberMe;
+
+//UserLoginBtn uitextfld - userName , uitextfld - password
+
 
 
 - (IBAction)LoginButton:(UIButton *)sender;
@@ -59,6 +79,9 @@ Reachability *internetReachableFoo;
 
 @implementation LoginViewController
 
+@synthesize userName, password, Remember_Button;
+
+@synthesize myActIndicator;
 
 
 - (void)viewDidLoad
@@ -67,38 +90,31 @@ Reachability *internetReachableFoo;
 	// Do any additional setup after loading the view, typically from a nib.
     
     
+    // show spinning wheel
+    [myActIndicator stopAnimating];
+    myActIndicator.hidden=TRUE;
+    
+
     // Get OutStanding Badges on Login
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
     NSManagedObjectContext *context = [self managedObjectContext];
     
+    
     // NSError *error;
+    NSArray *list =
+    [NSArray arrayWithObjects:
+     @"OFFLINE",
+     @"REJECTED", nil];
     
-    NSFetchRequest * request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"Orders" inManagedObjectContext:context]];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"projectcode=%@",@"unsent"]];
+    // Get UNSENT item count
+    NSFetchRequest *fetchRequestBadge = [[NSFetchRequest alloc] init];
+    fetchRequestBadge.entity = [NSEntityDescription entityForName:@"Order" inManagedObjectContext:context];
+    fetchRequestBadge.predicate = [NSPredicate predicateWithFormat:@"projectcode IN %@", list];
     
-    // PX2 Handle 0 returned items
-    // NSArray *currentitems = [[context executeFetchRequest:request error:&error] lastObject];
+    NSError *error = nil;
+    NSUInteger numberOfRecords = [context countForFetchRequest:fetchRequestBadge error:&error];
     
-    
-    // Prepare to Update Badge Number
-    for (UIViewController *viewController in self.tabBarController.viewControllers) {
-        
-        if (viewController.tabBarItem.tag == 4) {
-            // PX2 viewController.tabBarItem.badgeValue = [currentitems count];
-        }
-    }
-    
-    
-    
-    
-    // FAKE CODE FOR DEV PURPOSES
-    if (1 == 2) {
-    
-        [self.tabBarController setSelectedIndex:1];
-    
-    } else {
     
         // Set the button Text Color
         [_UserLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -113,14 +129,34 @@ Reachability *internetReachableFoo;
                 [viewController.tabBarItem setEnabled:NO];
             }
         
-            if (viewController.tabBarItem.tag == 4) {
-                //Check UnSent Orders in Temp
-                viewController.tabBarItem.badgeValue = @"1";
+            if (viewController.tabBarItem.tag == 4 && numberOfRecords > 0) {
+                viewController.tabBarItem.badgeValue = [@(numberOfRecords) description];
                 [viewController.tabBarItem setEnabled:NO];
             }
         }
         
-    } //END OF FOR
+    
+    
+    // show username/password if creds stored...
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults valueForKey:@"MCG_usernameKey"] > 0) {
+        userName.text = [defaults valueForKey:@"MCG_usernameKey"];
+        password.text = [defaults valueForKey:@"MCG_passwordKey"];
+        Remember_Button.on = YES;
+    }
+    
+    
+    
+    
+    // update label values
+    
+    _lblUsername.text = NSLocalizedString(@"User Name", nil);
+    _lblPassword.text = NSLocalizedString(@"Password", nil);
+    _lblRememberMe.text = NSLocalizedString(@"Remember Me", nil);
+    userName.placeholder = NSLocalizedString(@"user name", nil);
+    password.placeholder = NSLocalizedString(@"password", nil);
+    _BtnSignin.titleLabel.text = NSLocalizedString(@"Sign In", nil);
     
 }
 
@@ -131,16 +167,43 @@ Reachability *internetReachableFoo;
     // Dispose of any resources that can be recreated.
 }
 
+
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    // show spinning wheel
+    myActIndicator.hidden = FALSE;
+    [myActIndicator startAnimating];
+    
+    [self ProcessLogin];
+    
+    return NO;
+    
+}
+
+
 - (IBAction)LoginButton:(UIButton *)sender {
     
-    // NSLog(@"Credentials %@ %@", _userName.text, _password.text);
+    // show spinning wheel
+    myActIndicator.hidden = FALSE;
+    [myActIndicator startAnimating];
+    
+    [self ProcessLogin];
+}
 
+
+
+
+- (void)ProcessLogin {
+    
     
     Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
     NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
     if (internetStatus == NotReachable){
         
         // NO INTERNET ?
+        
+#pragma Offline Login
         
         // Check For Offline Login Credentials
         id appDelegate = (id)[[UIApplication sharedApplication] delegate];
@@ -158,38 +221,24 @@ Reachability *internetReachableFoo;
         NSString *comp_username = [[[currentitems valueForKey:@"username"] description] lowercaseString];
         NSString *comp_password = [[[currentitems valueForKey:@"password"] description] lowercaseString];
 
-        NSLog(@"These Are The Values %@, %@", _userName.text, [_userName.text copy]);
+        // NSLog(@"These Are The Values %@, %@", userName.text, [userName.text copy]);
         
-        if ( [[_userName.text lowercaseString] isEqualToString:comp_username] )
+        if ( [[userName.text lowercaseString] isEqualToString:comp_username] )
         {
             NSLog(@"Offline Login Confirmed");
             
-            if ( [[_password.text lowercaseString] isEqualToString:comp_password] ) {
+            if ( [[password.text lowercaseString] isEqualToString:comp_password] ) {
                 
-                // SUCCESS ROUTINE
-                for (UIViewController *viewController in self.tabBarController.viewControllers) {
-                    
-                    
-                    if (viewController.tabBarItem.tag == 0)
-                    {
-                        [viewController.tabBarItem setEnabled:NO];
-                    }
-                    else
-                    {
-                        [viewController.tabBarItem setEnabled:YES];
-                    }
-                    
-                    
-                }
-                [self.tabBarController setSelectedIndex:1];
+                // remember password for offline login ? (naw...)
                 
+                [self sucessfulLogin];
                 
                 
             } else {
                 
                 UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                               initWithTitle:@"INVALID LOGIN"
-                                               message:@"Please Check Your UserName and Password"
+                                               initWithTitle:@"Invalid Login"
+                                               message:@"Invalid User Name or Password"
                                                delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 
                 [errorAlertView show];
@@ -199,95 +248,64 @@ Reachability *internetReachableFoo;
             
             
         } else {
+            
+            // stop animating
+            [myActIndicator stopAnimating];
+            myActIndicator.hidden=TRUE;
         
             UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                           initWithTitle:@"INVALID LOGIN"
+                                           initWithTitle:@"Invalid Login"
                                            message:@"Offline Login Requires Previous User Credentials"
                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             
             [errorAlertView show];
             
             
-            // SUCCESS ROUTINE - TEMP CODE
-            for (UIViewController *viewController in self.tabBarController.viewControllers) {
-                
-                
-                if (viewController.tabBarItem.tag == 0)
-                {
-                    [viewController.tabBarItem setEnabled:NO];
-                }
-                else
-                {
-                    [viewController.tabBarItem setEnabled:YES];
-                }
-                
-                
-            }
-            [self.tabBarController setSelectedIndex:1];
-            
         }
-        
-        
-        //NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        //NSEntityDescription *entity = [NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context];
-        // [fetchRequest setEntity:entity];
-        
-        // NSError *error;
-        // NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
-        
         
        
         
         
     } else {
         
+        // INTERNET FOUND ?
+
+#pragma Online Login
         
-        // NSLog(@"Internet connection is OK");
-        
-        // CONNECTION FOUND ?
         
         NSURL *url=[NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/Login"];
-        NSString *nameX = _userName.text;
-        NSString *passwordX = _password.text;
+                
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
-     
+        // Store Login Credentials
+        if (Remember_Button.on) {
+            
+            // store credentials
+            [defaults setObject:userName.text forKey:@"MCG_usernameKey"];
+            [defaults setObject:password.text forKey:@"MCG_passwordKey"];
+        
+        } else {
+        
+            // clear previous credentials
+            [defaults setObject:nil forKey:@"MCG_usernameKey"];
+            [defaults setObject:nil forKey:@"MCG_passwordKey"];
+        }
+        
+                
+        
+        NSLog(@"first show VICE1 %@", userName.text);
+        NSLog(@"first show VICE2 %@", password.text);
+            
+            
         NSDictionary* infoTEST = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 @"greg.lee@merck.com",
-                                 @"userName",
-                                 @"qa",
-                                 @"password",
-                                 @"IPadApp",
-                                 @"sourceApp",
-                                 nil];
-        
-        NSLog(@"first show TEST %@", infoTEST);
-        
-        
-        
-        NSDictionary* infoRAW = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [_userName.text copy],
-                                @"userName",
-                                [_password.text copy],
-                                @"password",
-                                @"IPadApp",
-                                @"sourceApp",
-                                nil];
-        
-        NSLog(@"first show %@", infoRAW);
-        CFShow(CFBridgingRetain(infoRAW));
-        
-        NSDictionary* infoDB = [NSDictionary dictionaryWithObjectsAndKeys:
-                              nameX,
-                              @"userName",
-                              passwordX,
-                              @"password",
-                              @"IPadApp",
-                              @"sourceApp",
-                              nil];
-
-        
-        NSLog(@"first show %@", infoDB);
-        
+                                  userName.text,
+                                  @"userName",
+                                  password.text,
+                                  @"password",
+                                  @"IPadApp",
+                                  @"sourceApp",
+                                  nil];
+     
         
         NSError *errorMSG = nil;
         
@@ -302,27 +320,48 @@ Reachability *internetReachableFoo;
         [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         [request setHTTPBody:jsonData];
         
-        // print json:
-        // NSLog(@"JSON summary: %@", [[NSString alloc] initWithData:jsonData
-           //                                               encoding:NSUTF8StringEncoding]);
         
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+        
+        
+        
+// #if NS_BLOCKS_AVAILABLE
+        
+        
         [connection start];
-    
+        
+// #endif
+        
+        
     }
     
     
 }
 
 
+#pragma mark - NSUrl Connection Methods
+
+- (void)startLoadWithURL:(NSURL *)url {
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection connectionWithRequest:request delegate:self];
+    CFRunLoopRun();
+}
 
 
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    // Do something with the finished connection
+    CFRunLoopStop(CFRunLoopGetCurrent());
+}
 
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    // Handle the error
+    CFRunLoopStop(CFRunLoopGetCurrent());
+}
 
 -   (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)theData{
     
     
-    
+    NSLog(@"dw1 - is the app waiting here:%@", [NSDate date]);
     
     
     NSLog(@"String sent from server %@",[[NSString alloc] initWithData:theData encoding:NSUTF8StringEncoding]);
@@ -330,48 +369,149 @@ Reachability *internetReachableFoo;
     
     NSError *error = nil;
     
-    NSDictionary *dictContainer = [NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error];
-    NSString *LoginResultContainer = [dictContainer objectForKey:@"LoginResult"];
+    NSDictionary *dictResult = [NSJSONSerialization JSONObjectWithData:theData options:kNilOptions error:&error];
     
-    NSLog(@"The Dictionary %@", dictContainer);
+    // get root node
+    NSDictionary* dictRow = [dictResult objectForKey:@"LoginResult"];
+    
+    
+    NSLog(@"dw2 - is the app waiting here:%@", [NSDate date]);
+    
     
     // INVALID PASSWORD
-    if ([LoginResultContainer isKindOfClass:[NSNull class]]) {
+    if ([dictRow isKindOfClass:[NSNull class]]) {
         
+        
+        // stop animating
+        [myActIndicator stopAnimating];
+        myActIndicator.hidden=TRUE;
+
         UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                       initWithTitle:@"INVALID CREDENTIALS"
-                                       message:@"Invalid Username or Password"
+                                       initWithTitle:@"Invalid Login"
+                                       message:@"Invalid User Name or Password"
                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [errorAlertView show];
         
-        
-    } else if ([LoginResultContainer length] > 0)
+    }
+        else
     {
+
+        NSLog(@"dw1 - found here 3");
         
         id appDelegate = (id)[[UIApplication sharedApplication] delegate];
         self.managedObjectContext = [appDelegate managedObjectContext];
         NSManagedObjectContext *context = [self managedObjectContext];
         
-        // 1. CHECK IF RECORD EXISTS ?
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        // 1. check for Token_Credentials
+        NSFetchRequest * fetchrequest = [[NSFetchRequest alloc] init];
+        [fetchrequest setEntity:[NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context]];
+        [fetchrequest setPredicate:[NSPredicate predicateWithFormat:@"id=%@",@"current_rep"]];
         
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context];
+        NSUInteger usercount = [context countForFetchRequest:fetchrequest error:&error];
         
-        [fetchRequest setEntity:entity];
+        NSArray *tokendata = [[context executeFetchRequest:fetchrequest error:&error] lastObject];
         
-        NSError *error;
-        NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
+            NSLog(@"dw1 A- tk %@", [tokendata valueForKey:@"username"]);
         
+        
+        NSString *UserChangeOccured = @"";
+        int userfound = 1;
+        
+        NSLog(@"dw1 - show usercount %d" , usercount);
+        
+        if (usercount == 0) {
+            NSLog(@"dw1 - u make me happy");
+            userfound = 0;
+        }
+        
+        
+        NSLog(@"dw1 - show userfound %d" , userfound);
+        
+#pragma mark New User Login
         
             // NO - RECORD, CREATE
-            if ([items count] == 0) {
+            if (userfound == 0 ||  (userfound == 1 && ![userName.text isEqualToString:[tokendata valueForKey:@"username"]]) ) {
                 
+                // USER LOGIN CHANGED
+                
+                NSLog(@"dw1 - Bespoke1 %@", userName.text);
+                NSLog(@"dw1 - Bespoke2 %@", [tokendata valueForKey:@"username"]);
+                
+                
+                if (userfound == 1 && ![userName.text isEqualToString:[tokendata valueForKey:@"username"]]) {
+                
+                    UserChangeOccured = @"YES";
+
+#pragma mark Remove Previous User
+                    
+                    
+                    // NEW USER LOGIN HAS OCCURED
+                    
+                    NSArray *arrkeys = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys];
+                    NSArray *non_delete = @[@"MCG_clientid",@"MCG_token", @"MCG_userid"];
+                    
+                    NSString *searchStr = @"MCG_";
+                    NSPredicate *usr_predicate = [NSPredicate predicateWithFormat:@"self BEGINSWITH[cd] %@ AND NOT self in %@", searchStr, non_delete];
+                    NSArray *resultArray = [arrkeys filteredArrayUsingPredicate:usr_predicate];
+                    
+                    for (int i = 0; i < resultArray.count; i++) {
+                        NSLog(@"Delete Key: %@", [resultArray objectAtIndex:i]);
+                        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:[resultArray objectAtIndex:i]];
+                    }
+                
+                                        
+                    // msg (new login detected/previous update/rmvd...)
+                    /* should show with choice to cont. or cancel
+                    
+                    */
+                    
+                    // clear previous NSUSER values
+                    NSLog(@" show all keys %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+
+                    
+                    
+                    // remove all entities
+                    NSArray *deletionEntity;
+                    
+                    deletionEntity = @[@"ClientInfo",@"Order",@"Product",@"Allocation",@"AllocationHeader",@"TerritoryFSA",@"Territory",@"Rep",@"OrderTemplate",@"OrderTemplateLine",@"Tokenized_Credentials",@"HealthCareProfessional"];
+                    
+                    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+                    self.managedObjectContext = [appDelegate managedObjectContext];
+                    NSManagedObjectContext *context = [self managedObjectContext];
+                    
+                    
+                    for(int i=0;i<[deletionEntity count];i++)
+                    {
+                        
+                        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+                        
+                        NSEntityDescription *entity = [NSEntityDescription entityForName:[deletionEntity objectAtIndex:i] inManagedObjectContext:context];
+                        [fetchRequest setEntity:entity];
+                        
+                        NSError *error;
+                        NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
+                        
+                        for (NSManagedObject *managedObject in items) {
+                            [_managedObjectContext deleteObject:managedObject];
+                            NSLog(@"%@ object deleted",[deletionEntity objectAtIndex:i]);
+                        }
+                        if (![_managedObjectContext save:&error]) {
+                            NSLog(@"Error deleting %@ - error:%@",[deletionEntity objectAtIndex:i],error);
+                        }
+                        
+                    }
+                    
+                
+                }  //end of new usr removal
+                
+                
+#pragma mark Create New User Info                
                 
                 // GET USER INFORMATION
-                NSString *user_id = @"0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590";
-                
-                
+                NSString *user_id = [dictRow objectForKey:@"UserId"];
+                NSString *client_id = [dictRow objectForKey:@"ClientId"];
+                NSString *token = [dictRow objectForKey:@"Token"];
                 
                 // Insert New Record
                 NSManagedObject *TCred = [NSEntityDescription
@@ -379,11 +519,13 @@ Reachability *internetReachableFoo;
                                              inManagedObjectContext:context];
                 [TCred setValue:@"current_rep" forKey:@"id"];
                 [TCred setValue:user_id forKey:@"user_id"];
-                [TCred setValue:_userName.text forKey:@"username"];
-                [TCred setValue:_password.text forKey:@"password"];
-                [TCred setValue:[self sha1:_password.text] forKey:@"password_hash"];
-                [TCred setValue:LoginResultContainer forKey:@"token"];
+                [TCred setValue:client_id forKey:@"clientid"];
+                [TCred setValue:userName.text forKey:@"username"];
+                [TCred setValue:password.text forKey:@"password"];
+                [TCred setValue:[self sha1:password.text] forKey:@"password_hash"];
+                [TCred setValue:token forKey:@"token"];
                 [TCred setValue:[NSDate date] forKey:@"date_validated"];
+                
                 
                 NSError *error;
                 if (![context save:&error]) {
@@ -391,10 +533,29 @@ Reachability *internetReachableFoo;
                 }
                
                 
+                // update user credentials
+                
+                /*
+                MOD1
+                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:user_id forKey:@"MCG_userid"];
+                [defaults setObject:client_id forKey:@"MCG_clientid"];
+                [defaults setObject:token forKey:@"MCG_token"];
+                */
+                
+                // [defaults setObject:[[currentitems valueForKey:@"clientid"] description] forKey:@"clientid"];
+                // [defaults setObject:[[currentitems valueForKey:@"allocationid"] description] forKey:@"allocationid"];
+                
+                
                 // Mark Initial Database Message
+                
                 // Set All TabBar Badges Upon Load
+                /*
+                 MOD1
                 for (UIViewController *viewController in self.tabBarController.viewControllers) {
                     
+                    
+                    // only enable sync button on inital load
                     
                     if (viewController.tabBarItem.tag == 0)
                     {
@@ -408,85 +569,128 @@ Reachability *internetReachableFoo;
                     
                 }
                 [self.tabBarController setSelectedIndex:1];
+                */
+                
+                [self sucessfulLogin];
+                
+                
+                
+                if ([UserChangeOccured isEqualToString:@"YES"]) {
+                    
+                    UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                                   initWithTitle:@"New User Detected!"
+                                                   message:@"You are attempting to login as a new user, previous data will be removed from device..."
+                                                   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    
+                    [errorAlertView show];
+                    
+                
+                } else {
+                    
+                    UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                                   initWithTitle:@"First Time Login: Update Data!"
+                                                   message:@"You Must Sync Data Before Performing Any Operations"
+                                                   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    
+                    [errorAlertView show];
+                    
+                }
+                
+                
                 
             }
         
+        
+#pragma mark Login Existing User
         
             // YES - UPDATE RECORD
-            if ([items count] == 1) {
+            if (userfound == 1 && [userName.text isEqualToString:[tokendata valueForKey:@"username"]]) {
                 
                 NSError *error = nil;
-                
-                
-                // Delete All Date If Rep Name Not Equal...
-                
-
-                // RETRIEVE USER ID
-                // GET USER INFORMATION
-                NSString *user_id = @"0BB9FDAD-DDD9-4CEA-861B-073BB6D1A590";
-                
-                //Set up to get the thing you want to update
-                NSFetchRequest * request = [[NSFetchRequest alloc] init];
-                [request setEntity:[NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context]];
-                [request setPredicate:[NSPredicate predicateWithFormat:@"id=%@",@"current_rep"]];
-                
-                //Ask for it
-                NSArray *savechange = [[context executeFetchRequest:request error:&error] lastObject];
-                
-                if (error) {
-                    //Handle any errors
-                }	
-                
-                if (!savechange) {
-                    //Nothing there to update
-                }
-                
-                //Update the object
-                [savechange setValue:user_id forKey:@"user_id"];
-                [savechange setValue:LoginResultContainer forKey:@"token"];
-                [savechange setValue:_password.text forKey:@"password"];
-                [savechange setValue:[self sha1:_password.text] forKey:@"password_hash"];
-                [savechange setValue:[NSDate date] forKey:@"date_validated"];
-                
-                //Save it
-                error = nil;
-                if (![context save:&error]) {
-                    //Handle any error with the saving of the context
-                }
-                
-                
-                // - success ROUTINE = -- open menu items  / segue to home screen
-                // Set All TabBar Badges Upon Load
-                for (UIViewController *viewController in self.tabBarController.viewControllers) {
+              
+                    // REP IS SAME
+                    
+                    // get user info
+                    NSString *user_id = [dictRow objectForKey:@"UserId"];
+                    NSString *client_id = [dictRow objectForKey:@"ClientId"];
+                    NSString *token = [dictRow objectForKey:@"Token"];
+                    
+                    //Set up to get the thing you want to update
+                    NSFetchRequest * request = [[NSFetchRequest alloc] init];
+                    [request setEntity:[NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context]];
+                    [request setPredicate:[NSPredicate predicateWithFormat:@"id=%@",@"current_rep"]];
+                    
+                    // get token_cred data
+                    NSArray *savechange = [[context executeFetchRequest:request error:&error] lastObject];
+                    
+                    // update (AllocationID)
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setObject:[savechange valueForKey:@"allocationid"] forKey:@"MCG_allocationid"];
                     
                     
-                    if (viewController.tabBarItem.tag == 0)
-                    {
-                        [viewController.tabBarItem setEnabled:NO];
-                    }
-                    else
-                    {
-                        [viewController.tabBarItem setEnabled:YES];
+                    if (error) {
+                        //Handle any errors
+                    }	
+                    
+                    if (!savechange) {
+                        //Nothing there to update
                     }
                     
+                    //Update the object
+                    [savechange setValue:user_id forKey:@"user_id"];
+                    [savechange setValue:client_id forKey:@"clientid"];
+                    [savechange setValue:token forKey:@"token"];
+                    [savechange setValue:password.text forKey:@"password"];
+                    [savechange setValue:[self sha1:password.text] forKey:@"password_hash"];
+                    [savechange setValue:[NSDate date] forKey:@"date_validated"];
+                    
+                    //Save it
+                    error = nil;
+                    if (![context save:&error]) {
+                        //Handle any error with the saving of the context
+                    }
                 
-                }
-                    [self.tabBarController setSelectedIndex:1];
-            
+                
+                [self sucessfulLogin];
+                
+                    
+                    // - success ROUTINE = -- open menu items  / segue to home screen
+                    // Set All TabBar Badges Upon Load
+                
+                /*
+                 MOD1
+                 
+                    for (UIViewController *viewController in self.tabBarController.viewControllers) {
+                        
+                        
+                        if (viewController.tabBarItem.tag == 0)
+                        {
+                            [viewController.tabBarItem setEnabled:NO];
+                        }
+                        else
+                        {
+                            [viewController.tabBarItem setEnabled:YES];
+                        }
+                        
+                    
+                    }
+                        [self.tabBarController setSelectedIndex:1];
+                   */
+                    
+                    /*
+                    UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                                   initWithTitle:@"LOGIN SUCCESSFUL"
+                                                   message:@"Invalid Username or Password"
+                                                   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    
+                    [errorAlertView show];
+                    */                
+                
+                
             }
         
+              
         
-        
-        
-        //Store Password As Hashed (if successful)
-        // NSString *doogood = [self sha1:_password.text];
-        
-        UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                       initWithTitle:@"LOGIN SUCCESSFUL"
-                                       message:@"Invalid Username or Password"
-                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        [errorAlertView show];
         
         
     }
@@ -501,19 +705,66 @@ Reachability *internetReachableFoo;
     
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+
+#pragma mark - Custom
+
+-(void) sucessfulLogin {
     
     
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
     
+    NSError *error = nil;
+    
+    // fetch credentials
+    
+    NSFetchRequest * request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"id=%@",@"current_rep"]];
+    NSArray *currentitems = [[context executeFetchRequest:request error:&error] lastObject];
+    
+    
+    // update user credentials  (should be replaced with delegates)
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[[currentitems valueForKey:@"user_id"] description] forKey:@"MCG_userid"];
+    [defaults setObject:[[currentitems valueForKey:@"token"] description] forKey:@"MCG_token"];
+    [defaults setObject:[[currentitems valueForKey:@"clientid"] description] forKey:@"MCG_clientid"];
+    [defaults setObject:[[currentitems valueForKey:@"allocationid"] description] forKey:@"MCG_allocationid"];
+    
+    
+    // update user credentials    
+    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+    app.globalUserID = [[currentitems valueForKey:@"user_id"] description];
+    app.globalToken = [[currentitems valueForKey:@"token"] description];
+    app.globalClientId = [[currentitems valueForKey:@"clientid"] description];
+    app.globalAllocationId = [[currentitems valueForKey:@"allocationid"] description];
+    
+    app.globalBaseUrl = @"http://dev.samplecupboard.com/Data/MobileServices.svc";
+    
+    
+    for (UIViewController *viewController in self.tabBarController.viewControllers) {
+         
+         if (viewController.tabBarItem.tag == 0) {
+             [viewController.tabBarItem setEnabled:NO];
+         } else {
+             [viewController.tabBarItem setEnabled:YES];
+         }
+         
+    }
+    
+    [self.tabBarController setSelectedIndex:1];
+
 }
+
+
+#pragma mark - Utillities
 
 - (NSString *)urlEncodeValue:(NSString *)str
 {
 NSString *result = (NSString *) CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)str, NULL, CFSTR("?=&+"), kCFStringEncodingUTF8));
 return result;
 }
-
-
 
 
 - (NSString *)sha1:(NSString *)input
@@ -556,6 +807,8 @@ return result;
     
     return hash;
 }
+
+
 
 
 @end

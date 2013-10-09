@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-@interface ProductChoice : UIViewController <NSFetchedResultsControllerDelegate> {
+@interface ProductChoice : UIViewController <NSFetchedResultsControllerDelegate, UISearchBarDelegate> {
     
     NSIndexPath *checkedCell;
 }

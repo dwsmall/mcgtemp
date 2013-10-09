@@ -6,13 +6,11 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-@interface HcpChoice : UIViewController <NSFetchedResultsControllerDelegate> {
+@interface HcpChoice : UIViewController <NSFetchedResultsControllerDelegate, UISearchBarDelegate> {
 
 NSIndexPath *checkedCell;
 NSIndexPath *path;
 }
-
-
 
 @property (nonatomic, copy) NSIndexPath *path;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

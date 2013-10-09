@@ -29,7 +29,7 @@
                         
                         @"<p><ul><li>",
                         @"<a href='",
-                        @"MCG_Sampling_IPAD_EN.pdf",
+                        @"http://www.samplecupboard.com/content/ipad/MCG_Sampling_IPAD_EN.pdf",
                         @"'>",
                         @"Click here to Access the IPAD user manual",
                         @"</a>",
@@ -105,5 +105,14 @@
     
 }
 
+
+-(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+        [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        return NO;
+    }
+    
+    return YES;
+}
 
 @end

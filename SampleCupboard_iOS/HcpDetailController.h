@@ -16,13 +16,18 @@
     NSIndexPath *selectedHCPINDEX;
     NSArray *currentHCPINFO;
     
-    NSManagedObject *moDATA;
+    NSNumber *previousOrdersRetrieved;
+    
+    NSManagedObject *moDATAHCP;
         
 }
 
 
 @property (weak, nonatomic) IBOutlet UITableView *tableViewX;
 @property (strong, nonatomic) HCPDetailController *player;
+
+@property (nonatomic) NSNumber *previousOrdersRetrieved;
+@property (nonatomic, strong) NSMutableArray *storePreviousOrders;
 
 // PASSED VALUES
 @property (nonatomic) NSString *selectedHCPMSG;
@@ -35,6 +40,6 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (nonatomic, weak) IBOutlet UILabel *outputlabelA;
-@property (strong, nonatomic) NSManagedObject *moDATA;
+@property (strong, nonatomic) NSManagedObject *moDATAHCP;
 
 @end

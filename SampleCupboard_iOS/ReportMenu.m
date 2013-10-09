@@ -7,32 +7,54 @@
 //
 
 #import "ReportMenu.h"
+#import "ReportDetails.h"
+
+#import "Reachability.h"
+
+
+
+static NSString* myglobRptChoice = nil;
+
+
+NSArray *tableData;
+NSArray *tableDataX;
+NSArray *tableDataY;
+
 
 @interface ReportMenu ()
 
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+
 @end
+
 
 @implementation ReportMenu
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+
+
+@synthesize reportchoice, oreportchoice;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    tableData = [NSArray arrayWithObjects:@"My Usage", @"Territory Allocation", @"My Team", nil];
+    tableDataX = [NSArray arrayWithObjects:@"Show your total usage per product, by period (YTD, allocation period, current month)",
+                  @"Shows product allocations for your territory, quantity used (in units and %) and remaining MCG Inventory levels.",
+                  @"Lists all representatives in your territory(ies), group by territory name",
+                  nil];
+    tableDataY = [NSArray arrayWithObjects:@"my_usage.png", @"my_allocations.png", @"my_team.png", nil];
+    
+    
+    [self.tableView reloadData];
+    
+    
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
+    
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -40,82 +62,98 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 3;
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *simpleTableIdentifier = @"SimpleTableItem";
     
-    // Configure the cell...
+    // Create first cell
+    
+    UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_reportItem"];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:simpleTableIdentifier];
+    }
+    
+    
+    UILabel *PDate = (UILabel *)[cell viewWithTag:8001];
+    [PDate setText:[tableData objectAtIndex:[indexPath row]]];
+    
+    
+    UILabel *PName = (UILabel *)[cell viewWithTag:8002];
+    [PName setText:[tableDataX objectAtIndex:[indexPath row]]];
+    
+    
+    UIImageView *PicView = (UIImageView *)[cell viewWithTag:8003];
+    UIImage *PicName = [UIImage imageNamed:[tableDataY objectAtIndex:[indexPath row]]];
+    [PicView setImage:PicName];
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    
+    // check internet status
+    
+    Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
+    NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
+    
+    
+    // show msg if offline
+    if([indexPath row] != 1  && internetStatus == NotReachable) {
+    
+    if (internetStatus == NotReachable){
+        
+        UIAlertView *errorAlertView = [[UIAlertView alloc]
+                                       initWithTitle:@"No internet connection"
+                                       message:@"Internet connection is required to view reporting"
+                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        [errorAlertView show];
+        
+        
+    }
+    
+    }
+    
+    // populate rpt choice
+    
+    if( ([indexPath row] < 3  && internetStatus != NotReachable) || (internetStatus == NotReachable && [indexPath row] == 1) ) {
+        
+        
+        myglobRptChoice = [NSString stringWithFormat:@"%ld", (long)[indexPath row]];
+       
+        // used notification cause delgate in tab has issues
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshList" object:nil];
+  
+    }
+    
+    
+    
+        
+        
 }
+
+
+
+#pragma mark - utilities
+
++ (NSString*)globRptChoice {
+    return myglobRptChoice;
+}
+
+
+
+
 
 @end

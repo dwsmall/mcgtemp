@@ -8,7 +8,7 @@
 
 @class HcpListViewController;
 
-@interface HcpListViewController : UIViewController <NSFetchedResultsControllerDelegate>
+@interface HcpListViewController : UIViewController <UISearchBarDelegate, NSFetchedResultsControllerDelegate>
     
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

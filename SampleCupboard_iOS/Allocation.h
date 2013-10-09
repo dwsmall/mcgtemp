@@ -2,7 +2,7 @@
 //  Allocation.h
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 10/3/13.
+//  Created by David Small on 10/7/13.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
@@ -42,6 +42,8 @@
 @property (nonatomic, retain) NSString * territoryid;
 @property (nonatomic, retain) NSString * territoryname;
 @property (nonatomic, retain) NSNumber * totalmax;
+@property (nonatomic, retain) NSNumber * quantity_used;
+@property (nonatomic, retain) NSNumber * percentage_used;
 @property (nonatomic, retain) AllocationHeader *toAllocHdr;
 
 @end

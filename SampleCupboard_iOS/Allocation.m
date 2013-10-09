@@ -2,7 +2,7 @@
 //  Allocation.m
 //  SampleCupboard_iOS
 //
-//  Created by David Small on 10/3/13.
+//  Created by David Small on 10/7/13.
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
@@ -41,6 +41,8 @@
 @dynamic territoryid;
 @dynamic territoryname;
 @dynamic totalmax;
+@dynamic quantity_used;
+@dynamic percentage_used;
 @dynamic toAllocHdr;
 
 @end

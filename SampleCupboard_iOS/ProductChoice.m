@@ -6,12 +6,23 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+
+#import "AppDelegate.h"
 #import "OrderDetailViewController_iPad.h"
+
 #import "ProductChoice.h"
 
-@interface ProductChoice ()
+@interface ProductChoice ()  <NSFetchedResultsControllerDelegate, UISearchBarDelegate>
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationItem *healthcareProf;
+
+@property (strong, nonatomic) IBOutlet UISearchBar *prodSearchBar;
+
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *DoneButton;
+
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -19,11 +30,16 @@
 
 @implementation ProductChoice
 
+@synthesize prodSearchBar;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+    NSLog(@"dw1 - show Rmv values: %@", app.globalProductsRmv);
+    
     
 }
 
@@ -102,25 +118,162 @@
     return NO;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    checkedCell = indexPath;
+    [tableView reloadData];
+    
+    self.DoneButton.enabled = TRUE;
+    
+    
+}
+
+
+#pragma mark - Segue Delegate
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    
+    // resign kb incase user left open
+    [prodSearchBar resignFirstResponder];
+    
+    
+    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+
+    NSLog(@"Show id desc %@" , [identifier description]);
+    
+    if ([[identifier description] isEqualToString:@"_choseproductcancel"]) {
+        
+        return YES;
+         
+    }
+    
+    
+    
+    if ([[identifier description] isEqualToString:@"_choseproduct_done"]) {
+        
+        // Check whether product can be added
+        // NSMutableArray *removedPRODUCTS = [OrderDetailViewController_iPad globprod];
+        
+        NSMutableArray *removedPRODUCTS = app.globalProductsRmv;
+        NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:checkedCell];
+        
+        NSLog(@"Mutable is Seen %@", removedPRODUCTS);
+        NSLog(@"Product Selected - %@", [[object valueForKey:@"productid"] description]);
+        
+        NSLog(@"dw1 - show removed products b4 removal: %@", removedPRODUCTS);
+        
+        NSLog(@"dw1 - ENTERED ZONE A1A: %@", removedPRODUCTS);
+        NSLog(@"dw1 - ENTERED ZONE A1A: %@", [[object valueForKey:@"productid"] description]);
+        
+        
+        if ([removedPRODUCTS containsObject:[[object valueForKey:@"productid"] description]]) {
+            
+            
+            NSLog(@"dw1 - ENTERED ZONE B1B");
+            
+            // remove non-display object from list
+            // [removedPRODUCTS removeObjectsInArray:[[object valueForKey:@"productid"] description]];
+            int i;
+            for(i=0; i<[removedPRODUCTS count]; i++) {
+                
+                
+                NSString *element = [removedPRODUCTS objectAtIndex:i];
+                
+                
+                NSLog(@"dw1 - ENTERED ZONE C1C: %@", element);
+                NSLog(@"dw1 - ENTERED ZONE C2C: %@", [[object valueForKey:@"productid"] description]);
+                
+                
+                if([element isEqualToString: [[object valueForKey:@"productid"] description]]) {
+                    
+                    // pointer **removed from app.globalProucts
+                    
+                    // [removedPRODUCTS removeObjectAtIndex:i];
+                    
+                    NSLog(@"dw1 - show JKL: %@", removedPRODUCTS);
+                    
+                    //remove from rmv'd product list
+                    // [app.globalProductsRmv removeObjectAtIndex:i];
+                    // NSLog(@"dw1 - show: %@", removedPRODUCTS);
+                    //NSLog(@"dw1 - show: %@", app.globalProductsRmv);
+                    
+                    
+                    // add to productscreen
+                    
+                    NSMutableArray *arrTempProducts = [NSMutableArray array];
+                    
+                    arrTempProducts = [NSMutableArray array];
+                    [arrTempProducts addObject:[[object valueForKey:@"productid"] description]];
+                    [arrTempProducts addObject:[[object valueForKey:@"productname"] description]];
+                    [arrTempProducts addObject:[[object valueForKey:@"productdescription"] description]];
+                    [arrTempProducts addObject:@"0"];
+                    [app.globalProductsScrn addObject:arrTempProducts];
+                    
+                    
+                    
+                    
+                    [removedPRODUCTS removeObjectAtIndex:i];
+                    
+                    NSLog(@"dw1 - show MNO: %@", removedPRODUCTS);
+                    
+                    
+                    
+                }
+            }
+            
+            return YES;
+        }
+        
+    }
+    
+    
+    UIAlertView *AlertView = [[UIAlertView alloc]
+                              initWithTitle:@"Product Cannot Be Added"
+                              message:@"Product Already Exists"
+                              delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [AlertView show];
+    
+    return NO;
+        
+}
+
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:checkedCell];
+    
+    // Get destination view
+    OrderDetailViewController_iPad *vc = [segue destinationViewController];
+    
     
     // Return HCP SELECTION
     if ([[segue identifier] isEqualToString:@"_choseproduct_done"]) {
+       
+        AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+        app.globalProductChosen = @"NEW";
         
-        // Get destination view
-        OrderDetailViewController_iPad *vc = [segue destinationViewController];
-        [vc setSelectedHCPNUMBER:1001];
-        [vc setSelectedPRODUCTNUMBER:1001];
+        
+        // [vc setSelectedHCPNUMBER:0];
+        // [vc setSelectedADDPRODUCT:1001];
+        
+        [vc setSelectedCHOSENPRODUCT:@[[[object valueForKey:@"productid"] description],
+                                       [[object valueForKey:@"productname"] description],
+                                       [[object valueForKey:@"productdescription"] description]]];
+        
+        // [vc setSelectedPRODUCTNUMBER:1001];
         
     }
     
     
     // User Cancelled Selection
-    if ([[segue identifier] isEqualToString:@"_choseproduct_cancel"]) {
+    if ([[segue identifier] isEqualToString:@"_choseproductcancel"]) {
         
+        // [vc setSelectedPRODUCTNUMBER:1001];
+        
+        AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+        app.globalProductChosen = @"NEW";
         
     }
 }
@@ -136,22 +289,55 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
+    // Delete Cache
+    [NSFetchedResultsController deleteCacheWithName:@"MasterProduct"];
+    
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
     // NSManagedObjectContext *context = [self managedObjectContext];
     
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Product" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Allocation" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
+    
+        
+    
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"code" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"productname" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    
+    // set predicate
+    NSPredicate *predicate = nil;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *territoryid = [defaults objectForKey:@"MCG_territoryid"];
+    
+    NSString *searchtxt = prodSearchBar.text;
+        
+    NSLog(@"dw1 - show predicate %@" , prodSearchBar.text);
+    
+    if (searchtxt.length > 0) {
+        
+        // search predicate
+        predicate = [NSPredicate predicateWithFormat:@"territoryid = %@ and productname contains[cd] %@", territoryid, searchtxt];
+        NSLog(@"dw1 - show predicate %@" , predicate);
+        
+    } else {
+    
+        predicate = [NSPredicate predicateWithFormat:@"territoryid = %@", territoryid];
+        
+    }
+    
+    NSLog(@"dw1 - show predicate %@" , predicate);
+    [fetchRequest setPredicate:predicate];
+    
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
@@ -230,23 +416,78 @@
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    checkedCell = indexPath;
-    [tableView reloadData];
-    
-}
+
 
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    cell.textLabel.text = [[object valueForKey:@"code"] description];
-    cell.detailTextLabel.text = [[object valueForKey:@"lowlevelquantity"] description];
+    cell.textLabel.text = [[object valueForKey:@"productname"] description];
     
+    double allocation_max = [[[object valueForKey:@"avail_allocation"] description] doubleValue];
+    double order_max = [[[object valueForKey:@"ordermax"] description] doubleValue];
+    double set_qty = 0;
+    
+    // determine qty limitation
+    if (allocation_max < order_max) {
+        set_qty = allocation_max;
+    } else {
+        set_qty = order_max;
+    }
+    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%g", set_qty];
     
 }
+
+
+
+
+#pragma mark === Accessors ===
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    
+    NSLog(@"dw1 - show reaction %@" , prodSearchBar.text);
+    
+    [NSFetchedResultsController deleteCacheWithName:@"MasterProduct"];
+    
+    _fetchedResultsController=nil;
+    
+    [self.tableView reloadData];
+    
+}
+
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+	prodSearchBar.showsScopeBar = YES;
+	[prodSearchBar sizeToFit];
+    
+	[searchBar setShowsCancelButton:YES animated:YES];
+    
+	return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+	prodSearchBar.showsScopeBar = NO;
+	[prodSearchBar sizeToFit];
+    
+	[prodSearchBar setShowsCancelButton:NO animated:YES];
+    
+	return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    prodSearchBar.text = @"";
+    
+    [searchBar resignFirstResponder];
+    
+    [NSFetchedResultsController deleteCacheWithName:@"MasterProduct"];
+    _fetchedResultsController=nil;
+    
+    [self.tableView reloadData];
+}
+
 
 
 

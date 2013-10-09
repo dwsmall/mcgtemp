@@ -7,12 +7,44 @@
 //
 
 #import "AppDelegate.h"
+#import "ReportMenu.h"
+#import "ReportDetails.h"
 
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize splitViewController = _splitViewController;
+@synthesize globalOrderMO = _globalOrderMO;
+@synthesize globalHcpMO = _globalHcpMO;
+@synthesize globalMode = _globalMode;
+
+@synthesize globalHcpChosen = _globalHcpChosen;
+@synthesize globalProductChosen = _globalProductChosen;
+
+
+@synthesize globalHcpDictionary = _globalHcpDictionary;
+
+
+@synthesize globalShipInfo = _globalShipInfo;
+@synthesize globalShipType = _globalShipType;
+
+@synthesize globalProductsRmv = _globalProductsRmv;
+@synthesize globalProductsScrn = _globalProductsScrn;
+
+@synthesize globalRmvProductsFetch = _globalRmvProductsFetch;
+
+
+@synthesize globalBaseUrl = _globalBaseUrl;
+@synthesize globalUserID = _globalUserID;
+@synthesize globalToken = _globalToken;
+@synthesize globalClientId = _globalClientId;
+@synthesize globalAllocationId = _globalAllocationId;
+
+
+
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -20,15 +52,17 @@
     UIImage *backButtonImage = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 6)];
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
+    //Figure out that we're on an iPad.
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+      
+        
+    }
 
-   
-    // UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    // UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-    // splitViewController.delegate = (id)navigationController.topViewController;
+    
     
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -54,6 +88,20 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [NSFetchedResultsController deleteCacheWithName:nil];
+    
+    // clear user_values
+    NSArray *arrkeys = [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys];
+    NSArray *non_delete = @[@"MCG_clientid",@"MCG_token", @"MCG_userid", @"MCG_usernameKey", @"MCG_passwordKey"];
+    
+    NSString *searchStr = @"MCG_";
+    NSPredicate *usr_predicate = [NSPredicate predicateWithFormat:@"self BEGINSWITH[cd] %@ AND NOT self in %@", searchStr, non_delete];
+    NSArray *resultArray = [arrkeys filteredArrayUsingPredicate:usr_predicate];
+    
+    for (int i = 0; i < resultArray.count; i++) {
+        NSLog(@"Delete Key: %@", [resultArray objectAtIndex:i]);
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:[resultArray objectAtIndex:i]];
+    }
     
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
@@ -160,6 +208,47 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
+
+- (NSPersistentStoreCoordinator *)resetPersistentStore {
+    NSError *error = nil;
+    
+    if ([self.persistentStoreCoordinator persistentStores] == nil)
+        return [self persistentStoreCoordinator];
+    
+    [self.managedObjectContext reset];
+    [self.managedObjectContext lock];
+    
+    // FIXME: dirty. If there are many stores...
+    NSPersistentStore *store = [[self.persistentStoreCoordinator persistentStores] lastObject];
+    
+    if (![self.persistentStoreCoordinator removePersistentStore:store error:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    // Delete file
+    if ([[NSFileManager defaultManager] fileExistsAtPath:store.URL.path]) {
+        if (![[NSFileManager defaultManager] removeItemAtPath:store.URL.path error:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+    
+    // Delete the reference to non-existing store
+    // [self.persistentStoreCoordinator release];
+    _persistentStoreCoordinator = nil;
+    
+    NSPersistentStoreCoordinator *r = [self persistentStoreCoordinator];
+    // [ManagedObjectContext unlock];
+    
+    return r;
+}
+
+
+
+
+
 
 
 @end

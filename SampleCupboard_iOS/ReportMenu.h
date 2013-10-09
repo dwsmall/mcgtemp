@@ -6,8 +6,37 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+
+// @protocol ReportSelectionDelegate
+
+// @end
+
 #import <UIKit/UIKit.h>
 
-@interface ReportMenu : UITableViewController
+
+@class DetailViewController;
+
+
+@interface ReportMenu : UITableViewController {
+
+    
+    NSInteger reportchoice;
+    
+}
+
+@property (strong, nonatomic) DetailViewController *detailViewController;
+
+
+@property (nonatomic) NSInteger reportchoice;
+@property (nonatomic, weak) IBOutlet UILabel *oreportchoice;
+
+
+
+
+
+
+
+
++ (NSString*)globRptChoice;
 
 @end

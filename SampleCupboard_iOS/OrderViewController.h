@@ -6,10 +6,16 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
-@interface OrderViewController : UIViewController <NSFetchedResultsControllerDelegate>
+#import "MESegmentedControl.h"
+
+@interface OrderViewController : UIViewController <UISearchBarDelegate, NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
+
+@property (nonatomic, strong) IBOutlet MESegmentedControl *segmentedControl;
+
+// nothing
 
 @end

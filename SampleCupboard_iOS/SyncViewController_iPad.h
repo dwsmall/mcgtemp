@@ -6,12 +6,37 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+#import "MBProgressHUD.h"
+
 NSFetchedResultsController *fetchedResultsController;
 NSManagedObjectContext *managedObjectContext;
 
-@interface SyncViewController_iPad : UIViewController
+@class MBProgressHUD;
+
+@interface SyncViewController_iPad : UIViewController <NSFetchedResultsControllerDelegate> {
+
+    MBProgressHUD *HUD;
+    
+	long long expectedLength;
+	long long currentLength;
+    
+    // xml container
+    NSMutableDictionary *orderValue_Dict;
+    NSMutableDictionary *orderValueExt_Dict;
+    
+}
+
+
+// xml container
+@property (strong, nonatomic) NSDictionary *orderValue_Dict;
+@property (strong, nonatomic) NSDictionary *orderValueExt_Dict;
+
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property (strong, nonatomic) IBOutlet UILabel *_hcp_stamp;
+
+@property (strong, nonatomic) IBOutlet UILabel *_data_stamp;
 
 @end
