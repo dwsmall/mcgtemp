@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11E53" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Address" syncable="YES">
         <attribute name="address_status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="addressline1" optional="YES" attributeType="String" syncable="YES"/>
@@ -30,10 +30,13 @@
     </entity>
     <entity name="Allocation" representedClassName="Allocation" syncable="YES">
         <attribute name="allocationheaderid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="avail_allocation" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="avail_inventory" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="defaultordermax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="hasavailableinventory" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hcptargetlistid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="inventory" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -45,9 +48,17 @@
         <attribute name="originalordermax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="originaltotalmax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="parentid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="percentage_used" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="personalid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productdescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productstatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productvisibleflag" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="quantity_used" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territoryname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalmax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="toAllocHdr" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AllocationHeader" inverseName="toAllocDetails" inverseEntity="AllocationHeader" syncable="YES"/>
     </entity>
@@ -62,7 +73,7 @@
         <attribute name="inactive" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="toAllocDetails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Allocation" inverseName="toAllocHdr" inverseEntity="Allocation" syncable="YES"/>
+        <relationship name="toAllocDetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Allocation" inverseName="toAllocHdr" inverseEntity="Allocation" syncable="YES"/>
     </entity>
     <entity name="ClientInfo" syncable="YES">
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
@@ -138,7 +149,7 @@
         <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="quantitydisbursed" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
-    <entity name="HealthCareProfessional" syncable="YES">
+    <entity name="HealthCareProfessional" representedClassName="HealthCareProfessional" syncable="YES">
         <attribute name="address1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="address3" optional="YES" attributeType="String" syncable="YES"/>
@@ -163,12 +174,76 @@
         <attribute name="preferredlanguage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="province" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rejected" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="shiptoaddressid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="specialty" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="specialty2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Order" representedClassName="Order" syncable="YES">
+        <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="applicationsource" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creatorid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datereleased" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateshipped" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datesigned" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="formnumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="options_isfinalized" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="ordercontenttype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ownerid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reference" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="refprefix" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressline1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressline2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_addressline3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_facilityname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_fax" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_firstname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_instructions" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_lastname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_licence" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_partner" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_phoneextension" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_postalcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_suite" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_territory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipping_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shiptoid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="statusreason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="trackingnumbers" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toOrderDetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="OrderLineItem" inverseName="toOrderHeader" inverseEntity="OrderLineItem" syncable="YES"/>
+    </entity>
+    <entity name="OrderLineItem" representedClassName="OrderLineItem" syncable="YES">
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="quantityordered" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="stored_product_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stored_product_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stored_product_name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toOrderHeader" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Order" inverseName="toOrderDetails" inverseEntity="Order" syncable="YES"/>
+    </entity>
+    <entity name="OrderTemplate" representedClassName="OrderTemplate" syncable="YES">
         <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="applicationsource" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
@@ -213,12 +288,12 @@
         <attribute name="signature" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="statusreason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="templatename" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="trackingnumbers" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="toOrderDetails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OrderLineItem" inverseName="toOrderHeader" inverseEntity="OrderLineItem" syncable="YES"/>
+        <relationship name="toOrdTempDetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="OrderTemplateLine" inverseName="toOrdTempHdr" inverseEntity="OrderTemplateLine" syncable="YES"/>
     </entity>
-    <entity name="OrderLineItem" representedClassName="OrderLineItem" syncable="YES">
-        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="OrderTemplateLine" representedClassName="OrderTemplateLine" syncable="YES">
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
@@ -228,24 +303,6 @@
         <attribute name="stored_product_code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stored_product_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stored_product_name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="toOrderHeader" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Order" inverseName="toOrderDetails" inverseEntity="Order" syncable="YES"/>
-    </entity>
-    <entity name="OrderTemplate" representedClassName="OrderTemplate" syncable="YES">
-        <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="ownerid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shipping_addressid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shipping_instructions" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shiptoid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="templatename" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="toOrdTempDetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="OrderTemplateLine" inverseName="toOrdTempHdr" inverseEntity="OrderTemplateLine" syncable="YES"/>
-    </entity>
-    <entity name="OrderTemplateLine" representedClassName="OrderTemplateLine" syncable="YES">
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="ordertemplateid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="quantityordered" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="toOrdTempHdr" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OrderTemplate" inverseName="toOrdTempDetails" inverseEntity="OrderTemplate" syncable="YES"/>
     </entity>
     <entity name="People" syncable="YES">
@@ -315,7 +372,7 @@
         <attribute name="province" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territory_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territorynumber" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="toFSA" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TerritoryFSA" inverseName="toTerritory" inverseEntity="TerritoryFSA" syncable="YES"/>
+        <relationship name="toFSA" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TerritoryFSA" inverseName="toTerritory" inverseEntity="TerritoryFSA" syncable="YES"/>
     </entity>
     <entity name="TerritoryFSA" representedClassName="TerritoryFSA" syncable="YES">
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
@@ -335,8 +392,12 @@
         <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Tokenized_Credentials" syncable="YES">
+        <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date_validated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="last_data_sync_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="last_hcp_sync_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password_hash" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
@@ -345,23 +406,23 @@
     </entity>
     <elements>
         <element name="Address" positionX="324" positionY="-246" width="128" height="435"/>
-        <element name="Allocation" positionX="-407" positionY="-324" width="128" height="360"/>
-        <element name="AllocationHeader" positionX="-236" positionY="-210" width="128" height="210"/>
+        <element name="Allocation" positionX="-407" positionY="-324" width="128" height="525"/>
+        <element name="AllocationHeader" positionX="-236" positionY="-210" width="128" height="208"/>
         <element name="ClientInfo" positionX="97" positionY="-531" width="128" height="360"/>
         <element name="Disbursement" positionX="628" positionY="-531" width="128" height="630"/>
         <element name="DisbursementLineItem" positionX="475" positionY="-318" width="128" height="165"/>
-        <element name="HealthCareProfessional" positionX="-72" positionY="-528" width="128" height="465"/>
-        <element name="Order" positionX="-585" positionY="-534" width="128" height="750"/>
-        <element name="OrderLineItem" positionX="-756" positionY="-87" width="128" height="210"/>
-        <element name="OrderTemplate" positionX="-245" positionY="54" width="128" height="180"/>
-        <element name="OrderTemplateLine" positionX="-398" positionY="111" width="128" height="120"/>
+        <element name="HealthCareProfessional" positionX="-72" positionY="-528" width="128" height="480"/>
+        <element name="Order" positionX="-585" positionY="-534" width="128" height="765"/>
+        <element name="OrderLineItem" positionX="-756" positionY="-87" width="128" height="208"/>
+        <element name="OrderTemplate" positionX="-245" positionY="54" width="128" height="765"/>
+        <element name="OrderTemplateLine" positionX="-398" positionY="111" width="128" height="195"/>
         <element name="People" positionX="324" positionY="-369" width="128" height="90"/>
         <element name="Product" positionX="-74" positionY="-36" width="128" height="285"/>
         <element name="Rep" positionX="99" positionY="-123" width="128" height="375"/>
         <element name="RepInventory" positionX="475" positionY="-531" width="128" height="180"/>
-        <element name="Territory" positionX="-245" positionY="-525" width="128" height="180"/>
+        <element name="Territory" positionX="-245" positionY="-525" width="128" height="178"/>
         <element name="TerritoryFSA" positionX="-407" positionY="-495" width="128" height="150"/>
         <element name="TerritoryRep" positionX="322" positionY="-531" width="128" height="135"/>
-        <element name="Tokenized_Credentials" positionX="-749" positionY="-531" width="128" height="150"/>
+        <element name="Tokenized_Credentials" positionX="-749" positionY="-531" width="128" height="210"/>
     </elements>
 </model>
