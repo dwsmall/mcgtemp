@@ -43,6 +43,7 @@
 @property (strong, retain) NSString *globalClientId;
 @property (strong, retain) NSString *globalAllocationId;
 
+@property (strong, retain) NSString *globalClientOptionBO;
 
 
 
