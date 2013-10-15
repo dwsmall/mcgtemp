@@ -42,6 +42,8 @@
 @synthesize globalClientId = _globalClientId;
 @synthesize globalAllocationId = _globalAllocationId;
 
+@synthesize globalClientOptionBO = _globalClientOptionBO;
+
 
 
 
