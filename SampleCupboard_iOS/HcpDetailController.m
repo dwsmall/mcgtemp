@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+
+#import "Reachability.h"
+
 #import "AppDelegate.h"
 #import "OrderDetailViewController_iPad.h"
 #import "SVProgressHUD.h"
@@ -23,6 +26,16 @@
 
 @property (strong, nonatomic) NSArray *filteredList;
 @property (strong, nonatomic) NSArray *fsaFoundList;
+
+
+@property(nonatomic) NSInteger noAllocationFound;
+
+@property (nonatomic) NSString *urlsvc;
+@property (nonatomic) NSString *baseurl;
+@property (nonatomic) NSString *urluserid;
+@property (nonatomic) NSString *urltoken;
+@property (nonatomic) NSURL *url;
+
 
 
 - (IBAction)return:(UIStoryboardSegue *)segueX;
@@ -43,7 +56,7 @@
 @synthesize previousOrdersRetrieved;
 @synthesize storePreviousOrders;
 
-
+@synthesize urlsvc, baseurl, urluserid, urltoken, url;
 
 
 // @synthesize currentHCPARRAY;
@@ -448,6 +461,24 @@
     
     if ([[identifier description] isEqualToString:@"_createOrderFromHcp"]) {
         
+        
+            // Load Allocation
+        
+            Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
+            NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
+            
+            if (internetStatus != NotReachable){
+                
+                // Delete Data HCP
+                [self performSelectorOnMainThread:@selector(RemoveEntities:) withObject:@"allocationdata" waitUntilDone:YES];
+                
+                // load data for allocations
+                [self performSelectorOnMainThread:@selector(getAllocationDetailData) withObject:nil waitUntilDone:YES];
+                
+            }
+        
+        
+        
         // get fetched object
         
         NSManagedObject *hcpfetchClass = moDATAHCP;
@@ -817,19 +848,19 @@
     
     
     //Prep Values
-    NSString *baseurl = @"http://dev.samplecupboard.com/Data/MobileServices.svc";
+    baseurl = @"http://dev.samplecupboard.com/Data/MobileServices.svc";
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *urluserid = [defaults valueForKey:@"MCG_userid"];
-    NSString *urltoken = [defaults valueForKey:@"MCG_token"];
+    urluserid = [defaults valueForKey:@"MCG_userid"];
+    urltoken = [defaults valueForKey:@"MCG_token"];
     
     NSString *urlhcpid = [[object valueForKey:@"shiptoaddressid"] description];
     
     NSString *urlamt = @"5";
     
-    NSURL *url = [NSURL URLWithString:@""];
+    url = [NSURL URLWithString:@""];
     
-    NSString *urlsvc = @"GetOrdersByTerritoryId";
+    urlsvc = @"GetOrdersByTerritoryId";
     
     url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@/%@",
                                     baseurl,
@@ -1010,6 +1041,158 @@
     
     
 
+}
+
+
+
+
+- (void) RemoveEntities:(NSString *) removalType {
+    
+    
+    // NSLog(@"Entity A Removal Called %@", removalType);
+    
+    NSArray *deletionEntity;
+    
+    // NSString *delete_others = @"others";
+    
+    // if ([removalType isEqual: delete_others]) {
+    deletionEntity = @[@"Allocation"];
+    // deletionEntity = @[@"ClientInfo",@"Order",@"Product",@"Allocation",@"AllocationHeader",@"TerritoryFSA",@"Territory",@"Rep"];
+    // }
+    
+    
+    // Define Delegate Context
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    
+    for(int i=0;i<[deletionEntity count];i++)
+    {
+        
+        NSLog(@"dw1 - I am about to delete %@" , [deletionEntity objectAtIndex:i]);
+        
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:[deletionEntity objectAtIndex:i] inManagedObjectContext:context];
+        [fetchRequest setEntity:entity];
+        
+        NSError *error;
+        NSArray *items = [context executeFetchRequest:fetchRequest error:&error];
+        
+        
+        for (NSManagedObject *managedObject in items) {
+            [_managedObjectContext deleteObject:managedObject];
+            // NSLog(@"%@ object deleted",[deletionEntity objectAtIndex:i]);
+        }
+        
+        if (![_managedObjectContext save:&error]) {
+            NSLog(@"Error deleting %@ - error:%@",[deletionEntity objectAtIndex:i],error);
+        }
+        
+    }// End Each
+    
+}
+
+-(void) getAllocationDetailData {
+    
+    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+    
+    baseurl = app.globalBaseUrl;
+    urluserid = app.globalUserID;
+    urltoken = app.globalToken;
+    url = [NSURL URLWithString:@""];
+    
+    
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    urlsvc = @"GetAllocationByRepId";
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
+                                baseurl,
+                                urlsvc,
+                                urluserid,
+                                urltoken,
+                                urluserid]];
+    
+    NSLog(@"url: %@", url);
+    
+    NSData *jsonData = [NSData dataWithContentsOfURL:url];
+    
+    if(jsonData != nil)
+    {
+        NSError *error = nil;
+        
+        // step.1 - serialize object to data
+        NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+        
+        // step.2 - Determine How Many Territories in Object
+        int numofterr = [[[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0] count];
+        
+        NSLog(@"how many territories please ?? :%d" , numofterr);
+        numofterr = 1;
+        
+        // step.3 iterate over territories to get data
+        for(int i=0;i<numofterr;i++)
+        {
+            
+            // convert to dictionary
+            NSDictionary* dicTERR = [[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:i];
+            
+            // gather visible products
+            NSMutableArray *arrayProductID = [[NSMutableArray alloc] init];
+            
+            for (int a=0;a<[[dicTERR objectForKey:@"AvailableOrderItems"] count];a++) {
+                NSDictionary* dicPROD = [[dicTERR objectForKey:@"AvailableOrderItems"] objectAtIndex:a];
+                [arrayProductID addObject:[dicPROD objectForKey:@"ProductId"]];
+            }
+            
+            
+            // only add visible products
+            for(int i=0;i<[[dicTERR objectForKey:@"Allocations"] count];i++)
+            {
+                NSDictionary* dicALLOC = [[dicTERR objectForKey:@"Allocations"] objectAtIndex:i];
+                
+                if ( [arrayProductID containsObject:[dicALLOC objectForKey:@"ProductId"]] ) {
+                    
+                    NSManagedObject *model = [NSEntityDescription
+                                              insertNewObjectForEntityForName:@"Allocation"
+                                              inManagedObjectContext:context];
+                    
+                    [model setValue:[dicALLOC objectForKey:@"TerritoryId"] forKey:@"territoryid"];
+                    [model setValue:[dicALLOC objectForKey:@"EntityName"] forKey:@"territoryname"];
+                    [model setValue:[dicALLOC objectForKey:@"ProductId"] forKey:@"productid"];
+                    [model setValue:[dicALLOC objectForKey:@"ProductName"] forKey:@"productname"];
+                    [model setValue:[dicALLOC objectForKey:@"ProductDescription"] forKey:@"productdescription"];
+                    
+                    
+                    // computed values
+                    
+                    [model setValue:[dicALLOC objectForKey:@"Max"] forKey:@"max_computed"];
+                    [model setValue:[dicALLOC objectForKey:@"AvailableAllocation"] forKey:@"avail_allocation"];
+                    [model setValue:[dicALLOC objectForKey:@"AvailableInventory"] forKey:@"avail_inventory"];
+                    [model setValue:[dicALLOC objectForKey:@"OrderMax"] forKey:@"ordermax"];
+                    
+                    // [model setValue:[dicALLOC objectForKey:@"HasAvailableInventory"]forKey:@"hasavailableinventory"];
+                    
+                    
+                    if (![context save:&error]) {
+                        NSLog(@"Couldn't save: %@", [error localizedDescription]);
+                    }
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+    }  // End of Allocation
+    
+    
+    
 }
 
 
