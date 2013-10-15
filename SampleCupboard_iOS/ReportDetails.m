@@ -64,6 +64,11 @@
     
     self.splitViewController.delegate = self;
     
+    
+    // default title
+    myReportTitle.text = NSLocalizedString(@"Reports", nil);
+    
+    
 }
 
 
@@ -129,20 +134,17 @@
     {
         case 0:
             
-            [SVProgressHUD showWithStatus:@"Loading Usage..." maskType:SVProgressHUDMaskTypeGradient];
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading Usage...", nil) maskType:SVProgressHUDMaskTypeGradient];
             
             [self performSelectorInBackground:@selector(getUsageData) withObject:nil];
             
-            myReportTitle.text = @"My Usage";
-         
-            
-            // [self showPopOver];
+            myReportTitle.text = NSLocalizedString(@"My Usage", nil);
             
             break;
             
         case 1:
             
-            [SVProgressHUD showWithStatus:@"Loading Allocation..." maskType:SVProgressHUDMaskTypeGradient];
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading Allocation...", nil) maskType:SVProgressHUDMaskTypeGradient];
             
             if (internetStatus != NotReachable) {
                 
@@ -157,18 +159,18 @@
             // Online ???
             [self performSelectorOnMainThread:@selector(getAllocationData2) withObject:nil waitUntilDone:YES];
             
-            myReportTitle.text = @"Territory Allocation";
+            myReportTitle.text = NSLocalizedString(@"Territory Allocation", nil);
             
             
             break;
             
         case 2:
             
-            [SVProgressHUD showWithStatus:@"Loading Team..." maskType:SVProgressHUDMaskTypeGradient];
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading Team...",nil) maskType:SVProgressHUDMaskTypeGradient];
            
             [self performSelectorInBackground:@selector(getMyTeamData) withObject:nil];
             
-            myReportTitle.text = @"My Team";
+            myReportTitle.text = NSLocalizedString(@"My Team", nil);
             
             break;
     }
@@ -187,34 +189,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
-    
-    int activeRpt = [[ReportMenu globRptChoice] integerValue];
-    
+        
     int SECTIONS = 0;
     
-    switch (activeRpt)
-    
-    {
-        case 0:  //my usage
-
-            SECTIONS = [[NSMutableSet setWithArray: arraySectionCount] count];
-            break;
-            
-        case 1:  // territory allocation
-            
-            
-            SECTIONS = [[NSMutableSet setWithArray: arraySectionCount] count];
-            break;
-            
-        case 2:  // my team
-            
-            SECTIONS = [[NSMutableSet setWithArray: arraySectionCount] count];
-            break;
-    }
-    
-    
- 
+    SECTIONS = [[NSMutableSet setWithArray: arraySectionCount] count];
     
     return SECTIONS;
     
@@ -285,15 +263,8 @@
     // my usage
     
     if ( activeRpt == 0 ) {
-    
-        // int rownumber = 0;
-        
-        // get objects based on section
-        
-        // NSString *territoryid = [arraySectionCount objectAtIndex:indexPath.section];
         
         MyFormType = @"_Level1";  // my team
-        
         
     }
     
@@ -581,7 +552,7 @@
                                 urluserid]];
     
     
-    NSLog(@"dw1 - show url %@", url);
+    // NSLog(@"dw1 - show url %@", url);
     
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
@@ -605,9 +576,6 @@
         NSArray* arrUSAGE = [dictContainer objectForKey:@"GetUsageReportDataResult"];
         
         
-       //  NSString *productName= @"";
-        
-        
         for (int i=0;i<[dicUSAGE count];i++) {
             
             // move array value to dictionary
@@ -625,17 +593,6 @@
                                 @"YTDUsage": [self stringOrEmptyString:[dictItems objectForKey:@"YTDusage"]]
                                 };
             
-            /*
-            NSArray *arrayHolder = [[NSMutableArray alloc] init];
-            
-            arrayHolder = @[@"_LevelOne",
-                            [self stringOrEmptyString:[dictItems objectForKey:@"ProductName"]],
-                            [self stringOrEmptyString:@"YTD"],
-                            [self stringOrEmptyString:[dictItems objectForKey:@"YTDusage"]]
-                            ];
-            */
-            
-            // [storeRcdsJSON addObject:arrayHolder];
             
             [storeRcdsJSON addObject:arrayHolderDict];
             
@@ -654,34 +611,15 @@
             
             [storeRcdsJSON addObject:arrayHolderDict];
             
-            /*
-            arrayHolder = [[NSMutableArray alloc] init];
-            
-            arrayHolder = @[@"_LevelTwo",
-                            [self stringOrEmptyString:[dictItems objectForKey:@"ProductName"]],
-                            [self stringOrEmptyString:[dictItems objectForKey:@"CurrentAllocationName"]],
-                            [self stringOrEmptyString:[dictItems objectForKey:@"CurrentAllocationUsage"]]
-                            ];
-            
-            
-            [storeRcdsJSON addObject:arrayHolder];
-            */
-            
-            
             
             // add MONTHLY
             
             NSArray *arrMonthly = [dictItems objectForKey:@"MonthUsage"];
             
-            // NSLog(@"dw1 - show arrMonthly:%@", arrMonthly);
-            
-            
             for (int x=0;x<[arrMonthly count];x++) {
                 
                 // break down data
                 NSDictionary *myMonthData = [arrMonthly objectAtIndex:x];
-                
-                // NSLog(@"dw1 - show myMonthData:%@", myMonthData);
                 
                 NSString *monthName = [myMonthData objectForKey:@"MonthName"];
                 NSString *monthUsage = [myMonthData objectForKey:@"MonthUsage"];
@@ -695,18 +633,6 @@
                                     };
                 
                 [storeRcdsJSON addObject:arrayHolderDict];
-                
-                /*
-                arrayHolder = [[NSMutableArray alloc] init];
-                
-                arrayHolder = @[@"_LevelThree",
-                                [self stringOrEmptyString:[dictItems objectForKey:@"ProductName"]],
-                                [self stringOrEmptyString:monthName],
-                                [self stringOrEmptyString:monthUsage]
-                                ];
-            
-                [storeRcdsJSON addObject:arrayHolder];
-                */
                 
             }
             
@@ -739,147 +665,12 @@
 }
 
 
-
-
-
-- (void)getAllocationData {
-    
-    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
-
-    storeRcdsJSON = [[NSMutableArray alloc] init];
-    arraySectionCount = [[NSMutableArray alloc] init];
-    
-    urluserid = app.globalUserID;
-    urltoken = app.globalToken;
-    baseurl = app.globalBaseUrl;
-    
-    url = [NSURL URLWithString:@""];
-    urlsvc = @"TBD";
-    urlsvc = @"GetMobileTerritoryAllocationReport";
-    
-    
-    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
-                                baseurl,
-                                urlsvc,
-                                urluserid,
-                                urltoken,
-                                urluserid]];
-    
-    
-    
-    NSLog(@"dw1 - show url %@", url);
-    
-    
-    NSData *jsonData = [NSData dataWithContentsOfURL:url];
-        
-    
-    
-    if(jsonData != nil)
-    {
-        NSError *error = nil;
-                
-        // step.1 - serialize object to data
-        NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-        
-        
-        // convert to dictionary
-        NSDictionary* ObjectCount = [dictContainer objectForKey:@"GetMobileTerritoryAllocationReportResult"];
-        
-        
-        for (int i=0;i<[ObjectCount count];i++) {
-            
-            NSDictionary* dicTERR = [[dictContainer objectForKey:@"GetMobileTerritoryAllocationReportResult"] objectAtIndex:i];
-            
-            
-            // add territory
-            
-            NSString *territoryid = [dicTERR objectForKey:@"TerritoryName"];
-            [arraySectionCount addObject:territoryid];
-            
-            
-            
-            NSArray *mydetails = [dicTERR objectForKey:@"TerritoryAllocations"];
-            
-            
-            // add allocation header
-            
-            NSDictionary *arrayHolderDict = [[NSMutableDictionary alloc] init];
-          
-            arrayHolderDict = @{@"type": @"TYPEH",
-                                @"territoryid": [self stringOrEmptyString:territoryid],
-                                @"ProductName": @"Product",
-                                @"Total": @"Total",
-                                @"Used": @"Used",
-                                @"Percentage": @"%",
-                                @"Stock": @"Stock"
-                                };
-            
-            [storeRcdsJSON addObject:arrayHolderDict];
-            
-            
-            
-            
-            // iterate allocation details
-            
-            for (int x=0;x<[mydetails count];x++) {
-                
-                // json data
-                
-                NSDictionary *myAllocItems = [mydetails objectAtIndex:x];
-                
-                
-                // populate array
-                
-                arrayHolderDict = [[NSMutableDictionary alloc] init];
-                
-                arrayHolderDict = @{@"type": @"TYPEM",
-                                    @"territoryid": [self stringOrEmptyString:territoryid],
-                                    @"ProductName": [self stringOrEmptyString:[myAllocItems objectForKey:@"ProductName"]],
-                                    @"Total": [self stringOrEmptyString:[myAllocItems objectForKey:@"Total"]],
-                                    @"Used": [self stringOrEmptyString:[myAllocItems objectForKey:@"Used"]],
-                                    @"Percentage": [self stringOrEmptyString:[myAllocItems objectForKey:@"Percentage"]],
-                                    @"Stock": [self stringOrEmptyString:[myAllocItems objectForKey:@"Used"]]
-                                    };
-                
-                [storeRcdsJSON addObject:arrayHolderDict];
-               
-            
-            }
-            
-        }
-        
-        
-    }  // End of Allocation
-    
-    
-    if ([storeRcdsJSON count] > 0) {
-        [self performSelectorOnMainThread:@selector(dismissSuccess) withObject:nil waitUntilDone:YES];
-        
-    } else {
-        [self performSelectorOnMainThread:@selector(dismissNoRecords) withObject:nil waitUntilDone:YES];
-        
-    }
-    
-    [tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-    
-    NSLog(@"dw1 - storeRcdsJSON: %@", storeRcdsJSON);
-    NSLog(@"dw1 - arraySectionCount: %@", arraySectionCount);
-
-    
-}
-
-
-
 - (void)getAllocationData2 {
-    
-    // AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
     
     storeRcdsJSON = [[NSMutableArray alloc] init];
     arraySectionCount = [[NSMutableArray alloc] init];
     
     NSString *territoryid = @"";
-    
-    // read values from Entity to storeRcdsJSON
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
@@ -915,11 +706,11 @@
         
             arrayHolderDict = @{@"type": @"TYPEH",
                             @"territoryid": [self stringOrEmptyString:territoryid],
-                            @"ProductName": @"Product",
-                            @"Total": @"Total",
-                            @"Used": @"Used",
-                            @"Percentage": @"% Used",
-                            @"Stock": @"Stock"
+                            @"ProductName": NSLocalizedString(@"Product", nil),
+                            @"Total": NSLocalizedString(@"Total", nil),
+                            @"Used": NSLocalizedString(@"Used", nil),
+                            @"Percentage":NSLocalizedString(@"% Used", nil),
+                            @"Stock": NSLocalizedString(@"Stock", nil)
                             };
         
             [storeRcdsJSON addObject:arrayHolderDict];
@@ -934,7 +725,7 @@
         
             NSString *stock_there = @"NO";
 
-            NSLog(@"dw1 - show me avail_inventory: %f", [[alloc valueForKey:@"avail_inventory"] doubleValue]);
+            // NSLog(@"dw1 - show me avail_inventory: %f", [[alloc valueForKey:@"avail_inventory"] doubleValue]);
         
         
             if ([[alloc valueForKey:@"avail_inventory"] doubleValue] > 0) {
@@ -954,7 +745,7 @@
         
         [storeRcdsJSON addObject:arrayHolderDict];
         
-        NSLog(@"dw1 - showCOUNT %lu" , (unsigned long)[storeRcdsJSON count]);
+        // NSLog(@"dw1 - showCOUNT %lu" , (unsigned long)[storeRcdsJSON count]);
         
         
         
@@ -997,7 +788,7 @@
                                 urltoken,
                                 urluserid]];
     
-    NSLog(@"dw1 - show url %@", url);
+    // NSLog(@"dw1 - show url %@", url);
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
         
@@ -1078,6 +869,7 @@
 - (void) removeEntities {
 
     NSArray *deletionEntity;
+    
     /*
     if ([removalType isEqualToString:@"allocation"])  {
         deletionEntity = @[@"allocation"];
@@ -1086,8 +878,6 @@
     
     deletionEntity = @[@"Allocation"];
     
-    // deletionEntity = @[@"ClientInfo",@"Order",@"Product",@"Allocation",@"AllocationHeader",@"TerritoryFSA",@"Territory",@"Rep"];
-   
     // Define Delegate Context
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
@@ -1144,7 +934,7 @@
                                 urltoken,
                                 urluserid]];
     
-    NSLog(@"url: %@", url);
+    // NSLog(@"url: %@", url);
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
@@ -1158,7 +948,6 @@
         // step.2 - Determine How Many Territories in Object
         int numofterr = [[[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0] count];
         
-        NSLog(@"how many territories please ?? :%d" , numofterr);
         numofterr = 1;
         
         // step.3 iterate over territories to get data
@@ -1254,7 +1043,7 @@
     self.popover = pc;
     
     //Set the title of the bar button item
-    barButtonItem.title = @"Reports";
+    barButtonItem.title = NSLocalizedString(@"Reports", nil);
     
     //Set the bar button item as the Nav Bar's leftBarButtonItem
     [_navBarItem setLeftBarButtonItem:barButtonItem animated:YES];
@@ -1291,7 +1080,6 @@
 {
     
     if (string == nil || [string isKindOfClass:[NSNull class]] ) {
-        NSLog(@"dw1 - show_val:TT1");
         return @"";
     } else {
         return string;
@@ -1308,15 +1096,15 @@
 }
 
 - (void)dismissSuccess {
-	[SVProgressHUD showSuccessWithStatus:@"Loading Complete!"];
+	[SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Loading Complete!",nil)];
 }
 
 - (void)dismissNoRecords {
-	[SVProgressHUD showSuccessWithStatus:@"No Records Found!"];
+	[SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"No Records Found!", nil)];
 }
 
 - (void)dismissError {
-	[SVProgressHUD showErrorWithStatus:@"Failed with Error"];
+	[SVProgressHUD showErrorWithStatus:NSLocalizedString(@"Failed with Error", nil)];
 }
 @end
 
