@@ -10,7 +10,7 @@
 		5B1F8D2917D9BA5100873860 /* LastXOrdersDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F8D2817D9BA5100873860 /* LastXOrdersDesign.m */; };
 		5B2801D917C75E7600D06363 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2801D617C75E7600D06363 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5B2801DA17C75E7600D06363 /* MESegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2801D817C75E7600D06363 /* MESegmentedControl.m */; };
-		5B2E712A17C5FF6900A02273 /* OrderLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E712917C5FF6900A02273 /* OrderLineItem.m */; };
+		5B47025B1805BD2F006CCEF7 /* OrderLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B47025A1805BD2F006CCEF7 /* OrderLineItem.m */; };
 		5B49681617A13C5600DDC43A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B49681517A13C5500DDC43A /* CoreGraphics.framework */; };
 		5B4988C2175A27B0000AFD31 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */; };
 		5B4DDBD1176E97850015A496 /* my_allocations.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4DDBCE176E97850015A496 /* my_allocations.png */; };
@@ -101,10 +101,10 @@
 		5B2801D617C75E7600D06363 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomBadge.m; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/CustomBadge.m"; sourceTree = "<group>"; };
 		5B2801D717C75E7600D06363 /* MESegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MESegmentedControl.h; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/MESegmentedControl.h"; sourceTree = "<group>"; };
 		5B2801D817C75E7600D06363 /* MESegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MESegmentedControl.m; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/MESegmentedControl.m"; sourceTree = "<group>"; };
-		5B2E712817C5FF6900A02273 /* OrderLineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrderLineItem.h; path = ../OrderLineItem.h; sourceTree = "<group>"; };
-		5B2E712917C5FF6900A02273 /* OrderLineItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrderLineItem.m; path = ../OrderLineItem.m; sourceTree = "<group>"; };
 		5B3E552E17FDFCB6002A8373 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B3E552F17FDFCB7002A8373 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5B4702591805BD2E006CCEF7 /* OrderLineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderLineItem.h; sourceTree = "<group>"; };
+		5B47025A1805BD2F006CCEF7 /* OrderLineItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderLineItem.m; sourceTree = "<group>"; };
 		5B49681517A13C5500DDC43A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5B4DDBCE176E97850015A496 /* my_allocations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_allocations.png; sourceTree = "<group>"; };
@@ -363,26 +363,26 @@
 				5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */,
 				5B89560D18033C8F009635C4 /* Allocation.h */,
 				5B89560E18033C8F009635C4 /* Allocation.m */,
-				5BB6E0CF17EB53D7006EF204 /* Order.h */,
-				5BB6E0D017EB53D7006EF204 /* Order.m */,
-				5B2E712817C5FF6900A02273 /* OrderLineItem.h */,
-				5B2E712917C5FF6900A02273 /* OrderLineItem.m */,
-				5B6E2EB617BA966A002FDBF9 /* OrderTemplate.h */,
-				5B6E2EB717BA966A002FDBF9 /* OrderTemplate.m */,
-				5B6E2EBC17BA96C7002FDBF9 /* OrderTemplateLine.h */,
-				5B6E2EBD17BA96C7002FDBF9 /* OrderTemplateLine.m */,
 				5BE091EF1785F63A0035F51B /* AllocationHeader.h */,
 				5BE091F01785F63B0035F51B /* AllocationHeader.m */,
-				5BE091EC1785F52A0035F51B /* TerritoryFSA.h */,
-				5BE091ED1785F52A0035F51B /* TerritoryFSA.m */,
-				5BE091E91785F52A0035F51B /* Territory.h */,
-				5BE091EA1785F52A0035F51B /* Territory.m */,
-				5B74925017B28FD800EDBE8A /* Order+Extensions.h */,
-				5B74925117B28FD800EDBE8A /* Order+Extensions.m */,
+				5B4702591805BD2E006CCEF7 /* OrderLineItem.h */,
 				5B938A3A17B42F7700A8C078 /* HealthCareProfessional.h */,
 				5B938A3B17B42F7700A8C078 /* HealthCareProfessional.m */,
 				5B74925617B2972B00EDBE8A /* Hcp+Extensions.h */,
 				5B74925717B2972B00EDBE8A /* Hcp+Extensions.m */,
+				5B47025A1805BD2F006CCEF7 /* OrderLineItem.m */,
+				5BB6E0CF17EB53D7006EF204 /* Order.h */,
+				5BB6E0D017EB53D7006EF204 /* Order.m */,
+				5B74925017B28FD800EDBE8A /* Order+Extensions.h */,
+				5B74925117B28FD800EDBE8A /* Order+Extensions.m */,
+				5B6E2EB617BA966A002FDBF9 /* OrderTemplate.h */,
+				5B6E2EB717BA966A002FDBF9 /* OrderTemplate.m */,
+				5B6E2EBC17BA96C7002FDBF9 /* OrderTemplateLine.h */,
+				5B6E2EBD17BA96C7002FDBF9 /* OrderTemplateLine.m */,
+				5BE091EC1785F52A0035F51B /* TerritoryFSA.h */,
+				5BE091ED1785F52A0035F51B /* TerritoryFSA.m */,
+				5BE091E91785F52A0035F51B /* Territory.h */,
+				5BE091EA1785F52A0035F51B /* Territory.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -618,7 +618,6 @@
 				5B6E2EB817BA966A002FDBF9 /* OrderTemplate.m in Sources */,
 				5B6E2EBE17BA96C7002FDBF9 /* OrderTemplateLine.m in Sources */,
 				5B6E2EC117BA97E7002FDBF9 /* TemplateSelection.m in Sources */,
-				5B2E712A17C5FF6900A02273 /* OrderLineItem.m in Sources */,
 				5B2801D917C75E7600D06363 /* CustomBadge.m in Sources */,
 				5B2801DA17C75E7600D06363 /* MESegmentedControl.m in Sources */,
 				5B589D7B17CF4DA400DE9930 /* ReportDetails.m in Sources */,
@@ -628,6 +627,7 @@
 				5BB6E0D117EB53D7006EF204 /* Order.m in Sources */,
 				5B8068D417F202FF000DED9E /* ReportSVC.m in Sources */,
 				5B89560F18033C8F009635C4 /* Allocation.m in Sources */,
+				5B47025B1805BD2F006CCEF7 /* OrderLineItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
