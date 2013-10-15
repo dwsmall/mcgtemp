@@ -1758,6 +1758,9 @@ NSArray *statusDataX;
     if (indexPath.section == 2) {
         
         
+        Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
+        NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
+        
         NSLog(@"dw1 - Monitor Products: %@", currentMode);
         
         
@@ -1777,16 +1780,60 @@ NSArray *statusDataX;
             
             
             cell.detailTextLabel.text = @"0";
-            
 
             
-            // grey text for unavailable products please...
+#pragma mark Calc Grey
+
+            // grey text for unavailable products [allocation]...
             
+            if (internetStatus == NotReachable){
+                
+                // OFFLINE
+                
+                
+                if([app.globalClientOptionBO isEqualToString:@"true"]) {
+                
+                    // backorder
+                    
+                    if([[ProductObject valueForKey:@"avail_allocation"] integerValue] == 0) {
+                        
+                        cell.textLabel.textColor = [UIColor grayColor];
+                        cell.detailTextLabel.textColor = [UIColor grayColor];
+                    }
+                    
+                } else {
+                
+                    // non-backorder
+                    
+                    if([[ProductObject valueForKey:@"avail_allocation"] integerValue] == 0 || [[ProductObject valueForKey:@"avail_inventory"] integerValue] == 0) {
+                        
+                        cell.textLabel.textColor = [UIColor grayColor];
+                        cell.detailTextLabel.textColor = [UIColor grayColor];
+                    }
+                }
+                
+            
+            } else {
+                
+                // ONLINE
+                
+                if([[ProductObject valueForKey:@"max_computed"] integerValue] == 0) {
+                
+                    cell.textLabel.textColor = [UIColor grayColor];
+                    cell.detailTextLabel.textColor = [UIColor grayColor];
+                }
+                
+            }  // Calc Grey End
+            
+            
+            
+            /*
             if([[ProductObject valueForKey:@"avail_allocation"] integerValue] == 0 || [[ProductObject valueForKey:@"avail_inventory"] integerValue] == 0) {
                 
                 cell.textLabel.textColor = [UIColor grayColor];
                 cell.detailTextLabel.textColor = [UIColor grayColor];
             }
+            */
             
             
             NSLog(@"dw1 - arrScrnProducts: %@", app.globalProductsScrn);
@@ -1811,8 +1858,10 @@ NSArray *statusDataX;
                 NSLog(@"dw1 - WAS HERE_A23_3:%@", [[app.globalProductsScrn objectAtIndex:indexPath.row] objectAtIndex:0] );
                 
                 
+
+#pragma mark Calc OverRide
                 
-                // update existing values
+                // update existing values - OVERRIDE
                 
                 if ([app.globalProductsScrn count] > 0) {
                     
@@ -1822,15 +1871,88 @@ NSArray *statusDataX;
                     for (int p = 0; p < [app.globalProductsScrn count]; p++)
                     {
                         
+                        /*
                         NSString *pdesc = [NSString stringWithFormat:@"%@ %@",
                                            [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:1],
                                            [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:2]];
+                        */
+                        
                         
                         // if ([pdesc isEqualToString:cell.textLabel.text]) {
                         
                         if ([ [[ProductObject valueForKey:@"productid"] description] isEqualToString: [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:0] ] ) {
                             
+                            
+                            // CALC OVERRIDE FOR EXISTING VALUES
+                            
+                            // default value of
                             cell.detailTextLabel.text = [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3];
+                            
+                            
+                            // offline calculation vs. online calc.
+                                                        
+                            if (internetStatus == NotReachable){
+                                
+                                
+                                // OFFLINE 3 step process
+                                
+                                
+                                
+                                    // step 1. Value GT OrderMax
+                                    
+                                    if ( [[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] > [[ProductObject valueForKey:@"ordermax"] integerValue]) {
+                                        
+                                        cell.detailTextLabel.text = [ProductObject valueForKey:@"ordermax"];
+                                    
+                                    }
+                                
+                                    
+                                    // step 2. Value LT OrderMax GT Allocation
+                                    
+                                    if (
+                                        ([[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] < [[ProductObject valueForKey:@"ordermax"] integerValue]) &&
+                                        ([[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] > [[ProductObject valueForKey:@"avail_allocation"] integerValue])
+                                        ) {
+                                        
+                                        cell.detailTextLabel.text = [ProductObject valueForKey:@"avail_allocation"];
+                                    }
+                                
+                                    
+                                    // step 3. Value LT OrderMax LT Allocation GT Inventory {BACKORDER}
+                                    
+                                    if (
+                                        [app.globalClientOptionBO isEqualToString:@"true"] &&
+                                        ([[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] < [[ProductObject valueForKey:@"ordermax"] integerValue]) &&
+                                        ([[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] < [[ProductObject valueForKey:@"avail_allocation"] integerValue]) &&
+                                        ([[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] > [[ProductObject valueForKey:@"avail_inventory"] integerValue])
+                                        ) {
+                                        
+                                        cell.detailTextLabel.text = [ProductObject valueForKey:@"avail_inventory"];
+                                    }
+                            
+                                
+                            } else {
+                        
+                                
+                                // ONLINE
+                                
+                                // GT limit ? replace override with allocation value
+                                
+                                NSLog(@"dw1 -XOVER1:");
+                                
+                                if ( [[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] > [[ProductObject valueForKey:@"max_computed"] integerValue]) {
+                                    
+                                    NSLog(@"dw1 -XOVER2:");
+                                    
+                                    cell.detailTextLabel.text = [ProductObject valueForKey:@"max_computed"];
+                                    
+                                }
+                                
+                                
+                            }  // eof online/offline
+                            
+                            
+                            
                             
                         }
                         
@@ -1970,14 +2092,52 @@ NSArray *statusDataX;
                 // b. get productid = [[ProductObject valueForKey:@"productname"] description]
                 // c. output qty
                 
+
                 
-                // grey text for unavailable products please...
+#pragma mark Calc OverRide
+
+                // grey text for unavailable products [allocation]...
                 
-                if([[ProductObject valueForKey:@"avail_allocation"] integerValue] == 0 || [[ProductObject valueForKey:@"avail_inventory"] integerValue] == 0) {
+                if (internetStatus == NotReachable){
                     
-                    cell.textLabel.textColor = [UIColor grayColor];
-                    cell.detailTextLabel.textColor = [UIColor grayColor];
-                }
+                    // OFFLINE
+                    
+                    
+                    if([app.globalClientOptionBO isEqualToString:@"true"]) {
+                        
+                        // backorder
+                        
+                        if([[ProductObject valueForKey:@"avail_allocation"] integerValue] == 0) {
+                            
+                            cell.textLabel.textColor = [UIColor grayColor];
+                            cell.detailTextLabel.textColor = [UIColor grayColor];
+                        }
+                        
+                    } else {
+                        
+                        // non-backorder
+                        
+                        if([[ProductObject valueForKey:@"avail_allocation"] integerValue] == 0 || [[ProductObject valueForKey:@"avail_inventory"] integerValue] == 0) {
+                            
+                            cell.textLabel.textColor = [UIColor grayColor];
+                            cell.detailTextLabel.textColor = [UIColor grayColor];
+                        }
+                    }
+                    
+                    
+                } else {
+                    
+                    // ONLINE
+                    
+                    if([[ProductObject valueForKey:@"max_computed"] integerValue] == 0) {
+                        
+                        cell.textLabel.textColor = [UIColor grayColor];
+                        cell.detailTextLabel.textColor = [UIColor grayColor];
+                    }
+                    
+                }  // Calc Grey End
+                
+                
                 
                 
                 
@@ -1994,6 +2154,68 @@ NSArray *statusDataX;
                 
                 // get qty of product
                 int prodqty = [[productandqty objectForKey:[[ProductObject valueForKey:@"productid"] description]] integerValue];
+                
+                
+                
+                // reduction of existing qty
+                
+                // offline calculation vs. online calc.
+                
+                if (internetStatus == NotReachable){
+                    
+                    // OFFLINE 3 step process
+                    
+                    // step 1. Value GT OrderMax
+                    
+                    if ( prodqty > [[ProductObject valueForKey:@"ordermax"] integerValue]) {
+                        
+                        prodqty = [[ProductObject valueForKey:@"ordermax"] integerValue];
+                    }
+                    
+                    
+                    // step 2. Value LT OrderMax GT Allocation
+                    
+                    if (
+                        (prodqty < [[ProductObject valueForKey:@"ordermax"] integerValue]) &&
+                        (prodqty > [[ProductObject valueForKey:@"avail_allocation"] integerValue])
+                        ) {
+                        
+                        prodqty = [[ProductObject valueForKey:@"avail_allocation"] integerValue];
+                    }
+                    
+                    
+                    // step 3. Value LT OrderMax LT Allocation GT Inventory {BACKORDER}
+                    
+                    if (
+                        [app.globalClientOptionBO isEqualToString:@"true"] &&
+                        (prodqty < [[ProductObject valueForKey:@"ordermax"] integerValue]) &&
+                        (prodqty < [[ProductObject valueForKey:@"avail_allocation"] integerValue]) &&
+                        (prodqty > [[ProductObject valueForKey:@"avail_inventory"] integerValue])
+                        ) {
+                        
+                        prodqty = [[ProductObject valueForKey:@"avail_inventory"] integerValue];
+                    }
+                    
+                    
+                } else {
+                    
+                    
+                    // ONLINE
+                    
+                    // GT limit ? replace override with allocation value
+                    
+                    NSLog(@"dw1 -XOVER1:");
+                    
+                    if ( prodqty > [[ProductObject valueForKey:@"max_computed"] integerValue]) {
+                        
+                        prodqty = [[ProductObject valueForKey:@"max_computed"] integerValue];
+                    }
+                    
+                    
+                }  // eof online/offline
+
+                
+                
                 
                 NSLog(@"show prodqty value %d" ,  prodqty);
                 NSLog(@"show dictionary %@", productandqty);
@@ -2423,25 +2645,117 @@ float a;
         keyboardObservable = 1;
     
     // Override Product Maximum (USER ALLOCATION VALUES)
+
+#pragma mark Calc Override2 
+    
     
     NSManagedObject *prodMOM = [[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.row];
     
         double current_text_double = [current_text doubleValue];
+    
+        /*
         double allocation_max = [[[prodMOM valueForKey:@"avail_allocation"] description] doubleValue];
+        double inventory_max = [[[prodMOM valueForKey:@"avail_inventory"] description] doubleValue];
+        double max_computed = [[[prodMOM valueForKey:@"max_computed"] description] doubleValue];
         double order_max = [[[prodMOM valueForKey:@"ordermax"] description] doubleValue];
+        */
+    
+        NSString *overridestate = @"NO";
+    
         double set_qty = 0;
     
-        // determine qty limitation
+    
+        Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
+        NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
+    
+        // offline calculation vs. online calc.
+        
+        if (internetStatus == NotReachable){
+            
+            
+            // OFFLINE 3 step process
+            
+            
+            
+            // step 1. Value GT OrderMax
+            
+            if ( current_text_double > [[prodMOM valueForKey:@"ordermax"] integerValue]) {
+                
+                set_qty = [[prodMOM valueForKey:@"ordermax"] doubleValue];
+                
+                overridestate = @"YES";
+                
+            }
+            
+            
+            // step 2. Value LT OrderMax GT Allocation
+            
+            if (
+                ( current_text_double < [[prodMOM valueForKey:@"ordermax"] integerValue]) &&
+                (current_text_double > [[prodMOM valueForKey:@"avail_allocation"] integerValue])
+                ) {
+                
+                set_qty = [[prodMOM valueForKey:@"avail_allocation"] doubleValue];
+                
+                overridestate = @"YES";
+            }
+            
+            
+            // step 3. Value LT OrderMax LT Allocation GT Inventory {BACKORDER}
+            
+            if (
+                [app.globalClientOptionBO isEqualToString:@"true"] &&
+                ( current_text_double < [[prodMOM valueForKey:@"ordermax"] integerValue]) &&
+                ( current_text_double < [[prodMOM valueForKey:@"avail_allocation"] integerValue]) &&
+                ( current_text_double > [[prodMOM valueForKey:@"avail_inventory"] integerValue])
+                ) {
+                
+                set_qty = [[prodMOM valueForKey:@"avail_inventory"] doubleValue];
+                
+                overridestate = @"YES";
+            }
+            
+            
+        } else {
+                        
+            // ONLINE
+            
+            // GT limit ? replace override with allocation value
+            
+            
+            if ( current_text_double > [[prodMOM valueForKey:@"max_computed"] integerValue]) {
+                
+                set_qty = [[prodMOM valueForKey:@"max_computed"] doubleValue];
+                
+                overridestate = @"YES";
+                
+                NSLog(@"dw1 - show setQTY:%f", set_qty);
+                
+            }
+            
+            
+        }  // eof online/offline
+    
+    
+    
+        /* Removed
         if (allocation_max < order_max) {
             set_qty = allocation_max;
         } else {
             set_qty = order_max;
         }
     
-        if (current_text_double > set_qty) {
+         */
+    
+    
+    NSLog(@"dw1 - show setQTYTESTX:%f", set_qty);
+    NSLog(@"dw1 - show setQTYTESTY:%f", current_text_double);
+    // NSLog(@"dw1 - show setQTYTESTZ:%ld", (long)[[prodMOM valueForKey:@"max_computed"] integerValue]);
+    
+    if ([overridestate isEqualToString:@"YES"]) {
+        
             current_text = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%g", set_qty]];
-            
-            
+        
             // update offscreen array (same update applies)
             
             for (int p = 0; p < [app.globalProductsScrn count]; p++)
@@ -2464,11 +2778,9 @@ float a;
                 }
                 
             }
-
-            
-            
-            
-        }
+    
+    }  //
+    
     
     cell.detailTextLabel.text = current_text;
     
@@ -2707,7 +3019,7 @@ float a;
         
         // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"territoryid = %@", territoryid];
         
-        NSLog(@"dw1 - predicate %@" , predicate);
+        NSLog(@"dw1 - predicateX1 %@" , predicate);
         
         
         [fetchRequest setPredicate:predicate];
@@ -2726,7 +3038,8 @@ float a;
         NSArray *productsdisplay = nil;
         NSPredicate *predicate = nil;
         
-                
+        
+        
         productsdisplay = [defaults objectForKey:@"MCG_detail_products"];        
         
         if ([productsdisplay count] > 0) {
@@ -2735,8 +3048,14 @@ float a;
             predicate = [NSPredicate predicateWithFormat:@"territoryid = %@ AND (productid IN %@)", territoryid, productsdisplay];
             [fetchRequest setPredicate:predicate];
             
+            NSLog(@"dw1 - predicateX2 %@" , predicate);
             
+        } else {
+        
+            // note territoryid is minimum predicate (else issues if multiple teritories exists)
             
+            predicate = [NSPredicate predicateWithFormat:@"territoryid = %@", territoryid];
+            [fetchRequest setPredicate:predicate];
         }
         
         // clear initial load ???
@@ -2772,7 +3091,8 @@ float a;
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
-	}   
+	}
+    
 
     return _fetchedResultsController;
 }
@@ -3609,7 +3929,6 @@ float a;
             */
             
             
-            
             // fetch request
             aBook = [[context executeFetchRequest:request error:&error] lastObject];
             
@@ -3624,6 +3943,7 @@ float a;
             
             //Update the object
             aBook.avail_allocation = [NSNumber numberWithDouble:[aBook.avail_allocation doubleValue] - user_qty];
+            aBook.avail_inventory = [NSNumber numberWithDouble:[aBook.avail_inventory doubleValue] - user_qty];
             
             //Save it
             error = nil;
