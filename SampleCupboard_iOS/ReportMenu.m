@@ -30,28 +30,24 @@ NSArray *tableDataY;
 
 @implementation ReportMenu
 
-
-
 @synthesize reportchoice, oreportchoice;
+
+#pragma mark - viewDelegate
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    tableData = [NSArray arrayWithObjects:@"My Usage", @"Territory Allocation", @"My Team", nil];
-    tableDataX = [NSArray arrayWithObjects:@"Show your total usage per product, by period (YTD, allocation period, current month)",
-                  @"Shows product allocations for your territory, quantity used (in units and %) and remaining MCG Inventory levels.",
-                  @"Lists all representatives in your territory(ies), group by territory name",
+    tableData = [NSArray arrayWithObjects:NSLocalizedString(@"My Usage", nil), NSLocalizedString(@"Territory Allocation", nil), NSLocalizedString(@"My Team", nil), nil];
+    tableDataX = [NSArray arrayWithObjects:NSLocalizedString(@"MyUsageDescription", nil),
+                  NSLocalizedString(@"TerritoryAllocationDescription", nil),
+                  NSLocalizedString(@"MyTeamDescription", nil),
                   nil];
     tableDataY = [NSArray arrayWithObjects:@"my_usage.png", @"my_allocations.png", @"my_team.png", nil];
     
+    // self.navBarItem.title = NSLocalizedString(@"Reports", nil);
     
     [self.tableView reloadData];
-    
-    
-
-    
-    
     
 }
 
@@ -63,6 +59,7 @@ NSArray *tableDataY;
 }
 
 
+#pragma mark - TableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -74,7 +71,7 @@ NSArray *tableDataY;
 {
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
     
-    // Create first cell
+    // create first cell
     
     UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"_reportItem"];
     
@@ -114,10 +111,9 @@ NSArray *tableDataY;
     if (internetStatus == NotReachable){
         
         UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                       initWithTitle:@"No internet connection"
-                                       message:@"Internet connection is required to view reporting"
-                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
+                                       initWithTitle:NSLocalizedString(@"No internet connection", nil)
+                                       message:NSLocalizedString(@"Internet connection is required to view reporting", nil) 
+                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];        
         [errorAlertView show];
         
         
