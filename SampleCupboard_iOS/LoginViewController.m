@@ -739,6 +739,7 @@ Reachability *internetReachableFoo;
     app.globalToken = [[currentitems valueForKey:@"token"] description];
     app.globalClientId = [[currentitems valueForKey:@"clientid"] description];
     app.globalAllocationId = [[currentitems valueForKey:@"allocationid"] description];
+    app.globalClientOptionBO = [[currentitems valueForKey:@"allow_backorder"] description];
     
     app.globalBaseUrl = @"http://dev.samplecupboard.com/Data/MobileServices.svc";
     
