@@ -30,25 +30,26 @@
     </entity>
     <entity name="Allocation" representedClassName="Allocation" syncable="YES">
         <attribute name="allocationheaderid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="avail_allocation" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="avail_inventory" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="avail_allocation" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="avail_inventory" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="datecreated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="defaultordermax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="defaultordermax" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="hasavailableinventory" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="hcptargetlistid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="inventory" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="ishcp" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="ishcptargetlist" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="isrep" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="isterritory" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="ordermax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="originalordermax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="originaltotalmax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="inventory" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ishcp" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ishcptargetlist" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="isrep" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="isterritory" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="max_computed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ordermax" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="originalordermax" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="originaltotalmax" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="parentid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="percentage_used" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="percentage_used" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="personalid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productcode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productdescription" optional="YES" attributeType="String" syncable="YES"/>
@@ -56,10 +57,10 @@
         <attribute name="productname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productstatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productvisibleflag" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="quantity_used" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="quantity_used" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="territoryid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="territoryname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="totalmax" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalmax" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="toAllocHdr" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="AllocationHeader" inverseName="toAllocDetails" inverseEntity="AllocationHeader" syncable="YES"/>
     </entity>
     <entity name="AllocationHeader" representedClassName="AllocationHeader" syncable="YES">
@@ -82,21 +83,21 @@
         <attribute name="displayname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="opt_allocationstrategy" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_canaudit" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_fullfillmenttype_candodisbursement" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_fullfillmenttype_shiptobatch" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_fullfillmenttype_shiptoconsumer" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_fullfillmenttype_shiptohcp" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_fullfillmenttype_shiptopharmacy" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_fullfillmenttype_shiptorep" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_fullfillmenttype_shiptothirdparty" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_fullfillmenttype_shiptowholesaler" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_ordertype_allowsbackorder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_ordertype_allowsemergencyorders" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_ordertype_allowsmanagerapproval" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="opt_ordertype_allowspartialshipment" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="ordersreferencecounterid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="opt_allocationstrategy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_canaudit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_candodisbursement" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptobatch" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptoconsumer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptohcp" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptopharmacy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptorep" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptothirdparty" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_fullfillmenttype_shiptowholesaler" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_ordertype_allowsbackorder" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_ordertype_allowsemergencyorders" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_ordertype_allowsmanagerapproval" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="opt_ordertype_allowspartialshipment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ordersreferencecounterid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Disbursement" syncable="YES">
         <attribute name="applicationsource" optional="YES" attributeType="String" syncable="YES"/>
@@ -112,7 +113,7 @@
         <attribute name="options_isfinalized" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="ordercontenttype" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ownerid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shipping_addressid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="shipping_addressid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shipping_addressline1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shipping_addressline2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shipping_addressline3" optional="YES" attributeType="String" syncable="YES"/>
@@ -147,7 +148,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lotcode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="quantitydisbursed" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="quantitydisbursed" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="HealthCareProfessional" representedClassName="HealthCareProfessional" syncable="YES">
         <attribute name="address1" optional="YES" attributeType="String" syncable="YES"/>
@@ -168,7 +169,7 @@
         <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="phlid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="phlid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="postal" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="preferredlanguage" optional="YES" attributeType="String" syncable="YES"/>
@@ -237,7 +238,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="orderid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="quantityordered" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="quantityordered" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="stored_product_code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stored_product_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stored_product_name" optional="YES" attributeType="String" syncable="YES"/>
@@ -299,7 +300,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="orderid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="quantityordered" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="quantityordered" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="stored_product_code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stored_product_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stored_product_name" optional="YES" attributeType="String" syncable="YES"/>
@@ -317,15 +318,15 @@
         <attribute name="datemodified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imageurl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lowlevelquantity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lowlevelquantity" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="options_option2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="options_ordertypeeligibility" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="packagesize" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="packagesize" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="product_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="unitmultiplier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="unitmultiplier" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <entity name="Rep" syncable="YES">
@@ -393,11 +394,13 @@
     </entity>
     <entity name="Tokenized_Credentials" syncable="YES">
         <attribute name="allocationid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="allow_backorder" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date_validated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="last_data_sync_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="last_hcp_sync_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="multiple_carrier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password_hash" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
@@ -406,14 +409,14 @@
     </entity>
     <elements>
         <element name="Address" positionX="324" positionY="-246" width="128" height="435"/>
-        <element name="Allocation" positionX="-407" positionY="-324" width="128" height="525"/>
+        <element name="Allocation" positionX="-407" positionY="-324" width="128" height="540"/>
         <element name="AllocationHeader" positionX="-236" positionY="-210" width="128" height="208"/>
         <element name="ClientInfo" positionX="97" positionY="-531" width="128" height="360"/>
         <element name="Disbursement" positionX="628" positionY="-531" width="128" height="630"/>
         <element name="DisbursementLineItem" positionX="475" positionY="-318" width="128" height="165"/>
         <element name="HealthCareProfessional" positionX="-72" positionY="-528" width="128" height="480"/>
         <element name="Order" positionX="-585" positionY="-534" width="128" height="765"/>
-        <element name="OrderLineItem" positionX="-756" positionY="-87" width="128" height="208"/>
+        <element name="OrderLineItem" positionX="-756" positionY="-87" width="128" height="210"/>
         <element name="OrderTemplate" positionX="-245" positionY="54" width="128" height="765"/>
         <element name="OrderTemplateLine" positionX="-398" positionY="111" width="128" height="195"/>
         <element name="People" positionX="324" positionY="-369" width="128" height="90"/>
@@ -423,6 +426,6 @@
         <element name="Territory" positionX="-245" positionY="-525" width="128" height="178"/>
         <element name="TerritoryFSA" positionX="-407" positionY="-495" width="128" height="150"/>
         <element name="TerritoryRep" positionX="322" positionY="-531" width="128" height="135"/>
-        <element name="Tokenized_Credentials" positionX="-749" positionY="-531" width="128" height="210"/>
+        <element name="Tokenized_Credentials" positionX="-749" positionY="-531" width="128" height="240"/>
     </elements>
 </model>
