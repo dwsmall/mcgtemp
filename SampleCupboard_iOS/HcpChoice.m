@@ -666,6 +666,10 @@ BOOL isSearching;
                 app.globalProductsScrn = [[NSMutableArray alloc] init];
                 app.globalProductsRmv = [[NSMutableArray alloc] init];
                 
+                // remove existing values
+                
+                
+                
                 
                 
                 // show msg on order screen
@@ -676,11 +680,22 @@ BOOL isSearching;
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
                 [alert show];
+                
+                
+                // total reset of existing values
+                [defaults setValue:nil forKey:@"MCG_productandqty"];
+                [defaults setValue:nil forKey:@"MCG_detail_products"];
+                
             }
             
             
             // update territory            
             [defaults setObject:[[self.fsaFoundList objectAtIndex:0]  valueForKey:@"territory_id"] forKey:@"MCG_territoryid"];
+            
+            
+            
+            
+            
             
             
         } else {
@@ -693,6 +708,8 @@ BOOL isSearching;
                                               otherButtonTitles:nil];
              [alert show];
         
+            
+            
               // cancel request
               return NO;
         }
