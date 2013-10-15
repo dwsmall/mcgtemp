@@ -933,6 +933,9 @@
         // prep values
         
             NSString *stock_there = @"NO";
+
+            NSLog(@"dw1 - show me avail_inventory: %f", [[alloc valueForKey:@"avail_inventory"] doubleValue]);
+        
         
             if ([[alloc valueForKey:@"avail_inventory"] doubleValue] > 0) {
                 stock_there = @"YES";
