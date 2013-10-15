@@ -109,7 +109,7 @@ Reachability *internetReachableFoo;
         } else {
             
             UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                           initWithTitle:@"Please {Load Data} and {HCP Data} To Enable Features"
+                                           initWithTitle:@"Please Load Data To Enable Features"
                                            message:@"Initial Setup Requies Loading of Data"
                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             errorAlertView.tag = 400;
@@ -808,7 +808,7 @@ Reachability *internetReachableFoo;
     
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
-    NSManagedObjectContext *context = [self managedObjectContext];
+    // NSManagedObjectContext *context = [self managedObjectContext];
     
      
     // NSError *error;
@@ -1040,8 +1040,16 @@ Reachability *internetReachableFoo;
     self.managedObjectContext = [appDelegate managedObjectContext];
     NSManagedObjectContext *context = [self managedObjectContext];
     
-    // Client Info -  Single Record
-    url = [NSURL URLWithString:@"http://project.dwsmall.com/clientinfo"];
+    urlsvc = @"GetClientByName";
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@/%@",
+                                baseurl,
+                                urlsvc,
+                                urluserid,
+                                urltoken,
+                                @"Merck"]];
+    
+    NSLog(@"dw1 - show url: %@", url);
+    
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
@@ -1049,15 +1057,53 @@ Reachability *internetReachableFoo;
     {
         NSError *error = nil;
         NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-        NSArray* arrayContainer = [dictContainer objectForKey:@"clientinfo"];
+        // NSArray* arrayContainer = [dictContainer objectForKey:@"GetClientByNameResult"];
         
-        NSDictionary* dicItems = [arrayContainer objectAtIndex:0];
+        // NSDictionary* dicItems = [arrayContainer objectAtIndex:0];
+        
+        NSDictionary* dicItems = [dictContainer objectForKey:@"GetClientByNameResult"];
+        
         
         NSManagedObject *model = [NSEntityDescription
                                   insertNewObjectForEntityForName:@"ClientInfo"
                                   inManagedObjectContext:context];
-        [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
-        [model setValue:[dicItems objectForKey:@"DisplayName"]  forKey:@"displayname"];
+        
+        [model setValue:[dicItems objectForKey:@"Id"] forKey:@"clientid"];
+        [model setValue:[dicItems objectForKey:@"Name"]  forKey:@"displayname"];
+        [model setValue:[[dicItems objectForKey:@"Options_OrderType_AllowsBackOrder"] description] forKey:@"opt_ordertype_allowsbackorder"];
+        
+        
+        
+        // upate BO OPTIONS in user_credentials
+        NSFetchRequest * request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"id=%@",@"current_rep"]];
+        
+        //Ask for it
+        NSArray *savechange = [[context executeFetchRequest:request error:&error] lastObject];
+        
+        if (error) {
+            //Handle any errors
+        }
+        
+        if (!savechange) {
+            //Nothing there to update
+        }
+        
+        //Update the object
+        [savechange setValue:[[dicItems objectForKey:@"Options_OrderType_AllowsBackOrder"] description] forKey:@"allow_backorder"];
+        // [savechange setValue:[dictRow objectForKey:@"Id"] forKey:@"multiple_carrier"];
+        
+        //Save it
+        error = nil;
+        if (![context save:&error]) {
+            //Handle any error with the saving of the context
+        }
+        
+        
+        // update user credentials
+        AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+        app.globalClientOptionBO = [[dicItems objectForKey:@"Options_OrderType_AllowsBackOrder"] description];
         
         
         if (![context save:&error]) {
@@ -1209,6 +1255,10 @@ Reachability *internetReachableFoo;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:[dictRow objectForKey:@"Id"] forKey:@"MCG_allocationid"];
         
+        // update user credentials
+        AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+        app.globalAllocationId = [dictRow objectForKey:@"Id"];
+        
     }
 
 
@@ -1287,9 +1337,11 @@ Reachability *internetReachableFoo;
                     [model setValue:[dicALLOC objectForKey:@"ProductName"] forKey:@"productname"];
                     [model setValue:[dicALLOC objectForKey:@"ProductDescription"] forKey:@"productdescription"];
                     
-                    double c_ordermax = [[dicALLOC objectForKey:@"OrderMax"] doubleValue];
-                    double c_totalmax = [[dicALLOC objectForKey:@"AvailableAllocation"] doubleValue];
+                    // double c_ordermax = [[dicALLOC objectForKey:@"Max"] doubleValue];
+                    // double c_totalmax = [[dicALLOC objectForKey:@"AvailableAllocation"] doubleValue];
                     
+                    
+                    /*
                     if (c_ordermax < 0) {
                         [model setValue:0 forKey:@"ordermax"];
                     } else {
@@ -1304,8 +1356,19 @@ Reachability *internetReachableFoo;
                         [model setValue:[dicALLOC objectForKey:@"AvailableAllocation"] forKey:@"avail_allocation"];
                     }
                     
+                    */
+                    
+                    
+                    
+                    // computed values
+                    
+                    [model setValue:[dicALLOC objectForKey:@"Max"] forKey:@"max_computed"];
+                    [model setValue:[dicALLOC objectForKey:@"AvailableAllocation"] forKey:@"avail_allocation"];
                     [model setValue:[dicALLOC objectForKey:@"AvailableInventory"] forKey:@"avail_inventory"];
-                    [model setValue:[dicALLOC objectForKey:@"HasAvailableInventory"]forKey:@"hasavailableinventory"];
+                    [model setValue:[dicALLOC objectForKey:@"OrderMax"] forKey:@"ordermax"];
+                    
+                    // [model setValue:[dicALLOC objectForKey:@"HasAvailableInventory"]forKey:@"hasavailableinventory"];
+                    
                     
                     if (![context save:&error]) {
                         NSLog(@"Couldn't save: %@", [error localizedDescription]);
@@ -1761,7 +1824,7 @@ Reachability *internetReachableFoo;
             //Post XML to SC
             NSData *data = [order_xml dataUsingEncoding:NSUTF8StringEncoding];
             
-            NSURL *url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/CreateOrder"];
+            url = [NSURL URLWithString:@"http://dev.samplecupboard.com/Data/MobileServices.svc/CreateOrder"];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             
             [request setHTTPMethod:@"POST"];
@@ -1769,9 +1832,9 @@ Reachability *internetReachableFoo;
             [request setValue:@"text/html; charset=utf-8" forHTTPHeaderField:@"Accept"];
             [request setHTTPBody:data];
             
-            NSURLResponse *response;
-            NSError *err;
-            NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
+            // NSURLResponse *response;
+            // NSError *err;
+            // NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
             // NSString *order_response_msg = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
                 
     };
