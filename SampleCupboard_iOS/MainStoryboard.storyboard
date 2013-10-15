@@ -2100,9 +2100,9 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="JKW-CI-TKa"/>
+        <segue reference="idE-Ab-f4U"/>
         <segue reference="Nm3-gX-nis"/>
         <segue reference="ANr-dY-w1m"/>
-        <segue reference="jUv-lw-V8G"/>
-        <segue reference="idE-Ab-f4U"/>
     </inferredMetricsTieBreakers>
 </document>
