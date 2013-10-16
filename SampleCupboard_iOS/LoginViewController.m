@@ -26,7 +26,6 @@ Reachability *internetReachableFoo;
 
 @property (weak, nonatomic) IBOutlet UIButton *BtnSignin;
 
-// @property (weak, nonatomic) IBOutlet UILabel *UserName;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *busyIndicator;
 
@@ -58,17 +57,12 @@ Reachability *internetReachableFoo;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *myActIndicator;
 
 
-
-
 @property (strong, nonatomic) IBOutlet UILabel *lblUsername;
 
 @property (strong, nonatomic) IBOutlet UILabel *lblPassword;
 
 
 @property (strong, nonatomic) IBOutlet UILabel *lblRememberMe;
-
-//UserLoginBtn uitextfld - userName , uitextfld - password
-
 
 
 - (IBAction)LoginButton:(UIButton *)sender;
@@ -83,6 +77,8 @@ Reachability *internetReachableFoo;
 
 @synthesize myActIndicator;
 
+
+#pragma mark - ViewDelegate
 
 - (void)viewDidLoad
 {
@@ -124,10 +120,39 @@ Reachability *internetReachableFoo;
 
         // Set All TabBar Badges Upon Load
         for (UIViewController *viewController in self.tabBarController.viewControllers) {
-        
+            
+            // update text of tab...
+            
+            if (viewController.tabBarItem.tag == 1) {
+                viewController.tabBarItem.title = NSLocalizedString(@"Home", nil);
+            }
+            
+            
+            if (viewController.tabBarItem.tag == 2) {
+                viewController.tabBarItem.title = NSLocalizedString(@"Requests", nil);
+            }
+            
+            if (viewController.tabBarItem.tag == 3) {
+                viewController.tabBarItem.title = NSLocalizedString(@"HCPs", nil);
+            }
+            
+            if (viewController.tabBarItem.tag == 4) {
+                viewController.tabBarItem.title = NSLocalizedString(@"Sync", nil);
+            }
+            
+            if (viewController.tabBarItem.tag == 5) {
+                viewController.tabBarItem.title = NSLocalizedString(@"Reports", nil);
+            }
+            
+            
+            // disable tabs
+            
             if (viewController.tabBarItem.tag != 0) {
                 [viewController.tabBarItem setEnabled:NO];
             }
+            
+            
+            // update unsynced orders
         
             if (viewController.tabBarItem.tag == 4 && numberOfRecords > 0) {
                 viewController.tabBarItem.badgeValue = [@(numberOfRecords) description];
@@ -156,7 +181,9 @@ Reachability *internetReachableFoo;
     _lblRememberMe.text = NSLocalizedString(@"Remember Me", nil);
     userName.placeholder = NSLocalizedString(@"user name", nil);
     password.placeholder = NSLocalizedString(@"password", nil);
-    _BtnSignin.titleLabel.text = NSLocalizedString(@"Sign In", nil);
+    
+    [_UserLoginBtn setTitle:NSLocalizedString(@"Sign In", nil) forState:UIControlStateNormal];
+    
     
 }
 
@@ -168,6 +195,7 @@ Reachability *internetReachableFoo;
 }
 
 
+#pragma mark - IB Actions
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField{
     
@@ -225,7 +253,6 @@ Reachability *internetReachableFoo;
         
         if ( [[userName.text lowercaseString] isEqualToString:comp_username] )
         {
-            NSLog(@"Offline Login Confirmed");
             
             if ( [[password.text lowercaseString] isEqualToString:comp_password] ) {
                 
@@ -237,8 +264,8 @@ Reachability *internetReachableFoo;
             } else {
                 
                 UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                               initWithTitle:@"Invalid Login"
-                                               message:@"Invalid User Name or Password"
+                                               initWithTitle:NSLocalizedString(@"Invalid Login", nil)
+                                               message:NSLocalizedString(@"Invalid User Name or Password", nil)
                                                delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 
                 [errorAlertView show];
@@ -254,8 +281,8 @@ Reachability *internetReachableFoo;
             myActIndicator.hidden=TRUE;
         
             UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                           initWithTitle:@"Invalid Login"
-                                           message:@"Offline Login Requires Previous User Credentials"
+                                           initWithTitle:NSLocalizedString(@"Invalid Login", nil)
+                                           message:NSLocalizedString(@"Offline Login Requires Previous User Credentials", nil)
                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             
             [errorAlertView show];
@@ -291,11 +318,7 @@ Reachability *internetReachableFoo;
             [defaults setObject:nil forKey:@"MCG_passwordKey"];
         }
         
-                
-        
-        NSLog(@"first show VICE1 %@", userName.text);
-        NSLog(@"first show VICE2 %@", password.text);
-            
+
             
         NSDictionary* infoTEST = [NSDictionary dictionaryWithObjectsAndKeys:
                                   userName.text,
@@ -361,10 +384,8 @@ Reachability *internetReachableFoo;
 -   (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)theData{
     
     
-    NSLog(@"dw1 - is the app waiting here:%@", [NSDate date]);
     
-    
-    NSLog(@"String sent from server %@",[[NSString alloc] initWithData:theData encoding:NSUTF8StringEncoding]);
+    // NSLog(@"String sent from server %@",[[NSString alloc] initWithData:theData encoding:NSUTF8StringEncoding]);
 
     
     NSError *error = nil;
@@ -374,8 +395,6 @@ Reachability *internetReachableFoo;
     // get root node
     NSDictionary* dictRow = [dictResult objectForKey:@"LoginResult"];
     
-    
-    NSLog(@"dw2 - is the app waiting here:%@", [NSDate date]);
     
     
     // INVALID PASSWORD
@@ -387,8 +406,8 @@ Reachability *internetReachableFoo;
         myActIndicator.hidden=TRUE;
 
         UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                       initWithTitle:@"Invalid Login"
-                                       message:@"Invalid User Name or Password"
+                                       initWithTitle:NSLocalizedString(@"Invalid Login", nil)
+                                       message:NSLocalizedString(@"Invalid User Name or Password", nil)
                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [errorAlertView show];
@@ -397,7 +416,6 @@ Reachability *internetReachableFoo;
         else
     {
 
-        NSLog(@"dw1 - found here 3");
         
         id appDelegate = (id)[[UIApplication sharedApplication] delegate];
         self.managedObjectContext = [appDelegate managedObjectContext];
@@ -412,21 +430,13 @@ Reachability *internetReachableFoo;
         
         NSArray *tokendata = [[context executeFetchRequest:fetchrequest error:&error] lastObject];
         
-            NSLog(@"dw1 A- tk %@", [tokendata valueForKey:@"username"]);
-        
-        
         NSString *UserChangeOccured = @"";
         int userfound = 1;
         
-        NSLog(@"dw1 - show usercount %d" , usercount);
-        
         if (usercount == 0) {
-            NSLog(@"dw1 - u make me happy");
             userfound = 0;
         }
         
-        
-        NSLog(@"dw1 - show userfound %d" , userfound);
         
 #pragma mark New User Login
         
@@ -434,10 +444,6 @@ Reachability *internetReachableFoo;
             if (userfound == 0 ||  (userfound == 1 && ![userName.text isEqualToString:[tokendata valueForKey:@"username"]]) ) {
                 
                 // USER LOGIN CHANGED
-                
-                NSLog(@"dw1 - Bespoke1 %@", userName.text);
-                NSLog(@"dw1 - Bespoke2 %@", [tokendata valueForKey:@"username"]);
-                
                 
                 if (userfound == 1 && ![userName.text isEqualToString:[tokendata valueForKey:@"username"]]) {
                 
@@ -456,7 +462,7 @@ Reachability *internetReachableFoo;
                     NSArray *resultArray = [arrkeys filteredArrayUsingPredicate:usr_predicate];
                     
                     for (int i = 0; i < resultArray.count; i++) {
-                        NSLog(@"Delete Key: %@", [resultArray objectAtIndex:i]);
+                        // NSLog(@"Delete Key: %@", [resultArray objectAtIndex:i]);
                         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:[resultArray objectAtIndex:i]];
                     }
                 
@@ -467,7 +473,7 @@ Reachability *internetReachableFoo;
                     */
                     
                     // clear previous NSUSER values
-                    NSLog(@" show all keys %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+                    // NSLog(@" show all keys %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 
                     
                     
@@ -494,7 +500,7 @@ Reachability *internetReachableFoo;
                         
                         for (NSManagedObject *managedObject in items) {
                             [_managedObjectContext deleteObject:managedObject];
-                            NSLog(@"%@ object deleted",[deletionEntity objectAtIndex:i]);
+                            // NSLog(@"%@ object deleted",[deletionEntity objectAtIndex:i]);
                         }
                         if (![_managedObjectContext save:&error]) {
                             NSLog(@"Error deleting %@ - error:%@",[deletionEntity objectAtIndex:i],error);
@@ -533,53 +539,14 @@ Reachability *internetReachableFoo;
                 }
                
                 
-                // update user credentials
-                
-                /*
-                MOD1
-                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setObject:user_id forKey:@"MCG_userid"];
-                [defaults setObject:client_id forKey:@"MCG_clientid"];
-                [defaults setObject:token forKey:@"MCG_token"];
-                */
-                
-                // [defaults setObject:[[currentitems valueForKey:@"clientid"] description] forKey:@"clientid"];
-                // [defaults setObject:[[currentitems valueForKey:@"allocationid"] description] forKey:@"allocationid"];
-                
-                
-                // Mark Initial Database Message
-                
-                // Set All TabBar Badges Upon Load
-                /*
-                 MOD1
-                for (UIViewController *viewController in self.tabBarController.viewControllers) {
-                    
-                    
-                    // only enable sync button on inital load
-                    
-                    if (viewController.tabBarItem.tag == 0)
-                    {
-                        [viewController.tabBarItem setEnabled:NO];
-                    }
-                    else
-                    {
-                        [viewController.tabBarItem setEnabled:YES];
-                    }
-                    
-                    
-                }
-                [self.tabBarController setSelectedIndex:1];
-                */
-                
                 [self sucessfulLogin];
-                
                 
                 
                 if ([UserChangeOccured isEqualToString:@"YES"]) {
                     
                     UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                                   initWithTitle:@"New User Detected!"
-                                                   message:@"You are attempting to login as a new user, previous data will be removed from device..."
+                                                   initWithTitle:NSLocalizedString(@"New User Detected!", nil)
+                                                   message:NSLocalizedString(@"You are attempting to login as a new user, previous data will be removed from device...", nil)
                                                    delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     
                     [errorAlertView show];
@@ -588,8 +555,8 @@ Reachability *internetReachableFoo;
                 } else {
                     
                     UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                                   initWithTitle:@"First Time Login: Update Data!"
-                                                   message:@"You Must Sync Data Before Performing Any Operations"
+                                                   initWithTitle:NSLocalizedString(@"First Time Login: Update Data!", nil)
+                                                   message:NSLocalizedString(@"You Must Sync Data Before Performing Any Operations", nil)
                                                    delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     
                     [errorAlertView show];
@@ -653,38 +620,6 @@ Reachability *internetReachableFoo;
                 
                 [self sucessfulLogin];
                 
-                    
-                    // - success ROUTINE = -- open menu items  / segue to home screen
-                    // Set All TabBar Badges Upon Load
-                
-                /*
-                 MOD1
-                 
-                    for (UIViewController *viewController in self.tabBarController.viewControllers) {
-                        
-                        
-                        if (viewController.tabBarItem.tag == 0)
-                        {
-                            [viewController.tabBarItem setEnabled:NO];
-                        }
-                        else
-                        {
-                            [viewController.tabBarItem setEnabled:YES];
-                        }
-                        
-                    
-                    }
-                        [self.tabBarController setSelectedIndex:1];
-                   */
-                    
-                    /*
-                    UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                                   initWithTitle:@"LOGIN SUCCESSFUL"
-                                                   message:@"Invalid Username or Password"
-                                                   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    
-                    [errorAlertView show];
-                    */                
                 
                 
             }
@@ -804,7 +739,6 @@ return result;
     hash = [hash stringByReplacingOccurrencesOfString:@"<" withString:@""];
     hash = [hash stringByReplacingOccurrencesOfString:@">" withString:@""];
     
-    NSLog(@"Hash is %@ for string %@", hash, str);
     
     return hash;
 }
