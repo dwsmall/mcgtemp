@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  SampleCupboard_iOS
+
+  Created by David Small on 10/15/13.
+  Copyright (c) 2013 MCG. All rights reserved.
+*/
+
+"MyUsageDescription" = "Show your total usage per product, by period (YTD, allocation period, current month)";
+"TerritoryAllocationDescription" = "Shows product allocations for your territory, quantity used (in units and %) and remaining MCG Inventory levels.";
+"MyTeamDescription" = "Lists all representatives in your territory(ies), group by territory name";
