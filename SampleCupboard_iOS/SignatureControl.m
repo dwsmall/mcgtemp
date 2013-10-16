@@ -50,32 +50,14 @@ foreColor = foreColor_;
 
 #pragma mark - *** Drawing ***
 
-/**
- * Main drawing method. We keep an array of touch coordinates to represent
- * the user dragging their finter across the screen. This method loops through
- * those coordinates and draws a line to each. When the user lifts their finger,
- * we insert a CGPointZero object into the array and handle that here.
- * @author Jesse Bunch
- **/
-
-
 
 - (void)view:(UIView *)view didBeginDragging:(UIEvent *)event {
-    
-    NSLog(@"dw1 - drag baby 1");
-    
-    /*
-     [self setHighlighted:NO animated:NO];
-     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
-     */
+   
 }
 
 
 - (void)vView:(UIView *)view didFinishDragging:(UIEvent *)event {
-    
-    NSLog(@"dw1 - drag baby 2");
-    
-    // [self setSelectionStyle:UITableViewCellSelectionStyleGray];
+
 }
 
 
@@ -89,7 +71,6 @@ foreColor = foreColor_;
     // if (handWRITING == nil) {
     if (myglobsigCoordinates == nil) {
     
-        NSLog(@"dw1 - cheap method but works");
         handWRITING = [[NSMutableArray alloc] init];
         self.handwritingCoords = [[NSMutableArray alloc] init];
 		self.lineWidth = 3.0f;
@@ -100,50 +81,6 @@ foreColor = foreColor_;
 		lastTapPoint_ = CGPointZero;
         
         myglobsigCoordinates = [[NSMutableArray alloc] init];
-        
-        // OrderDetailViewController_iPad *details = [[OrderDetailViewController_iPad alloc] init];
-        
-        // UIView *hview = details.viewContainer;
-        
-        // UITableView *tview = details.ordTableView;
-  
-        
-        NSLog(@"dw1 - draw rect called A");
-        
-        
-        /*
-        tview.scrollEnabled = NO;
-        tview.bounces = NO;
-        
-        [tview setScrollEnabled:NO];
-        
-        // [hview setContentOffset: offsetof(3, 0) animated: YES]
-        [tview setContentOffset:tview.contentOffset animated:NO];
-        NSLog(@"dw1 - sig was here!!");
-        
-        CGRect contentRect = tview.bounds;
-        [tview scrollRectToVisible:contentRect animated:NO];
-        
-        NSLog(@"dw1 - show offset %f, %f", tview.contentOffset.x, tview.contentOffset.y);
-        
-        [tview setContentOffset:CGPointMake(tview.contentOffset.x, tview.contentOffset.y) animated:NO];
-        
-        */
-        
-        // details.viewContainer.subviews;
-        
-        
-        /* freeze screen
-         
-        OrderDetailViewController_iPad *details = [[OrderDetailViewController_iPad alloc] init];
-        details.viewContainer.subviews
-        UIView *tab1 = [super viewWithTag:877];
-        
-        
-        // tab1.scrollEnabled = NO;
-        */
-        
-        
         
     }
     
@@ -162,8 +99,6 @@ foreColor = foreColor_;
     
         
     } else {
-    
-                    NSLog(@"dw1 - draw rect called B");
         
             // DRAW SIGNATURE
     
@@ -210,12 +145,7 @@ foreColor = foreColor_;
                     CGPoint startPoint = CGContextGetPathCurrentPoint(context);
                     CGContextAddQuadCurveToPoint(context, startPoint.x, startPoint.y, tapLocation.x, tapLocation.y);
                     CGContextAddLineToPoint(context, tapLocation.x, tapLocation.y);
-                    // NSLog(@"dw1 - %f, %f", tapLocation.x, tapLocation.y);
-                    
-                    // bx1 NSLog(@"dw1 - handwritingCoords_: %@", handwritingCoords_);
-                    
-                    
-                    // BX1 NSLog(@"dw1 - handwritingCoords_: %@", myglobsigCoordinates);
+
                 }
                 
             }
@@ -232,12 +162,7 @@ foreColor = foreColor_;
 
 #pragma mark - *** Touch Handling ***
 
-/**
- * Not implemented.
- * @author Jesse Bunch
- **/
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"dw1 - prevent drag1");
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"SteadySignature" object:nil];
 
@@ -245,10 +170,7 @@ foreColor = foreColor_;
 
     
 
-/**
- * This method adds the touch to our array.
- * @author Jesse Bunch
- **/
+
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 	
 	UITouch *touch = [touches anyObject];
@@ -256,67 +178,44 @@ foreColor = foreColor_;
 	
 	[self processPoint:touchLocation];
 
-	NSLog(@"dw1 - prevent drag2");
-
 }
 
 
-/**
- * Add a CGPointZero to our array to denote the user's finger has been
- * lifted.
- * @author Jesse Bunch
- **/
+
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	// bx1 [self.handwritingCoords addObject:NSStringFromCGPoint(CGPointZero)];
-    
+	
     [myglobsigCoordinates addObject:NSStringFromCGPoint(CGPointZero)];
     
-    NSLog(@"dw1 - prevent drag3");
-
+    
 }
 
 
 
 
-/**
- * Touches Cancelled.
- * @author Jesse Bunch
- **/
+
 -(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-	// bx1 [self.handwritingCoords addObject:NSStringFromCGPoint(CGPointZero)];
-    
+	
     [myglobsigCoordinates addObject:NSStringFromCGPoint(CGPointZero)];
     
-    // NSLog(@"dw1 - show valueD:%f", CGPointZero.x);
-    // NSLog(@"dw1 - show valueD:%f", CGPointZero.y);
-    
-    NSLog(@"dw1 - prevent drag4	");
-
 }
 
 
 #pragma mark - *** Private Methods ***
 
-/**
- * Processes the point received from touch events
- * @author Jesse Bunch
- **/
+
 -(void)processPoint:(CGPoint)touchLocation {
 	
-    // NSLog(@"dw1 - point #3a: %@" , NSStringFromCGPoint(touchLocation));
     
 	// Only keep the point if it's > 5 points from the last
 	if (CGPointEqualToPoint(CGPointZero, lastTapPoint_) ||
 		fabs(touchLocation.x - lastTapPoint_.x) > 2.0f ||
 		fabs(touchLocation.y - lastTapPoint_.y) > 2.0f) {
 		
-		// bx1 [self.handwritingCoords addObject:NSStringFromCGPoint(touchLocation)];
-        [myglobsigCoordinates addObject:NSStringFromCGPoint(touchLocation)];
+		[myglobsigCoordinates addObject:NSStringFromCGPoint(touchLocation)];
         
 		[self setNeedsDisplay];
 		lastTapPoint_ = touchLocation;
 		
-        // NSLog(@"dw1 - point #3b: %@" , NSStringFromCGPoint(touchLocation));
 	}
 	
 }
@@ -324,11 +223,6 @@ foreColor = foreColor_;
 
 #pragma mark - *** Public Methods ***
 
-/**
- * Returns a UIImage with the signature cropped and centered with the margin
- * specified in the signatureImageMargin property.
- * @author Jesse Bunch
- **/
 -(UIImage *)getSignatureImage {
 	
 	// Grab the image
@@ -388,28 +282,6 @@ foreColor = foreColor_;
     
     [myglobsigCoordinates removeAllObjects];
     myglobsigCoordinates = nil;
-    
-
-
-    
-    
-    // NO [self performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
-    // NO [self performSelectorOnMainThread:@selector(resetSignature) withObject:nil waitUntilDone:NO];
-    
-    // [SignatureControl setNeedsDisplay];
-    
-    // NO [self resetSignature];
-    
-    
-    // [[self view] setNeedsDisplay];
-    
-    // [[self view] setNeedsDisplay:YES];
-    
-    // crash [self performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:self waitUntilDone:TRUE];
-    
-    
-   // NSLog(@"dw1 - signature cleared");
-    
 	
 }
 
@@ -425,15 +297,13 @@ foreColor = foreColor_;
 // - (void)drawRect:(CGRect)rect;
  
 - (void)showSignature {
+    
     // Get VarBinary String...
     // this is in orders entity (signature) and can be passwed as var...
     
     
         
     NSString *mySignature = [OrderDetailViewController_iPad globsig];
-
-   
-
     
     
     if ([mySignature length] > 0)
@@ -445,14 +315,7 @@ foreColor = foreColor_;
         // Set WaterMark Label
         
         // Decode Base64 String
-        NSLog(@"dw1 - show my signature: %@", mySignature);
-        
         NSString *convertedString = [NSString stringWithBase64EncodedString:mySignature];
-        
-
-        
-        NSLog(@"dw1 - ConvertedString:%@", convertedString);
-        
         
         // Convert to Dictionary from JSON
         NSError *error = nil;
@@ -463,10 +326,6 @@ foreColor = foreColor_;
     
         CGContextRef context = UIGraphicsGetCurrentContext();
         CGContextSetStrokeColorWithColor(context, [[UIColor blueColor] CGColor]);
-        
-        
-        NSLog(@"dw1 - show array container:%@" , arrContainer);
-        
         
         
         CGContextBeginPath(context);
