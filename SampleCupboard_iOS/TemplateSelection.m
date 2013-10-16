@@ -832,10 +832,11 @@
 
 - (NSString *)stringOrEmptyString:(NSString *)string
 {
-    if (string)
-        return string;
-    else
+    if (string == nil || [string isKindOfClass:[NSNull class]] ) {
         return @"";
+    } else {
+        return string;
+    }    
 }
 
 
