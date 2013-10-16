@@ -38,6 +38,10 @@ Reachability *internetReachableFoo;
 @property (nonatomic) NSString *urltoken;
 @property (nonatomic) NSURL *url;
 
+@property (strong, nonatomic) IBOutlet UILabel *lastHcpUpdateDate;
+
+@property (strong, nonatomic) IBOutlet UILabel *lastDataUpdateDate;
+
 
 
 - (IBAction)btnLoadHCPsClick:(id)sender;
@@ -56,6 +60,7 @@ Reachability *internetReachableFoo;
 
 @synthesize urlsvc, baseurl, urluserid, urltoken, url;
 
+@synthesize lastHcpUpdateDate, lastDataUpdateDate;
 
 
 #pragma mark - ViewDelegate Methods
@@ -64,6 +69,15 @@ Reachability *internetReachableFoo;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    
+    // update button titles    
+    _btnLoadHCPs.title = NSLocalizedString(@"Load HCPs", nil);
+    _btnReloadData.title = NSLocalizedString(@"Reload Data", nil);
+    _btnSync.title = NSLocalizedString(@"Sync", nil);
+    
+    lastHcpUpdateDate.text = NSLocalizedString(@"LAST HCP UPDATE", nil);    
+    lastDataUpdateDate.text = NSLocalizedString(@"LAST DATA SYNC UPDATE", nil);
     
     
     NSString *internetFound = @"";
@@ -99,8 +113,8 @@ Reachability *internetReachableFoo;
         // first time msg
         if ([internetFound isEqualToString:@"NO"]) {
             UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                           initWithTitle:@"Initial Load Requires An Internet Connection"
-                                           message:@"Internet connection is required to load data"
+                                           initWithTitle:NSLocalizedString(@"Initial Load Requires An Internet Connection",nil)
+                                           message:NSLocalizedString(@"Internet connection is required to load data", nil)
                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             
             errorAlertView.tag = 300;
@@ -109,8 +123,8 @@ Reachability *internetReachableFoo;
         } else {
             
             UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                           initWithTitle:@"Please Load Data To Enable Features"
-                                           message:@"Initial Setup Requies Loading of Data"
+                                           initWithTitle:NSLocalizedString(@"Please Load Data To Enable Features",nil)
+                                           message:NSLocalizedString(@"Initial Setup Requies Loading of Data",nil)
                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             errorAlertView.tag = 400;
             [errorAlertView show];
@@ -123,8 +137,8 @@ Reachability *internetReachableFoo;
         // not first time no internet
         if ([internetFound isEqualToString:@"NO"]) {
             UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                           initWithTitle:@"Syncing of Data Requires An Internet Connection"
-                                           message:@"Internet connection is required to load data"
+                                           initWithTitle:NSLocalizedString(@"Syncing of Data Requires An Internet Connection",nil)
+                                           message:NSLocalizedString(@"Internet connection is required to load data", nil)
                                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             
             [errorAlertView show];
@@ -139,6 +153,7 @@ Reachability *internetReachableFoo;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     // not used (was to allow/disallow based on data loaded)
+    // invalid user data should prevent user from going beyond sync data screen (lock other tabs)
     
     if (alertView.tag == 400 || alertView.tag == 300) {
         
@@ -164,7 +179,7 @@ Reachability *internetReachableFoo;
 
 
 
-#pragma mark - SyncOrders Actions
+#pragma mark - IB Actions
 
 - (IBAction)btnSyncClick:(id)sender {
 
@@ -178,8 +193,8 @@ Reachability *internetReachableFoo;
     if (internetStatus == NotReachable){
         
         UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                       initWithTitle:@"No internet connection"
-                                       message:@"Internet connection is required to sync orders"
+                                       initWithTitle: NSLocalizedString(@"No internet connection",nil)
+                                       message: NSLocalizedString(@"Internet connection is required to sync orders",nil)
                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         
         [errorAlertView show];
@@ -196,17 +211,8 @@ Reachability *internetReachableFoo;
         donotsyncFLAG = @"FALSE";
         
     } else {
-        
-        /*
-        UIAlertView *errorAlertView = [[UIAlertView alloc]
-                                       initWithTitle:@"No Orders To Sync"
-                                       message:@"You Have No Orders To Sync At This Time"
-                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        [errorAlertView show];
-        */
-        
-        
+       
+        // used to be no orders to sync msg, but quick chg
         // if online get orders (hey why not?)
         
         if (internetStatus != NotReachable) {
@@ -215,7 +221,7 @@ Reachability *internetReachableFoo;
             [self.view addSubview:HUD];
             
             HUD.delegate = self;
-            HUD.labelText = @"Connecting";
+            HUD.labelText = NSLocalizedString(@"Connecting",nil);
             HUD.minSize = CGSizeMake(135.f, 135.f);
             
             [HUD showWhileExecuting:@selector(syncOrdersfromSC) onTarget:self withObject:nil animated:YES];
@@ -233,7 +239,7 @@ Reachability *internetReachableFoo;
         [self.view addSubview:HUD];
 	
         HUD.delegate = self;
-        HUD.labelText = @"Connecting";
+        HUD.labelText = NSLocalizedString(@"Connecting",nil);
         HUD.minSize = CGSizeMake(135.f, 135.f);
 	
         [HUD showWhileExecuting:@selector(sendOrderstoSC) onTarget:self withObject:nil animated:YES];
@@ -367,7 +373,7 @@ Reachability *internetReachableFoo;
         
         cell.textLabel.textColor = [UIColor blueColor];
                 
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d %@", abs(startDateDay - endDateDay) ,@"DAYS OUTSTANDING"];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d %@", abs(startDateDay - endDateDay) , NSLocalizedString(@"DAYS OUTSTANDING",nil)];
         cell.detailTextLabel.textColor = [UIColor redColor];
         
     }
@@ -512,7 +518,7 @@ Reachability *internetReachableFoo;
     NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
     if (internetStatus == NotReachable){
         
-        NSLog(@"There's no connection");
+        // NSLog(@"There's no connection");
         
         UIAlertView *errorAlertView = [[UIAlertView alloc]
                                        initWithTitle:NSLocalizedString(@"Connection Required",@"titleKey")
@@ -621,7 +627,7 @@ Reachability *internetReachableFoo;
     NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
     if (internetStatus == NotReachable){
         
-        NSLog(@"There's no connection");
+        // NSLog(@"There's no connection");
         
         UIAlertView *errorAlertView = [[UIAlertView alloc]
                                        initWithTitle:NSLocalizedString(@"Connection Required",@"titleKey")
@@ -645,13 +651,13 @@ Reachability *internetReachableFoo;
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         });
         
-                
         
         // Update TimeStamp for HCP
         NSDate *currentDateNTime = [NSDate date];
         NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
-        [dateformater setDateFormat:@"yyyyMMdd,HH:mm"];
-        // NSString *str = [dateformater stringFromDate: currentDateNTime];
+        // [dateformater setDateFormat:@"yyyyMMdd,HH:mm"];
+        [dateformater setDateFormat:@"MMM dd, yyyy HH:mm"];
+        
         __hcp_stamp.text = [dateformater stringFromDate: currentDateNTime];
         
         
@@ -747,8 +753,7 @@ Reachability *internetReachableFoo;
     for(int i=0;i<[deletionEntity count];i++)
     {
         
-        NSLog(@"dw1 - I am about to delete %@" , [deletionEntity objectAtIndex:i]);
-    
+        
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         
         NSEntityDescription *entity = [NSEntityDescription entityForName:[deletionEntity objectAtIndex:i] inManagedObjectContext:context];
@@ -808,22 +813,6 @@ Reachability *internetReachableFoo;
     
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
-    // NSManagedObjectContext *context = [self managedObjectContext];
-    
-     
-    // NSError *error;
-    
-    /*
-    //Get User ID AND Token
-    NSFetchRequest * request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"Tokenized_Credentials" inManagedObjectContext:context]];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"id=%@",@"current_rep"]];
-    NSArray *currentitems = [[context executeFetchRequest:request error:&error] lastObject];
-    
-    NSString *comp_userid = [[[currentitems valueForKey:@"user_id"] description] lowercaseString];
-    NSString *comp_token = [[[currentitems valueForKey:@"token"] description] lowercaseString];
-    */
-    
     
     //Prep Values
     
@@ -850,9 +839,7 @@ Reachability *internetReachableFoo;
         
         // getHcpData
         [self performSelectorOnMainThread:@selector(getHcpData) withObject:nil waitUntilDone:YES];
-        // [self performSelectorInBackground:@selector(getHcpData) withObject:nil];
-        
-        
+                
     }
     
     
@@ -923,10 +910,9 @@ Reachability *internetReachableFoo;
                                 urluserid]];
     
     
-    NSLog(@"Show BASE TOKENS %@ %@ %@ %@ %@", url, baseurl, urlsvc, urluserid, urltoken);
+    // NSLog(@"Show BASE TOKENS %@ %@ %@ %@ %@", url, baseurl, urlsvc, urluserid, urltoken);
     
     
-    NSLog(@"Show HCP SVC %@", url);
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
@@ -1048,7 +1034,7 @@ Reachability *internetReachableFoo;
                                 urltoken,
                                 @"Merck"]];
     
-    NSLog(@"dw1 - show url: %@", url);
+    // NSLog(@"dw1 - show url: %@", url);
     
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
@@ -1057,9 +1043,7 @@ Reachability *internetReachableFoo;
     {
         NSError *error = nil;
         NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-        // NSArray* arrayContainer = [dictContainer objectForKey:@"GetClientByNameResult"];
         
-        // NSDictionary* dicItems = [arrayContainer objectAtIndex:0];
         
         NSDictionary* dicItems = [dictContainer objectForKey:@"GetClientByNameResult"];
         
@@ -1092,7 +1076,6 @@ Reachability *internetReachableFoo;
         
         //Update the object
         [savechange setValue:[[dicItems objectForKey:@"Options_OrderType_AllowsBackOrder"] description] forKey:@"allow_backorder"];
-        // [savechange setValue:[dictRow objectForKey:@"Id"] forKey:@"multiple_carrier"];
         
         //Save it
         error = nil;
@@ -1162,8 +1145,6 @@ Reachability *internetReachableFoo;
             NSLog(@"Couldn't save: %@", [error localizedDescription]);
         }
         
-        // if (error == nil)
-        // NSLog(@"%@", dictContainer);
     }
 
 
@@ -1184,7 +1165,7 @@ Reachability *internetReachableFoo;
                                 urltoken,
                                 urluserid]];
     
-    NSLog(@"url: %@", url);
+    // NSLog(@"url: %@", url);
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
@@ -1279,7 +1260,7 @@ Reachability *internetReachableFoo;
                                 urltoken,
                                 urluserid]];
     
-    NSLog(@"url: %@", url);
+    // NSLog(@"url: %@", url);
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
@@ -1293,7 +1274,6 @@ Reachability *internetReachableFoo;
         // step.2 - Determine How Many Territories in Object
         int numofterr = [[[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0] count];
         
-        NSLog(@"how many territories please ?? :%d" , numofterr);
         numofterr = 1;
         
         // step.3 iterate over territories to get data
@@ -1336,28 +1316,6 @@ Reachability *internetReachableFoo;
                     [model setValue:[dicALLOC objectForKey:@"ProductId"] forKey:@"productid"];
                     [model setValue:[dicALLOC objectForKey:@"ProductName"] forKey:@"productname"];
                     [model setValue:[dicALLOC objectForKey:@"ProductDescription"] forKey:@"productdescription"];
-                    
-                    // double c_ordermax = [[dicALLOC objectForKey:@"Max"] doubleValue];
-                    // double c_totalmax = [[dicALLOC objectForKey:@"AvailableAllocation"] doubleValue];
-                    
-                    
-                    /*
-                    if (c_ordermax < 0) {
-                        [model setValue:0 forKey:@"ordermax"];
-                    } else {
-                        [model setValue:[dicALLOC objectForKey:@"OrderMax"] forKey:@"ordermax"];
-                    }
-                    
-                    if (c_totalmax < 0) {
-                        [model setValue:0 forKey:@"totalmax"];
-                        [model setValue:0 forKey:@"avail_allocation"];
-                    } else {
-                        [model setValue:[dicALLOC objectForKey:@"AvailableAllocation"] forKey:@"totalmax"];
-                        [model setValue:[dicALLOC objectForKey:@"AvailableAllocation"] forKey:@"avail_allocation"];
-                    }
-                    
-                    */
-                    
                     
                     
                     // computed values
@@ -1405,7 +1363,7 @@ Reachability *internetReachableFoo;
                                 urltoken,
                                 urluserid]];
     
-    NSLog(@"url: %@", url);
+    // NSLog(@"url: %@", url);
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
@@ -1424,7 +1382,6 @@ Reachability *internetReachableFoo;
             // should only be 1 item
             if (i == 5)
             {
-                NSLog(@"current index %d",i);
                 NSDictionary* dicItems = [arrayContainer objectAtIndex:i];
                 
                 NSManagedObject *model = [NSEntityDescription
@@ -1462,9 +1419,8 @@ Reachability *internetReachableFoo;
                                 urluserid]];
 
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
-
-    NSLog(@"url: %@", url);    
-
+    
+    
     if(jsonData != nil)
     {
         NSError *error = nil;
@@ -1474,7 +1430,6 @@ Reachability *internetReachableFoo;
         NSArray* arrayContainer = [dictContainer objectForKey:@"GetOrdersByRepIdResult"];
         
         
-        NSLog(@"dw1 - how many loaded:%d", [arrayContainer count]);
         
         
         //Iterate JSON Objects
@@ -1507,6 +1462,9 @@ Reachability *internetReachableFoo;
             [OrderHDR setValue:[dicItems objectForKey:@"shipping_phone"] forKey:@"shipping_phone"];
             [OrderHDR setValue:[dicItems objectForKey:@"shipping_phoneextension"] forKey:@"shipping_phoneextension"];
             
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_instructions"] forKey:@"shipping_instructions"];
+            [OrderHDR setValue:[dicItems objectForKey:@"shipping_carrierType"] forKey:@"shipping_type"];
+            
             [OrderHDR setValue:[dicItems objectForKey:@"shipping_trackingnumber"] forKey:@"trackingnumbers"];
             [OrderHDR setValue:[dicItems objectForKey:@"FormNumber"] forKey:@"formnumber"];
             
@@ -1515,15 +1473,16 @@ Reachability *internetReachableFoo;
             [OrderHDR setValue:[dicItems objectForKey:@"shipping_signature64"] forKey:@"signature"];
             
             
+            
+            
             // Date Conversion Routine
             
             NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
             [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-            NSLog(@"dw1 - conv_date:%@", [dicItems objectForKey:@"datecreated"]);
+            
             NSString *myDateToConvert = [dicItems objectForKey:@"datecreated"];
             NSDate *myDate = [dateFormatter dateFromString:myDateToConvert];
             
-            NSLog(@"dw1 - populate_date:%@", myDate);
             
             [OrderHDR setValue:myDate forKey:@"datecreated"];
             
@@ -1531,7 +1490,6 @@ Reachability *internetReachableFoo;
             // Iteration of Order Details
             NSArray* arrayContainer2 = [dicItems objectForKey:@"orderLineItems"];
             
-            // NSLog(@"PXX %@", arrayContainer2);
             
             // Get Matching Detailed Items And Insert
             for(int x=0;x<[arrayContainer2 count];x++)
@@ -1543,8 +1501,6 @@ Reachability *internetReachableFoo;
                                              insertNewObjectForEntityForName:@"OrderLineItem"
                                              inManagedObjectContext:context];
                 
-                
-                // [OrderDTL setValue:[dicItems2 objectForKey:@"clientid"] forKey:@"clientid"];
                 [OrderDTL setValue:[dicItems2 objectForKey:@"Orderid"] forKey:@"orderid"];
                 [OrderDTL setValue:[dicItems2 objectForKey:@"ProductId"] forKey:@"productid"];
                 [OrderDTL setValue:[dicItems2 objectForKey:@"Stored_Product_Name"] forKey:@"stored_product_name"];
@@ -1584,7 +1540,7 @@ Reachability *internetReachableFoo;
                                 urltoken,
                                 urluserid]];
     
-    NSLog(@"url: %@", url);
+    // NSLog(@"url: %@", url);
     
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
@@ -1606,7 +1562,7 @@ Reachability *internetReachableFoo;
             NSManagedObject *model = [NSEntityDescription
                                       insertNewObjectForEntityForName:@"Territory"
                                       inManagedObjectContext:context];
-            // [model setValue:[dicItems objectForKey:@"ClientId"] forKey:@"clientid"];
+ 
             [model setValue:[dicItems objectForKey:@"Name"] forKey:@"name"];
             [model setValue:[dicItems objectForKey:@"Id"] forKey:@"territory_id"];
             
@@ -1639,9 +1595,7 @@ Reachability *internetReachableFoo;
                                              inManagedObjectContext:context];
                 [modelfsa setValue:[dicItemsFSA objectForKey:@"FSA"] forKey:@"fsa"];
                 [modelfsa setValue:[dicItemsFSA objectForKey:@"TerritoryId"] forKey:@"territory_id"];
-                
-                //PART 3. INSERT VALUE FOR RELATIONSHIP
-                // [OrderDTL setValue:OrderHDR forKey:@"toOrderHeader"];
+
             }
             
             
@@ -1652,52 +1606,21 @@ Reachability *internetReachableFoo;
             NSLog(@"Couldn't save: %@", [error localizedDescription]);
         }
         
+        /*
+         
         if (error == nil) {
             NSLog(@"%@", dictContainer);
         }
+        
+        */
     }
 }
 
 
 
 
-#pragma mark - Utillities
 
-
-+ (NSInteger)daysBetween:(NSDate *)dt1 and:(NSDate *)dt2 {
-    NSUInteger unitFlags = NSDayCalendarUnit;
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:unitFlags fromDate:dt1 toDate:dt2 options:0];
-    NSInteger daysBetween = abs([components day]);
-    return daysBetween+1;
-}
-
-
-
-
-- (void) deleteAllObjects: (NSString *) entityDescription  {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:_managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSError *error;
-    NSArray *items = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    for (NSManagedObject *managedObject in items) {
-    	[_managedObjectContext deleteObject:managedObject];
-    	NSLog(@"%@ object deleted",entityDescription);
-    }
-    if (![_managedObjectContext save:&error]) {
-    	NSLog(@"Error deleting %@ - error:%@",entityDescription,error);
-    }
-    
-}
-
-- (void)myTask {
-	// Do something usefull in here instead of sleeping ...
-	sleep(3);
-}
-
+#pragma mark - Custom Methods
 
 - (void)sendOrderstoSC {
     
@@ -1789,16 +1712,7 @@ Reachability *internetReachableFoo;
             [order_xml appendString:[NSString stringWithFormat:@"<DateSigned xsi:nil=\"%@\" />\n", @"true"]];
             
             [order_xml appendString:[NSString stringWithFormat:@"<OrderLineItems>\n"]];
-        
-        
-            // build detail file
-            /*
-            NSSet *orderDetails = [obj.toOrderDetails valueForKeyPath:@"productid"];
-            NSArray *orderDetailsItem = [orderDetails allObjects];
-            
-            NSSet *orderDetails2 = [obj.toOrderDetails valueForKeyPath:@"quantityordered"];
-            NSArray *orderDetailsQTY = [orderDetails2 allObjects];
-            */
+ 
         
             int totdtl = [obj.toOrderDetails.allObjects count];
         
@@ -1818,7 +1732,7 @@ Reachability *internetReachableFoo;
             // Should Replace Contradicting XML Characters
             // NSString *order_xml=[order_xml stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
         
-            NSLog(@"xmlData: %@", order_xml);
+            // NSLog(@"xmlData: %@", order_xml);
         
         
             //Post XML to SC
@@ -1844,7 +1758,7 @@ Reachability *internetReachableFoo;
     
 	// Switch to determinate mode
 	HUD.mode = MBProgressHUDModeDeterminate;
-	HUD.labelText = @"Sending Data";
+	HUD.labelText = NSLocalizedString(@"Sending Data",nil);
 	float progress = 0.0f;
 	while (progress < 1.0f)
 	{
@@ -1855,7 +1769,7 @@ Reachability *internetReachableFoo;
     
 	// Back to indeterminate mode
 	HUD.mode = MBProgressHUDModeIndeterminate;
-	HUD.labelText = @"Updating Status";
+	HUD.labelText = NSLocalizedString(@"Updating Status",nil);
     
     // replacement of Orders in Core-Data With Orders From The System...
     
@@ -1875,14 +1789,12 @@ Reachability *internetReachableFoo;
 
 	HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
 	HUD.mode = MBProgressHUDModeCustomView;
-	HUD.labelText = @"Completed";
+	HUD.labelText = NSLocalizedString(@"Completed",nil);
 	sleep(1);
     
     
-    
-    
-    
 }
+
 
 
 -(void) syncOrdersfromSC {
@@ -1890,7 +1802,7 @@ Reachability *internetReachableFoo;
     
     // Switch to determinate mode
     HUD.mode = MBProgressHUDModeDeterminate;
-    HUD.labelText = @"Syncing Orders";
+    HUD.labelText = NSLocalizedString(@"Syncing Orders",nil);
     float progress = 0.0f;
     while (progress < 1.0f)
     {
@@ -1901,7 +1813,7 @@ Reachability *internetReachableFoo;
     
     // Back to indeterminate mode
     HUD.mode = MBProgressHUDModeIndeterminate;
-    HUD.labelText = @"Updating Status";
+    HUD.labelText = NSLocalizedString(@"Updating Status",nil);
     
     // replacement of Orders in Core-Data With Orders From The System...
     
@@ -1919,11 +1831,15 @@ Reachability *internetReachableFoo;
     
     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
     HUD.mode = MBProgressHUDModeCustomView;
-    HUD.labelText = @"Completed";
+    HUD.labelText = NSLocalizedString(@"Completed",nil);
     sleep(1);
 
 
 }
+
+
+
+#pragma mark - Utillities
 
 
 - (NSString *)stringOrEmptyString:(NSString *)string
@@ -1938,6 +1854,34 @@ Reachability *internetReachableFoo;
 }
 
 
++ (NSInteger)daysBetween:(NSDate *)dt1 and:(NSDate *)dt2 {
+    NSUInteger unitFlags = NSDayCalendarUnit;
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:unitFlags fromDate:dt1 toDate:dt2 options:0];
+    NSInteger daysBetween = abs([components day]);
+    return daysBetween+1;
+}
+
+
+
+
+- (void) deleteAllObjects: (NSString *) entityDescription  {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:_managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    NSArray *items = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    for (NSManagedObject *managedObject in items) {
+    	[_managedObjectContext deleteObject:managedObject];
+    	NSLog(@"%@ object deleted",entityDescription);
+    }
+    if (![_managedObjectContext save:&error]) {
+    	NSLog(@"Error deleting %@ - error:%@",entityDescription,error);
+    }
+    
+}
 
 
 
@@ -1946,21 +1890,21 @@ Reachability *internetReachableFoo;
     NSString *msgText = nil;
     
     if (noHcpFound == 1) {
-        msgText = @"Warning! No HCP Records Recieved";
+        msgText = NSLocalizedString(@"Warning! No HCP Records Recieved",nil);
     }
     
     if (noAllocationFound == 1) {
-        msgText = @"Warning! No Allocation Records Recieved.";
+        msgText = NSLocalizedString(@"Warning! No Allocation Records Recieved.",nil);
     }
     
     if (noHcpFound == 0 && noAllocationFound == 0) {
-        msgText = @"All files loaded successfully";
+        msgText = NSLocalizedString(@"All files loaded successfully",nil);
     }
     
     
     
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle: @"Data Load Complete"
+                          initWithTitle: NSLocalizedString(@"Data Load Complete",nil)
                           message: msgText
                           delegate: nil
                           cancelButtonTitle:@"OK"
@@ -1971,14 +1915,10 @@ Reachability *internetReachableFoo;
 }
 
 
-#pragma mark - update sync counter
+#pragma mark - Update Counter
 
 
 -(void) updateSyncBadge {
-    
-    
-    NSLog(@"dw1 - Badge Was Called");
-    
     
     // Get OutStanding Badges on Login
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
