@@ -54,7 +54,7 @@
 @synthesize urlsvc, baseurl, urluserid, urltoken, url;
 
 
-#pragma mark - View
+#pragma mark - ViewDelegate
 
 - (void)viewDidLoad
 {
@@ -67,6 +67,8 @@
     
     // default title
     myReportTitle.text = NSLocalizedString(@"Reports", nil);
+    
+    _SelectAReport.text = NSLocalizedString(@"Select A Report", nil);
     
     
 }
@@ -539,7 +541,6 @@
     baseurl = app.globalBaseUrl;
     
     url = [NSURL URLWithString:@""];
-    urlsvc = @"TBD";
     urlsvc = @"GetUsageReportData";
     
     
@@ -723,13 +724,13 @@
         
         // prep values
         
-            NSString *stock_there = @"NO";
+            NSString *stock_there = NSLocalizedString(@"NO", nil);
 
             // NSLog(@"dw1 - show me avail_inventory: %f", [[alloc valueForKey:@"avail_inventory"] doubleValue]);
         
         
             if ([[alloc valueForKey:@"avail_inventory"] doubleValue] > 0) {
-                stock_there = @"YES";
+                stock_there = NSLocalizedString(@"YES", nil);
             }
         
         NSDictionary *arrayHolderDict = [[NSMutableDictionary alloc] init];
