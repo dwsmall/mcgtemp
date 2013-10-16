@@ -85,7 +85,7 @@
 
 
 
-#pragma mark - View Functions
+#pragma mark - View Delegate
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -94,10 +94,7 @@
     
     // count on number of drafts
     // Get OutStanding Badges on Login
-    /*
-    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-    self.managedObjectContext = [appDelegate managedObjectContext];
-    */
+   
     
     NSManagedObjectContext *context = [self managedObjectContext];
     
@@ -109,7 +106,6 @@
     NSError *error = nil;
     NSUInteger numberOfRecords = [context countForFetchRequest:fetchDraftBadge error:&error];
     
-    NSLog(@"dw1 - how many badges: %d", numberOfRecords);
     
     
     if (numberOfRecords > 0) {
@@ -143,7 +139,7 @@
     BOOL isLandscape = UIInterfaceOrientationIsLandscape(self.interfaceOrientation);
     
     if (isLandscape) {
-                NSLog(@"dw1 - I am in landscape mode X2");
+                // NSLog(@"dw1 - I am in landscape mode X2");
         
         CGRect Frame = _segmentBar.frame;
         
@@ -155,15 +151,17 @@
         
          
     } else {
-                NSLog(@"dw1 - I am portrait mode X2");
+                // NSLog(@"dw1 - I am portrait mode X2");
     }
     
     // reposition segment bar based on horizontal/portrait
         // a. show frame position
+    /*
+     fix for DRAFTS
     NSLog(@"dw1 - show frame origin x: %f", _segmentBar.frame.origin.x);
     NSLog(@"dw1 - show frame origin y: %f", _segmentBar.frame.origin.y);
     NSLog(@"dw1 - show frame size: %f", _segmentBar.frame.size.width);
-    
+    */
     // [_segmentBar setFrame:_segmentBar.frame]
     
     
@@ -179,6 +177,14 @@
     
     // Do any additional setup after loading the view, typically from a nib.
     NSError *error = nil;
+    
+    [_segmentBar setTitle:NSLocalizedString(@"All", nil) forSegmentAtIndex:0];
+    [_segmentBar setTitle:NSLocalizedString(@"In Progress", nil) forSegmentAtIndex:1];
+    [_segmentBar setTitle:NSLocalizedString(@"On Hold", nil) forSegmentAtIndex:2];
+    [_segmentBar setTitle:NSLocalizedString(@"Shipped", nil) forSegmentAtIndex:3];
+    [_segmentBar setTitle:NSLocalizedString(@"Cancelled", nil) forSegmentAtIndex:4];
+    [_segmentBar setTitle:NSLocalizedString(@"**Draft**", nil) forSegmentAtIndex:5];
+    
     
     [[self fetchedResultsController] performFetch:&error];
     
@@ -210,7 +216,7 @@
 
 
 
-#pragma mark - Rotate
+#pragma mark - Rotate (DRAFT SEGMNENT DO NOT TOUCH)
 
 /*
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -221,27 +227,25 @@
 
 -(void)willRotateToInterfaceOrientation: (UIInterfaceOrientation)orientation duration:(NSTimeInterval)duration {
     
+    BOOL isLandscape = UIInterfaceOrientationIsLandscape(self.interfaceOrientation);
     
     
-     BOOL isLandscape = UIInterfaceOrientationIsLandscape(self.interfaceOrientation);
-     
      if (isLandscape) {
-         NSLog(@"dw1 - I am portrait mode X");
+         // NSLog(@"dw1 - I am portrait mode X");
      
      } else {
      
-         NSLog(@"dw1 - I am in landscape mode X");
+         // NSLog(@"dw1 - I am in landscape mode X");
      }
     
     
-    NSLog(@"dw1 - did rotate will 1--");
+    // NSLog(@"dw1 - did rotate will 1--");
 }
-
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)orientation duration:(NSTimeInterval)duration {
     
-    NSLog(@"dw1 - did rotate will 2--");
-    
+    // NSLog(@"dw1 - did rotate will 2--");
+ 
 }
 
 
@@ -318,7 +322,6 @@
             
             
             // draft
-            // [vc setSelectedButton:4];
             
             // Store Data
             app.globalMode = @"DRAFT";
@@ -386,15 +389,11 @@
             //create predicate
             
             NSPredicate *tmp_predicate = [NSPredicate predicateWithFormat:@"territoryid = %@ AND NOT (productid IN %@)", [[ourfetchClass valueForKey:@"territoryid"] description], orderDetails];
-            
-            
-            // NSLog(@"Order Details: %@, predicate:%@", orderDetails, tmp_predicate);
+
             
             [tmp_request setPredicate:tmp_predicate];
             
             NSError *error = nil;
-            
-            // [[[self fetchedResultsController] fetchedObjects] count]
             
             NSArray *arrayRmvProd = [tmp_moc executeFetchRequest:tmp_request error:&error];
             
@@ -411,19 +410,11 @@
                 for (int i = 0; i < [[arrayRmvProd valueForKey:@"productid"] count]; i++)
                 {
                     
-                    NSLog(@"dw1 - add SHOW_OBJECT %d - %@", i , [[arrayRmvProd valueForKey:@"productid"] objectAtIndex:i] );
                     [app.globalProductsRmv addObject:[[arrayRmvProd valueForKey:@"productid"] objectAtIndex:i] ];
                     
                 }
                 
             }
-            
-            
-            // [app.globalProductsRmv addobject:]
-            
-            NSLog(@"dw1 - SHOW ITEMS %@", app.globalProductsRmv);
-            
-            
             
             
             app.globalProductsRmv = nil;
@@ -444,8 +435,6 @@
             }
             
             
-            NSLog(@"dw1 - pass productandqty: %@" , productandqty);
-            
             // dictionary with pairing
             [defaults setObject:productandqty forKey:@"MCG_productandqty"];
             
@@ -453,7 +442,6 @@
         } else {
             
             // regular order
-            // [vc setSelectedButton:2];
             
             app.globalMode = @"VIEW";
         
@@ -476,8 +464,6 @@
     
     // Fetch Each Object As Section (Should Show Total Orders as Results - XX)
     
-    
-    
     if (tableView == self.tableView)
     {
         return [[[self.fetchedResultsController sections] objectAtIndex:0] numberOfObjects];
@@ -495,8 +481,7 @@
 {
     
     // Determine Number of Rows Based on NSSet Count For Details
-    
-    // Order *order =[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:section inSection:0]];
+
     if (tableView == self.tableView)
     {
         
@@ -552,10 +537,115 @@
 
 
 
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    Order *order = nil;
+    
+    if (_tableView == self.tableView)
+    {
+        order =[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
+    } else
+    {
+        order = [self.filteredList objectAtIndex:indexPath.row];
+    }
+    
+    
+    
+    // HEADER CELL
+    if (indexPath.row == 0) {
+        
+        UILabel *PDate = (UILabel *)[cell viewWithTag:600];
+        
+        // Date [Reference] Formating...
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"dd/MM/yyyy"];
+        
+        
+        // update header based on projectcode type
+        
+        
+        // do not show ref. if value is null
+        if( [[[order valueForKey:@"projectcode"] description] isEqualToString:@"OFFLINE"]  ||
+           [[[order valueForKey:@"projectcode"] description] isEqualToString:@"DRAFT"] ) {
+            
+            // unprocessed
+            
+            [PDate setText: [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:[order valueForKey:@"datecreated"]]] ];
+            
+        } else  {
+            
+            
+            // regular order
+            
+            [PDate setText: [NSString stringWithFormat:@"%@ [%@%@]",
+                             [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:[order valueForKey:@"datecreated"]]],
+                             [[order valueForKey:@"refprefix"] description],
+                             [[order valueForKey:@"reference"] description]]];
+        }
+        
+        
+        // Name Formating
+        UILabel *PName = (UILabel *)[cell viewWithTag:601];
+        [PName setText: [NSString stringWithFormat:@"%@, %@",
+                         [[order valueForKey:@"shipping_firstname"] description],
+                         [[order valueForKey:@"shipping_lastname"] description]]];
+    }
+    
+    
+    
+    // DETAIL ITEM CELL
+    if (indexPath.row != 0 && indexPath.row != ([order.toOrderDetails.allObjects count] + 1) ) {
+        
+        
+        // ** SHOULD LOOP TO FIND VALUE AT INDEX (OR STRAIGHT PROPAGATE...)
+        
+        NSArray *oRecords = [[order valueForKey:@"toOrderDetails"] allObjects];
+        
+        if ([oRecords count] > 0) {
+            
+            int total_rcds = 0;
+            total_rcds = [[order.toOrderDetails allObjects] count];
+            for (int i = 0; i < total_rcds; i++)
+            {
+                if (i == (indexPath.row - 1)) {
+                    UILabel *PItem = (UILabel *)[cell viewWithTag:602];
+                    [PItem setText:[[oRecords objectAtIndex:i] valueForKey:@"stored_product_name"]];
+                    
+                    UILabel *PQty = (UILabel *)[cell viewWithTag:603];
+                    [PQty setText:[[[oRecords objectAtIndex:i] valueForKey:@"quantityordered"] stringValue]];
+                }
+                
+            }
+            
+            
+        }
+        
+        
+        
+        
+    }
+    
+    
+    // SUMMARY CELL
+    if (indexPath.row == ([order.toOrderDetails.allObjects count] + 1)) {
+        
+        UILabel *XNameX = (UILabel *)[cell viewWithTag:604];
+        [XNameX setText:[[order valueForKey:@"status"] description]];
+        
+        UILabel *InsText = (UILabel *)[cell viewWithTag:605];
+        [InsText setText:NSLocalizedString(@"View Details", nil)];
+    
+    }
+    
+    
+}
 
 
 
-#pragma mark - Fetched results controller
+
+#pragma mark - Fetched Results Controller
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -583,9 +673,8 @@
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"reference" ascending:NO];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"datecreated" ascending:NO];
-    // NSArray *sortDescriptors = @[sortDescriptor];
+
     NSArray *sortDescriptorA = @[sortDescriptor, sortDescriptor2];
-   // NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptorA, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptorA];
     
@@ -607,10 +696,7 @@
         NSPredicate *predicateSTS = [NSPredicate predicateWithFormat:@"status IN (%@) ", all_status[_segmentBar.selectedSegmentIndex]];
         
         [compoundPredicateArray addObject: predicateSTS ];
-        
-        // [fetchRequest setPredicate:predicate];
-        
-        NSLog(@"dw1 - show DRAFT:%@", predicateSTS);
+
     } else {
     
         // exclude DRAFT
@@ -623,14 +709,11 @@
     // set predicate based on search
     if (_topSearchBar.text.length > 0) {
     
-        NSLog(@"dw1 - search bar UX1 %@", _topSearchBar.text);
         
         NSPredicate *predicateSRCH = [NSPredicate predicateWithFormat:@"shipping_lastname contains[cd] %@ OR shipping_firstname contains[cd] %@ OR shipping_postalcode contains[cd] %@ OR reference contains[cd] %@", _topSearchBar.text, _topSearchBar.text, _topSearchBar.text, _topSearchBar.text];
         
-        NSLog(@"dw1 - show my predicate %@" , predicateSRCH);
-        
         [compoundPredicateArray addObject: predicateSRCH];
-        // [fetchRequest setPredicate:predicate2];
+
     }
     
     
@@ -717,137 +800,16 @@
     // [self.tableView reloadData];
 }
 
-/*
- // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
- {
- // In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
- }
- */
 
 
 
 
 
-
-
-#pragma mark - Custom Functions
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    
-    
-    Order *order = nil;
-    
-    if (_tableView == self.tableView)
-    {
-        order =[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
-    } else
-    {
-        order = [self.filteredList objectAtIndex:indexPath.row];
-    }
-    
-    
-    
-    // HEADER CELL
-    if (indexPath.row == 0) {
-        
-        UILabel *PDate = (UILabel *)[cell viewWithTag:600];
-        
-        // Date [Reference] Formating...
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"dd/MM/yyyy"];
-        
-        
-        // update header based on projectcode type
-        
-
-        // do not show ref. if value is null
-        if( [[[order valueForKey:@"projectcode"] description] isEqualToString:@"OFFLINE"]  ||
-            [[[order valueForKey:@"projectcode"] description] isEqualToString:@"DRAFT"] ) {
-            
-            // unprocessed
-            
-            [PDate setText: [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:[order valueForKey:@"datecreated"]]] ];
-        
-        } else  {
-            
-            
-            // regular order
-            
-            [PDate setText: [NSString stringWithFormat:@"%@ [%@%@]",
-                             [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:[order valueForKey:@"datecreated"]]],
-                             [[order valueForKey:@"refprefix"] description],
-                             [[order valueForKey:@"reference"] description]]];
-        }        
-        
-        
-        // Name Formating
-        UILabel *PName = (UILabel *)[cell viewWithTag:601];
-        [PName setText: [NSString stringWithFormat:@"%@, %@",
-        [[order valueForKey:@"shipping_firstname"] description],
-        [[order valueForKey:@"shipping_lastname"] description]]];
-    }
-    
-    
-    
-    // DETAIL ITEM CELL
-    if (indexPath.row != 0 && indexPath.row != ([order.toOrderDetails.allObjects count] + 1) ) {
-     
-
-        // ** SHOULD LOOP TO FIND VALUE AT INDEX (OR STRAIGHT PROPAGATE...)
-        
-        NSArray *oRecords = [[order valueForKey:@"toOrderDetails"] allObjects];
-
-       if ([oRecords count] > 0) {
-           
-            int total_rcds = 0;
-            total_rcds = [[order.toOrderDetails allObjects] count];
-            for (int i = 0; i < total_rcds; i++)
-            {
-                if (i == (indexPath.row - 1)) {
-                    UILabel *PItem = (UILabel *)[cell viewWithTag:602];
-                    [PItem setText:[[oRecords objectAtIndex:i] valueForKey:@"stored_product_name"]];
-                
-                    UILabel *PQty = (UILabel *)[cell viewWithTag:603];
-                    [PQty setText:[[[oRecords objectAtIndex:i] valueForKey:@"quantityordered"] stringValue]];
-                }
-                
-            }
-           
-        
-        }
-        
-        
-    
-       
-    }
-    
-    
-    // SUMMARY CELL
-    if (indexPath.row == ([order.toOrderDetails.allObjects count] + 1)) {
-        UILabel *XNameX = (UILabel *)[cell viewWithTag:604];
-        [XNameX setText:[[order valueForKey:@"status"] description]];
-    }
-    
-    
-}
-
-
-
-
-
-#pragma mark === Accessors ===
+#pragma mark SearchBar Delegate
 
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
 
-    NSLog(@"dw1 - show reaction %@" , _topSearchBar.text);
-    
-    
-    
     [NSFetchedResultsController deleteCacheWithName:@"OrderList"];
     _fetchedResultsController=nil;
     
@@ -883,8 +845,6 @@
 
 -(void) updateSyncBadge {
 
-    NSLog(@"dw1 - Badge Was Called");
-    
     
     // Get OutStanding Badges on Login
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
@@ -906,13 +866,6 @@
     NSError *error = nil;
     NSUInteger numberOfRecords = [context countForFetchRequest:fetchRequestBadge error:&error];
 
-    // Set the button Text Color
-    /*
-    [_UserLoginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _UserLoginBtn.layer.cornerRadius = 10; // this value vary as per your desire
-    _UserLoginBtn.clipsToBounds = YES;
-     */
-    
 
     // Set All TabBar Badges Upon Load
     for (UIViewController *viewController in self.tabBarController.viewControllers) {
@@ -951,11 +904,6 @@
     app.globalProductsScrn = nil;
     app.globalRmvProductsFetch = nil;
     
-   
-    
-    // [SignatureControl clearSignature];
-    
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:nil forKey:@"MCG_territoryid"];
     
@@ -967,16 +915,9 @@
 - (void) RemoveEntities:(NSString *) removalType {
     
     
-    // NSLog(@"Entity A Removal Called %@", removalType);
-    
     NSArray *deletionEntity;
     
-    // NSString *delete_others = @"others";
-    
-    // if ([removalType isEqual: delete_others]) {
-        deletionEntity = @[@"Allocation"];
-        // deletionEntity = @[@"ClientInfo",@"Order",@"Product",@"Allocation",@"AllocationHeader",@"TerritoryFSA",@"Territory",@"Rep"];
-    // }
+    deletionEntity = @[@"Allocation"];
     
     
     // Define Delegate Context
@@ -987,8 +928,6 @@
     
     for(int i=0;i<[deletionEntity count];i++)
     {
-        
-        NSLog(@"dw1 - I am about to delete %@" , [deletionEntity objectAtIndex:i]);
         
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         
@@ -1034,8 +973,6 @@
                                 urltoken,
                                 urluserid]];
     
-    NSLog(@"url: %@", url);
-    
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
     if(jsonData != nil)
@@ -1048,7 +985,6 @@
         // step.2 - Determine How Many Territories in Object
         int numofterr = [[[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0] count];
         
-        NSLog(@"how many territories please ?? :%d" , numofterr);
         numofterr = 1;
         
         // step.3 iterate over territories to get data
@@ -1092,9 +1028,6 @@
                     [model setValue:[dicALLOC objectForKey:@"AvailableInventory"] forKey:@"avail_inventory"];
                     [model setValue:[dicALLOC objectForKey:@"OrderMax"] forKey:@"ordermax"];
                     
-                    // [model setValue:[dicALLOC objectForKey:@"HasAvailableInventory"]forKey:@"hasavailableinventory"];
-                    
-                    
                     if (![context save:&error]) {
                         NSLog(@"Couldn't save: %@", [error localizedDescription]);
                     }
@@ -1119,9 +1052,10 @@
 
 - (NSString *)stringOrEmptyString:(NSString *)string
 {
-    if (string)
+    if (string == nil || [string isKindOfClass:[NSNull class]] ) {
+        return @"";
+    } else {
         return string;
-    else
-        return @" ";
+    }    
 }
 @end
