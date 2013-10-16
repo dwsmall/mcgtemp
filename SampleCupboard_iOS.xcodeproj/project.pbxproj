@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B2801D917C75E7600D06363 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2801D617C75E7600D06363 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		5B2801DA17C75E7600D06363 /* MESegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2801D817C75E7600D06363 /* MESegmentedControl.m */; };
 		5B39CB53180DD2D6008055FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B39CB51180DD2D6008055FB /* Localizable.strings */; };
 		5B47025B1805BD2F006CCEF7 /* OrderLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B47025A1805BD2F006CCEF7 /* OrderLineItem.m */; };
 		5B49681617A13C5600DDC43A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B49681517A13C5500DDC43A /* CoreGraphics.framework */; };
@@ -20,6 +18,9 @@
 		5B589D7B17CF4DA400DE9930 /* ReportDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B589D7A17CF4DA400DE9930 /* ReportDetails.m */; };
 		5B589D8117CF4F1D00DE9930 /* ReportMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B589D8017CF4F1D00DE9930 /* ReportMenu.m */; };
 		5B5C53E31757E44D004126D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C53E21757E44D004126D1 /* Reachability.m */; };
+		5B5D951B180F252600ED1A5D /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5D951A180F252500ED1A5D /* SVProgressHUD.m */; };
+		5B5D951E180F25D800ED1A5D /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5D951D180F25D800ED1A5D /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5B5D9521180F25FD00ED1A5D /* MESegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5D9520180F25FB00ED1A5D /* MESegmentedControl.m */; };
 		5B62125D1746D8C5007B5C7C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B62125C1746D8C5007B5C7C /* UIKit.framework */; };
 		5B62125F1746D8C5007B5C7C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B62125E1746D8C5007B5C7C /* Foundation.framework */; };
 		5B6212671746D8C5007B5C7C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212651746D8C5007B5C7C /* InfoPlist.strings */; };
@@ -53,7 +54,6 @@
 		5B6E2EC117BA97E7002FDBF9 /* TemplateSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E2EC017BA97E7002FDBF9 /* TemplateSelection.m */; };
 		5B74925217B28FD800EDBE8A /* Order+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B74925117B28FD800EDBE8A /* Order+Extensions.m */; };
 		5B74925817B2972B00EDBE8A /* Hcp+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B74925717B2972B00EDBE8A /* Hcp+Extensions.m */; };
-		5B7E16BD17D69675000049B6 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E16BC17D69675000049B6 /* SVProgressHUD.m */; };
 		5B7E16BF17D69768000049B6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B7E16BE17D69768000049B6 /* QuartzCore.framework */; };
 		5B7E4BF1179B2C8A00ABD030 /* accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7E4BEF179B2C8A00ABD030 /* accept.png */; };
 		5B7E4BF2179B2C8A00ABD030 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7E4BF0179B2C8A00ABD030 /* delete.png */; };
@@ -94,10 +94,6 @@
 		5B0C7899176D4ED100770EDF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5B10578D176F3C360048513E = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodeld; sourceTree = "<group>"; };
 		5B10578E176F3E540048513E /* SampleCupboard_iOS 1.001.xcdatamodel */ = {isa = PBXFileReference; explicitFileType = wrapper.xcdatamodel; path = "SampleCupboard_iOS 1.001.xcdatamodel"; sourceTree = "<group>"; };
-		5B2801D517C75E7500D06363 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomBadge.h; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/CustomBadge.h"; sourceTree = "<group>"; };
-		5B2801D617C75E7600D06363 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomBadge.m; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/CustomBadge.m"; sourceTree = "<group>"; };
-		5B2801D717C75E7600D06363 /* MESegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MESegmentedControl.h; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/MESegmentedControl.h"; sourceTree = "<group>"; };
-		5B2801D817C75E7600D06363 /* MESegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MESegmentedControl.m; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/MESegmentedControl.m"; sourceTree = "<group>"; };
 		5B39CB52180DD2D6008055FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = SampleCupboard_iOS/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B3E552E17FDFCB6002A8373 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B3E552F17FDFCB7002A8373 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -115,6 +111,12 @@
 		5B589D8017CF4F1D00DE9930 /* ReportMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportMenu.m; sourceTree = "<group>"; };
 		5B5C53E11757E44D004126D1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5B5C53E21757E44D004126D1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		5B5D9519180F252500ED1A5D /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		5B5D951A180F252500ED1A5D /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		5B5D951C180F25D800ED1A5D /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
+		5B5D951D180F25D800ED1A5D /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
+		5B5D951F180F25FB00ED1A5D /* MESegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MESegmentedControl.h; sourceTree = "<group>"; };
+		5B5D9520180F25FB00ED1A5D /* MESegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MESegmentedControl.m; sourceTree = "<group>"; };
 		5B6212591746D8C5007B5C7C /* SampleCupboard_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleCupboard_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B62125C1746D8C5007B5C7C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5B62125E1746D8C5007B5C7C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -162,8 +164,6 @@
 		5B74925117B28FD800EDBE8A /* Order+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Order+Extensions.m"; sourceTree = "<group>"; };
 		5B74925617B2972B00EDBE8A /* Hcp+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Hcp+Extensions.h"; sourceTree = "<group>"; };
 		5B74925717B2972B00EDBE8A /* Hcp+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Hcp+Extensions.m"; sourceTree = "<group>"; };
-		5B7E16BB17D69675000049B6 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = "../../../../Desktop/SVProgressHUD-master/SVProgressHUD/SVProgressHUD.h"; sourceTree = "<group>"; };
-		5B7E16BC17D69675000049B6 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = "../../../../Desktop/SVProgressHUD-master/SVProgressHUD/SVProgressHUD.m"; sourceTree = "<group>"; };
 		5B7E16BE17D69768000049B6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5B7E4BEF179B2C8A00ABD030 /* accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accept.png; sourceTree = "<group>"; };
 		5B7E4BF0179B2C8A00ABD030 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
@@ -238,12 +238,12 @@
 		5B5C53E01757DB8A004126D1 /* Utility Classes */ = {
 			isa = PBXGroup;
 			children = (
-				5B7E16BB17D69675000049B6 /* SVProgressHUD.h */,
-				5B7E16BC17D69675000049B6 /* SVProgressHUD.m */,
-				5B2801D517C75E7500D06363 /* CustomBadge.h */,
-				5B2801D617C75E7600D06363 /* CustomBadge.m */,
-				5B2801D717C75E7600D06363 /* MESegmentedControl.h */,
-				5B2801D817C75E7600D06363 /* MESegmentedControl.m */,
+				5B5D951F180F25FB00ED1A5D /* MESegmentedControl.h */,
+				5B5D9520180F25FB00ED1A5D /* MESegmentedControl.m */,
+				5B5D951C180F25D800ED1A5D /* CustomBadge.h */,
+				5B5D951D180F25D800ED1A5D /* CustomBadge.m */,
+				5B5D9519180F252500ED1A5D /* SVProgressHUD.h */,
+				5B5D951A180F252500ED1A5D /* SVProgressHUD.m */,
 				5BDE29FF17A17A4B00422C4A /* Base64.h */,
 				5BDE2A0017A17A4B00422C4A /* Base64.m */,
 				5BE39236174BEE74005B40D2 /* SignatureControl.h */,
@@ -612,14 +612,14 @@
 				5B6E2EB817BA966A002FDBF9 /* OrderTemplate.m in Sources */,
 				5B6E2EBE17BA96C7002FDBF9 /* OrderTemplateLine.m in Sources */,
 				5B6E2EC117BA97E7002FDBF9 /* TemplateSelection.m in Sources */,
-				5B2801D917C75E7600D06363 /* CustomBadge.m in Sources */,
-				5B2801DA17C75E7600D06363 /* MESegmentedControl.m in Sources */,
 				5B589D7B17CF4DA400DE9930 /* ReportDetails.m in Sources */,
 				5B589D8117CF4F1D00DE9930 /* ReportMenu.m in Sources */,
-				5B7E16BD17D69675000049B6 /* SVProgressHUD.m in Sources */,
 				5BB6E0D117EB53D7006EF204 /* Order.m in Sources */,
 				5B89560F18033C8F009635C4 /* Allocation.m in Sources */,
 				5B47025B1805BD2F006CCEF7 /* OrderLineItem.m in Sources */,
+				5B5D951B180F252600ED1A5D /* SVProgressHUD.m in Sources */,
+				5B5D951E180F25D800ED1A5D /* CustomBadge.m in Sources */,
+				5B5D9521180F25FD00ED1A5D /* MESegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
