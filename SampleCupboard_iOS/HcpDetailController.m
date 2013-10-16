@@ -12,7 +12,6 @@
 #import "AppDelegate.h"
 #import "OrderDetailViewController_iPad.h"
 #import "SVProgressHUD.h"
-#import "LastXOrdersDesign.h"
 #import "HcpAdditionalDetails.h"
 
 #import "HcpDetailController.h"
@@ -36,6 +35,7 @@
 @property (nonatomic) NSString *urltoken;
 @property (nonatomic) NSURL *url;
 
+@property (strong, nonatomic) IBOutlet UINavigationItem *hcpTopTitle;
 
 
 - (IBAction)return:(UIStoryboardSegue *)segueX;
@@ -67,6 +67,8 @@
     
 }
 
+#pragma mark - View Delegate
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -89,6 +91,7 @@
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [_territoryFetchRequest setSortDescriptors:sortDescriptors];
     
+    _hcpTopTitle.title = NSLocalizedString(@"HCP Details", nil);
     
     
 }
@@ -101,11 +104,10 @@
 }
 
 
-#pragma mark - Table View
+#pragma mark - TableView Delegates
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // return [[self.fetchedResultsController sections] count];
     return 4;
 }
 
@@ -120,27 +122,27 @@
     {
         case 0:
             
-            HeaderTitle = @"Name";
+            HeaderTitle = NSLocalizedString(@"Name", nil);
             break;
             
         case 1:
             
-            HeaderTitle = @"Communication";
+            HeaderTitle = NSLocalizedString(@"Communication",nil);
             break;
             
         case 2:
             
-            HeaderTitle = @"Address";
+            HeaderTitle = NSLocalizedString(@"Address",nil);
             break;
         
         case 3:
             
-            HeaderTitle = @"Order History";
+            HeaderTitle = NSLocalizedString(@"Order History",nil);
             break;
             
         default:
             
-            HeaderTitle = @"Info";
+            HeaderTitle = NSLocalizedString(@"Info",nil);
             break;
             
     }
@@ -153,8 +155,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    // return [sectionInfo numberOfObjects];
     
     int MRows = 0;
     
@@ -185,7 +185,7 @@
             MRows = 1;
             
             int myInt = [previousOrdersRetrieved integerValue];
-            NSLog(@"show row accumulation = %d", myInt);
+            // NSLog(@"show row accumulation = %d", myInt);
             
             if (previousOrdersRetrieved > 0) {
                 MRows = myInt;
@@ -225,73 +225,14 @@
             if ([[extractArray objectAtIndex:0] isEqualToString:@"TYPE1"]) {
                 
                 // apply style
-                
-                // static NSString *CellIdentifier = @"_showOrdHeader";
-                
+
                 MyFormType = @"_showOrdHeader";
-                
-                /*
-                LastXOrdersDesign *cell = [self.tableViewX
-                                           dequeueReusableCellWithIdentifier:CellIdentifier];
-                
-                if (cell == nil) {
-                    cell = [[LastXOrdersDesign alloc]
-                            initWithStyle:UITableViewCellStyleDefault
-                            reuseIdentifier:CellIdentifier];
-                }
-                */
-                
-                /*
-                // Configure the cell...
-                cell.ordDate.text = @"mm/dd/yyyy";
-                cell.ordRef.text = [NSString stringWithFormat:@"%@%@", [extractArray objectAtIndex:2], [extractArray objectAtIndex:1]];
-                cell.ordStatus.text = [extractArray objectAtIndex:3];
-                cell.ordOutstanding.text = [extractArray objectAtIndex:5];
-                cell.ordDaysAgo.text = @"Days Agox";
-                */
-                 
-                 
-                 /*
-                UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"_showOrdHeader" forIndexPath:indexPath];
-                
-                if (cell == nil)  {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"_showOrdHeader"];
-                    // cell.selectionStyle = UITableViewCellStyleValue1;
-                }
-                */
                 
                 
                
             } else {
                 
-                /*
-                UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"_showOrdDetail" forIndexPath:indexPath];
-                
-                if (cell == nil)  {
-                    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"_showOrdDetail"];
-                }
-                */
-                
-                
                 MyFormType = @"_showOrdDetail";
-                
-                /*
-                NSLog(@"dw1 - detail line header");
-                                
-                static NSString *CellIdentifier = @"_showOrdDetail";
-                
-                LastXOrdersDesign *cellX = [tableView
-                                          dequeueReusableCellWithIdentifier:CellIdentifier];
-                if (cellX == nil) {
-                    cellX = [[LastXOrdersDesign alloc]
-                            initWithStyle:UITableViewCellStyleDefault
-                            reuseIdentifier:CellIdentifier];
-                }
-                
-                [cellX.ordDetAmt setText:@"3"];
-                */
-                
-                 
                 
             }
             
@@ -311,25 +252,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    NSLog(@"dw1 - Section and IndexPath %ld, %ld", (long)indexPath.section, (long)indexPath.row);
-    
-    
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
     
-    NSLog(@"dw1 - %ld", (long)selectedCell.tag);
-    NSLog(@"dw2 - %@", selectedCell.reuseIdentifier);
+    // NSLog(@"dw1 - %ld", (long)selectedCell.tag);
+    // NSLog(@"dw2 - %@", selectedCell.reuseIdentifier);
     
     if ([selectedCell.reuseIdentifier isEqualToString:@"_typeD"]) {
         
-        // Change Text to Loading.../Spin Thing...
-        // selectedCell.textLabel.text = @"Loading...";
-        
-        
         // Load Orders From Server...
-        [SVProgressHUD showWithStatus:@"Loading Orders..."];
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"Loading Orders...",nil)];
         [self performSelectorOnMainThread:@selector(retrievePreviousOrders) withObject:nil waitUntilDone:YES];
-        
-        // [self performSelector:@selector(retrievePreviousOrders) withObject:nil afterDelay:0.3];
         
         if (previousOrdersRetrieved == 0) {
             [self performSelector:@selector(dismissNoRecords) withObject:nil afterDelay:0.4f];
@@ -337,13 +269,7 @@
             [self performSelector:@selector(dismiss) withObject:nil afterDelay:0.4f];
         
         }
-        
-        // Animate the Cell
-        
-        
-        
-        
-        
+    
         
     }
     
@@ -351,7 +277,7 @@
 
 
 
-#pragma mark - Fetched results controller
+#pragma mark - Fetched Results Controller
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -520,8 +446,8 @@
         } else {
             
             // show error msg
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid HCP Selection"
-                                                            message:@"This HCP is not available in your territory."
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid HCP Selection", nil)
+                                                            message:NSLocalizedString(@"This HCP is not available in your territory.",nil)
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
@@ -559,7 +485,6 @@
         
         
             // Get destination view
-            // OrderDetailViewController_iPad *vc = [segue destinationViewController];
         
             // set values in app delegate
         
@@ -585,59 +510,7 @@
                                    [self stringOrEmptyString:[[ourfetchClass valueForKey:@"shiptoaddressid"] description]], @"shiptoaddressid",
                                    nil];
         
-        
-        
-            /*
-            [vc setSelectedHCPNUMBER:1002];
-            [vc setMoCreateOrderHCP:moDATAHCP];
-        
-            // get fetched object
-        
-            
-             
-            // Handling of Null Fields (Server Side or Replace With NSAssert)
-            NSString *varphlid = [[ourfetchClass valueForKey:@"phlid"] description];
-            NSString *varfirst = [[ourfetchClass valueForKey:@"firstname"] description];
-            NSString *varlast = [[ourfetchClass valueForKey:@"lastname"] description];
-            NSString *varfacility = [[ourfetchClass valueForKey:@"facility"] description];
-            NSString *varaddress1 = [[ourfetchClass valueForKey:@"address1"] description];
-            NSString *varaddress2 = [[ourfetchClass valueForKey:@"address2"] description];
-            NSString *varaddress3 = [[ourfetchClass valueForKey:@"address3"] description];
-            
-            if (varphlid == NULL) {varphlid = @"111";}
-            if (varfirst == NULL) { varfirst = @".";}
-            if (varlast == NULL) {varlast = @".";}
-            if (varfacility == NULL) {varfacility = @" ";}
-            if (varaddress1 == NULL) {varaddress1 = @" ";}
-            if (varaddress2 == NULL) {varaddress2 = @" ";}
-            if (varaddress3 == NULL) {varaddress3 = @" ";}
-            
-            
-            NSString *shorthcp_name = [NSString stringWithFormat:@"%@, %@",
-                                       [[ourfetchClass valueForKey:@"lastname"] description],
-                                       [[ourfetchClass valueForKey:@"firstname"] description]];
-            
-            NSString *longaddress_name = [NSString stringWithFormat:@"%@ \n %@ %@ %@ %@",
-                                          [[ourfetchClass valueForKey:@"facility"] description],
-                                          [[ourfetchClass valueForKey:@"address1"] description],
-                                          [[ourfetchClass valueForKey:@"city"] description],
-                                          [[ourfetchClass valueForKey:@"province"] description],
-                                          [[ourfetchClass valueForKey:@"postal"] description]];
-            
-            vc.selectedHCPINFO = @[shorthcp_name,
-                                   longaddress_name,
-                                   varfacility,
-                                   varaddress1,
-                                   varaddress2,
-                                   varaddress3,
-                                   [[ourfetchClass valueForKey:@"province"] description],
-                                   [[ourfetchClass valueForKey:@"city"] description],
-                                   [[ourfetchClass valueForKey:@"postal"] description],
-                                   [[ourfetchClass valueForKey:@"shiptoaddressid"] description]];     
-             
-             
-             */
-            
+                       
         }
         
 
@@ -651,12 +524,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
     NSManagedObject *object = moDATAHCP;
-    
-    // [(UILabel *)[cell viewWithTag:1] setText:[[object valueForKey:@"reference"] description]];
-
     
     switch (indexPath.section)
     
@@ -664,33 +532,31 @@
         case 0:
             //Name
             if (indexPath.row == 0) {
-                // cell.textLabel.text = @"First Name:";
-                cell.textLabel.text = @"First Name:";
+                cell.textLabel.text = NSLocalizedString(@"First Name:",nil);
                 cell.detailTextLabel.text = [[object valueForKey:@"firstname"] description];
-                //cell.detailTextLabel.text = currentHCPINFO[0];
             }
             
             if (indexPath.row == 1) {
-                cell.textLabel.text = @"Last Name:";
+                cell.textLabel.text = NSLocalizedString(@"Last Name:",nil);
                 cell.detailTextLabel.text = [[object valueForKey:@"lastname"] description];
                 // cell.detailTextLabel.text = currentHCPINFO[1];
             }
             
             if (indexPath.row == 2) {
-                cell.textLabel.text = @"Title:";
+                cell.textLabel.text = NSLocalizedString(@"Title:",nil);
                 cell.detailTextLabel.text = [[object valueForKey:@"title"] description];
                 // cell.detailTextLabel.text = @"ADD TITLE";
                 // cell.detailTextLabel.text = currentHCPINFO[2];
             }
             
             if (indexPath.row == 3) {
-                cell.textLabel.text = @"Gender:";
+                cell.textLabel.text = NSLocalizedString(@"Gender:",nil);
                 cell.detailTextLabel.text = [[object valueForKey:@"gender"] description];
                 // cell.detailTextLabel.text = currentHCPINFO[3];
             }
             
             if (indexPath.row == 4) {
-                cell.textLabel.text = @"Language:";
+                cell.textLabel.text = NSLocalizedString(@"Language:",nil);
                 cell.detailTextLabel.text = [[object valueForKey:@"language"] description];
                 // cell.detailTextLabel.text = currentHCPINFO[4];
             }
@@ -700,13 +566,13 @@
             
             //Communication
             if (indexPath.row == 0) {
-                cell.textLabel.text = @"Telephone:";
+                cell.textLabel.text = NSLocalizedString(@"Telephone:",nil);;
                 cell.detailTextLabel.text = [[object valueForKey:@"phone"] description];
                 // cell.detailTextLabel.text = currentHCPINFO[5];
             }
             
             if (indexPath.row == 1) {
-                cell.textLabel.text = @"Fax:";
+                cell.textLabel.text = NSLocalizedString(@"Fax:",nil);;
                 cell.detailTextLabel.text = [[object valueForKey:@"fax"] description];
                 // cell.detailTextLabel.text = currentHCPINFO[6];
             }
@@ -735,36 +601,7 @@
                  NSArray *extractArray = [storePreviousOrders objectAtIndex:indexPath.row];
                  
                  if ([[extractArray objectAtIndex:0] isEqualToString:@"TYPE1"]) {
-                     
-                     /*
-                     [(UILabel *)[cell viewWithTag:0] setText:[[extractArray objectAtIndex:4] description]]; //shipdate
-                      */                     
-                     
-                     // apply style
-                     // static NSString *CellIdentifier = @"_showOrdHeader";
-                     
-                     /*
-                     LastXOrdersDesign *cell = [self.tableViewX
-                                                dequeueReusableCellWithIdentifier:CellIdentifier];
-                     
-                     if (cell == nil) {
-                         cell = [[LastXOrdersDesign alloc]
-                                 initWithStyle:UITableViewCellStyleDefault
-                                 reuseIdentifier:CellIdentifier];
-                     }
-                     */
-                     
-                     /*
-                     // Configure the cell...
-                     cell.ordDate.text = @"mm/dd/yyyy";
-                     cell.ordRef.text = [NSString stringWithFormat:@"%@%@", [extractArray objectAtIndex:2], [extractArray objectAtIndex:1]];
-                     cell.ordStatus.text = [extractArray objectAtIndex:3];
-                     cell.ordOutstanding.text = [extractArray objectAtIndex:5];
-                     cell.ordDaysAgo.text = @"Days Ago";
-                     */
-                     
-                    
-
+                   
                      [(UILabel *)[cell viewWithTag:101] setText:[extractArray objectAtIndex:4]]; //date
                      
                      [(UILabel *)[cell viewWithTag:102] setText:[NSString stringWithFormat:@"%@%@", [extractArray objectAtIndex:1], [extractArray objectAtIndex:2]]]; //reference
@@ -773,54 +610,21 @@
                      
                      [(UILabel *)[cell viewWithTag:104] setText:[extractArray objectAtIndex:5]]; //calc days
                      
-                     [(UILabel *)[cell viewWithTag:105] setText:@"Days Ago"]; //description
-                     
-                     
-                     
-                     
+                     [(UILabel *)[cell viewWithTag:105] setText:NSLocalizedString(@"Days Ago",nil)]; //description
                      
                      
                  } else {
                      
-                     // details
-                     
-                     // apply style
-                     // static NSString *CellIdentifier = @"_showOrdDetail";
-                     
-                     /*
-                     LastXOrdersDesign *cell = [self.tableViewX
-                                                dequeueReusableCellWithIdentifier:CellIdentifier];
-                     
-                     if (cell == nil) {
-                         cell = [[LastXOrdersDesign alloc]
-                                 initWithStyle:UITableViewCellStyleDefault
-                                 reuseIdentifier:CellIdentifier];
-                     }
-                      */
-                     
-                     
                      [(UILabel *)[cell viewWithTag:201] setText:[extractArray objectAtIndex:1]]; //product
                      
                      [(UILabel *)[cell viewWithTag:202] setText:[extractArray objectAtIndex:3]]; //amt
-                     
-                     // Configure the cell...
-                     
-                     // cell.ordDetProd.text= [extractArray objectAtIndex:1];
-                     // cell.ordDetAmt.text = [extractArray objectAtIndex:2];
-                     
-                     // [cell.ordDetAmt setText:[extractArray objectAtIndex:2]];
-                     
-                     // cell.ordDetAmt.textColor = [UIColor greenColor];
-                     
-                     
-                     // [(UILabel *)[cell viewWithTag:0] setText:[[extractArray objectAtIndex:2] description]]; //shipdate
                      
                  }
                  
                  
              } else {
              
-                 cell.textLabel.text = @"Show Previous Orders";
+                 cell.textLabel.text = NSLocalizedString(@"Show Previous Orders",nil);
                  cell.textLabel.textColor = [UIColor blueColor];
              
              }
@@ -835,30 +639,27 @@
 
 
 #pragma mark - Custom Functions
+
 -(void) retrievePreviousOrders {
 
     
     NSManagedObject *object = moDATAHCP;
     
-    NSLog(@"dw1 - show valu:%@",[object valueForKey:@"shiptoaddressid"]);
-    
-    
-    
     storePreviousOrders = [[NSMutableArray alloc] init];
     
     
     //Prep Values
-    baseurl = @"http://dev.samplecupboard.com/Data/MobileServices.svc";
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    urluserid = [defaults valueForKey:@"MCG_userid"];
-    urltoken = [defaults valueForKey:@"MCG_token"];
+    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
     
-    NSString *urlhcpid = [[object valueForKey:@"shiptoaddressid"] description];
-    
-    NSString *urlamt = @"5";
+    urluserid = app.globalUserID;
+    urltoken = app.globalToken;
+    baseurl = app.globalBaseUrl;
     
     url = [NSURL URLWithString:@""];
+    
+    NSString *urlhcpid = [[object valueForKey:@"shiptoaddressid"] description];
+    NSString *urlamt = @"5";
     
     urlsvc = @"GetOrdersByTerritoryId";
     
@@ -870,9 +671,7 @@
                                     urluserid,
                                     urlhcpid,
                                     urlamt]];
-        
-    NSLog(@"Show HCP SVC %@", url);
-        
+    
     NSData *jsonData = [NSData dataWithContentsOfURL:url];
     
     if(jsonData != nil)
@@ -896,9 +695,6 @@
         }
         
         int ctr = 0;
-        
-        
-        
         
         
         //Iterate JSON Objects
@@ -962,12 +758,9 @@
             // update ctr
             ctr = ctr + 1;
             
-            
-            
             // Iteration of Order Details
             NSArray* arrayContainer2 = [dicItems objectForKey:@"orderLineItems"];
             
-            // NSLog(@"PXX %@", arrayContainer2);
             
             // Get Matching Detailed Items And Insert
             for(int x=0;x<[arrayContainer2 count];x++)
@@ -1012,34 +805,7 @@
     
     
     [self.tableViewX endUpdates];
-    
-    
-    
-    //indexPath is an NSIndexPath with indexes 0 and 0.  At the moment, this is the only cell in the table view.
-    // NSArray *array = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:3]];
-    // [self.tableView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationNone];   // does not reload
-    // self.tableView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationNone];   // does reload
-    
-    // Insert New Row
-    // self.tableView.dataSource = self;
-    
-    
-    
-    // [self.tableViewX insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:3]]
-     //                      withRowAnimation:UITableViewRowAnimationTop];
-    
-    // [self.tableViewX insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:3]]
-       //                    withRowAnimation:UITableViewRowAnimationTop];
-    
-    
-    
-    /*
-    [self.tableViewX reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationNone];   // does not reload
-    [self.tableViewX reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationNone];
-    [self.tableViewX reloadData];
-    */
-    
-    
+       
 
 }
 
@@ -1047,18 +813,10 @@
 
 
 - (void) RemoveEntities:(NSString *) removalType {
-    
-    
-    // NSLog(@"Entity A Removal Called %@", removalType);
-    
+   
     NSArray *deletionEntity;
     
-    // NSString *delete_others = @"others";
-    
-    // if ([removalType isEqual: delete_others]) {
     deletionEntity = @[@"Allocation"];
-    // deletionEntity = @[@"ClientInfo",@"Order",@"Product",@"Allocation",@"AllocationHeader",@"TerritoryFSA",@"Territory",@"Rep"];
-    // }
     
     
     // Define Delegate Context
@@ -1093,6 +851,7 @@
     }// End Each
     
 }
+
 
 -(void) getAllocationDetailData {
     
@@ -1174,8 +933,6 @@
                     [model setValue:[dicALLOC objectForKey:@"AvailableInventory"] forKey:@"avail_inventory"];
                     [model setValue:[dicALLOC objectForKey:@"OrderMax"] forKey:@"ordermax"];
                     
-                    // [model setValue:[dicALLOC objectForKey:@"HasAvailableInventory"]forKey:@"hasavailableinventory"];
-                    
                     
                     if (![context save:&error]) {
                         NSLog(@"Couldn't save: %@", [error localizedDescription]);
@@ -1222,10 +979,12 @@
 
 - (NSString *)stringOrEmptyString:(NSString *)string
 {
-    if (string)
+    if (string == nil || [string isKindOfClass:[NSNull class]] ) {
+        return @"";
+    } else {
         return string;
-    else
-        return @" ";
+    }
+    
 }
 
 
