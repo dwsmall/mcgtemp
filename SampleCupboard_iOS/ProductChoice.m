@@ -37,8 +37,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
-    NSLog(@"dw1 - show Rmv values: %@", app.globalProductsRmv);
+    // AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
     
     
 }
@@ -139,7 +138,6 @@
     
     AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
 
-    NSLog(@"Show id desc %@" , [identifier description]);
     
     if ([[identifier description] isEqualToString:@"_choseproductcancel"]) {
         
@@ -150,53 +148,20 @@
     
     
     if ([[identifier description] isEqualToString:@"_choseproduct_done"]) {
-        
-        // Check whether product can be added
-        // NSMutableArray *removedPRODUCTS = [OrderDetailViewController_iPad globprod];
+
         
         NSMutableArray *removedPRODUCTS = app.globalProductsRmv;
         NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:checkedCell];
         
-        NSLog(@"Mutable is Seen %@", removedPRODUCTS);
-        NSLog(@"Product Selected - %@", [[object valueForKey:@"productid"] description]);
-        
-        NSLog(@"dw1 - show removed products b4 removal: %@", removedPRODUCTS);
-        
-        NSLog(@"dw1 - ENTERED ZONE A1A: %@", removedPRODUCTS);
-        NSLog(@"dw1 - ENTERED ZONE A1A: %@", [[object valueForKey:@"productid"] description]);
-        
-        
         if ([removedPRODUCTS containsObject:[[object valueForKey:@"productid"] description]]) {
             
-            
-            NSLog(@"dw1 - ENTERED ZONE B1B");
-            
-            // remove non-display object from list
-            // [removedPRODUCTS removeObjectsInArray:[[object valueForKey:@"productid"] description]];
             int i;
             for(i=0; i<[removedPRODUCTS count]; i++) {
                 
                 
                 NSString *element = [removedPRODUCTS objectAtIndex:i];
                 
-                
-                NSLog(@"dw1 - ENTERED ZONE C1C: %@", element);
-                NSLog(@"dw1 - ENTERED ZONE C2C: %@", [[object valueForKey:@"productid"] description]);
-                
-                
                 if([element isEqualToString: [[object valueForKey:@"productid"] description]]) {
-                    
-                    // pointer **removed from app.globalProucts
-                    
-                    // [removedPRODUCTS removeObjectAtIndex:i];
-                    
-                    NSLog(@"dw1 - show JKL: %@", removedPRODUCTS);
-                    
-                    //remove from rmv'd product list
-                    // [app.globalProductsRmv removeObjectAtIndex:i];
-                    // NSLog(@"dw1 - show: %@", removedPRODUCTS);
-                    //NSLog(@"dw1 - show: %@", app.globalProductsRmv);
-                    
                     
                     // add to productscreen
                     
@@ -210,12 +175,7 @@
                     [app.globalProductsScrn addObject:arrTempProducts];
                     
                     
-                    
-                    
                     [removedPRODUCTS removeObjectAtIndex:i];
-                    
-                    NSLog(@"dw1 - show MNO: %@", removedPRODUCTS);
-                    
                     
                     
                 }
@@ -228,8 +188,8 @@
     
     
     UIAlertView *AlertView = [[UIAlertView alloc]
-                              initWithTitle:@"Product Cannot Be Added"
-                              message:@"Product Already Exists"
+                              initWithTitle:NSLocalizedString(@"Product Cannot Be Added",nil)
+                              message:NSLocalizedString(@"Product Already Exists",nil)
                               delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     
     [AlertView show];
@@ -254,23 +214,15 @@
         AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
         app.globalProductChosen = @"NEW";
         
-        
-        // [vc setSelectedHCPNUMBER:0];
-        // [vc setSelectedADDPRODUCT:1001];
-        
         [vc setSelectedCHOSENPRODUCT:@[[[object valueForKey:@"productid"] description],
                                        [[object valueForKey:@"productname"] description],
                                        [[object valueForKey:@"productdescription"] description]]];
-        
-        // [vc setSelectedPRODUCTNUMBER:1001];
         
     }
     
     
     // User Cancelled Selection
     if ([[segue identifier] isEqualToString:@"_choseproductcancel"]) {
-        
-        // [vc setSelectedPRODUCTNUMBER:1001];
         
         AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
         app.globalProductChosen = @"NEW";
@@ -294,7 +246,6 @@
     
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
-    // NSManagedObjectContext *context = [self managedObjectContext];
     
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Allocation" inManagedObjectContext:self.managedObjectContext];
@@ -303,8 +254,6 @@
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
-    
-        
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"productname" ascending:YES];
@@ -320,24 +269,17 @@
     NSString *territoryid = [defaults objectForKey:@"MCG_territoryid"];
     
     NSString *searchtxt = prodSearchBar.text;
-        
-    NSLog(@"dw1 - show predicate %@" , prodSearchBar.text);
     
     if (searchtxt.length > 0) {
         
         // search predicate
         predicate = [NSPredicate predicateWithFormat:@"territoryid = %@ and productname contains[cd] %@", territoryid, searchtxt];
-        NSLog(@"dw1 - show predicate %@" , predicate);
-        
     } else {
     
         predicate = [NSPredicate predicateWithFormat:@"territoryid = %@", territoryid];
-        
     }
     
-    NSLog(@"dw1 - show predicate %@" , predicate);
     [fetchRequest setPredicate:predicate];
-    
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
@@ -443,11 +385,9 @@
 
 
 
-#pragma mark === Accessors ===
+#pragma mark - Search Delegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
-    NSLog(@"dw1 - show reaction %@" , prodSearchBar.text);
     
     [NSFetchedResultsController deleteCacheWithName:@"MasterProduct"];
     
