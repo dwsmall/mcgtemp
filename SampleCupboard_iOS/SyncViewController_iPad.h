@@ -13,7 +13,7 @@ NSManagedObjectContext *managedObjectContext;
 
 @class MBProgressHUD;
 
-@interface SyncViewController_iPad : UIViewController <NSFetchedResultsControllerDelegate> {
+@interface SyncViewController_iPad : UIViewController <MBProgressHUDDelegate, NSFetchedResultsControllerDelegate> {
 
     MBProgressHUD *HUD;
     
