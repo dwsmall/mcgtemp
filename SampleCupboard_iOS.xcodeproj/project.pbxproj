@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B1F8D2917D9BA5100873860 /* LastXOrdersDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F8D2817D9BA5100873860 /* LastXOrdersDesign.m */; };
 		5B2801D917C75E7600D06363 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2801D617C75E7600D06363 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5B2801DA17C75E7600D06363 /* MESegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2801D817C75E7600D06363 /* MESegmentedControl.m */; };
+		5B39CB53180DD2D6008055FB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B39CB51180DD2D6008055FB /* Localizable.strings */; };
 		5B47025B1805BD2F006CCEF7 /* OrderLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B47025A1805BD2F006CCEF7 /* OrderLineItem.m */; };
 		5B49681617A13C5600DDC43A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B49681517A13C5500DDC43A /* CoreGraphics.framework */; };
 		5B4988C2175A27B0000AFD31 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */; };
@@ -58,7 +58,6 @@
 		5B7E4BF1179B2C8A00ABD030 /* accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7E4BEF179B2C8A00ABD030 /* accept.png */; };
 		5B7E4BF2179B2C8A00ABD030 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7E4BF0179B2C8A00ABD030 /* delete.png */; };
 		5B7E6DEC1767334B008286D4 /* HcpChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E6DEB17673343008286D4 /* HcpChoice.m */; };
-		5B8068D417F202FF000DED9E /* ReportSVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8068D317F202FF000DED9E /* ReportSVC.m */; };
 		5B89560F18033C8F009635C4 /* Allocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B89560E18033C8F009635C4 /* Allocation.m */; };
 		5B938A3C17B42F7700A8C078 /* HealthCareProfessional.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B938A3B17B42F7700A8C078 /* HealthCareProfessional.m */; };
 		5B96673417678A2E0017F0E4 /* ProductChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B96673317678A2E0017F0E4 /* ProductChoice.m */; };
@@ -95,12 +94,11 @@
 		5B0C7899176D4ED100770EDF /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5B10578D176F3C360048513E = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodeld; sourceTree = "<group>"; };
 		5B10578E176F3E540048513E /* SampleCupboard_iOS 1.001.xcdatamodel */ = {isa = PBXFileReference; explicitFileType = wrapper.xcdatamodel; path = "SampleCupboard_iOS 1.001.xcdatamodel"; sourceTree = "<group>"; };
-		5B1F8D2717D9BA5100873860 /* LastXOrdersDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastXOrdersDesign.h; sourceTree = "<group>"; };
-		5B1F8D2817D9BA5100873860 /* LastXOrdersDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LastXOrdersDesign.m; sourceTree = "<group>"; };
 		5B2801D517C75E7500D06363 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomBadge.h; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/CustomBadge.h"; sourceTree = "<group>"; };
 		5B2801D617C75E7600D06363 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomBadge.m; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/CustomBadge.m"; sourceTree = "<group>"; };
 		5B2801D717C75E7600D06363 /* MESegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MESegmentedControl.h; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/MESegmentedControl.h"; sourceTree = "<group>"; };
 		5B2801D817C75E7600D06363 /* MESegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MESegmentedControl.m; path = "../../../../Desktop/MESegmentedControl-master/MESegmentedControl/MESegmentedControl.m"; sourceTree = "<group>"; };
+		5B39CB52180DD2D6008055FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = SampleCupboard_iOS/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5B3E552E17FDFCB6002A8373 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B3E552F17FDFCB7002A8373 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5B4702591805BD2E006CCEF7 /* OrderLineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderLineItem.h; sourceTree = "<group>"; };
@@ -171,8 +169,6 @@
 		5B7E4BF0179B2C8A00ABD030 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		5B7E6DEA1767333F008286D4 /* HcpChoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcpChoice.h; sourceTree = "<group>"; };
 		5B7E6DEB17673343008286D4 /* HcpChoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcpChoice.m; sourceTree = "<group>"; };
-		5B8068D217F202FF000DED9E /* ReportSVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportSVC.h; sourceTree = "<group>"; };
-		5B8068D317F202FF000DED9E /* ReportSVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportSVC.m; sourceTree = "<group>"; };
 		5B89560D18033C8F009635C4 /* Allocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Allocation.h; sourceTree = "<group>"; };
 		5B89560E18033C8F009635C4 /* Allocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Allocation.m; sourceTree = "<group>"; };
 		5B938A3A17B42F7700A8C078 /* HealthCareProfessional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HealthCareProfessional.h; sourceTree = "<group>"; };
@@ -262,8 +258,6 @@
 				5BDE2A0617A1FA8300422C4A /* SetupConfig.m */,
 				5B6E2EBF17BA97E7002FDBF9 /* TemplateSelection.h */,
 				5B6E2EC017BA97E7002FDBF9 /* TemplateSelection.m */,
-				5B8068D217F202FF000DED9E /* ReportSVC.h */,
-				5B8068D317F202FF000DED9E /* ReportSVC.m */,
 			);
 			name = "Utility Classes";
 			sourceTree = "<group>";
@@ -271,6 +265,7 @@
 		5B6212501746D8C5007B5C7C = {
 			isa = PBXGroup;
 			children = (
+				5B39CB51180DD2D6008055FB /* Localizable.strings */,
 				5B6212621746D8C5007B5C7C /* SampleCupboard_iOS */,
 				5B6212631746D8C5007B5C7C /* Supporting Files */,
 				5B6212911746D8C6007B5C7C /* SampleCupboard_iOSTests */,
@@ -465,8 +460,6 @@
 				5BF4CF821760D86700BB3DBC /* HcpDetailController.m */,
 				5B9667351768C41C0017F0E4 /* HcpAdditionalDetails.h */,
 				5B9667361768C41C0017F0E4 /* HcpAdditionalDetails.m */,
-				5B1F8D2717D9BA5100873860 /* LastXOrdersDesign.h */,
-				5B1F8D2817D9BA5100873860 /* LastXOrdersDesign.m */,
 			);
 			name = Hcp_Controller;
 			sourceTree = "<group>";
@@ -580,6 +573,7 @@
 				5B4DDBD3176E97850015A496 /* my_usage.png in Resources */,
 				5B7E4BF1179B2C8A00ABD030 /* accept.png in Resources */,
 				5B7E4BF2179B2C8A00ABD030 /* delete.png in Resources */,
+				5B39CB53180DD2D6008055FB /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,9 +617,7 @@
 				5B589D7B17CF4DA400DE9930 /* ReportDetails.m in Sources */,
 				5B589D8117CF4F1D00DE9930 /* ReportMenu.m in Sources */,
 				5B7E16BD17D69675000049B6 /* SVProgressHUD.m in Sources */,
-				5B1F8D2917D9BA5100873860 /* LastXOrdersDesign.m in Sources */,
 				5BB6E0D117EB53D7006EF204 /* Order.m in Sources */,
-				5B8068D417F202FF000DED9E /* ReportSVC.m in Sources */,
 				5B89560F18033C8F009635C4 /* Allocation.m in Sources */,
 				5B47025B1805BD2F006CCEF7 /* OrderLineItem.m in Sources */,
 			);
@@ -634,6 +626,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		5B39CB51180DD2D6008055FB /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B39CB52180DD2D6008055FB /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		5B6212651746D8C5007B5C7C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
