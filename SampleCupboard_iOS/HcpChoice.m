@@ -79,6 +79,8 @@ BOOL isSearching;
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     [_territoryFetchRequest setSortDescriptors:sortDescriptors];
     
+    topSearchBar.scopeButtonTitles = @[NSLocalizedString(@"All", nil), NSLocalizedString(@"Name",nil), NSLocalizedString(@"Address",nil), NSLocalizedString(@"Postal Code",nil), NSLocalizedString(@"Phone", nil)];
+    
 }
 
 
@@ -105,14 +107,11 @@ BOOL isSearching;
     if (tableView == self.tableView)
     {
         return [[self.fetchedResultsController sections] count];
-        NSLog(@"tableView Alive Alive");
-        
 
     }
     else
     {
         return 1;
-        NSLog(@"tableView Did IT");
     }
         
 }
@@ -128,7 +127,6 @@ BOOL isSearching;
     else
     {
         return [self.filteredList count];
-                NSLog(@"tableView Did IT - 2");
     }
 }
 
@@ -156,26 +154,6 @@ BOOL isSearching;
 }
 
 
-/*
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        NSError *error = nil;
-        if (![context save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-}
-*/
-
-
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = nil;
@@ -191,7 +169,6 @@ BOOL isSearching;
         
         object = [self.filteredList objectAtIndex:indexPath.row];
         
-        NSLog(@"tableView Did IT - 3");
     }
 
      
@@ -219,7 +196,6 @@ BOOL isSearching;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     path = indexPath;
-    NSLog(@"index path for hcp_selection DID SELECT %i", path.row);
     
     checkedCell = indexPath;
     [tableView reloadData];
@@ -244,7 +220,6 @@ BOOL isSearching;
         
         object = [self.filteredList objectAtIndex:indexPath.row];
         
-        NSLog(@"tableView Did IT - 3");
     }
     
     
@@ -284,22 +259,6 @@ BOOL isSearching;
     
     
     cell.detailTextLabel.Text = AddressBuilder;
-    
-    
-    NSLog(@"dw1 - show addressBuilder:%@", AddressBuilder);
-    
-    
-    
-    /*
-    cell.detailTextLabel.Text = [NSString stringWithFormat:@"%@ \n %@ %@ %@ \n %@ %@ %@",
-                                 [[object valueForKey:@"facility"] description],
-                                 [[object valueForKey:@"address1"] description],
-                                 [[object valueForKey:@"address2"] description],
-                                 [[object valueForKey:@"address3"] description],
-                                 [[object valueForKey:@"city"] description],
-                                 [[object valueForKey:@"province"] description],
-                                 [[object valueForKey:@"postal"] description]];
-     */
     
     
 }
@@ -349,9 +308,6 @@ BOOL isSearching;
     NSPredicate *predicate = nil;
     NSString *searchtxt = topSearchBar.text;
     
-    NSLog(@"dw1 - my selected ScopeButton:%ld", (long)topSearchBar.selectedScopeButtonIndex);
-    
-    
     if (searchtxt.length > 0) {
         
         switch (topSearchBar.selectedScopeButtonIndex) {
@@ -359,42 +315,35 @@ BOOL isSearching;
             case 1:
                 // scope name
                 predicate = [NSPredicate predicateWithFormat:@"firstname contains[cd] %@ OR lastname contains[cd] %@", searchtxt, searchtxt];
-                NSLog(@"dw1 - show predicate 1 %@" , predicate);
+
                 [fetchRequest setPredicate:predicate];
                 break;
             
             case 2:
                 // scope address
                 predicate = [NSPredicate predicateWithFormat:@"facility contains[cd] %@ OR address1 contains[cd] %@ OR address2 contains[cd] %@ OR address3 contains[cd] %@ OR city contains[cd] %@ OR province contains[cd] %@ OR postal contains[cd] %@", searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt];
-                NSLog(@"dw1 - show predicate 3 address: %@" , predicate);
                 [fetchRequest setPredicate:predicate];
                 break;
                 
             case 3:
                 // scope postal
                 predicate = [NSPredicate predicateWithFormat:@"postal contains[cd] %@", searchtxt];
-                NSLog(@"dw1 - show predicate 2 %@" , predicate);
                 [fetchRequest setPredicate:predicate];
                 break;                
             
             case 4:
                 // scope phone
                 predicate = [NSPredicate predicateWithFormat:@"phone contains[cd] %@", searchtxt];
-                NSLog(@"dw1 - show predicate 4 %@" , predicate);
                 [fetchRequest setPredicate:predicate];
                 break;
                 
             default:
                 predicate = [NSPredicate predicateWithFormat:@"firstname contains[cd] %@ OR lastname contains[cd] %@ OR facility contains[cd] %@ OR address1 contains[cd] %@ OR address2 contains[cd] %@ OR address3 contains[cd] %@ OR city contains[cd] %@ OR province contains[cd] %@ OR postal contains[cd] %@", searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt];
-                NSLog(@"dw1 - show predicate 5 %@" , predicate);
                 [fetchRequest setPredicate:predicate];
                 break;
         }
         
     }
-    
-    
-    
     
     
     
@@ -487,32 +436,9 @@ BOOL isSearching;
 #pragma mark - Search Delegate
 
 
-- (void)searchForText:(NSString *)searchText
-{
-    /*
-    if (self.managedObjectContext)
-    {
-        NSString *predicateFormat = @"%K BEGINSWITH[cd] %@";
-        NSString *searchAttribute = @"lastname";
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateFormat, searchAttribute, searchText];
-        [self.territoryFetchRequest setPredicate:predicate];
-        
-        NSError *error = nil;
-        self.filteredList = [self.managedObjectContext executeFetchRequest:self.territoryFetchRequest error:&error];
-        if (error)
-        {
-            NSLog(@"searchFetchRequest failed: %@",[error localizedDescription]);
-        }
-    }
-    */
-    
-}
 
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
-    NSLog(@"dw1 - show reaction %@" , topSearchBar.text);
     
     [NSFetchedResultsController deleteCacheWithName:@"HCPChoice"];
     _fetchedResultsController=nil;
@@ -587,8 +513,6 @@ BOOL isSearching;
         
         [self.draftFetchRequest setPredicate:predicateX];
         
-        NSLog(@"dw1 SHOWX: %@, %@", current_shiptoid, predicateX);
-        
         
         error = nil;
         
@@ -606,8 +530,8 @@ BOOL isSearching;
             
             // msg
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"HCP Cannot Be Selected"
-                                                            message:@"A Current Draft Is In Progress for this HCP."
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"HCP Cannot Be Selected",nil)
+                                                            message:NSLocalizedString(@"A Current Draft Is In Progress for this HCP.",nil)
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
@@ -674,8 +598,8 @@ BOOL isSearching;
                 
                 // show msg on order screen
                 
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New HCP Territory Selected"
-                                                                message:@"This has reset previous products/qty's"
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"New HCP Territory Selected",nil)
+                                                                message:NSLocalizedString(@"This has reset previous products/qty's",nil)
                                                                delegate:nil
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
@@ -701,8 +625,8 @@ BOOL isSearching;
         } else {
             
             // show error msg
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid HCP Selection"
-                                                        message:@"This HCP is not available in your territory."
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid HCP Selection",nil)
+                                                        message:NSLocalizedString(@"This HCP is not available in your territory.",nil)
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -732,10 +656,8 @@ BOOL isSearching;
         
         if (self.searchDisplayController.isActive)
         {
-            NSLog(@"Search is Active");
             
-            NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForCell:sender];
-            NSLog(@"Search Index %@" , indexPath);
+            // NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForCell:sender];
             
         }
         else
@@ -765,92 +687,6 @@ BOOL isSearching;
                                        nil];
             
             
-            NSLog(@"dw1 - forward marchA:%@", [[ourfetchClass valueForKey:@"status"] description] );
-            NSLog(@"dw1 - forward marchB:%@", [[ourfetchClass valueForKey:@"phone"] description] );
-            NSLog(@"dw1 - forward marchC:%@", [[ourfetchClass valueForKey:@"fax"] description] );
-            NSLog(@"dw1 - forward marchD:%@", [[ourfetchClass valueForKey:@"email"] description] );
-            NSLog(@"dw1 - forward marchE:%@", [[ourfetchClass valueForKey:@"shiptoaddressid"] description] );
-            
-            NSLog(@"dw1 - forward march2:%@", app.globalHcpDictionary );
-            
-            
-            
-            /*
-            // Get destination view
-            OrderDetailViewController_iPad *vc = [segue destinationViewController];
-            [vc setSelectedHCPNUMBER:1001];           
-            
-            [vc setMoHCPDATA:[[self.fetchedResultsController fetchedObjects] objectAtIndex:checkedCell.row]];
-            
-     
-            // Handling of Null Fields (Server Side or Replace With NSAssert)
-            NSString *varphlid = [[ourfetchClass valueForKey:@"phlid"] description];
-            NSString *varfirst = [[ourfetchClass valueForKey:@"firstname"] description];
-            NSString *varlast = [[ourfetchClass valueForKey:@"lastname"] description];
-            NSString *varfacility = [[ourfetchClass valueForKey:@"facility"] description];
-            NSString *varaddress1 = [[ourfetchClass valueForKey:@"address1"] description];
-            NSString *varaddress2 = [[ourfetchClass valueForKey:@"address2"] description];
-            NSString *varaddress3 = [[ourfetchClass valueForKey:@"address3"] description];
-            
-            if (varphlid == NULL) {varphlid = @"111";}
-            if (varfirst == NULL) { varfirst = @".";}
-            if (varlast == NULL) {varlast = @".";}
-            if (varfacility == NULL) {varfacility = @" ";}
-            if (varaddress1 == NULL) {varaddress1 = @" ";}
-            if (varaddress2 == NULL) {varaddress2 = @" ";}
-            if (varaddress3 == NULL) {varaddress3 = @" ";}
-            
-            
-            NSString *shorthcp_name = [NSString stringWithFormat:@"%@, %@",
-                                          [[ourfetchClass valueForKey:@"lastname"] description],
-                                          [[ourfetchClass valueForKey:@"firstname"] description]];
-            
-            
-            
-            NSMutableString *address = [NSMutableString string];
-            
-            if ([[ourfetchClass valueForKey:@"facility"] description].length > 2) {
-                [address appendString:[[ourfetchClass valueForKey:@"facility"] description]];
-                [address appendString:@" \n"];
-            }
-            
-            if ([[ourfetchClass valueForKey:@"address1"] description].length > 2) {
-                [address appendString:[[ourfetchClass valueForKey:@"address1"] description]];
-                [address appendString:@" \n"];
-            }
-            
-            if ([[ourfetchClass valueForKey:@"address2"] description].length > 2) {
-                [address appendString:[[ourfetchClass valueForKey:@"address2"] description]];
-                [address appendString:@" \n"];
-            }
-            
-            if ([[ourfetchClass valueForKey:@"address3"] description].length > 2) {
-                [address appendString:[[ourfetchClass valueForKey:@"address3"] description]];
-                [address appendString:@" \n"];
-            }
-            
-            
-            NSString *longaddress_name = [NSString stringWithFormat:@"%@ %@,%@,%@",
-                                        address,
-                                        [[ourfetchClass valueForKey:@"city"] description],
-                                        [[ourfetchClass valueForKey:@"province"] description],
-                                        [[ourfetchClass valueForKey:@"postal"] description]];
-            
-            
-            vc.selectedHCPINFO = @[shorthcp_name,
-                                   longaddress_name,
-                                        varfacility,
-                                        varaddress1,
-                                        varaddress2,
-                                        varaddress3,
-                                        [[ourfetchClass valueForKey:@"province"] description],
-                                        [[ourfetchClass valueForKey:@"city"] description],
-                                        [[ourfetchClass valueForKey:@"postal"] description],
-                                        [[ourfetchClass valueForKey:@"shiptoaddressid"] description]];
-         */
-            
-            
-            
         }
         
     }
@@ -870,10 +706,12 @@ BOOL isSearching;
 
 - (NSString *)stringOrEmptyString:(NSString *)string
 {
-    if (string)
+    if (string == nil || [string isKindOfClass:[NSNull class]] ) {
+        return @"";
+    } else {
         return string;
-    else
-        return @" ";
+    }
+    
 }
 
 
