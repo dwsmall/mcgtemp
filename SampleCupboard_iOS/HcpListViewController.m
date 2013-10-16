@@ -14,6 +14,7 @@
 
 @interface HcpListViewController () <NSFetchedResultsControllerDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 
+@property (strong, nonatomic) IBOutlet UINavigationItem *hcpTitleBar;
   
     @property (weak, nonatomic) IBOutlet UINavigationItem *healthcareProf;
     @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -28,16 +29,6 @@
 
     //Segue Exit
     -(IBAction)return:(UIStoryboardSegue *)segue;
-
-typedef enum
-{
-    searchScopeAll = 0,
-    searchScopeName = 1,
-    searchScopePostal = 2,
-    searchScopeAddress = 3,
-    searchScopePhone = 4
-    
-} UYLWorldFactsSearchScope;
 
 @end
 
@@ -56,12 +47,9 @@ typedef enum
 
 
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
-}
 
 
+#pragma mark - ViewDelegate
 
 - (void)viewDidLoad
 {
@@ -70,21 +58,12 @@ typedef enum
     
     [topSearchBar setShowsScopeBar:NO];
     [topSearchBar sizeToFit];
-  
-
-        /*
-         could have used inital fetch, but chose filtered....
-         self.filteredList = [NSMutableArray arrayWithCapacity:[[self.fetchedResultsController sections] count]];
-        */
-    
-    
-    // get total count based on filtered list
-    // NSError *error = nil;
-    // self.filteredList = [NSMutableArray arrayWithCapacity:[[self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error] count]];
-    
-    // self.filteredList = [self.managedObjectContext executeFetchRequest:self.searchFetchRequest error:&error];
     
     [self.tableView reloadData];
+    
+    _hcpTitleBar.title = NSLocalizedString(@"Healthcare Professionals", nil);
+    
+    topSearchBar.scopeButtonTitles = @[NSLocalizedString(@"All", nil), NSLocalizedString(@"Name",nil), NSLocalizedString(@"Postal Code",nil), NSLocalizedString(@"Address",nil), NSLocalizedString(@"Phone", nil)];
     
 }
 
@@ -105,34 +84,11 @@ typedef enum
         // Step 1 - Declare VC Controller
         HcpDetailController *detailVC = (HcpDetailController *)[segue destinationViewController];
         
-        // HealthCareProfessional *country = nil;
-        
-        /*
-        if (self.searchDisplayController.isActive)
-        {
-            NSLog(@"Search is Active");
-            
-            
-            NSIndexPath *indexPath = [self.searchDisplayController.searchResultsTableView indexPathForCell:sender];
-            NSLog(@"Search Index %@" , indexPath);
-            
-            // country = [self.filteredList objectAtIndex:indexPath.row];
-        }
-        else
-        {
-         */
-        
-        
-        
-            // NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-            // country = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        
         
             // second screen
         
             NSIndexPath *ip = [self.tableView indexPathForSelectedRow];
             [detailVC setMoDATAHCP:[self.fetchedResultsController objectAtIndexPath:ip]];
-        
         
             
             // third screen
@@ -188,28 +144,6 @@ typedef enum
                                         [[ourfetchClass valueForKey:@"city"] description],
                                         [[ourfetchClass valueForKey:@"postal"] description],
                                         vardeparment];            
-            
-        
-        
-        
-        
-        
-        
-        // TEST.2 - Show Chosen Row
-        // NSLog(@"ChosenRowNumber = %ld", (long)ChosenRowNumber);
-        
-        // TEST.3 - Show Index Path For Selected Row
-        // NSLog(@"Show Index Path from Sender %@", [sender indexPathForSelectedRow]);
-        // JUST REMOVED NSLog(@"indexPathForSelectedItems Based on Sender %@", [sender indexPathsForSelectedItems]);
-        
-        
-        // [detailVC setMoDATA:[[self fetchedResultsController]objectAtIndexPath:[NSIndexPath indexPathForRow:ChosenRowNumber inSection:0]]];
-        // NSLog(@"Make Sure Populated DOCTOR Before Sending %@", [[self.fetchedResultsController fetchedObjects] objectAtIndex:ChosenRowNumber]);
-        
-        
-        
-        
-        
         
         
     }
@@ -221,7 +155,7 @@ typedef enum
 
 
 
-#pragma mark - Table View Delegate Methods
+#pragma mark - TableView Delegate Methods
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
@@ -315,11 +249,7 @@ typedef enum
     
     
     if (tableView == self.tableView)
-    {
-        //world
-        //id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-        //return [sectionInfo numberOfObjects];
-        
+    {        
         id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
         return [sectionInfo numberOfObjects];
     }
@@ -334,8 +264,6 @@ typedef enum
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
-    NSLog(@"indexP %@", indexPath);
-    
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"_hcplist" forIndexPath:indexPath];
     
     [self configureCell:cell atIndexPath:indexPath];
@@ -346,7 +274,7 @@ typedef enum
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSLog(@"Did Select Row %ld", (long)indexPath.row);
+    // NSLog(@"Did Select Row %ld", (long)indexPath.row);
     // ChosenRowNumber = indexPath.row;
     
 }
@@ -387,11 +315,9 @@ typedef enum
 
 
 
-#pragma mark === Accessors ===
+#pragma mark - SearchBarDelegate
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
-    NSLog(@"dw1 - show reaction %@" , topSearchBar.text);
     
     [NSFetchedResultsController deleteCacheWithName:@"OrderList"];
     _fetchedResultsController=nil;
@@ -437,7 +363,7 @@ typedef enum
 
 
 
-#pragma mark - Fetched results controller
+#pragma mark - Fetched Results Controller
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -468,33 +394,28 @@ typedef enum
         case 1:
             // scope name
             predicate = [NSPredicate predicateWithFormat:@"firstname contains[cd] %@ OR lastname contains[cd] %@", searchtxt, searchtxt];
-            NSLog(@"dw1 - show predicate %@" , predicate);
             [fetchRequest setPredicate:predicate];
             break;
             
         case 2:
             // scope postal
             predicate = [NSPredicate predicateWithFormat:@"postal contains[cd] %@", searchtxt];
-            NSLog(@"dw1 - show predicate %@" , predicate);
             [fetchRequest setPredicate:predicate];
             break;
             
         case 3:
             // scope address
             predicate = [NSPredicate predicateWithFormat:@"facility contains[cd] %@ OR address1 contains[cd] %@ OR address2 contains[cd] %@ OR address3 contains[cd] %@ OR city contains[cd] %@ OR province contains[cd] %@ OR postal contains[cd] %@", searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt];
-            NSLog(@"dw1 - show predicate %@" , predicate);
             [fetchRequest setPredicate:predicate];
             break;
         case 4:
             // scope phone
             predicate = [NSPredicate predicateWithFormat:@"phone contains[cd] %@", searchtxt];
-            NSLog(@"dw1 - show predicate %@" , predicate);
             [fetchRequest setPredicate:predicate];
             break;
             
         default:
             predicate = [NSPredicate predicateWithFormat:@"firstname contains[cd] %@ OR lastname contains[cd] %@ OR facility contains[cd] %@ OR address1 contains[cd] %@ OR address2 contains[cd] %@ OR address3 contains[cd] %@ OR city contains[cd] %@ OR province contains[cd] %@ OR postal contains[cd] %@", searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt, searchtxt];
-            NSLog(@"dw1 - show predicate %@" , predicate);
             [fetchRequest setPredicate:predicate];
             break;
     }
@@ -531,7 +452,12 @@ typedef enum
 }
 
 
+#pragma mark - Orientation
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
+}
 
 
 
