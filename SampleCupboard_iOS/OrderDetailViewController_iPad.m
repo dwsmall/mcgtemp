@@ -173,10 +173,7 @@ NSArray *statusDataX;
     //STAGE 4 - [SEGUE 2] = SHOW ORDER DETAIL INFORMATION
     
     
-    // [[self fetchedResultsController] fetchedObjects] count]
-    //Loop Through fetchedResults And Build Dictionary To Hold Values
-    
-    
+  
     // clear previous signature
     myglobsig = @"";
     
@@ -227,10 +224,9 @@ NSArray *statusDataX;
         myglobChosenHcp = [[NSMutableArray alloc] init];
     }
     
-    
 
     
-    
+    _SaveDraftButton.title = NSLocalizedString(@"Save Draft",nil);
     
     
   
@@ -240,14 +236,14 @@ NSArray *statusDataX;
     NSString *currentMode = app.globalMode;
     
     if (app.globalShipType == nil) {
-        app.globalShipType = @"Ground";
+        app.globalShipType = NSLocalizedString(@"Ground", nil);
     }
     
     
     if ([currentMode isEqualToString:@"VIEW"]) {
     
         _odNavBar.tintColor = [UIColor blueColor];
-        _odNavBarTitle.title = @"View Order Details";
+        _odNavBarTitle.title = NSLocalizedString(@"View Order Details",nil);
         
         _SaveDraftButton.enabled = FALSE;
         TemplateMenuButton.enabled = FALSE;
@@ -274,10 +270,6 @@ NSArray *statusDataX;
         _odNavBar.tintColor = [UIColor redColor];
         _odNavBarTitle.title = @"Sample Request {Draft Mode}";
         
-        // update hcp/product chosen based on mode
-        // app.globalHcpChosen = @"EXISTING";
-        // app.globalProductChosen = @"EXISTING";
-        
     }
 
     
@@ -289,11 +281,6 @@ NSArray *statusDataX;
     
     // clear signature
     [SignatureControl clearSignature];
-    
-    
-    
-    NSLog(@"dw1 - SHOW DRAFT_PRODUCTS %@", app.globalProductsScrn);
-    
     
     // clear initial load ???
     NSArray *initialproducts = [defaults objectForKey:@"MCG_detail_products"];
@@ -328,6 +315,8 @@ NSArray *statusDataX;
         // perfom non-cell function (cant regonize cell vs. non-cell good.
     }
 }
+
+
 
 
 #pragma mark - Custom Methods
@@ -387,8 +376,8 @@ NSArray *statusDataX;
             
             // msg - min. 1 qty
             UIAlertView *alertView = [[UIAlertView alloc]
-                                      initWithTitle: @"No Qty Entered"
-                                      message: @"Signature Not Accepted" delegate: nil
+                                      initWithTitle: NSLocalizedString(@"No Qty Entered",nil)
+                                      message: NSLocalizedString(@"Signature Not Accepted",nil) delegate: nil
                                       cancelButtonTitle: @"OK" otherButtonTitles: nil];
             
             [alertView show];
@@ -397,14 +386,13 @@ NSArray *statusDataX;
             
         } else {
             
-                NSLog(@"dw1 - check signature count %lu" , (unsigned long)[signatureCapture count]);
             
                 if ([signatureCapture count] < 2) {
                     
                     // no sig. entered
                     UIAlertView *alertView = [[UIAlertView alloc]
-                                              initWithTitle: @"Signature Required"
-                                              message: @"Signature Not Entered on Device" delegate: nil
+                                              initWithTitle: NSLocalizedString(@"Signature Required",nil)
+                                              message: NSLocalizedString(@"Signature Not Entered on Device",nil) delegate: nil
                                               cancelButtonTitle: @"OK" otherButtonTitles: nil];
                     
                     [alertView show];
@@ -463,14 +451,6 @@ NSArray *statusDataX;
                             
                             cell.selectionStyle = UITableViewCellSelectionStyleNone;
                             
-                            
-                            /* 
-                             a. [disable Hcp Button]
-                             b. [disable ship ins input]
-                             c. [disable carrier input]
-                             d. [disable new prod button]
-                            */
-                            
                             // disable hcp button
                             if (x == 0 && i == 1) {
                                 
@@ -505,25 +485,13 @@ NSArray *statusDataX;
                         }
                 }
                     
-
-            
             
                     
                 // prevent user interaction after sig accept
                     
                 UIView *viewX=(UIView *)[self.view viewWithTag:322];
                     [viewX setUserInteractionEnabled:NO];
-                    
-                
-                    
-                // [viewx.exclusiveTouch]
-                    
-                    
-                // [myTableView setUserInteractionEnabled:FALSE];
-                    
-                // [myTableView setAllowsSelection:NO];
-                
-                // myTableView.scrollEnabled = YES;
+        
                 
                 // Enable Done Button
                 _done_btn.enabled = YES;
@@ -558,17 +526,13 @@ NSArray *statusDataX;
     
     
     // check for hcp populate
-    NSLog(@"dw1 - show freebee INFO %@" , selectedHCPINFO );
-    NSLog(@"dw1 - show freebee NUM %ld" , (long)selectedHCPNUMBER);
-    NSLog(@"dw1 - %ld", (unsigned long)[selectedHCPINFO count]);
-    
         
     if(hcpfound == nil) {
         
         // msg no hcp
         UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle: @"No Hcp Chosen"
-                                  message: @"Draft Cannot Be Saved" delegate: nil
+                                  initWithTitle: NSLocalizedString(@"No Hcp Chosen", nil)
+                                  message: NSLocalizedString(@"Draft Cannot Be Saved",nil) delegate: nil
                                   cancelButtonTitle: @"OK" otherButtonTitles: nil];
         
         alertView.tag = 200;
@@ -616,9 +580,8 @@ NSArray *statusDataX;
                                                               delegate: self
                                                      cancelButtonTitle: nil
                                                 destructiveButtonTitle: nil
-                                                     otherButtonTitles: @"Save Template",
-                                   @"Load Template", nil];
-    
+                                                     otherButtonTitles: NSLocalizedString(@"Save Template",nil) ,
+                                   NSLocalizedString(@"Load Template",nil), nil];    
     
     [actionSheet_ showFromBarButtonItem:sender animated:YES];
     
@@ -646,8 +609,8 @@ NSArray *statusDataX;
         // save template w/ name
         if (hcpfound != nil) {
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Template Name", @"new_list_dialog")
-                                                              message:@"chose your template name" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Create", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Template Name", nil)
+                                                              message:NSLocalizedString(@"chose your template name",nil) delegate:self cancelButtonTitle: NSLocalizedString(@"Cancel",nil) otherButtonTitles:NSLocalizedString(@"Create",nil), nil];
         alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
         alertView.tag = 300;
         [alertView show];
@@ -656,8 +619,8 @@ NSArray *statusDataX;
         
         } else {
         
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No HCP Selected"
-                                                            message: @"Must Select HCP To Save Template!"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"No HCP Selected", nil)
+                                                            message: NSLocalizedString(@"Must Select HCP To Save Template!", nil)
                                                            delegate: nil
                                                   cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert show];
@@ -673,47 +636,9 @@ NSArray *statusDataX;
     // just set to nil
     actionSheet_ = nil;
     
-    NSLog(@"ActionSheet Dismissed");
     
 }
 
-
-
-/*
- 
- Remove Properly
- 
-- (IBAction)NewProductClick:(id)sender {
-}
-
-- (IBAction)tbActionsClick:(id)sender {
-}
-
-- (IBAction)tbSaveDraftClick:(id)sender {
-}
-
-- (IBAction)CellEditorBegunEditing:(id)sender {
-}
-
-- (IBAction)CellEditorEndedEdit:(id)sender {
-}
-*/
-
-
-
-
-/*
-- (IBAction)CancelOrderDetail:(UIBarButtonItem *)sender {
-    
-    NSLog(@"dw1 - Cancel Has Occured");
-    
-    UIAlertView *alertView = [[UIAlertView alloc]
-                              initWithTitle: @"Cancel Request" message: @"Warning! All Entered Data Will Be Lost" delegate: self
-                              cancelButtonTitle: @"cancel" otherButtonTitles: @"OK", nil];
-    alertView.tag = 400;
-    [alertView show];
-}
-*/
 
 
 
@@ -725,9 +650,8 @@ NSArray *statusDataX;
     UITableViewCell *buttonCell = (UITableViewCell *)[senderButton superview];
     
     // change text
-    [(UILabel *)[buttonCell viewWithTag:33] setText:@"Ground"];
-    selectedCARRIER = @"Ground";
-    
+    [(UILabel *)[buttonCell viewWithTag:33] setText:NSLocalizedString(@"Ground",nil)];
+    selectedCARRIER = NSLocalizedString(@"Ground", nil);
     
 }
 
@@ -740,11 +664,11 @@ NSArray *statusDataX;
     UITableViewCell *buttonCell = (UITableViewCell *)[senderButton superview];
     
     // hide button
-    [(UILabel *)[buttonCell viewWithTag:33] setText:@"Air"];
-    selectedCARRIER = @"Air";
+    [(UILabel *)[buttonCell viewWithTag:33] setText: NSLocalizedString(@"Air",nil)];
+    selectedCARRIER = NSLocalizedString(@"Air",nil);
     
     UIAlertView *alertView = [[UIAlertView alloc]
-                            initWithTitle: @"Warning" message: @"This shipment will be sent by ATS Air" delegate: self
+                            initWithTitle: NSLocalizedString(@"Warning",nil) message: NSLocalizedString(@"This shipment will be sent by ATS Air", nil) delegate: self
                           cancelButtonTitle: @"OK" otherButtonTitles:nil];
     
     [alertView show];
@@ -768,9 +692,6 @@ NSArray *statusDataX;
     
     AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
     app.globalOrderMO = moDATA;
-    
-    
-    NSLog(@"dw1 - value to retain:%@", shiptype.text);
     
     app.globalShipType = shiptype.text;
     app.globalShipInfo = shipinput.text;
@@ -799,32 +720,11 @@ NSArray *statusDataX;
     app.globalProductsScrn = nil;
     app.globalRmvProductsFetch = nil;
     
-    
-    
     [SignatureControl clearSignature];
     
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:nil forKey:@"MCG_territoryid"];
-    
-    
-    // carrier
-    /*
-    UITableViewCell *cella = [myTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
-    UITextField *shipinput = (UITextField*)[cella viewWithTag:1002];
-    
-    UITableViewCell *cellb = [myTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]];
-    UITextField *shiptype = (UITextField*)[cellb viewWithTag:33];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:shipinput.text forKey:@"MCG_shipnote"];
-    [defaults setObject:shiptype.text forKey:@"MCG_shiptype"];
-    
-    // Store Data
-    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
-    app.globalOrderMO = moDATA;
-    */
-    
     
     
 }
@@ -835,18 +735,13 @@ NSArray *statusDataX;
         AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
     
         NSManagedObject *object = app.globalOrderMO;
-        
-        NSLog(@"dw1 - HAPPY_DRAFT Removal:%@", [object valueForKey:@"shipping_firstname"]);
-        NSLog(@"dw1 - HAPPY_DRAFT Removal:%@", [object valueForKey:@"projectcode"]);
-        NSLog(@"dw1 - HAPPY_DRAFT Removal:%@", [object valueForKey:@"orderid"]);
+    
         
         // delete row from fetchResults
         id appDelegate = (id)[[UIApplication sharedApplication] delegate];
         self.managedObjectContext = [appDelegate managedObjectContext];
         NSManagedObjectContext *context = [self managedObjectContext];
         [context deleteObject:object];
-        
-        // [_managedObjectContext deleteObject:object];
         
         // Commit the change.
         NSError *error = nil;
@@ -893,9 +788,6 @@ NSArray *statusDataX;
         NSections = 6;
     }
     
-    NSLog(@"dw1 - Show Selected Button %ld" , (long)selectedButton);
-    NSLog(@"dw1 - Show Selected Button %@" , currentMode);
-
     return NSections;
 }
 
@@ -915,28 +807,28 @@ NSArray *statusDataX;
             
         case 1:
             
-            HeaderTitle = @"Requested Physician";
+            HeaderTitle = NSLocalizedString(@"Requested Physician",nil);
             break;
             
         case 2:
-            HeaderTitle = @"To be delivered to Physician";
+            HeaderTitle = NSLocalizedString(@"To be delivered to Physician",nil);
             break;
             
         case 3:
             
-            HeaderTitle = @"Delivery Instructions";
+            HeaderTitle = NSLocalizedString(@"Delivery Instructions",nil);
             break;
             
             
         case 4:
             
-            HeaderTitle = @"Shipping Carrier";
+            HeaderTitle = NSLocalizedString(@"Shipping Carrier",nil);
             break;
             
             
         case 5:
             
-            HeaderTitle = @"Signature (required)";
+            HeaderTitle = NSLocalizedString(@"Signature (required)",nil);
             break;
             
         default:
@@ -983,18 +875,9 @@ NSArray *statusDataX;
             if (currentMode == nil || [currentMode isEqualToString:@"TEMPLATE"]  || [currentMode isEqualToString:@"DRAFT"]) // NEW ORDER / TEMPLATE / DRAFT
             {
                 
-                // state before row count
-                NSLog(@"@dw1 - HG1 globalProductChosen: %@", app.globalProductChosen);
-                NSLog(@"@dw1 - HG1 globalHcpChosen: %@", app.globalHcpChosen);
-                NSLog(@"@dw1 - HG1 globalProductsRmv Count: %lu", (unsigned long)[app.globalProductsRmv count]);
-                
                 
                 // filter rows after hcp selection
                 MRows = [[[self fetchedResultsController] fetchedObjects] count] + 1;   //Total Products
-                
-                
-                NSLog(@"@dw1 - HG1 ProductsFromFetch: %u", MRows);
-                
                 
                 
                 // do this when previous rmv products exist (and use tries to delete/add)
@@ -1004,7 +887,6 @@ NSArray *statusDataX;
                     // no fetch, manually removed rows
                     SubtractRows = [app.globalProductsRmv count];
                     
-                                    NSLog(@"@dw1 - HG1 ProductsFromRemove: %u", SubtractRows);
                     
                     if (app.globalRmvProductsFetch.length > 0) {
                         
@@ -1012,7 +894,6 @@ NSArray *statusDataX;
                         int IgnoreRows = [app.globalRmvProductsFetch integerValue];
                         
                         MRows = MRows - (SubtractRows - IgnoreRows);
-                        NSLog(@"@dw1 - HG1 ShowPositive: %u", MRows);
                     } else {
                         MRows = MRows - SubtractRows;
                     }
@@ -1020,13 +901,7 @@ NSArray *statusDataX;
                 
                 }
                 
-                
-                
-                NSLog(@"@dw1 - HG1 TOTAL_MROWS: %d", MRows);
-                
-                NSLog(@"dw1 - show Rmv: %@", app.globalProductsRmv);
-                
-                
+               
                 // reset values
                 
                 if ([app.globalProductChosen isEqualToString:@"NEW"]) {
@@ -1050,15 +925,6 @@ NSArray *statusDataX;
                 MRows = [[object valueForKey:@"toOrderDetails"] count];
                 break;
             }
-            
-            
-            /*
-            if ([currentMode isEqualToString:@"DRAFT"]) // draft
-            {
-                MRows = [[object valueForKey:@"toOrderDetails"] count] + 1;
-                break;
-            }
-            */
             
             
             
@@ -1128,7 +994,6 @@ NSArray *statusDataX;
             
             //To Be Delivered To Physician
             // Iterate based on fetched products from table
-            NSLog(@"dw1 - MercyJust %lu",  (unsigned long)[[[self fetchedResultsController] fetchedObjects] count]);
             
             if (indexPath.row == [[[self fetchedResultsController] fetchedObjects] count]) {
                 MyFormType=@"_newLineItem";
@@ -1162,19 +1027,11 @@ NSArray *statusDataX;
             
     }
     
-    
-    
- 
-    
-    
-
-    
+       
     
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyFormType forIndexPath:indexPath];
     
         [self configureCell:cell atIndexPath:indexPath];
-    
-    
     
         return cell;
     
@@ -1195,7 +1052,6 @@ NSArray *statusDataX;
 
 - (BOOL)touchesShouldCancelInContentView:(UIView *)view {
 
-    NSLog(@"dw1 - is this being called");
     return YES;
 }
 
@@ -1204,7 +1060,7 @@ NSArray *statusDataX;
     AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
     NSString *currentMode = app.globalMode;
 
-    NSLog(@"dw1 - why no keyboard dude: %ld", (long)selectedButton);
+    // NSLog(@"dw1 - why no keyboard dude: %ld", (long)selectedButton);
     
     tableView.scrollEnabled = YES;
     
@@ -1230,32 +1086,12 @@ NSArray *statusDataX;
     if (indexPath.section == 2 && ![currentMode isEqualToString:@"VIEW"] && ![mypreventEdit isEqualToString:@"YES"])
     {
         
-        /*
-        for (UIView *view in [self.view subviews]) {
-            if ([view isFirstResponder]) {
-                [view resignFirstResponder];
-            }
-        }
-        */
-        
         
         BOOL isExists = NO;
         for (UIWindow *keyboardWindow in [[UIApplication sharedApplication] windows])   {
             if ([[keyboardWindow description] hasPrefix:@"<UITextEffectsWindow"] == YES) {
                 isExists = YES;
             }
-        }
-        
-        
-        NSLog(@"dw1 - show Keyboard Noww? %c", isExists);
-        
-        
-        
-        
-        if ([self.hiddenTextField isFirstResponder]) {
-            NSLog(@"dw1 - textf is first responder");
-        } else {
-            NSLog(@"dw1 - textf is NOT first responder");
         }
         
         
@@ -1271,7 +1107,6 @@ NSArray *statusDataX;
         // hiddenTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
                 
         [self.hiddenTextField becomeFirstResponder];
-        // hiddenTextField.becomeFirstResponder;
         
     }
 
@@ -1283,9 +1118,6 @@ NSArray *statusDataX;
     
     // only allow deletion of products
     AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
-    
-    // NSLog(@"show global count: %@", app.globalProductsScrn);
-    
     
     if (indexPath.section == 2 && ![mypreventEdit isEqualToString:@"YES"]) {
         if (indexPath.row < [app.globalProductsScrn count]) {
@@ -1306,16 +1138,12 @@ NSArray *statusDataX;
         
         AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
         
-        NSLog(@"dw1 - show mysection %ld" , (long)indexPath.section);
         
         if (indexPath.section == 2) {
             
         // store in do not show array
             
             UITableViewCell *cell = [self.myTableView cellForRowAtIndexPath:indexPath];
-            
-            NSLog(@"dw1 - SSS: %@", cell.textLabel.text);
-            
             
             // store proper accessors
             
@@ -1329,10 +1157,7 @@ NSArray *statusDataX;
                 NSString *pdesc = [NSString stringWithFormat:@"%@ %@",
                                    [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:1],
                                    [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:2]];
-                
-                NSLog(@"dw1 - SSSCOMP1: %@", cell.textLabel.text);
-                NSLog(@"dw1 - SSSCOMP2: %@", pdesc);
-                
+              
                 if ([pdesc isEqualToString:cell.textLabel.text]) {
                     rmv_id = p;
                 }
@@ -1371,14 +1196,6 @@ NSArray *statusDataX;
             
             // remove object based on id
             [app.globalProductsScrn removeObjectAtIndex:rmv_id];
-            
-
-            
-            
-            
-           NSLog(@"dw1 - Was product added to Rmv? %@", app.globalProductsRmv);
-            
-            // NSLog(@"dw1 - Was product added to Rmv? %@", app.globalProductsRmv);
             
             
         // remove from screen
@@ -1453,11 +1270,21 @@ NSArray *statusDataX;
         [(UILabel *)[cell viewWithTag:8] setText:@""]; //tracking label
         [(UILabel *)[cell viewWithTag:9] setText:@""]; //tracking value
         
+        // update of Label Values
+        [(UILabel *)[cell viewWithTag:111] setText:NSLocalizedString(@"Date Created",nil) ];
+        [(UILabel *)[cell viewWithTag:112] setText:NSLocalizedString(@"Date Released",nil) ];
+        [(UILabel *)[cell viewWithTag:113] setText:NSLocalizedString(@"Date Shipped",nil) ];
+        
+        // update of Label Values
+        [(UILabel *)[cell viewWithTag:101] setText:NSLocalizedString(@"Ref.#",nil) ];
+        [(UILabel *)[cell viewWithTag:102] setText:NSLocalizedString(@"Status",nil) ];
+        
         
         if ([currentMode isEqualToString:@"VIEW"])
         {
             [(UILabel *)[cell viewWithTag:1] setText:[[object valueForKey:@"reference"] description]];
             [(UILabel *)[cell viewWithTag:5] setText:[[object valueForKey:@"status"] description]]; //status
+            
             
             NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
             [DateFormatter setDateFormat:@"dd-MM-yyyy"];
@@ -1471,7 +1298,7 @@ NSArray *statusDataX;
             
             if ([[[object valueForKey:@"status"] description] isEqualToString:@"Shipped"]) {
                 
-                [(UILabel *)[cell viewWithTag:8] setText:@"Tracking #:"] ; //tracking label
+                [(UILabel *)[cell viewWithTag:8] setText:NSLocalizedString(@"Tracking #:",nil)] ; //tracking label
                 [(UILabel *)[cell viewWithTag:8] setHidden:FALSE]; //tracking value
                 
                 // concatenate url
@@ -1488,7 +1315,7 @@ NSArray *statusDataX;
             }
             
             if ([[[object valueForKey:@"status"] description] isEqualToString:@"OnHold"]) {
-                [(UILabel *)[cell viewWithTag:8] setText:@"Reason:"] ; //tracking label
+                [(UILabel *)[cell viewWithTag:8] setText:NSLocalizedString(@"Reason:",nil)] ; //tracking label
                 [(UILabel *)[cell viewWithTag:8] setHidden:FALSE]; //tracking value
                 [(UILabel *)[cell viewWithTag:9] setText:[object valueForKey:@"trackingnumbers"]]; //tracking value
                 
@@ -1520,8 +1347,6 @@ NSArray *statusDataX;
                 if (hcpFound != nil || productFound != nil) {
                     
                     // hcp value from delegate
-                    
-                    // NSDictionary *myHcp = app.globalHcpDictionary;
                     
                     [(UILabel *)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@, %@", [myHcp valueForKey:@"lastname"], [myHcp valueForKey:@"firstname"]] ]; // load hcp Name
                     
@@ -1691,58 +1516,7 @@ NSArray *statusDataX;
                 
                 [(UILabel *)[cell viewWithTag:0] setText:AddressBuilder]; // load Address
                 
-                /*
-                 NSLog(@"dw1 - address %@" , selectedHCPINFO[1]);
-                 
-                 [(UILabel *)[cell viewWithTag:0] setText:selectedHCPINFO[1]]; // load Address
-                 
-                 // save hcp address
-                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                 [defaults setObject:selectedHCPINFO[1] forKey:@"MCG_hcpaddress"];
-                 [defaults setObject:selectedHCPINFO[9] forKey:@"MCG_shiptoaddressid"];
-                 */
-                
             }
-            
-            
-            /*
-            if ([currentMode isEqualToString:@"DRAFT"])  // DRAFT
-            {
-                
-                NSMutableString *address = [NSMutableString string];
-                
-                if ([[object valueForKey:@"shipping_facilityname"] description].length > 2) {
-                    [address appendString:[[object valueForKey:@"shipping_facilityname"] description]];
-                    [address appendString:@" \n"];
-                }
-                
-                if ([[object valueForKey:@"shipping_addressline1"] description].length > 2) {
-                    [address appendString:[[object valueForKey:@"shipping_addressline1"] description]];
-                    [address appendString:@" \n"];
-                }
-                
-                if ([[object valueForKey:@"shipping_addressline2"] description].length > 2) {
-                    [address appendString:[[object valueForKey:@"shipping_addressline2"] description]];
-                    [address appendString:@" \n"];
-                }
-                
-                if ([[object valueForKey:@"shipping_addressline3"] description].length > 2) {
-                    [address appendString:[[object valueForKey:@"shipping_addressline3"] description]];
-                    [address appendString:@" \n"];
-                }
-                
-                
-                NSString *AddressBuilder = [NSString stringWithFormat:@"%@ %@,%@,%@",
-                                            address,
-                                            [[object valueForKey:@"shipping_city"] description],
-                                            [[object valueForKey:@"shipping_province"] description],
-                                            [[object valueForKey:@"shipping_postalcode"] description]];
-                
-                [(UILabel *)[cell viewWithTag:0] setText:AddressBuilder];  // load Address
-                
-            }
-             */
-            
             
             
             
@@ -1761,16 +1535,22 @@ NSArray *statusDataX;
         Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
         NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
         
-        NSLog(@"dw1 - Monitor Products: %@", currentMode);
         
+        // French for New Product - Too Long
+        
+        /*
+        if (![currentMode isEqualToString:@"VIEW"] && (indexPath.row == [[self.fetchedResultsController fetchedObjects] count]))
+        {
+            cell.textLabel.text = NSLocalizedString(@"New Product",nil);
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+        }
+        */
         
         
         // new order (first time pass)
         
         if (currentMode == nil && (indexPath.row < [[self.fetchedResultsController fetchedObjects] count]))
         {
-            NSLog(@"This is the count %d", [[self.fetchedResultsController fetchedObjects] count]);
-            NSLog(@"This is the problem %ld", (long)indexPath.row);
             
             NSManagedObject *ProductObject = [[self.fetchedResultsController fetchedObjects] objectAtIndex:indexPath.row];
             
@@ -1825,38 +1605,11 @@ NSArray *statusDataX;
                 
             }  // Calc Grey End
             
-            
-            
-            /*
-            if([[ProductObject valueForKey:@"avail_allocation"] integerValue] == 0 || [[ProductObject valueForKey:@"avail_inventory"] integerValue] == 0) {
-                
-                cell.textLabel.textColor = [UIColor grayColor];
-                cell.detailTextLabel.textColor = [UIColor grayColor];
-            }
-            */
-            
-            
-            NSLog(@"dw1 - arrScrnProducts: %@", app.globalProductsScrn);
-            NSLog(@"dw1 - is BCCD hcpfound_existing: %@", hcpFound);
-            NSLog(@"dw1 - is BCCD productFound_existing: %@", productFound);
-            
-            
-            NSLog(@"dw1 - PRODUCTFOUND_VALUE: %@", productFound);
-            
-            
+           
             
             
             // update qty for fetched results
             if (productFound != nil) {
-                
-                NSLog(@"dw1 - WAS HERE_A23");
-                
-                NSLog(@"dw1 - WAS HERE_A23_1:%lu", (unsigned long)[app.globalProductsScrn count]);
-                
-                NSLog(@"dw1 - WAS HERE_A23_2:%@", [[ProductObject valueForKey:@"productid"] description]);
-                
-                NSLog(@"dw1 - WAS HERE_A23_3:%@", [[app.globalProductsScrn objectAtIndex:indexPath.row] objectAtIndex:0] );
-                
                 
 
 #pragma mark Calc OverRide
@@ -1870,12 +1623,6 @@ NSArray *statusDataX;
                     
                     for (int p = 0; p < [app.globalProductsScrn count]; p++)
                     {
-                        
-                        /*
-                        NSString *pdesc = [NSString stringWithFormat:@"%@ %@",
-                                           [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:1],
-                                           [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:2]];
-                        */
                         
                         
                         // if ([pdesc isEqualToString:cell.textLabel.text]) {
@@ -1938,11 +1685,7 @@ NSArray *statusDataX;
                                 
                                 // GT limit ? replace override with allocation value
                                 
-                                NSLog(@"dw1 -XOVER1:");
-                                
                                 if ( [[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] > [[ProductObject valueForKey:@"max_computed"] integerValue]) {
-                                    
-                                    NSLog(@"dw1 -XOVER2:");
                                     
                                     cell.detailTextLabel.text = [ProductObject valueForKey:@"max_computed"];
                                     
@@ -1966,16 +1709,9 @@ NSArray *statusDataX;
             }
             
             
-            NSLog(@"dw1 - BBC - show added products on screen");
-            
-            
-            
-            
             // add product based on initial load
             
             if (productFound == nil) {
-                
-                NSLog(@"dw1 - WAS HERE_B");
                 
                 arrTempProducts = [NSMutableArray array];
                 [arrTempProducts addObject:[[ProductObject valueForKey:@"productid"] description]];
@@ -1986,11 +1722,7 @@ NSArray *statusDataX;
             }
             
             
-            
-            NSLog(@"dw1 - Monitor Products2: %@", currentMode);
-            
-            
-            
+           
             
         }
         
@@ -2033,36 +1765,7 @@ NSArray *statusDataX;
                             
                         }
                         
-                        
-                        NSLog(@"dw1 - Show Current Mode %@", currentMode);
-                        NSLog(@"dw1 - Show ProductFound %@", productFound);
-                        NSLog(@"dw1 - Show ProductFound %lu", (unsigned long)productFound.length);
-                        
-                        
-                        // add product based on initial load for Draft
-                        /*
-                        if ([currentMode isEqualToString:@"DRAFT"] && productFound.length == 0) {
-                            
-                            NSLog(@"dw1 - WAS HERE_C");
-                            if (indexPath.row == i) {
-                                
-                                arrTempProducts = [NSMutableArray array];
-                                [arrTempProducts addObject:[[[oRecords objectAtIndex:i] valueForKey:@"productid"] description]];
-                                [arrTempProducts addObject:[[[oRecords objectAtIndex:i] valueForKey:@"stored_product_name"] description]];
-                                [arrTempProducts addObject:[[[oRecords objectAtIndex:i] valueForKey:@"stored_product_description"] description]];
-                                [arrTempProducts addObject:[[[oRecords objectAtIndex:i] valueForKey:@"quantityordered"] stringValue]];
-                                [app.globalProductsScrn addObject:arrTempProducts];
-                                
-                                
-                            }
-                        }
-                        */
-                
-                        
-                        
-                        // [productandqty setObject:[[oRecords objectAtIndex:i] valueForKey:@"quantityordered"]
-                        //               forKey:[ valueForKey:@"productid"]];
-                        
+                       
                     }
                     
                 }
@@ -2087,10 +1790,9 @@ NSArray *statusDataX;
                                        [[ProductObject valueForKey:@"productname"] description],
                                        [[ProductObject valueForKey:@"productdescription"] description]];
                 
-                // check for corresponding qty
-                // a. Loop Through Products
-                // b. get productid = [[ProductObject valueForKey:@"productname"] description]
-                // c. output qty
+               
+                
+
                 
 
                 
@@ -2204,8 +1906,6 @@ NSArray *statusDataX;
                     
                     // GT limit ? replace override with allocation value
                     
-                    NSLog(@"dw1 -XOVER1:");
-                    
                     if ( prodqty > [[ProductObject valueForKey:@"max_computed"] integerValue]) {
                         
                         prodqty = [[ProductObject valueForKey:@"max_computed"] integerValue];
@@ -2216,15 +1916,7 @@ NSArray *statusDataX;
 
                 
                 
-                
-                NSLog(@"show prodqty value %d" ,  prodqty);
-                NSLog(@"show dictionary %@", productandqty);
-                NSLog(@"show dictionary %@", [defaults objectForKey:@"MCG_productandqty"]);
-                
-                
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",prodqty];
-                
-                NSLog(@"dw1 - BBC2 - show added products on screen");
                 
                 
                 // Prevent Addition of Existing Projects
@@ -2269,9 +1961,6 @@ NSArray *statusDataX;
     // DELIVERY INSTRUCTIONS
     if (indexPath.section == 3) {
         
-        NSLog(@"dw1 - matchbook1a:%@", hcpFound);
-        NSLog(@"dw1 - matchbook1b:%@", productFound);
-        NSLog(@"dw1 - matchbook1c:%@", object);
         
         // new
         
@@ -2283,7 +1972,6 @@ NSArray *statusDataX;
         if (object != nil) {
             
             [(UILabel *)[cell viewWithTag:1002] setText:[[object valueForKey:@"shipping_instructions"] description]];
-            NSLog(@"dw1 - matchbook1");
             
         }
         
@@ -2295,14 +1983,8 @@ NSArray *statusDataX;
             
             // get ship info based on type
             
-            
-            
-            
             [(UILabel *)[cell viewWithTag:1002] setText:app.globalShipInfo];
-            NSLog(@"dw1 - matchbook2");
             
-            NSLog(@"dw1 - matchbook2a:%@", hcpFound);
-            NSLog(@"dw1 - matchbook2b:%@", productFound);
         }
         
         
@@ -2311,8 +1993,6 @@ NSArray *statusDataX;
         {
             UILabel *label = (UILabel *)[cell viewWithTag:1002];
             label.enabled = NO;
-            
-            
             
         }
         
@@ -2351,10 +2031,6 @@ NSArray *statusDataX;
             
             [(UILabel *)[cell viewWithTag:33] setText:app.globalShipType];
         }
-        
-        
-        
-        
         
         
         
@@ -2398,15 +2074,7 @@ NSArray *statusDataX;
         [(UILabel *)[cell viewWithTag:553] setHidden:NO];
         
         }
-        
-        
-        // addTarget Method
-        // [[(UILabel *)[cell viewWithTag:553] setTag:indexPath.row];
-        // [[cell] addTarget:self action:@selector(showName:) forControlEvents:UIControlEventTouchDown];
-        // buttonName.tag = indexPath.row;
-        // [buttonName addTarget:self action:@selector(showName:) forControlEvents:UIControlEventTouchUpInside];
-        
-        
+       
         
         if ([currentMode isEqualToString:@"VIEW"])
         {
@@ -2418,7 +2086,14 @@ NSArray *statusDataX;
             // show watermark
             
             [(UILabel *)[cell viewWithTag:554] setHidden:NO];
-            [(UILabel *)[cell viewWithTag:554] setText:@"03/07/2013 3:19:59 PM"];
+            
+            NSDate *currDate = [NSDate date];
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+            [dateFormatter setDateFormat:@"dd.MM.YY HH:mm:ss"];
+            NSString *dateString = [dateFormatter stringFromDate:currDate];
+            
+            [(UILabel *)[cell viewWithTag:554] setText:dateString];
+            
             
             // hide buttons
             
@@ -2456,7 +2131,6 @@ float a;
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     a=scrollView.contentOffset.y;
-    NSLog(@"dw1 - show offset:%f", a);
 }
 
 
@@ -2464,11 +2138,10 @@ float a;
     if (scrollView.contentOffset.y<=a) {
         // [scrollView setScrollEnabled:NO];
         // [scrollView setContentOffset:CGPointMake(0, a)];
-        NSLog(@"dw1 - show offset A:%f", a);
     }
     
     [scrollView setScrollEnabled:YES];
-    NSLog(@"dw1 - show offset:%f B", a);
+
 }
 
 
@@ -2484,15 +2157,10 @@ float a;
         
     }
     
-    NSLog(@"dw1 - show mysig: %@" , myglobsig);
-    NSLog(@"dw1 - show mysig length: %lu" , (unsigned long)myglobsig.length);
-    
     // clear if signature is null (focus on signature box)
     NSMutableArray *signatureCapture = [SignatureControl globsigCoordinates];
     
     if ([signatureCapture count] == 0) {
-        
-        NSLog(@"dw1 - I HAVE CLEARED");
     
         [SignatureControl clearSignature];
     
@@ -2506,28 +2174,11 @@ float a;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    NSLog(@"dw1 - alive again ?");
-    
     myTableView.scrollEnabled = YES;
     
     [super touchesBegan:touches withEvent:event];
     
 }
-
-
-- (void) touchesEnded: (NSSet *) touches withEvent: (UIEvent *) event
-{
-    NSLog(@"touch scroll");
-    // If not dragging, send event to next responder
-    if (myTableView.dragging)
-        NSLog(@"dragging1AA");
-    //[self.nextResponder touchesEnded: touches withEvent:event];
-    else
-        NSLog(@"dragging2AA");
-    // [super touchesEnded: touches withEvent: event];
-}
-
-
 
 
 
@@ -2556,14 +2207,6 @@ float a;
                 // replace value
                 [current_text appendString:string];
                 
-                // update dictionary
-                // NSString *dictqty = @"QTY_";
-                // dictqty = [dictqty stringByAppendingString: [NSString stringWithFormat:@"%d", ip.row]];
-                // [_selectableProducts_Dict setObject:current_text forKey:dictqty];
-                
-                NSLog(@"dw1 - Show GRow Value: %d", ip.row);
-                NSLog(@"dw1 - Show GARRAY Value: %@", app.globalProductsScrn);                
-                
                 
                 // find product to populate based on cell text
                 
@@ -2574,28 +2217,15 @@ float a;
                                        [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:1],
                                        [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:2]];
                     
-                    NSLog(@"dw1 - show AAA:%@",pdesc);
-                    
-                    NSLog(@"dw1 - show BBB:%@", cell.textLabel.text);
-                    
-                    
                     
                     if ([pdesc isEqualToString:cell.textLabel.text]) {
-                        
-                        // double user_qty = [[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] doubleValue];
                         
                         [[app.globalProductsScrn objectAtIndex:p] replaceObjectAtIndex:3 withObject:current_text];
                         
                         
-                        NSLog(@"dw1 - CCC made update");
-                        
                     }
                     
                 }
-                
-                // [[app.globalProductsScrn objectAtIndex:ip.row] replaceObjectAtIndex:3 withObject:current_text];
-                
-                // _selectableProducts_Dict = @{ dictqty : current_text};
             
             } else {
                 
@@ -2611,11 +2241,6 @@ float a;
                 [current_text appendString:cell.detailTextLabel.text];
                 [current_text appendString:string];
                 
-                // update dictionary
-                // NSString *dictqty = @"QTY_";
-                // dictqty = [dictqty stringByAppendingString: [NSString stringWithFormat:@"%d", ip.row]];
-                // [_selectableProducts_Dict setObject:current_text forKey:dictqty];
-                
                 for (int p = 0; p < [app.globalProductsScrn count]; p++)
                 {
                     
@@ -2631,10 +2256,7 @@ float a;
                     
                 }
                 
-                
-                // [[app.globalProductsScrn objectAtIndex:ip.row] replaceObjectAtIndex:3 withObject:current_text];
-                // _selectableProducts_Dict = @{ dictqty : current_text};
-            
+         
             } else {
                 
                 // non int value [put back original value]
@@ -2652,13 +2274,6 @@ float a;
     NSManagedObject *prodMOM = [[self.fetchedResultsController fetchedObjects] objectAtIndex:ip.row];
     
         double current_text_double = [current_text doubleValue];
-    
-        /*
-        double allocation_max = [[[prodMOM valueForKey:@"avail_allocation"] description] doubleValue];
-        double inventory_max = [[[prodMOM valueForKey:@"avail_inventory"] description] doubleValue];
-        double max_computed = [[[prodMOM valueForKey:@"max_computed"] description] doubleValue];
-        double order_max = [[[prodMOM valueForKey:@"ordermax"] description] doubleValue];
-        */
     
         NSString *overridestate = @"NO";
     
@@ -2729,29 +2344,14 @@ float a;
                 
                 overridestate = @"YES";
                 
-                NSLog(@"dw1 - show setQTY:%f", set_qty);
                 
             }
             
             
         }  // eof online/offline
     
-    
-    
-        /* Removed
-        if (allocation_max < order_max) {
-            set_qty = allocation_max;
-        } else {
-            set_qty = order_max;
-        }
-    
-         */
-    
-    
-    NSLog(@"dw1 - show setQTYTESTX:%f", set_qty);
-    NSLog(@"dw1 - show setQTYTESTY:%f", current_text_double);
-    // NSLog(@"dw1 - show setQTYTESTZ:%ld", (long)[[prodMOM valueForKey:@"max_computed"] integerValue]);
-    
+   
+
     if ([overridestate isEqualToString:@"YES"]) {
         
             current_text = [[NSMutableString alloc] initWithString:[NSString stringWithFormat:@"%g", set_qty]];
@@ -2765,16 +2365,10 @@ float a;
                                    [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:1],
                                    [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:2]];
                 
-                NSLog(@"dw1 - show DDD:%@",pdesc);
-                NSLog(@"dw1 - show EEE:%@", cell.textLabel.text);
-                
-                
                 if ([pdesc isEqualToString:cell.textLabel.text]) {
                     
                     [[app.globalProductsScrn objectAtIndex:p] replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%g", set_qty]];
-                    // [[app.globalProductsScrn objectAtIndex:ip.row] replaceObjectAtIndex:3 withObject:[NSString stringWithFormat:@"%g", set_qty]];
                     
-                    NSLog(@"dw1 - FFF made update");
                 }
                 
             }
@@ -2857,12 +2451,6 @@ float a;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
-     /* access by tag #
-     draft = 200 / templatename = 300  / cancelOrderDetail = 400
-     */
-    
-    //NSString *title = [alertView buttonTitleAtIndex:buttonIndex]
-    // if ([title isEqualToString: @"Create"]) {
     
     if (alertView.tag == 300) {
         
@@ -2884,10 +2472,6 @@ float a;
         NSArray *templateFound = [_managedObjectContext executeFetchRequest:request error:&error];
         
         
-       
-        NSLog(@"dw1 - show count # %d" , [templateFound count]);
-        
-        
         if ([templateFound count] == 0) {
         
         // create new template
@@ -2896,8 +2480,8 @@ float a;
         } else {
         
             UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:@"Name In Use"
-                                  message:@"Your Template Not Created Because That Current Name is in Usage"
+                                  initWithTitle:NSLocalizedString(@"Name In Use",nil)
+                                  message:NSLocalizedString(@"Your Template Not Created Because That Current Name is in Usage",nil)
                                   delegate:nil //or self
                                   cancelButtonTitle:@"OK"
                                   otherButtonTitles:nil];
@@ -2971,25 +2555,7 @@ float a;
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:200];
-        
-   
-    /* REMOVED - KEEP PRODUCTS / QTYS FOR HCP
-    // add predicate only if hcp selected
-    if (hcpFound != nil) {
-        
-        //get predicate from user values
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *territoryid = [defaults objectForKey:@"MCG_territoryid"];
-        
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"territoryid = %@", territoryid];
-        [fetchRequest setPredicate:predicate];
-        
-    }
-    */
-    
-    
-    NSLog(@"dw1 - predicate_check: %@", productFound);
-    NSLog(@"dw1 - predicate_check: %@", hcpFound);
+  
     
     //get territory
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -2998,11 +2564,6 @@ float a;
     
     // add predicate only if removed-products exists selected
     if (productFound != nil || hcpFound != nil) {
-        
-        //get removed products
-        NSLog(@"predicate 4 rmvd products %@" , app.globalProductsRmv);
-        // NSLog(@"predicate 4 rmvd products %@" , app.globalProductsRmv);
-        
         
         // fetch performed with RmvProducts ?
         if ([app.globalProductsRmv count] > 0) {
@@ -3014,12 +2575,6 @@ float a;
         
         //create predicate
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"territoryid = %@ AND NOT (productid IN %@)", territoryid, app.globalProductsRmv];
-        
-        // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"territoryid = %@ AND NOT (productid IN %@)", territoryid, app.globalProductsRmv];
-        
-        // NSPredicate *predicate = [NSPredicate predicateWithFormat:@"territoryid = %@", territoryid];
-        
-        NSLog(@"dw1 - predicateX1 %@" , predicate);
         
         
         [fetchRequest setPredicate:predicate];
@@ -3047,9 +2602,7 @@ float a;
             // use screen prod after initial load
             predicate = [NSPredicate predicateWithFormat:@"territoryid = %@ AND (productid IN %@)", territoryid, productsdisplay];
             [fetchRequest setPredicate:predicate];
-            
-            NSLog(@"dw1 - predicateX2 %@" , predicate);
-            
+              
         } else {
         
             // note territoryid is minimum predicate (else issues if multiple teritories exists)
@@ -3057,21 +2610,8 @@ float a;
             predicate = [NSPredicate predicateWithFormat:@"territoryid = %@", territoryid];
             [fetchRequest setPredicate:predicate];
         }
-        
-        // clear initial load ???
-        /*
-         rmv - done in viewdidload
-        NSArray *initialproducts = [defaults objectForKey:@"MCG_detail_products"];
-        
-        if ([initialproducts count] > 0) {
-            [defaults setObject:nil forKey:@"MCG_detail_products"];
-        }
-        */
+ 
     }
-
-    
-
-    
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"productname" ascending:YES];
@@ -3117,8 +2657,6 @@ float a;
     
     
     AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
-    // NSLog(@"dw1 - show segue man %@", [identifier description]);
-    
     
     if ([[identifier description] isEqualToString:@"_uwindToOrders"]) {
         
@@ -3135,7 +2673,6 @@ float a;
             NSManagedObjectContext *context = [self managedObjectContext];
             [context deleteObject:object];
             
-            // [_managedObjectContext deleteObject:object];
             
             // Commit the change.
             NSError *error = nil;
@@ -3149,12 +2686,8 @@ float a;
             
         }
         
-        // app.globalMode = nil;
-        
         [self removeValues];
-        
-        
-        NSLog(@"dw1 - show segue - cleared globalMode");
+
     }
     
     
@@ -3216,10 +2749,9 @@ float a;
     if ([valid_order isEqualToString:@"NO"]) {
         
         // show msg
-        // msg no hcp
         UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle: @"Must Select A Product"
-                                  message: @"Must Enter A Qty to Create Request" delegate: nil
+                                  initWithTitle: NSLocalizedString(@"Must Select A Product",nil)
+                                  message: NSLocalizedString(@"Must Enter A Qty to Create Request",nil) delegate: nil
                                   cancelButtonTitle: @"OK" otherButtonTitles: nil];
         [alertView show];
         
@@ -3228,10 +2760,7 @@ float a;
     }
     
     
-
-    
-    
-    [SVProgressHUD showWithStatus:@"Saving Order..."];
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"Saving Order...",nil)];
     
     Reachability *myNetwork = [Reachability reachabilityWithHostname:@"www.samplecupboard.com"];
     NetworkStatus internetStatus = [myNetwork currentReachabilityStatus];
@@ -3263,15 +2792,7 @@ float a;
         [self performSelectorOnMainThread:@selector(sendOrderToSC:) withObject:uuidString waitUntilDone:YES];
         
         [self performSelectorOnMainThread:@selector(createOrder:) withObject:uuidString waitUntilDone:YES];
-        
-        
-        
-        
-   
     
-    
-    // myglobRmvdProducts = nil;
-    // myglobChosenHcp = nil;
     
     }  //testx
     
@@ -3407,7 +2928,6 @@ float a;
     
     // Should Replace Contradicting XML Characters
     // NSString *order_xml=[order_xml stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
-    
     // NSLog(@"xmlData: %@", order_xml);
     
     
@@ -3429,8 +2949,8 @@ float a;
     
     rtnOrderID = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     
-    NSLog(@"dw1 - show data response: %@", order_xml);
-    NSLog(@"dw1a - show data response: %@", order_response_msg);
+    // NSLog(@"dw1 - show data response: %@", order_xml);
+    // NSLog(@"dw1a - show data response: %@", order_response_msg);
     
     
 }
@@ -3489,12 +3009,6 @@ float a;
     
     [OrderHDR setValue:[orderValue_Dict valueForKey:@"AllocationId"] forKey:@"allocationid"];
         
-    // screen based values
-    
-    /* can replace 4 lines with ShippingInstructions for consistency
-     
-     */
-    
     UITableViewCell *cella = [myTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
     UITextField *shipinput = (UITextField*)[cella viewWithTag:1002];
     
@@ -3532,12 +3046,6 @@ float a;
     }
     
     
-    
-    
-    
-    NSLog(@"dw1 - show guid length %d", orderType.length);
-    
-    
     // on-line orders
     if (orderType.length > 10) {
         projectcode_var = @"TEMP";
@@ -3556,8 +3064,7 @@ float a;
         } else {
             
             // substring rtnOrderID
-            NSLog(@"dw1 - show me the money: %@", rtnOrderID);
-        
+          
             int strpos = [rtnOrderID rangeOfString:@"["].location;  // start position
             int endpos = [rtnOrderID rangeOfString:@"]"].location;  // end position
         
@@ -3567,10 +3074,7 @@ float a;
             int midpos = [basetext rangeOfString:@":"].location;  // mid-point
             strprefix = [basetext substringToIndex:midpos];
             strref = [basetext substringFromIndex:midpos+1];
-        
-            NSLog(@"dw1a - show me the cash: %@", basetext);
-            NSLog(@"dw1b - show me the cash-a: %@", strprefix);
-            NSLog(@"dw1b - show me the cash-b: %@", strref);
+ 
         }
         
         
@@ -3585,12 +3089,7 @@ float a;
     
     [OrderHDR setValue:projectcode_var forKey:@"projectcode"];
     [OrderHDR setValue:[NSDate date] forKey:@"datecreated"];
-    
-    
-    // show me how many products
-    NSLog(@"dw1 - how many products:: %lu", (unsigned long)[app.globalProductsScrn count]);
-    
-    
+   
     
     // Get Details From Dictionary
     int total_products = 0;
@@ -3664,10 +3163,6 @@ float a;
                                  inManagedObjectContext:contextINSERT];
     
     
-    NSLog(@"dw1 - tempNameLog: %@", templateName);
-    NSLog(@"dw1 - tempNameLog: orderType %@", orderType);
-    
-    
     [OrderHDR setValue:templateName forKey:@"templatename"];
     
     [OrderHDR setValue:[orderValue_Dict valueForKey:@"ShippingAddressId"] forKey:@"shiptoid"];
@@ -3713,11 +3208,9 @@ float a;
     {
          double user_qty = [[[app.globalProductsScrn objectAtIndex:i] objectAtIndex:3] doubleValue];
         
-        // template saves with qty of 0
+        // NOTE!!!! template saves with qty of 0
         
         // if (user_qty > 0) {
-        
-        NSLog(@"dw1 no write details %lu" , (unsigned long)[app.globalProductsScrn count]);
         
             NSManagedObject *OrderDTL = [NSEntityDescription
                                          insertNewObjectForEntityForName:@"OrderTemplateLine"
@@ -3804,9 +3297,6 @@ float a;
     NSDate *currentDateNTime = [NSDate date];
     NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
     [dateformater setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
-    // [dateformater setDateFormat:@"yyyy-MM-dd,THH:mm:ss"];
-    
-    NSLog(@"dw1 - show date4mat %@", [dateformater stringFromDate: currentDateNTime]);
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -3819,7 +3309,6 @@ float a;
     NSDictionary *validUserObjects = [[NSDictionary alloc] initWithObjectsAndKeys:@"MCG_userid", @"MCG_token", @"MCG_territoryid", @"MCG_allocationid", nil];
     
     for(id key in validUserObjects) {
-        NSLog(@"key=%@ value=%@", key, [defaults objectForKey:key]);
         
         if ([[defaults objectForKey:key] isKindOfClass:[NSNull class]]) {
             NSLog(@"missing value for %@" , [key description]);
@@ -3834,19 +3323,7 @@ float a;
     UITextField *shiptype = (UITextField*)[cellb viewWithTag:33];
       
     
-    NSLog(@"dw1 - forward:%@", [self stringOrEmptyString:[[myHcp valueForKey:@"shiptoaddressid"] description]]);
-    
-    NSLog(@"dw1 - forward marc1h:%@", app.globalHcpDictionary );
-    
-    
-    
     // offline mode check for null values
-    NSLog(@"dw1 - Userid %@", [defaults objectForKey:@"MCG_userid"] );
-    NSLog(@"dw1 - Token %@", [defaults objectForKey:@"MCG_token"] );
-    NSLog(@"dw1 - Territoryid %@", [defaults objectForKey:@"MCG_territoryid"] );
-    NSLog(@"dw1 - allocationid %@", [defaults objectForKey:@"MCG_allocationid"] );
-    NSLog(@"dw1 - Clientid %@", [defaults objectForKey:@"MCG_clientid"] );
-    
     
     
     orderValue_Dict = @{   @"UserId" : [defaults objectForKey:@"MCG_userid"],
@@ -3923,11 +3400,6 @@ float a;
                                      [[app.globalProductsScrn objectAtIndex:i] objectAtIndex:0] ];
             [request setPredicate:predicate];
             
-            /*
-            [request setPredicate:[NSPredicate predicateWithFormat:@"territoryid=%@ AND productid=%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"MCG_territoryid"],
-                                   [[app.globalProductsScrn objectAtIndex:i] objectAtIndex:0] ]];
-            */
-            
             
             // fetch request
             aBook = [[context executeFetchRequest:request error:&error] lastObject];
@@ -3968,11 +3440,6 @@ float a;
     NSString *isStart = @"";
     int previousCoord = 0;
 
-
-    if ([signatureCapture count] > 2) {
-        NSLog(@"dw1 - show sigCap: %@", signatureCapture);
-    }
-
     int total_coord = 0;
     total_coord = [signatureCapture count];
 
@@ -4002,29 +3469,22 @@ float a;
             // strip values
             int midpoint = [coord_handle rangeOfString:@","].location;  // start position
             
-            int endpoint = coord_handle.length;  // end position
-            int endpointX = endpoint - (midpoint - 1);
+            // int endpoint = coord_handle.length;  // end position
+            // int endpointX = endpoint - (midpoint - 1);
             int stoppoint = [coord_handle rangeOfString:@"}"].location;  // start position
             
             
-            NSLog(@"dw1 - show the goods:%@  m:%d e:%d ex:%d s:%d", coord_handle, midpoint, endpoint, endpointX, stoppoint);
-            
-            
+            // NSLog(@"dw1 - show the goods:%@  m:%d e:%d ex:%d s:%d", coord_handle, midpoint, endpoint, endpointX, stoppoint);
             
             NSString *fstringX = [coord_handle substringWithRange:NSMakeRange(1, midpoint-1)];
-            NSLog(@"dw1: fstringX:%@", fstringX);
+            // NSLog(@"dw1: fstringX:%@", fstringX);
             
-            int endpointS = coord_handle.length - 1;
-            NSLog(@"dw1: endpointS:%d", endpointS);
+            // int endpointS = coord_handle.length - 1;
+            // NSLog(@"dw1: endpointS:%d", endpointS);
             
             NSString *fstringY = [coord_handle substringWithRange:NSMakeRange(midpoint+2, (stoppoint - (midpoint+2)))];
-            NSLog(@"dw1: fstringY:%@", fstringY);
+            // NSLog(@"dw1: fstringY:%@", fstringY);
             
-            // NSString *fstringYx = [coord_handle substringWithRange:NSMakeRange(midpoint+2, (endpointX - (midpoint+1)))];
-            // NSLog(@"dw1: fstringYx:%@", fstringYx);
-            
-            // NSLog(@"dw1 - show float strings %@, %@", fstringX, fstringY);
-                        
             // create new string based on
             [preBase64 addObject:[NSString stringWithFormat:@"{\"isStart\": %@, \"x\": %@, \"y\": %@},", isStart, fstringX, fstringY]];
             
@@ -4048,17 +3508,7 @@ float a;
         // conversion
         NSString *resultZ = [NSString stringWithFormat:@"[%@]", resultY];
     
-    
-        // Experiment
-        // resultZ = @"?[{\"isStart\": true, \"x\": 119, \"y\": 45}, {\"isStart\": false, \"x\": 109, \"y\": 55}, {\"isStart\": false, \"x\": 101, \"y\": 72}, {\"isStart\": false, \"x\": 92, \"y\": 87}, {\"isStart\": false, \"x\": 86, \"y\": 97}, {\"isStart\": false, \"x\": 83, \"y\": 101}, {\"isStart\": false, \"x\": 81, \"y\": 103}, {\"isStart\": false, \"x\": 80, \"y\": 104}, {\"isStart\": false, \"x\": 80, \"y\": 103}, {\"isStart\": false, \"x\": 81, \"y\": 91}, {\"isStart\": false, \"x\": 92, \"y\": 68}, {\"isStart\": false, \"x\": 108, \"y\": 39}, {\"isStart\": false, \"x\": 125, \"y\": 20}, {\"isStart\": false, \"x\": 136, \"y\": 13}, {\"isStart\": false, \"x\": 143, \"y\": 11}, {\"isStart\": false, \"x\": 148, \"y\": 11}, {\"isStart\": false, \"x\": 150, \"y\": 17}, {\"isStart\": false, \"x\": 150, \"y\": 34}, {\"isStart\": false, \"x\": 141, \"y\": 55}, {\"isStart\": false, \"x\": 136, \"y\": 67}, {\"isStart\": false, \"x\": 131, \"y\": 75}, {\"isStart\": false, \"x\": 122, \"y\": 82}, {\"isStart\": false, \"x\": 112, \"y\": 86}, {\"isStart\": false, \"x\": 104, \"y\": 89}, {\"isStart\": false, \"x\": 97, \"y\": 93}, {\"isStart\": false, \"x\": 93, \"y\": 93}, {\"isStart\": false, \"x\": 100, \"y\": 88}, {\"isStart\": false, \"x\": 112, \"y\": 81}, {\"isStart\": false, \"x\": 127, \"y\": 75}, {\"isStart\": false, \"x\": 135, \"y\": 73}, {\"isStart\": false, \"x\": 136, \"y\": 73}, {\"isStart\": false, \"x\": 137, \"y\": 73}, {\"isStart\": false, \"x\": 135, \"y\": 75}, {\"isStart\": false, \"x\": 125, \"y\": 85}, {\"isStart\": false, \"x\": 117, \"y\": 92}, {\"isStart\": false, \"x\": 114, \"y\": 97}, {\"isStart\": false, \"x\": 114, \"y\": 100}, {\"isStart\": false, \"x\": 114, \"y\": 101}, {\"isStart\": false, \"x\": 120, \"y\": 101}, {\"isStart\": false, \"x\": 126, \"y\": 98}, {\"isStart\": false, \"x\": 131, \"y\": 93}, {\"isStart\": false, \"x\": 135, \"y\": 88}, {\"isStart\": false, \"x\": 137, \"y\": 85}, {\"isStart\": false, \"x\": 138, \"y\": 84}, {\"isStart\": false, \"x\": 139, \"y\": 83}, {\"isStart\": false, \"x\": 139, \"y\": 84}, {\"isStart\": false, \"x\": 139, \"y\": 85}, {\"isStart\": false, \"x\": 139, \"y\": 89}, {\"isStart\": false, \"x\": 139, \"y\": 92}, {\"isStart\": false, \"x\": 139, \"y\": 94}, {\"isStart\": false, \"x\": 140, \"y\": 97}, {\"isStart\": false, \"x\": 142, \"y\": 98}, {\"isStart\": false, \"x\": 147, \"y\": 98}, {\"isStart\": false, \"x\": 152, \"y\": 94}, {\"isStart\": false, \"x\": 158, \"y\": 85}, {\"isStart\": false, \"x\": 160, \"y\": 84}, {\"isStart\": true, \"x\": 207, \"y\": 20}, {\"isStart\": false, \"x\": 206, \"y\": 24}, {\"isStart\": false, \"x\": 195, \"y\": 36}, {\"isStart\": false, \"x\": 177, \"y\": 57}, {\"isStart\": false, \"x\": 163, \"y\": 78}, {\"isStart\": false, \"x\": 157, \"y\": 88}, {\"isStart\": false, \"x\": 156, \"y\": 93}, {\"isStart\": false, \"x\": 156, \"y\": 97}, {\"isStart\": false, \"x\": 156, \"y\": 98}, {\"isStart\": false, \"x\": 157, \"y\": 100}, {\"isStart\": true, \"x\": 165, \"y\": 98}, {\"isStart\": false, \"x\": 158, \"y\": 101}, {\"isStart\": false, \"x\": 154, \"y\": 102}, {\"isStart\": false, \"x\": 153, \"y\": 103}, {\"isStart\": false, \"x\": 161, \"y\": 101}, {\"isStart\": false, \"x\": 182, \"y\": 85}, {\"isStart\": false, \"x\": 214, \"y\": 63}, {\"isStart\": false, \"x\": 250, \"y\": 35}, {\"isStart\": false, \"x\": 278, \"y\": 10}, {\"isStart\": false, \"x\": 287, \"y\": -1}, {\"isStart\": false, \"x\": 287, \"y\": -5}, {\"isStart\": false, \"x\": 281, \"y\": -5}, {\"isStart\": false, \"x\": 257, \"y\": 7}, {\"isStart\": false, \"x\": 231, \"y\": 29}, {\"isStart\": false, \"x\": 211, \"y\": 55}, {\"isStart\": false, \"x\": 203, \"y\": 72}, {\"isStart\": false, \"x\": 201, \"y\": 84}, {\"isStart\": false, \"x\": 201, \"y\": 93}, {\"isStart\": false, \"x\": 201, \"y\": 98}, {\"isStart\": false, \"x\": 201, \"y\": 101}, {\"isStart\": false, \"x\": 202, \"y\": 103}, {\"isStart\": false, \"x\": 203, \"y\": 103}, {\"isStart\": false, \"x\": 203, \"y\": 101}, {\"isStart\": false, \"x\": 202, \"y\": 97}, {\"isStart\": false, \"x\": 199, \"y\": 92}, {\"isStart\": false, \"x\": 199, \"y\": 89}, {\"isStart\": false, \"x\": 199, \"y\": 87}, {\"isStart\": false, \"x\": 199, \"y\": 85}, {\"isStart\": false, \"x\": 199, \"y\": 84}, {\"isStart\": false, \"x\": 202, \"y\": 85}, {\"isStart\": false, \"x\": 204, \"y\": 86}, {\"isStart\": false, \"x\": 210, \"y\": 89}, {\"isStart\": false, \"x\": 217, \"y\": 89}, {\"isStart\": false, \"x\": 227, \"y\": 85}, {\"isStart\": false, \"x\": 238, \"y\": 72}, {\"isStart\": false, \"x\": 253, \"y\": 49}, {\"isStart\": false, \"x\": 255, \"y\": 47}]";
-
-    
-        NSLog(@"dw1 - show resultX:%@", resultZ);
-    
-        // NSString *b64 = [[NSString alloc] init];
-    
         b64 = [[resultZ description] base64EncodedString];
-        NSLog(@"dw1 = b64:%@", b64);
     
         return b64;
 
@@ -4093,10 +3543,11 @@ float a;
 
 - (NSString *)stringOrEmptyString:(NSString *)string
 {
-    if (string)
+    if (string == nil || [string isKindOfClass:[NSNull class]] ) {
+        return @"";
+    } else {
         return string;
-    else
-        return @" ";
+    }    
 }
 
 +(BOOL)isKeyBoardInDisplay  {
