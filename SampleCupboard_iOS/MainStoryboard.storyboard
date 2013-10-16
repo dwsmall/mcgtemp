@@ -112,7 +112,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.21556292788581044" green="0.74639068759523075" blue="0.95110818614130432" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="boldSystem" size="button"/>
-                                        <state key="normal" title="Sign In">
+                                        <state key="normal" title="User Sign In">
                                             <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -391,7 +391,7 @@
                                             <rect key="frame" x="45" y="1" width="678" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Ref:" lineBreakMode="tailTruncation" minimumFontSize="10" id="rim-vs-gJZ">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="left" text="Ref:" lineBreakMode="tailTruncation" minimumFontSize="10" id="rim-vs-gJZ">
                                                     <rect key="frame" x="6" y="8" width="42" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -405,7 +405,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date Created:" lineBreakMode="tailTruncation" minimumFontSize="10" id="pRv-nW-3ri">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="111" contentMode="left" text="Date Created:" lineBreakMode="tailTruncation" minimumFontSize="10" id="pRv-nW-3ri">
                                                     <rect key="frame" x="329" y="8" width="119" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -419,7 +419,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date Released:" lineBreakMode="tailTruncation" minimumFontSize="10" id="9WI-vC-wu6">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="112" contentMode="left" text="Date Released:" lineBreakMode="tailTruncation" minimumFontSize="10" id="9WI-vC-wu6">
                                                     <rect key="frame" x="329" y="37" width="126" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -433,7 +433,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Date Shipped:" lineBreakMode="tailTruncation" minimumFontSize="10" id="bae-Lq-GZ1">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="113" contentMode="left" text="Date Shipped:" lineBreakMode="tailTruncation" minimumFontSize="10" id="bae-Lq-GZ1">
                                                     <rect key="frame" x="329" y="66" width="119" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -447,7 +447,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Status:" lineBreakMode="tailTruncation" minimumFontSize="10" id="zIT-W2-25p">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="102" contentMode="left" text="Status:" lineBreakMode="tailTruncation" minimumFontSize="10" id="zIT-W2-25p">
                                                     <rect key="frame" x="6" y="37" width="72" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -1596,6 +1596,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="fwd-rq-yTd"/>
                     <connections>
+                        <outlet property="hcpTitleBar" destination="Txh-aj-vzc" id="f95-Vp-Vmb"/>
                         <outlet property="searchDisplayController" destination="BVj-wM-BG6" id="rDW-WG-yWb"/>
                         <outlet property="tableView" destination="H1J-MT-AaQ" id="QJU-ea-mQc"/>
                         <outlet property="topSearchBar" destination="GAu-iF-YUP" id="Ccu-4x-p5Y"/>
@@ -1812,6 +1813,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Ntm-y5-yyM"/>
                     <connections>
+                        <outlet property="hcpTopTitle" destination="y8u-3e-UHB" id="vdP-8o-Qzr"/>
                         <outlet property="tableViewX" destination="hPs-VR-OyE" id="iY5-0J-GBb"/>
                     </connections>
                 </viewController>
@@ -1883,6 +1885,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="6Bb-Y7-SJ3"/>
+                    <connections>
+                        <outlet property="hcpTtileBar" destination="p5l-fK-Opq" id="hG9-Do-BCB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IFC-ZM-jcp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Vza-ga-xw3" userLabel="Exit" sceneMemberID="exit"/>
@@ -2051,6 +2056,8 @@
                         <outlet property="btnLoadHCPs" destination="82P-m7-9YY" id="CRL-Sb-TLi"/>
                         <outlet property="btnReloadData" destination="bev-cO-bG2" id="gCX-p2-VYp"/>
                         <outlet property="btnSync" destination="ZHp-4M-ZLM" id="2JL-9P-Bc6"/>
+                        <outlet property="lastDataUpdateDate" destination="8gQ-gZ-iN7" id="aTQ-ze-3A8"/>
+                        <outlet property="lastHcpUpdateDate" destination="AI1-Kt-X8s" id="r0A-5G-RBD"/>
                         <outlet property="syncTableView" destination="VlG-go-wmf" id="fMn-yb-PCW"/>
                     </connections>
                 </viewController>
@@ -2094,13 +2101,217 @@
         <image name="shoppingcart.png" width="26" height="26"/>
         <image name="trend.png" width="26" height="26"/>
     </resources>
+    <classes>
+        <class className="HcpAdditionalDetails" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HcpAdditionalDetails.h"/>
+            <relationships>
+                <relationship kind="outlet" name="hcpTtileBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="tableViewX" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="HcpChoice" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HcpChoice.h"/>
+            <relationships>
+                <relationship kind="outlet" name="healthcareProf" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topSearchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="HcpDetailController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HcpDetailController.h"/>
+            <relationships>
+                <relationship kind="action" name="return:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="hcpTopTitle" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="navBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="outputlabelA" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="tableViewX" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="HcpListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HcpListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="return:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="outlet" name="hcpTitleBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="healthcareProf" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topSearchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="viewWeb" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="LoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="LoginButton:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="BtnSignin" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="Remember_Button" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="UserLoginBtn" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="busyIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="cbRememberMe" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="lblInvalidUserName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lblPassword" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lblRememberMe" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lblUsername" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="loadingPanel" candidateClass="UIView"/>
+                <relationship kind="outlet" name="loginBackgroundImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginErrorPanel" candidateClass="UIView"/>
+                <relationship kind="outlet" name="loginIcon" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="myActIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="password" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="userName" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="MESegmentedControl" superclassName="UISegmentedControl">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MESegmentedControl.h"/>
+        </class>
+        <class className="OrderDetailViewController_iPad" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OrderDetailViewController_iPad.h"/>
+            <relationships>
+                <relationship kind="action" name="CancelOrderDetail:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="Carrier_Air:" candidateClass="UIButton"/>
+                <relationship kind="action" name="Carrier_Ground:" candidateClass="UIButton"/>
+                <relationship kind="action" name="CellEditorBegunEditing:"/>
+                <relationship kind="action" name="CellEditorEndedEdit:"/>
+                <relationship kind="action" name="Done_Clicked:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="NewProductClick:"/>
+                <relationship kind="action" name="SaveDraft:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="TemplateMenu_Clicked:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="accept_sig:"/>
+                <relationship kind="action" name="delete_sig:"/>
+                <relationship kind="action" name="tbActionsClick:"/>
+                <relationship kind="outlet" name="SaveDraftButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="TemplateMenuButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="carrier_display_label" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="done_btn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="hiddenTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="myTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="odMainView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="odNavBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="odNavBarTitle" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="ok_btn" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="ordTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="ortnOrderID" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="oselectedCARRIER" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="oselectedSHIPINFO" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="otemplateName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputCHOSENPRODUCT" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputREMOVEDPRODUCTS" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputREMOVEDPRODUCTS2" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputarrScrnProducts" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputarrTempProducts" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel1" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel2" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel3" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel4" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel5" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabel6" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelA" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelB" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelC" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelD" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelE" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelF" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputlabelG" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="outputodMainView" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="sigview" candidateClass="UIView"/>
+                <relationship kind="outlet" name="tbActions" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="viewContainer" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="OrderViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/OrderViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="return:" candidateClass="UIStoryboardSegue"/>
+                <relationship kind="action" name="segmentClicked:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="lblTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="orderSearchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="segmentBar" candidateClass="MESegmentedControl"/>
+                <relationship kind="outlet" name="segmentedControl" candidateClass="MESegmentedControl"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topSearchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+        <class className="ProductChoice" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProductChoice.h"/>
+            <relationships>
+                <relationship kind="outlet" name="DoneButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="healthcareProf" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="prodSearchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ReportDetails" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportDetails.h"/>
+            <relationships>
+                <relationship kind="outlet" name="SelectAReport" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="myReportTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="navBarItem" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="reportTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="ReportMenu" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ReportMenu.h"/>
+            <relationships>
+                <relationship kind="outlet" name="oreportchoice" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="SignatureControl" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SignatureControl.h"/>
+            <relationships>
+                <relationship kind="outlet" name="ohandWRITING" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SyncViewController_iPad" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SyncViewController_iPad.h"/>
+            <relationships>
+                <relationship kind="action" name="btnLoadHCPsClick:"/>
+                <relationship kind="action" name="btnReloadDataClick:"/>
+                <relationship kind="action" name="btnSyncClick:"/>
+                <relationship kind="outlet" name="_data_stamp" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_hcp_stamp" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="btnLoadHCPs" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="btnReloadData" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="btnSync" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="lastDataUpdateDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="lastHcpUpdateDate" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="syncTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="TemplateSelection" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TemplateSelection.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topSearchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="total_templates" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="used_templates" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="UIStoryboardSegue" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="JKW-CI-TKa"/>
+        <segue reference="jUv-lw-V8G"/>
         <segue reference="idE-Ab-f4U"/>
         <segue reference="Nm3-gX-nis"/>
         <segue reference="ANr-dY-w1m"/>
