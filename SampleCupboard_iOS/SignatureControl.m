@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 MCG. All rights reserved.
 //
 
+
+#import "AppDelegate.h"
+
 #import "Base64.h"
 #import "SignatureControl.h"
 #import "OrderDetailViewController_iPad.h"
@@ -66,95 +69,109 @@ foreColor = foreColor_;
 - (void)drawRect:(CGRect)rect {
     
     
-    // initilization
     
-    // if (handWRITING == nil) {
-    if (myglobsigCoordinates == nil) {
+    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+    NSString *currentMode = app.globalMode;
     
-        handWRITING = [[NSMutableArray alloc] init];
-        self.handwritingCoords = [[NSMutableArray alloc] init];
-		self.lineWidth = 3.0f;
-		self.signatureImageMargin = 3.0f;
-		self.shouldCropSignatureImage = YES;
-		self.foreColor = [UIColor blackColor];
-        self.backgroundColor = [UIColor clearColor];
-		lastTapPoint_ = CGPointZero;
-        
-        myglobsigCoordinates = [[NSMutableArray alloc] init];
-        
-    }
-    
-    
-    
-    
-    NSString *mySignature = [OrderDetailViewController_iPad globsig];
-
-    
-    if ([mySignature length] > 0)
-    {
-        
-            // SHOW SIGNATURE
-        
-            [self showSignature];
     
         
-    } else {
-        
-            // DRAW SIGNATURE
     
-            CGContextRef context = UIGraphicsGetCurrentContext();
+        // initilization
+    
+        if (myglobsigCoordinates == nil) {
+        
+            handWRITING = [[NSMutableArray alloc] init];
+            self.handwritingCoords = [[NSMutableArray alloc] init];
+            self.lineWidth = 3.0f;
+            self.signatureImageMargin = 3.0f;
+            self.shouldCropSignatureImage = YES;
+            self.foreColor = [UIColor blackColor];
             
-            // Set drawing params
-            CGContextSetLineWidth(context, self.lineWidth);
-            CGContextSetStrokeColorWithColor(context, [self.foreColor CGColor]);
-            CGContextSetLineCap(context, kCGLineCapButt);
-            CGContextSetLineJoin(context, kCGLineJoinRound);
-            CGContextBeginPath(context);
-            
-            // This flag tells us to move to the point
-            // rather than draw a line to the point
-            BOOL isFirstPoint = YES;
-            
-            // Loop through the strings in the array
-            // which are just serialized CGPoints
-        
-            // bx1 for (NSString *touchString in self.handwritingCoords) {
-                for (NSString *touchString in myglobsigCoordinates) {
-                
-                // NSLog(@"dw1 - show handWRITE %@", self.handwritingCoords);
-                
-                // Unserialize
-                CGPoint tapLocation = CGPointFromString(touchString);
-                
-                // If we have a CGPointZero, that means the next
-                // iteration of this loop will represent the first
-                // point after a user has lifted their finger.
-                if (CGPointEqualToPoint(tapLocation, CGPointZero)) {
-                    isFirstPoint = YES;
-                    continue;
-                }
-                
-                // If first point, move to it and continue. Otherwize, draw a line from
-                // the last point to this one.
-                if (isFirstPoint) {
-                    CGContextMoveToPoint(context, tapLocation.x, tapLocation.y);
-                    isFirstPoint = NO;
-                    // NSLog(@"dw1 - %f, %f", tapLocation.x, tapLocation.y);
-                    
-                } else {
-                    CGPoint startPoint = CGContextGetPathCurrentPoint(context);
-                    CGContextAddQuadCurveToPoint(context, startPoint.x, startPoint.y, tapLocation.x, tapLocation.y);
-                    CGContextAddLineToPoint(context, tapLocation.x, tapLocation.y);
-
-                }
-                
+            // prevent change in view mode
+            if (![currentMode isEqualToString:@"VIEW"]) {
+                self.backgroundColor = [UIColor clearColor];
             }
             
-            // Stroke it, baby!
-            CGContextStrokePath(context);
-        
-    } // end of if
+            lastTapPoint_ = CGPointZero;
+            
+            myglobsigCoordinates = [[NSMutableArray alloc] init];
+            
+        }
     
+     
+    
+    
+        NSString *mySignature = [OrderDetailViewController_iPad globsig];
+
+    
+        if ([mySignature length] > 0)
+        {
+            
+                // SHOW SIGNATURE
+            
+                [self showSignature];
+        
+            
+        } else {
+            
+                // DRAW SIGNATURE
+        
+                CGContextRef context = UIGraphicsGetCurrentContext();
+                
+                // Set drawing params
+                CGContextSetLineWidth(context, self.lineWidth);
+                CGContextSetStrokeColorWithColor(context, [self.foreColor CGColor]);
+                CGContextSetLineCap(context, kCGLineCapButt);
+                CGContextSetLineJoin(context, kCGLineJoinRound);
+                CGContextBeginPath(context);
+                
+                // This flag tells us to move to the point
+                // rather than draw a line to the point
+                BOOL isFirstPoint = YES;
+                
+                // Loop through the strings in the array
+                // which are just serialized CGPoints
+            
+                // bx1 for (NSString *touchString in self.handwritingCoords) {
+                    for (NSString *touchString in myglobsigCoordinates) {
+                    
+                    // NSLog(@"dw1 - show handWRITE %@", self.handwritingCoords);
+                    
+                    // Unserialize
+                    CGPoint tapLocation = CGPointFromString(touchString);
+                    
+                    // If we have a CGPointZero, that means the next
+                    // iteration of this loop will represent the first
+                    // point after a user has lifted their finger.
+                    if (CGPointEqualToPoint(tapLocation, CGPointZero)) {
+                        isFirstPoint = YES;
+                        continue;
+                    }
+                    
+                    // If first point, move to it and continue. Otherwize, draw a line from
+                    // the last point to this one.
+                    if (isFirstPoint) {
+                        CGContextMoveToPoint(context, tapLocation.x, tapLocation.y);
+                        isFirstPoint = NO;
+                        // NSLog(@"dw1 - %f, %f", tapLocation.x, tapLocation.y);
+                        
+                    } else {
+                        CGPoint startPoint = CGContextGetPathCurrentPoint(context);
+                        CGContextAddQuadCurveToPoint(context, startPoint.x, startPoint.y, tapLocation.x, tapLocation.y);
+                        CGContextAddLineToPoint(context, tapLocation.x, tapLocation.y);
+
+                    }
+                    
+                }
+                
+                // Stroke it, baby!
+                CGContextStrokePath(context);
+            
+        } // end of if
+    
+        
+        
+   
 }
 
 
