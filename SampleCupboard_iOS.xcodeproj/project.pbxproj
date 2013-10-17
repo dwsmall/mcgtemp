@@ -87,6 +87,86 @@
 		5BEAD0E7174B379600FBF8B2 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E3174B379500FBF8B2 /* refresh.png */; };
 		5BEAD0E8174B379600FBF8B2 /* trend.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E4174B379600FBF8B2 /* trend.png */; };
 		5BF4CF831760D86700BB3DBC /* HcpDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF4CF821760D86700BB3DBC /* HcpDetailController.m */; };
+		5BFAA712180FE22E00DF0639 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C7899176D4ED100770EDF /* MBProgressHUD.m */; };
+		5BFAA713180FE22E00DF0639 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6212681746D8C5007B5C7C /* main.m */; };
+		5BFAA714180FE22E00DF0639 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B62126C1746D8C5007B5C7C /* AppDelegate.m */; };
+		5BFAA715180FE22E00DF0639 /* OrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B7A1747A25800816AF7 /* OrderViewController.m */; };
+		5BFAA716180FE22E00DF0639 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B801747A2DB00816AF7 /* LoginViewController.m */; };
+		5BFAA717180FE22E00DF0639 /* HcpListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B861747A31000816AF7 /* HcpListViewController.m */; };
+		5BFAA718180FE22E00DF0639 /* SyncViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BCB1B891747A32E00816AF7 /* SyncViewController_iPad.m */; };
+		5BFAA719180FE22E00DF0639 /* OrderDetailViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39222174BC9C9005B40D2 /* OrderDetailViewController_iPad.m */; };
+		5BFAA71A180FE22E00DF0639 /* SignatureControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39237174BEE75005B40D2 /* SignatureControl.m */; };
+		5BFAA71B180FE22E00DF0639 /* TextInputDialog_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3923D174BEF7A005B40D2 /* TextInputDialog_iPad.m */; };
+		5BFAA71C180FE22E00DF0639 /* SampleCupboard_iOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5BE39245174C3176005B40D2 /* SampleCupboard_iOS.xcdatamodeld */; };
+		5BFAA71D180FE22E00DF0639 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBD89E17552E9D002A3E11 /* HomeViewController.m */; };
+		5BFAA71E180FE22E00DF0639 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5C53E21757E44D004126D1 /* Reachability.m */; };
+		5BFAA71F180FE22E00DF0639 /* HcpDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF4CF821760D86700BB3DBC /* HcpDetailController.m */; };
+		5BFAA720180FE22E00DF0639 /* HcpChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7E6DEB17673343008286D4 /* HcpChoice.m */; };
+		5BFAA721180FE22E00DF0639 /* ProductChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B96673317678A2E0017F0E4 /* ProductChoice.m */; };
+		5BFAA722180FE22E00DF0639 /* HcpAdditionalDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B9667361768C41C0017F0E4 /* HcpAdditionalDetails.m */; };
+		5BFAA723180FE22E00DF0639 /* Territory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091EA1785F52A0035F51B /* Territory.m */; };
+		5BFAA724180FE22E00DF0639 /* TerritoryFSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091ED1785F52A0035F51B /* TerritoryFSA.m */; };
+		5BFAA725180FE22E00DF0639 /* AllocationHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE091F01785F63B0035F51B /* AllocationHeader.m */; };
+		5BFAA726180FE22E00DF0639 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE2A0017A17A4B00422C4A /* Base64.m */; };
+		5BFAA727180FE22E00DF0639 /* SetupConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE2A0617A1FA8300422C4A /* SetupConfig.m */; };
+		5BFAA728180FE22E00DF0639 /* Order+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B74925117B28FD800EDBE8A /* Order+Extensions.m */; };
+		5BFAA729180FE22E00DF0639 /* Hcp+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B74925717B2972B00EDBE8A /* Hcp+Extensions.m */; };
+		5BFAA72A180FE22E00DF0639 /* HealthCareProfessional.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B938A3B17B42F7700A8C078 /* HealthCareProfessional.m */; };
+		5BFAA72B180FE22E00DF0639 /* OrderTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E2EB717BA966A002FDBF9 /* OrderTemplate.m */; };
+		5BFAA72C180FE22E00DF0639 /* OrderTemplateLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E2EBD17BA96C7002FDBF9 /* OrderTemplateLine.m */; };
+		5BFAA72D180FE22E00DF0639 /* TemplateSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E2EC017BA97E7002FDBF9 /* TemplateSelection.m */; };
+		5BFAA72E180FE22E00DF0639 /* ReportDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B589D7A17CF4DA400DE9930 /* ReportDetails.m */; };
+		5BFAA72F180FE22E00DF0639 /* ReportMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B589D8017CF4F1D00DE9930 /* ReportMenu.m */; };
+		5BFAA730180FE22E00DF0639 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6E0D017EB53D7006EF204 /* Order.m */; };
+		5BFAA731180FE22E00DF0639 /* Allocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B89560E18033C8F009635C4 /* Allocation.m */; };
+		5BFAA732180FE22E00DF0639 /* OrderLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B47025A1805BD2F006CCEF7 /* OrderLineItem.m */; };
+		5BFAA733180FE22E00DF0639 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5D951A180F252500ED1A5D /* SVProgressHUD.m */; };
+		5BFAA734180FE22E00DF0639 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5D951D180F25D800ED1A5D /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5BFAA735180FE22E00DF0639 /* MESegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5D9520180F25FB00ED1A5D /* MESegmentedControl.m */; };
+		5BFAA737180FE22E00DF0639 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B7E16BE17D69768000049B6 /* QuartzCore.framework */; };
+		5BFAA738180FE22E00DF0639 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B62125C1746D8C5007B5C7C /* UIKit.framework */; };
+		5BFAA739180FE22E00DF0639 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B62125E1746D8C5007B5C7C /* Foundation.framework */; };
+		5BFAA73A180FE22E00DF0639 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B49681517A13C5500DDC43A /* CoreGraphics.framework */; };
+		5BFAA73B180FE22E00DF0639 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B4988C1175A27B0000AFD31 /* SystemConfiguration.framework */; };
+		5BFAA73C180FE22E00DF0639 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE39298174CBE6F005B40D2 /* CoreData.framework */; };
+		5BFAA73E180FE22E00DF0639 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212651746D8C5007B5C7C /* InfoPlist.strings */; };
+		5BFAA73F180FE22E00DF0639 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B62126E1746D8C5007B5C7C /* Default.png */; };
+		5BFAA740180FE22E00DF0639 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212701746D8C5007B5C7C /* Default@2x.png */; };
+		5BFAA741180FE22E00DF0639 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212721746D8C5007B5C7C /* Default-568h@2x.png */; };
+		5BFAA742180FE22E00DF0639 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B62127A1746D8C5007B5C7C /* first.png */; };
+		5BFAA743180FE22E00DF0639 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B62127C1746D8C5007B5C7C /* first@2x.png */; };
+		5BFAA744180FE22E00DF0639 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212811746D8C5007B5C7C /* second.png */; };
+		5BFAA745180FE22E00DF0639 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212831746D8C5007B5C7C /* second@2x.png */; };
+		5BFAA746180FE22E00DF0639 /* SCB_Icon_iPad29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212A21746D957007B5C7C /* SCB_Icon_iPad29x29.png */; };
+		5BFAA747180FE22E00DF0639 /* SCB_Icon_iPad50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212A31746D957007B5C7C /* SCB_Icon_iPad50x50.png */; };
+		5BFAA748180FE22E00DF0639 /* SCB_Icon_iPhone4.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212A41746D957007B5C7C /* SCB_Icon_iPhone4.png */; };
+		5BFAA749180FE22E00DF0639 /* SCB_Icon_iTunes.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212A51746D957007B5C7C /* SCB_Icon_iTunes.png */; };
+		5BFAA74A180FE22E00DF0639 /* home_background_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212AA1746DA00007B5C7C /* home_background_landscape.png */; };
+		5BFAA74B180FE22E00DF0639 /* home_background_portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212AB1746DA00007B5C7C /* home_background_portrait.png */; };
+		5BFAA74C180FE22E00DF0639 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212AC1746DA00007B5C7C /* Icon-72.png */; };
+		5BFAA74D180FE22E00DF0639 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212AD1746DA00007B5C7C /* Icon-72@2x.png */; };
+		5BFAA74E180FE22E00DF0639 /* iPad_Login_bouton_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212AE1746DA00007B5C7C /* iPad_Login_bouton_Background.png */; };
+		5BFAA74F180FE22E00DF0639 /* iPad_Login_bouton_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212AF1746DA00007B5C7C /* iPad_Login_bouton_button.png */; };
+		5BFAA750180FE22E00DF0639 /* iPad_Login_bouton_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212B01746DA00007B5C7C /* iPad_Login_bouton_icon.png */; };
+		5BFAA751180FE22E00DF0639 /* iPad_Login_bouton_SignIn.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212B11746DA00007B5C7C /* iPad_Login_bouton_SignIn.png */; };
+		5BFAA752180FE22E00DF0639 /* iPad_MCG_background_landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212B21746DA00007B5C7C /* iPad_MCG_background_landscape.png */; };
+		5BFAA753180FE22E00DF0639 /* iPad_MCG_background_portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212B31746DA00007B5C7C /* iPad_MCG_background_portrait.png */; };
+		5BFAA754180FE22E00DF0639 /* iPad_MCG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212B41746DA00007B5C7C /* iPad_MCG@2x.png */; };
+		5BFAA755180FE22E00DF0639 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B6212C01746DA61007B5C7C /* MainStoryboard.storyboard */; };
+		5BFAA756180FE22E00DF0639 /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5BD83538174AE96D00DA8B5A /* fr.lproj */; };
+		5BFAA757180FE22E00DF0639 /* Icons in Resources */ = {isa = PBXBuildFile; fileRef = 5BD8353A174AE98300DA8B5A /* Icons */; };
+		5BFAA758180FE22E00DF0639 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5B5085E0174B20460068A71E /* en.lproj */; };
+		5BFAA759180FE22E00DF0639 /* shoppingcart.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0DF174B36A200FBF8B2 /* shoppingcart.png */; };
+		5BFAA75A180FE22E00DF0639 /* house.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E1174B379500FBF8B2 /* house.png */; };
+		5BFAA75B180FE22E00DF0639 /* man.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E2174B379500FBF8B2 /* man.png */; };
+		5BFAA75C180FE22E00DF0639 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E3174B379500FBF8B2 /* refresh.png */; };
+		5BFAA75D180FE22E00DF0639 /* trend.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BEAD0E4174B379600FBF8B2 /* trend.png */; };
+		5BFAA75E180FE22E00DF0639 /* my_allocations.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4DDBCE176E97850015A496 /* my_allocations.png */; };
+		5BFAA75F180FE22E00DF0639 /* my_team.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4DDBCF176E97850015A496 /* my_team.png */; };
+		5BFAA760180FE22E00DF0639 /* my_usage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B4DDBD0176E97850015A496 /* my_usage.png */; };
+		5BFAA761180FE22E00DF0639 /* accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7E4BEF179B2C8A00ABD030 /* accept.png */; };
+		5BFAA762180FE22E00DF0639 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B7E4BF0179B2C8A00ABD030 /* delete.png */; };
+		5BFAA763180FE22E00DF0639 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5B39CB51180DD2D6008055FB /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -216,6 +296,7 @@
 		5BEAD0E4174B379600FBF8B2 /* trend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = trend.png; path = Images/trend.png; sourceTree = "<group>"; };
 		5BF4CF811760D86700BB3DBC /* HcpDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcpDetailController.h; sourceTree = "<group>"; };
 		5BF4CF821760D86700BB3DBC /* HcpDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcpDetailController.m; sourceTree = "<group>"; };
+		5BFAA767180FE22E00DF0639 /* SampleCupboard_iOS Merck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SampleCupboard_iOS Merck.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +310,19 @@
 				5B49681617A13C5600DDC43A /* CoreGraphics.framework in Frameworks */,
 				5B4988C2175A27B0000AFD31 /* SystemConfiguration.framework in Frameworks */,
 				5BE39299174CBE6F005B40D2 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BFAA736180FE22E00DF0639 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BFAA737180FE22E00DF0639 /* QuartzCore.framework in Frameworks */,
+				5BFAA738180FE22E00DF0639 /* UIKit.framework in Frameworks */,
+				5BFAA739180FE22E00DF0639 /* Foundation.framework in Frameworks */,
+				5BFAA73A180FE22E00DF0639 /* CoreGraphics.framework in Frameworks */,
+				5BFAA73B180FE22E00DF0639 /* SystemConfiguration.framework in Frameworks */,
+				5BFAA73C180FE22E00DF0639 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				5B6212591746D8C5007B5C7C /* SampleCupboard_iOS.app */,
+				5BFAA767180FE22E00DF0639 /* SampleCupboard_iOS Merck.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -504,6 +599,23 @@
 			productReference = 5B6212591746D8C5007B5C7C /* SampleCupboard_iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5BFAA710180FE22E00DF0639 /* SampleCupboard_iOS Merck */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5BFAA764180FE22E00DF0639 /* Build configuration list for PBXNativeTarget "SampleCupboard_iOS Merck" */;
+			buildPhases = (
+				5BFAA711180FE22E00DF0639 /* Sources */,
+				5BFAA736180FE22E00DF0639 /* Frameworks */,
+				5BFAA73D180FE22E00DF0639 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SampleCupboard_iOS Merck";
+			productName = SampleCupboard_iOS;
+			productReference = 5BFAA767180FE22E00DF0639 /* SampleCupboard_iOS Merck.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -527,6 +639,7 @@
 			projectRoot = "";
 			targets = (
 				5B6212581746D8C5007B5C7C /* SampleCupboard_iOS */,
+				5BFAA710180FE22E00DF0639 /* SampleCupboard_iOS Merck */,
 			);
 		};
 /* End PBXProject section */
@@ -577,6 +690,51 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5BFAA73D180FE22E00DF0639 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BFAA73E180FE22E00DF0639 /* InfoPlist.strings in Resources */,
+				5BFAA73F180FE22E00DF0639 /* Default.png in Resources */,
+				5BFAA740180FE22E00DF0639 /* Default@2x.png in Resources */,
+				5BFAA741180FE22E00DF0639 /* Default-568h@2x.png in Resources */,
+				5BFAA742180FE22E00DF0639 /* first.png in Resources */,
+				5BFAA743180FE22E00DF0639 /* first@2x.png in Resources */,
+				5BFAA744180FE22E00DF0639 /* second.png in Resources */,
+				5BFAA745180FE22E00DF0639 /* second@2x.png in Resources */,
+				5BFAA746180FE22E00DF0639 /* SCB_Icon_iPad29x29.png in Resources */,
+				5BFAA747180FE22E00DF0639 /* SCB_Icon_iPad50x50.png in Resources */,
+				5BFAA748180FE22E00DF0639 /* SCB_Icon_iPhone4.png in Resources */,
+				5BFAA749180FE22E00DF0639 /* SCB_Icon_iTunes.png in Resources */,
+				5BFAA74A180FE22E00DF0639 /* home_background_landscape.png in Resources */,
+				5BFAA74B180FE22E00DF0639 /* home_background_portrait.png in Resources */,
+				5BFAA74C180FE22E00DF0639 /* Icon-72.png in Resources */,
+				5BFAA74D180FE22E00DF0639 /* Icon-72@2x.png in Resources */,
+				5BFAA74E180FE22E00DF0639 /* iPad_Login_bouton_Background.png in Resources */,
+				5BFAA74F180FE22E00DF0639 /* iPad_Login_bouton_button.png in Resources */,
+				5BFAA750180FE22E00DF0639 /* iPad_Login_bouton_icon.png in Resources */,
+				5BFAA751180FE22E00DF0639 /* iPad_Login_bouton_SignIn.png in Resources */,
+				5BFAA752180FE22E00DF0639 /* iPad_MCG_background_landscape.png in Resources */,
+				5BFAA753180FE22E00DF0639 /* iPad_MCG_background_portrait.png in Resources */,
+				5BFAA754180FE22E00DF0639 /* iPad_MCG@2x.png in Resources */,
+				5BFAA755180FE22E00DF0639 /* MainStoryboard.storyboard in Resources */,
+				5BFAA756180FE22E00DF0639 /* fr.lproj in Resources */,
+				5BFAA757180FE22E00DF0639 /* Icons in Resources */,
+				5BFAA758180FE22E00DF0639 /* en.lproj in Resources */,
+				5BFAA759180FE22E00DF0639 /* shoppingcart.png in Resources */,
+				5BFAA75A180FE22E00DF0639 /* house.png in Resources */,
+				5BFAA75B180FE22E00DF0639 /* man.png in Resources */,
+				5BFAA75C180FE22E00DF0639 /* refresh.png in Resources */,
+				5BFAA75D180FE22E00DF0639 /* trend.png in Resources */,
+				5BFAA75E180FE22E00DF0639 /* my_allocations.png in Resources */,
+				5BFAA75F180FE22E00DF0639 /* my_team.png in Resources */,
+				5BFAA760180FE22E00DF0639 /* my_usage.png in Resources */,
+				5BFAA761180FE22E00DF0639 /* accept.png in Resources */,
+				5BFAA762180FE22E00DF0639 /* delete.png in Resources */,
+				5BFAA763180FE22E00DF0639 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -620,6 +778,49 @@
 				5B5D951B180F252600ED1A5D /* SVProgressHUD.m in Sources */,
 				5B5D951E180F25D800ED1A5D /* CustomBadge.m in Sources */,
 				5B5D9521180F25FD00ED1A5D /* MESegmentedControl.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BFAA711180FE22E00DF0639 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BFAA712180FE22E00DF0639 /* MBProgressHUD.m in Sources */,
+				5BFAA713180FE22E00DF0639 /* main.m in Sources */,
+				5BFAA714180FE22E00DF0639 /* AppDelegate.m in Sources */,
+				5BFAA715180FE22E00DF0639 /* OrderViewController.m in Sources */,
+				5BFAA716180FE22E00DF0639 /* LoginViewController.m in Sources */,
+				5BFAA717180FE22E00DF0639 /* HcpListViewController.m in Sources */,
+				5BFAA718180FE22E00DF0639 /* SyncViewController_iPad.m in Sources */,
+				5BFAA719180FE22E00DF0639 /* OrderDetailViewController_iPad.m in Sources */,
+				5BFAA71A180FE22E00DF0639 /* SignatureControl.m in Sources */,
+				5BFAA71B180FE22E00DF0639 /* TextInputDialog_iPad.m in Sources */,
+				5BFAA71C180FE22E00DF0639 /* SampleCupboard_iOS.xcdatamodeld in Sources */,
+				5BFAA71D180FE22E00DF0639 /* HomeViewController.m in Sources */,
+				5BFAA71E180FE22E00DF0639 /* Reachability.m in Sources */,
+				5BFAA71F180FE22E00DF0639 /* HcpDetailController.m in Sources */,
+				5BFAA720180FE22E00DF0639 /* HcpChoice.m in Sources */,
+				5BFAA721180FE22E00DF0639 /* ProductChoice.m in Sources */,
+				5BFAA722180FE22E00DF0639 /* HcpAdditionalDetails.m in Sources */,
+				5BFAA723180FE22E00DF0639 /* Territory.m in Sources */,
+				5BFAA724180FE22E00DF0639 /* TerritoryFSA.m in Sources */,
+				5BFAA725180FE22E00DF0639 /* AllocationHeader.m in Sources */,
+				5BFAA726180FE22E00DF0639 /* Base64.m in Sources */,
+				5BFAA727180FE22E00DF0639 /* SetupConfig.m in Sources */,
+				5BFAA728180FE22E00DF0639 /* Order+Extensions.m in Sources */,
+				5BFAA729180FE22E00DF0639 /* Hcp+Extensions.m in Sources */,
+				5BFAA72A180FE22E00DF0639 /* HealthCareProfessional.m in Sources */,
+				5BFAA72B180FE22E00DF0639 /* OrderTemplate.m in Sources */,
+				5BFAA72C180FE22E00DF0639 /* OrderTemplateLine.m in Sources */,
+				5BFAA72D180FE22E00DF0639 /* TemplateSelection.m in Sources */,
+				5BFAA72E180FE22E00DF0639 /* ReportDetails.m in Sources */,
+				5BFAA72F180FE22E00DF0639 /* ReportMenu.m in Sources */,
+				5BFAA730180FE22E00DF0639 /* Order.m in Sources */,
+				5BFAA731180FE22E00DF0639 /* Allocation.m in Sources */,
+				5BFAA732180FE22E00DF0639 /* OrderLineItem.m in Sources */,
+				5BFAA733180FE22E00DF0639 /* SVProgressHUD.m in Sources */,
+				5BFAA734180FE22E00DF0639 /* CustomBadge.m in Sources */,
+				5BFAA735180FE22E00DF0639 /* MESegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,6 +955,46 @@
 			};
 			name = Release;
 		};
+		5BFAA765180FE22E00DF0639 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Herald Gjura (R3S2528F63)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Herald Gjura (R3S2528F63)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SampleCupboard_iOS/SampleCupboard_iOS-Prefix.pch";
+				INFOPLIST_FILE = "SampleCupboard_iOS copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				PRODUCT_NAME = "SampleCupboard_iOS Merck";
+				PROVISIONING_PROFILE = "9C69BDA5-1F6E-4BC0-B0E8-408D583583D6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9C69BDA5-1F6E-4BC0-B0E8-408D583583D6";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5BFAA766180FE22E00DF0639 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Herald Gjura (R3S2528F63)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Herald Gjura (R3S2528F63)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SampleCupboard_iOS/SampleCupboard_iOS-Prefix.pch";
+				INFOPLIST_FILE = "SampleCupboard_iOS copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				PRODUCT_NAME = "SampleCupboard_iOS Merck";
+				PROVISIONING_PROFILE = "9C69BDA5-1F6E-4BC0-B0E8-408D583583D6";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9C69BDA5-1F6E-4BC0-B0E8-408D583583D6";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -771,6 +1012,15 @@
 			buildConfigurations = (
 				5B62129D1746D8C6007B5C7C /* Debug */,
 				5B62129E1746D8C6007B5C7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5BFAA764180FE22E00DF0639 /* Build configuration list for PBXNativeTarget "SampleCupboard_iOS Merck" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BFAA765180FE22E00DF0639 /* Debug */,
+				5BFAA766180FE22E00DF0639 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
