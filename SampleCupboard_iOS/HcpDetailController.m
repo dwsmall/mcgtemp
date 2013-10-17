@@ -729,9 +729,9 @@
                 howManyDays = howManyDays * -1;
             }
             
-            NSArray *arrayHolder = [[NSMutableArray alloc] init];
+            // DWX01 - NSArray *arrayHolder = [[NSMutableArray alloc] init];
             
-            arrayHolder = @[@"TYPE1",                            
+            NSArray *arrayHolder = @[@"TYPE1",
                             [self stringOrEmptyString:[dicItems objectForKey:@"refprefix"]],
                             [self stringOrEmptyString:[dicItems objectForKey:@"reference"]],
                             [self stringOrEmptyString:[dicItems objectForKey:@"shipping_status"]],
@@ -768,12 +768,12 @@
                 
                 NSDictionary* dicItems2 = [arrayContainer2 objectAtIndex:x];
                 
-                NSArray *arrayHolder = [[NSMutableArray alloc] init];
+                // DWX01 - NSArray *arrayHolder = [[NSMutableArray alloc] init];
                 
                 
                 // add entry to array
                 
-                arrayHolder = @[@"TYPE2",
+                NSArray *arrayHolder = @[@"TYPE2",
                                 [self stringOrEmptyString:[dicItems2 objectForKey:@"Stored_Product_Name"]],
                                 [self stringOrEmptyString:[dicItems2 objectForKey:@"Stored_Product_Description"]],
                                 [self stringOrEmptyString:[[dicItems2 objectForKey:@"quantityordered"] description]] ];
