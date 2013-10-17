@@ -586,9 +586,9 @@
             
             // add YTD
             
-            NSDictionary *arrayHolderDict = [[NSDictionary alloc] init];
+            // DWX01 - NSDictionary *arrayHolderDict = [[NSDictionary alloc] init];
             
-            arrayHolderDict = @{@"type": @"_Level1",
+            NSDictionary *arrayHolderDict = @{@"type": @"_Level1",
                                 @"territoryid": [self stringOrEmptyString:[[dictItems objectForKey:@"ProductName"] description]],
                                 @"YTD": @"YTD",
                                 @"YTDUsage": [self stringOrEmptyString:[dictItems objectForKey:@"YTDusage"]]
@@ -703,9 +703,9 @@
             
             [arraySectionCount addObject:territoryid];
         
-            NSDictionary *arrayHolderDict = [[NSMutableDictionary alloc] init];
+            // DWX01 - NSDictionary *arrayHolderDict = [[NSMutableDictionary alloc] init];
         
-            arrayHolderDict = @{@"type": @"TYPEH",
+            NSDictionary *arrayHolderDict = @{@"type": @"TYPEH",
                             @"territoryid": [self stringOrEmptyString:territoryid],
                             @"ProductName": NSLocalizedString(@"Product", nil),
                             @"Total": NSLocalizedString(@"Total", nil),
@@ -733,9 +733,9 @@
                 stock_there = NSLocalizedString(@"YES", nil);
             }
         
-        NSDictionary *arrayHolderDict = [[NSMutableDictionary alloc] init];
+        // DWX01 - NSDictionary *arrayHolderDict = [[NSMutableDictionary alloc] init];
         
-        arrayHolderDict = @{@"type": @"TYPEM",
+        NSDictionary *arrayHolderDict = @{@"type": @"TYPEM",
                             @"territoryid": [self stringOrEmptyString:territoryid],
                             @"ProductName": [self stringOrEmptyString:[alloc valueForKey:@"productname"]],
                             @"Total": [self stringOrEmptyString:[alloc valueForKey:@"totalmax"] ],
@@ -803,12 +803,14 @@
         
         
         // msg user if no hcp found
+        
+        /* DWX01 -
         int noDataFound = 0;
         
         if ([arrayContainer count] == 0) {
             noDataFound = 1;
         };
-        
+        */
         
         
         //Iterate JSON Objects
@@ -835,9 +837,9 @@
             for(int x=0;x<[members count];x++)
             {
                 
-                NSDictionary *arrayHolderDict = [[NSMutableDictionary alloc] init];
+                // DWX01 - NSDictionary *arrayHolderDict = [[NSMutableDictionary alloc] init];
                 
-                arrayHolderDict = @{@"type": @"TYPEM",
+                NSDictionary *arrayHolderDict = @{@"type": @"TYPEM",
                                                      @"territoryid": [self stringOrEmptyString:TerritoryNom],
                                                      @"Name": [self stringOrEmptyString:[[membersARR objectAtIndex:x] objectForKey:@"Name"]],
                                                      @"Fax": [self stringOrEmptyString:[[membersARR objectAtIndex:x] objectForKey:@"Fax"]],
@@ -947,16 +949,16 @@
         NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
         
         // step.2 - Determine How Many Territories in Object
-        int numofterr = [[[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0] count];
+        // DWX01 - int numofterr = [[[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0] count];
         
-        numofterr = 1;
+        // DWX01 - numofterr = 1;
         
         // step.3 iterate over territories to get data
-        for(int i=0;i<numofterr;i++)
-        {
+        // for(int i=0;i<numofterr;i++)
+        //{
             
             // convert to dictionary
-            NSDictionary* dicTERR = [[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:i];
+            NSDictionary* dicTERR = [[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0];
             
             // gather visible products
             NSMutableArray *arrayProductID = [[NSMutableArray alloc] init];
@@ -968,13 +970,12 @@
             
             
             // msg user if no territories exist
-            int noAllocationFound = 0;
+            // DWX01 - int noAllocationFound = 0;
             
-            if ([[dicTERR objectForKey:@"Allocations"] count] == 0) {
-                noAllocationFound = 1;
-            };
-            
-            
+            // DWX01 - if ([[dicTERR objectForKey:@"Allocations"] count] == 0) {
+            // DWX01 -    noAllocationFound = 1;
+            // DWX01 -  };
+                        
             // only add visible products
             for(int i=0;i<[[dicTERR objectForKey:@"Allocations"] count];i++)
             {
@@ -1025,7 +1026,7 @@
             
             
             
-        }
+       // DWX01 - }
         
     }  // End of Allocation
     
