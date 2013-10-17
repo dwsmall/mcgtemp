@@ -7,7 +7,7 @@
 //
 #import <UIKit/UIKit.h>
 
-@interface OrderDetailViewController_iPad : UIViewController <UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface OrderDetailViewController_iPad : UIViewController <UIActionSheetDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 {
     
 

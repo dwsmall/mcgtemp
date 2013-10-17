@@ -983,16 +983,16 @@
         NSDictionary* dictContainer = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
         
         // step.2 - Determine How Many Territories in Object
-        int numofterr = [[[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0] count];
+        // DWX01 - int numofterr = [[[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0] count];
         
-        numofterr = 1;
+        // DWX01 - numofterr = 1;
         
         // step.3 iterate over territories to get data
-        for(int i=0;i<numofterr;i++)
-        {
+        // DWX01 -for(int i=0;i<numofterr;i++)
+        // DWX01 -{
             
             // convert to dictionary
-            NSDictionary* dicTERR = [[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:i];
+            NSDictionary* dicTERR = [[[dictContainer objectForKey:@"GetAllocationByRepIdResult"] objectForKey:@"Territories"] objectAtIndex:0];
             
             // gather visible products
             NSMutableArray *arrayProductID = [[NSMutableArray alloc] init];
@@ -1035,10 +1035,9 @@
                 }
                 
             }
+        
             
-            
-            
-        }
+        // DWX01 - }
         
     }  // End of Allocation
     

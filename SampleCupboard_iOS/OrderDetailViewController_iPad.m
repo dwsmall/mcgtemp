@@ -51,7 +51,6 @@ static NSMutableArray* myglobChosenHcp = nil;
 
 @property (strong, nonatomic) IBOutlet UINavigationItem *odNavBarTitle;
 
-
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *SaveDraftButton;
 
 
@@ -645,13 +644,21 @@ NSArray *statusDataX;
 - (IBAction)Carrier_Ground:(UIButton *)sender {
     
     // get sender cell
-    UIButton *senderButton = (UIButton *)sender;
     
+    UIButton *senderButton = (UIButton *)sender;
     UITableViewCell *buttonCell = (UITableViewCell *)[senderButton superview];
     
+    
     // change text
+    
     [(UILabel *)[buttonCell viewWithTag:33] setText:NSLocalizedString(@"Ground",nil)];
     selectedCARRIER = NSLocalizedString(@"Ground", nil);
+    
+    
+    // update global values
+    
+    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+    app.globalShipType = NSLocalizedString(@"Ground", nil);
     
 }
 
@@ -659,13 +666,22 @@ NSArray *statusDataX;
     
    
     // get sender cell
-    UIButton *senderButton = (UIButton *)sender;
     
+    UIButton *senderButton = (UIButton *)sender;
     UITableViewCell *buttonCell = (UITableViewCell *)[senderButton superview];
     
+    
     // hide button
+    
     [(UILabel *)[buttonCell viewWithTag:33] setText: NSLocalizedString(@"Air",nil)];
     selectedCARRIER = NSLocalizedString(@"Air",nil);
+    
+    
+    // update global values
+    
+    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+    app.globalShipType = NSLocalizedString(@"Air", nil);
+
     
     UIAlertView *alertView = [[UIAlertView alloc]
                             initWithTitle: NSLocalizedString(@"Warning",nil) message: NSLocalizedString(@"This shipment will be sent by ATS Air", nil) delegate: self
@@ -752,6 +768,57 @@ NSArray *statusDataX;
             // Handle the error.
         }
 
+}
+
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    
+    if (alertView.tag == 300) {
+        
+        templateName = [alertView textFieldAtIndex:0].text;
+        
+        
+        // check if name is existing
+        
+        id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+        self.managedObjectContext = [appDelegate managedObjectContext];
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderTemplate" inManagedObjectContext:self.managedObjectContext];
+        NSPredicate *predicate =[NSPredicate predicateWithFormat:@"templatename MATCHES[cd] %@",templateName];
+        [request setEntity:entity];
+        [request setPredicate:predicate];
+        
+        NSError *error = nil;
+        NSArray *templateFound = [_managedObjectContext executeFetchRequest:request error:&error];
+        
+        
+        if ([templateFound count] == 0) {
+            
+            // create new template
+            [self performSelectorOnMainThread:@selector(createTemplate:) withObject:templateName waitUntilDone:YES];
+            
+        } else {
+            
+            UIAlertView *alert = [[UIAlertView alloc]
+                                  initWithTitle:NSLocalizedString(@"Name In Use",nil)
+                                  message:NSLocalizedString(@"Your Template Not Created Because That Current Name is in Usage",nil)
+                                  delegate:nil //or self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            
+            [alert show];
+            
+        }
+        
+        
+    }
+    
+    
+    
 }
 
 
@@ -1208,7 +1275,32 @@ NSArray *statusDataX;
 
 
 
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    //return [indexPath row] * 20;
+    int Npole = 44;
+    
+    if (indexPath.section == 0) {
+        Npole = 100;
+    }
+    
+    
+    // custom height for return address
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        
+        Npole = 120;
+        
+    }
+    
+    // custom hieght for signature
+    if (indexPath.section == 5) {
+        Npole = 140;
+    }
+    
+    return Npole;
+    
+}
 
 
 #pragma mark - Configure Cell
@@ -1559,7 +1651,23 @@ NSArray *statusDataX;
                                    [[ProductObject valueForKey:@"productdescription"] description]];
             
             
+            
             cell.detailTextLabel.text = @"0";
+            
+            
+            // check for existing values (offscreen)
+
+            for (int p = 0; p < [app.globalProductsScrn count]; p++)
+            {
+                
+                if ([ [[ProductObject valueForKey:@"productid"] description] isEqualToString: [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:0] ] ) {
+                    
+                    // default value of
+                    cell.detailTextLabel.text = [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3];
+                }
+            }
+            
+            
 
             
 #pragma mark Calc Grey
@@ -1649,7 +1757,7 @@ NSArray *statusDataX;
                                     
                                     if ( [[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] > [[ProductObject valueForKey:@"ordermax"] integerValue]) {
                                         
-                                        cell.detailTextLabel.text = [ProductObject valueForKey:@"ordermax"];
+                                        cell.detailTextLabel.text = [[ProductObject valueForKey:@"ordermax"] description];
                                     
                                     }
                                 
@@ -1661,7 +1769,7 @@ NSArray *statusDataX;
                                         ([[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] > [[ProductObject valueForKey:@"avail_allocation"] integerValue])
                                         ) {
                                         
-                                        cell.detailTextLabel.text = [ProductObject valueForKey:@"avail_allocation"];
+                                        cell.detailTextLabel.text = [[ProductObject valueForKey:@"avail_allocation"] description];
                                     }
                                 
                                     
@@ -1674,7 +1782,7 @@ NSArray *statusDataX;
                                         ([[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] > [[ProductObject valueForKey:@"avail_inventory"] integerValue])
                                         ) {
                                         
-                                        cell.detailTextLabel.text = [ProductObject valueForKey:@"avail_inventory"];
+                                        cell.detailTextLabel.text = [[ProductObject valueForKey:@"avail_inventory"] description];
                                     }
                             
                                 
@@ -1683,11 +1791,12 @@ NSArray *statusDataX;
                                 
                                 // ONLINE
                                 
+                                
                                 // GT limit ? replace override with allocation value
                                 
                                 if ( [[[app.globalProductsScrn objectAtIndex:p] objectAtIndex:3] integerValue] > [[ProductObject valueForKey:@"max_computed"] integerValue]) {
                                     
-                                    cell.detailTextLabel.text = [ProductObject valueForKey:@"max_computed"];
+                                    cell.detailTextLabel.text = [[ProductObject valueForKey:@"max_computed"] description];
                                     
                                 }
                                 
@@ -1711,7 +1820,24 @@ NSArray *statusDataX;
             
             // add product based on initial load
             
-            if (productFound == nil) {
+            // Prevent Addition of Existing Projects
+            
+            NSString *add_productid = @"YES";
+            
+            
+            for (int p = 0; p < [app.globalProductsScrn count]; p++)
+            {
+                NSString *myproductfoundid = [[app.globalProductsScrn objectAtIndex:p] objectAtIndex:0];
+                
+                if ([myproductfoundid isEqualToString:[[ProductObject valueForKey:@"productid"] description] ]) {
+                    
+                    add_productid = @"NO";
+                    
+                }
+            }
+            
+            
+            if ([add_productid isEqualToString:@"YES"]) {
                 
                 arrTempProducts = [NSMutableArray array];
                 [arrTempProducts addObject:[[ProductObject valueForKey:@"productid"] description]];
@@ -1962,9 +2088,20 @@ NSArray *statusDataX;
     if (indexPath.section == 3) {
         
         
-        // new
         
-        [(UILabel *)[cell viewWithTag:1002] setText:@""];
+        // default new value to null (offscreen)
+        
+        if (app.globalShipInfo == nil) {
+            
+            // default value
+            [(UILabel *)[cell viewWithTag:1002] setText:@""];
+        
+        } else {
+            
+            // populate with existing
+            [(UILabel *)[cell viewWithTag:1002] setText:app.globalShipInfo];
+        }
+        
         
         
         // MO
@@ -2012,9 +2149,23 @@ NSArray *statusDataX;
         
         
         
-        // new
+        NSLog(@"dwxp - show TYPE: %@", app.globalShipType);
         
-        [(UILabel *)[cell viewWithTag:33] setText:@"Ground"];
+        
+        // retain values from offscreen
+        
+        if (app.globalShipType == nil) {
+        
+            // Default Case No Value Selected
+            [(UILabel *)[cell viewWithTag:33] setText:@"Ground"];
+            
+        } else {
+            
+            // Default Case No Value Selected
+            [(UILabel *)[cell viewWithTag:33] setText:app.globalShipType];
+        }
+        
+        
         
         
         // MO
@@ -2172,13 +2323,7 @@ float a;
 }
 
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    
-    myTableView.scrollEnabled = YES;
-    
-    [super touchesBegan:touches withEvent:event];
-    
-}
+
 
 
 
@@ -2192,6 +2337,14 @@ float a;
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    
+    
+    // exit if ship_ins textfield
+    if (textField.tag == 1002) {
+        return YES;
+    }
+    
+    
     AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
     
     NSIndexPath *ip = [self.myTableView indexPathForSelectedRow];    
@@ -2344,7 +2497,6 @@ float a;
                 
                 overridestate = @"YES";
                 
-                
             }
             
             
@@ -2382,148 +2534,32 @@ float a;
 }
 
 
+- (void)textFieldDidEndEditing:(UITextField *)textField {
 
-
-
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    [self.myTableView beginUpdates];
-}
-
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-    
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [self.myTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
-                          withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.myTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
-                          withRowAnimation:UITableViewRowAnimationFade];
-            break;
+    // only for ship_ins
+    if (textField.tag == 1002) {
+        
+        // capture on exit
+        
+        AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+        app.globalShipInfo = textField.text;
     }
 }
 
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath {
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    UITableView *tableView = self.myTableView;
+    myTableView.scrollEnabled = YES;
     
-    switch(type) {
-            
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath]
-                    atIndexPath:indexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    [self.myTableView endUpdates];
+    [super touchesBegan:touches withEvent:event];
+    
 }
 
 
 
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-    
-    if (alertView.tag == 300) {
-        
-        templateName = [alertView textFieldAtIndex:0].text;
-        
-        
-        // check if name is existing
-        
-        id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-        self.managedObjectContext = [appDelegate managedObjectContext];
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"OrderTemplate" inManagedObjectContext:self.managedObjectContext];
-        NSPredicate *predicate =[NSPredicate predicateWithFormat:@"templatename MATCHES[cd] %@",templateName];
-        [request setEntity:entity];
-        [request setPredicate:predicate];
-        
-        NSError *error = nil;
-        NSArray *templateFound = [_managedObjectContext executeFetchRequest:request error:&error];
-        
-        
-        if ([templateFound count] == 0) {
-        
-        // create new template
-        [self performSelectorOnMainThread:@selector(createTemplate:) withObject:templateName waitUntilDone:YES];
-        
-        } else {
-        
-            UIAlertView *alert = [[UIAlertView alloc]
-                                  initWithTitle:NSLocalizedString(@"Name In Use",nil)
-                                  message:NSLocalizedString(@"Your Template Not Created Because That Current Name is in Usage",nil)
-                                  delegate:nil //or self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-
-            [alert show];
-        
-        }
-        
-    
-    }
-    
-
-    
-}
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    //return [indexPath row] * 20;
-    int Npole = 44;
-    
-    if (indexPath.section == 0) {
-        Npole = 100;
-    }
-    
-    
-    // custom height for return address
-    if (indexPath.section == 1 && indexPath.row == 1) {
-        
-        Npole = 120;
-        
-    }
-    
-    // custom hieght for signature
-    if (indexPath.section == 5) {
-        Npole = 140;
-    }
-    
-    return Npole;
-    
-}
 
 
 
@@ -2640,6 +2676,66 @@ float a;
 
 
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.myTableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.myTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                            withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.myTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                            withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.myTableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath]
+                    atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.myTableView endUpdates];
+}
+
+
 
 
 
@@ -2649,18 +2745,23 @@ float a;
 // segue validation (should I segue or not ?)
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-        
+    
+    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
+    NSString *currentMode = app.globalMode;
+    
+    // dont segue if prevent or view mode
+    
     if ([[identifier description] isEqualToString:@"_choosehcp1"] && [mypreventEdit isEqualToString:@"YES"]) {
+        return NO;
+    }
+    
+    if ([[identifier description] isEqualToString:@"_choosehcp1"] && [currentMode isEqualToString:@"VIEW"]) {
         return NO;
     }
     
     
     
-    AppDelegate *app = (AppDelegate*) [[UIApplication sharedApplication] delegate];
-    
     if ([[identifier description] isEqualToString:@"_uwindToOrders"]) {
-        
-        NSString *currentMode = app.globalMode;
         
         // remove if cancelled draft
         if ([currentMode isEqualToString:@"DRAFT"]) {
@@ -2945,7 +3046,7 @@ float a;
     NSURLResponse *response;
     NSError *err;
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-    NSString *order_response_msg = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    // NSString *order_response_msg = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     
     rtnOrderID = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     
