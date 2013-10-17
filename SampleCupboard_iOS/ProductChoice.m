@@ -167,7 +167,7 @@
                     
                     NSMutableArray *arrTempProducts = [NSMutableArray array];
                     
-                    arrTempProducts = [NSMutableArray array];
+                    // DWX01 - arrTempProducts = [NSMutableArray array];
                     [arrTempProducts addObject:[[object valueForKey:@"productid"] description]];
                     [arrTempProducts addObject:[[object valueForKey:@"productname"] description]];
                     [arrTempProducts addObject:[[object valueForKey:@"productdescription"] description]];
